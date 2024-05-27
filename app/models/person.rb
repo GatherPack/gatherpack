@@ -4,11 +4,11 @@ class Person < ApplicationRecord
   accepts_nested_attributes_for :user
 
   def self.ransackable_attributes(auth_object = nil)
-    ["address", "birthday", "created_at", "dietary_restrictions", "display_name", "first_name", "gender", "id", "last_name", "phone_number", "shirt_size", "updated_at", "user_id"]
+    [ 'address', 'birthday', 'created_at', 'dietary_restrictions', 'display_name', 'first_name', 'gender', 'id', 'last_name', 'phone_number', 'shirt_size', 'updated_at', 'user_id' ]
   end
 
   def self.ransackable_associations(auth_object = nil)
-    ["user"]
+    [ 'user' ]
   end
 
   private

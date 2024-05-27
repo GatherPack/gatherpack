@@ -1,5 +1,5 @@
 module NavHelper
-  def nav_link link, path, icon, method: 'get'
+  def nav_link(link, path, icon, method: 'get')
     data = {}
     if method != 'get'
       data['turbo-method'] = method
@@ -8,16 +8,16 @@ module NavHelper
       if (path == '/' && request.path == '/') || (path != '/' && request.path.starts_with?(path))
         link_to path, class: 'active', data: data do
           icon_text(icon, link)
-        end  
+        end
       else
         link_to path, data: data do
           icon_text(icon, link)
         end
-      end 
+      end
     end
   end
 
-  def nav_heading label
+  def nav_heading(label)
     tag.h6 label, class: 'nav-item'
   end
 end

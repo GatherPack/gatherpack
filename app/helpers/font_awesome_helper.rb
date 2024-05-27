@@ -3,9 +3,9 @@ module FontAwesomeHelper
     family ||= 'solid'
     klass = "fa-fw fa-#{family}"
     if size
-      klass += " " + size
+      klass += ' ' + size
     end
-    klass += " fa-" + icon
+    klass += ' fa-' + icon
     tag.i class: klass
   end
 
@@ -14,6 +14,6 @@ module FontAwesomeHelper
   end
 
   def icon_text(icon, text, family: nil)
-    (i(icon, family: family) + " " + text).html_safe
+    (i(icon, family: family) + ' ' + text).html_safe
   end
 end
