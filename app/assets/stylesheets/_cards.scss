@@ -1,0 +1,13 @@
+.card {
+  @extend .my-2;
+}
+
+.card-header {
+  background-color: lighten($card-bg, 10%);
+  border-bottom-color: $greige;
+
+  h2, h3 {
+    margin-bottom: 0;
+    line-height: 1.0;
+  }
+}

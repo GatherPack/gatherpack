@@ -1,0 +1,14 @@
+<%%= simple_form_for(@<%= singular_table_name %>) do |f| %>
+<div class="card">
+  <div class="card-header">
+    <h1>Editing <%%= @<%= singular_table_name %>.identifier_name %></h1>
+  </div>
+  <div class="card-body">
+    <%%= render "form", f: f %>
+  </div>
+  <div class="card-footer">
+    <%%= link_to "Cancel", <%= model_resource_name(prefix: "@") %>, class: 'btn btn-warning' %>
+    <%%= f.button :submit, class: 'btn btn-primary' %>
+  </div>
+</div>
+<%% end %>

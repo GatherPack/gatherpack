@@ -1,0 +1,11 @@
+<div class="card">
+  <div class="card-header">
+    <h1><%%= @<%= singular_table_name %>.identifier_name %></h1>
+  </div>
+  <div class="card-body">
+  </div>
+  <div class="card-footer">
+    <%%= link_to 'Edit', <%= edit_helper(type: :path) %>, class: 'btn btn-warning' %>
+    <%%= link_to 'Delete', <%= model_resource_name(prefix: "@") %>, class: 'btn btn-danger', data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %>
+  </div>
+</div>

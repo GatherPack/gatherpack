@@ -1,0 +1,34 @@
+<div class="sidebar border border-right col-md-3 col-lg-2 p-0 bg-body-tertiary">
+  <div class="offcanvas-md offcanvas-end bg-body-tertiary" tabindex="-1" id="sidebarMenu" aria-labelledby="sidebarMenuLabel">
+    <div class="offcanvas-header">
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebarMenu" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body d-md-flex flex-column p-0 pt-lg-3 overflow-y-auto">
+      <div class="nav flex-column me-auto">
+        <%= nav_link 'Dashboard', root_path, 'flag' %>
+        <%= nav_link 'Your Account', person_path(current_user.person), 'user' %>
+        <%= nav_link 'Sign Out', destroy_user_session_path, 'person-through-window', method: 'delete' %>
+      
+        <hr class="my-2">
+
+        <%= nav_heading 'Stuff & Things' %>
+
+        <%= nav_link 'People', people_path, 'users' %>
+        <%= nav_link 'Teams', '#', 'people-group' %>
+        <%= nav_link 'Events', '#', 'calendar' %>
+        <%= nav_link 'Time', '#', 'business-time' %>
+        <%= nav_link 'Tags', '#', 'tag' %>
+        <%= nav_link 'Announcements', '#', 'comment' %>
+        <%= nav_link 'Accounts', '#', 'receipt' %>
+        <%= nav_link 'Pages', '#', 'file-lines' %>
+
+        <hr class="my-2">
+
+        <%= nav_link 'Variables', '#', 'database' %>
+        <%= nav_link 'Reports', '#', 'file-code' %>
+        <%= nav_link 'Hooks', '#', 'timeline' %>
+        <%= nav_link 'Setup', '#', 'cogs' %>
+      </div>
+    </div>
+  </div>
+</div>

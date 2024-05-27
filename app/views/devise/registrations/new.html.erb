@@ -1,0 +1,41 @@
+<div class="row fullscreen">
+  <div class="col-12">
+    <div class="logoline">Get Together with <%= image_tag( 'logo.svg', alt: 'GatherPack', class: 'logo') %> GatherPack</a></div>
+  </div>
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-header">
+        <h2>Sign Up with Email &amp; Password</h2>
+      </div>
+      <div class="card-body">
+        <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+
+          <%= f.input :email %>
+
+          <%= f.input :password %>
+
+          <%= f.input :password_confirmation %>
+
+          <div class="actions">
+            <%= link_to 'Cancel', root_path, class: 'btn btn-danger' %>
+            <%= f.submit "Sign up", class: 'btn btn-primary' %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <%- if devise_mapping.omniauthable? && resource_class.omniauth_providers.any? %>
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <h2>Sign In or Sign Up With Another Account</h2>
+        </div>
+        <div class="card-body">
+          <%- resource_class.omniauth_providers.each do |provider| %>
+            <p><%= button_to "Sign in with #{OmniAuth::Utils.camelize(provider)}", omniauth_authorize_path(resource_name, provider), data: { turbo: false }, class: 'btn btn-secondary' %></p>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

@@ -1,0 +1,8 @@
+.form-check-input, input.form-control, select.form-select {
+  border-color: $greige-darkest;
+  background-color: $greige-lightest;
+
+  &:focus {
+    background-color: white;
+  }
+}

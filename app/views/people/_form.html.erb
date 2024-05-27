@@ -1,0 +1,51 @@
+<%= f.error_notification %>
+<%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+<div class="row">
+  <div class="col-md">
+    <%= f.input :first_name %>
+  </div>
+  <div class="col-md">
+    <%= f.input :last_name %>
+  </div>
+  <div class="col-md">
+    <%= f.input :display_name %>
+  </div>
+  <div class="col-md-2">
+    <%= f.input :gender %>
+  </div>
+  <div class="col-md-2">
+    <%= f.input :shirt_size %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md">
+    <%= f.input :phone_number %>
+
+    <%= f.input :address %>
+
+    <%= f.input :birthday %>
+
+    <%= f.input :dietary_restrictions %>
+  </div>
+  <div class="col-md">
+    <% if @person.user %>
+      <%= f.simple_fields_for :user do |ff| %>
+        <%= ff.input :email %>
+
+        <% if @person.user.provider %>
+          <div class="alert alert-warning">
+            This person signs in with <%= @person.user.provider %>
+          </div>
+        <% else %>
+          <%= ff.input :password %>
+        <% end %>
+      <% end %>
+    <% else %>
+      <div class="alert alert-info">
+        This person doesn't have a user attached.
+      </div>
+    <% end %>
+  </div>
+</div>

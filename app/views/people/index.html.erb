@@ -1,0 +1,24 @@
+<%= search_form_for @q do |f| %>
+<div class="card">
+  <div class="card-header">
+    <h1>People</h1>
+  </div>
+  <div class="card-body">
+    <%= f.input :display_name_cont, label: 'Name' %>
+  </div>
+  <div class="card-footer">
+    <%= link_to "New person", new_person_path, class: 'btn btn-success' %>
+    <%= f.submit 'Search', class: 'btn btn-primary' %>
+  </div>
+</div>
+<% end %>
+
+<div id="people" class="row">
+  <% @people.each do |person| %>
+    <div class="col-md-3">
+      <%= render person %>
+    </div>
+  <% end %>
+</div>
+
+<%= paginate @people %>

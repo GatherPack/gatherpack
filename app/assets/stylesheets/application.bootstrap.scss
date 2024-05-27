@@ -1,0 +1,94 @@
+@import "bootstrap/scss/functions";
+
+$font-family-sans-serif: "Fira Sans", sans-serif;
+$font-family-monospace: "Fira Code", monospace;
+$headings-font-family: "Bubblegum Sans", cursive;
+
+$greige-lightest: #fffdf6;
+$greige-light: #ddd7c2;
+$greige: #a59e86;
+$greige-dark: #6d6753;
+$greige-darkest: #403a22;
+
+$primary: $greige-dark;
+$body-bg: $greige;
+$body-secondary-bg: $greige-darkest;
+$body-tertiary-bg: $greige-lightest;
+$card-bg: $greige-light;
+
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/variables-dark";
+@import "bootstrap/scss/maps";
+@import "bootstrap/scss/mixins";
+@import "bootstrap/scss/utilities";
+
+// Layout & components
+@import "bootstrap/scss/root";
+@import "bootstrap/scss/reboot";
+@import "bootstrap/scss/type";
+@import "bootstrap/scss/images";
+@import "bootstrap/scss/containers";
+@import "bootstrap/scss/grid";
+@import "bootstrap/scss/tables";
+@import "bootstrap/scss/forms";
+@import "bootstrap/scss/buttons";
+@import "bootstrap/scss/transitions";
+@import "bootstrap/scss/dropdown";
+@import "bootstrap/scss/button-group";
+@import "bootstrap/scss/nav";
+@import "bootstrap/scss/navbar";
+@import "bootstrap/scss/card";
+@import "bootstrap/scss/accordion";
+@import "bootstrap/scss/breadcrumb";
+@import "bootstrap/scss/pagination";
+@import "bootstrap/scss/badge";
+@import "bootstrap/scss/alert";
+@import "bootstrap/scss/progress";
+@import "bootstrap/scss/list-group";
+@import "bootstrap/scss/close";
+@import "bootstrap/scss/toasts";
+@import "bootstrap/scss/modal";
+@import "bootstrap/scss/tooltip";
+@import "bootstrap/scss/popover";
+@import "bootstrap/scss/carousel";
+@import "bootstrap/scss/spinners";
+@import "bootstrap/scss/offcanvas";
+@import "bootstrap/scss/placeholders";
+
+// Helpers
+@import "bootstrap/scss/helpers";
+
+// Utilities
+@import "bootstrap/scss/utilities/api";
+// scss-docs-end import-stack
+
+@import 'dashboard';
+@import 'forms';
+@import 'cards';
+
+@import 'actiontext.css';
+
+.fullscreen {
+  height: 100vh;
+  align-items: center;
+  align-content: center;
+}
+
+.logoline {
+  @extend .mb-3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: $headings-font-family;
+  font-size: 400%;
+  text-align: center;
+
+
+  img {
+    height: 1em;
+  }
+}
+
+main {
+  min-height: 100vh;
+}
