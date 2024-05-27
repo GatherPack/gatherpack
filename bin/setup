@@ -26,7 +26,7 @@ FileUtils.chdir APP_ROOT do
   # end
 
   puts "\n== Preparing SQLite extensions =="
-  bundle exec sqlpkg install
+  system! "bundle exec sqlpkg install"
 
   puts "\n== Preparing database =="
   system! "bin/rails db:migrate:primary"
