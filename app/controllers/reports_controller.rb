@@ -13,7 +13,7 @@ class ReportsController < ApplicationController
 
   # GET /reports/1/run
   def run
-    @results = eval(@report.code)
+    @results = JSON.pretty_generate(eval(@report.code))
   end
 
   # GET /reports/new
@@ -30,7 +30,7 @@ class ReportsController < ApplicationController
     @report = Report.new(report_params)
 
     if @report.save
-      redirect_to @report, notice: "Report was successfully created."
+      redirect_to @report, notice: 'Report was successfully created.'
     else
       render :new, status: :unprocessable_entity
     end
@@ -39,7 +39,7 @@ class ReportsController < ApplicationController
   # PATCH/PUT /reports/1
   def update
     if @report.update(report_params)
-      redirect_to @report, notice: "Report was successfully updated.", status: :see_other
+      redirect_to @report, notice: 'Report was successfully updated.', status: :see_other
     else
       render :edit, status: :unprocessable_entity
     end
@@ -48,7 +48,7 @@ class ReportsController < ApplicationController
   # DELETE /reports/1
   def destroy
     @report.destroy!
-    redirect_to reports_url, notice: "Report was successfully destroyed.", status: :see_other
+    redirect_to reports_url, notice: 'Report was successfully destroyed.', status: :see_other
   end
 
   private

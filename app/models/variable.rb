@@ -2,10 +2,10 @@ class Variable < ApplicationRecord
   TYPES = %i[ string int float structure ]
 
   validates :name, presence: true, format: { without: /\w/, message: 'must not have spaces' }
-  validates :klass, presence: true, inclusion: { in: TYPES, message: 'is not valid'}
+  validates :klass, presence: true, inclusion: { in: TYPES, message: 'is not valid' }
 
   def self.ransackable_attributes(auth_object = nil)
-    ["klass", "name", "raw_value"]
+    [ 'klass', 'name', 'raw_value' ]
   end
 
   def value
