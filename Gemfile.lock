@@ -12,7 +12,7 @@ GIT
 
 GIT
   remote: https://github.com/rails/rails.git
-  revision: 9232363f4ac359ea3fa7c6536faffc1690ffad83
+  revision: 51b60234adb27b5a6db4a765a4fa565c117b9abc
   branch: main
   specs:
     actioncable (8.0.0.alpha)
@@ -77,7 +77,7 @@ GIT
     activesupport (8.0.0.alpha)
       base64
       bigdecimal
-      concurrent-ruby (~> 1.0, >= 1.0.2)
+      concurrent-ruby (~> 1.0, >= 1.3.1)
       connection_pool (>= 2.2.5)
       drb
       i18n (>= 1.6, < 2)
@@ -108,14 +108,14 @@ GIT
 
 GIT
   remote: https://github.com/rails/solid_queue.git
-  revision: 74627bdfabc3bcdade2bf60afce1c4fd41683b86
+  revision: afb5fe23b283c60cfe70b85558726ba0187f5609
   branch: main
   specs:
-    solid_queue (0.3.1)
+    solid_queue (0.3.2)
       activejob (>= 7.1)
       activerecord (>= 7.1)
-      concurrent-ruby (~> 1.2.2)
-      fugit (~> 1.10.1)
+      concurrent-ruby (>= 1.3.1)
+      fugit (~> 1.11.0)
       railties (>= 7.1)
 
 GEM
@@ -146,7 +146,7 @@ GEM
       rack-test (>= 0.6.3)
       regexp_parser (>= 1.5, < 3.0)
       xpath (~> 3.2)
-    concurrent-ruby (1.2.3)
+    concurrent-ruby (1.3.1)
     connection_pool (2.4.1)
     crass (1.0.6)
     cssbundling-rails (1.4.0)
@@ -168,8 +168,8 @@ GEM
     et-orbi (1.2.11)
       tzinfo
     ffi (1.16.3)
-    fugit (1.10.1)
-      et-orbi (~> 1, >= 1.2.7)
+    fugit (1.11.0)
+      et-orbi (~> 1, >= 1.2.11)
       raabro (~> 1.4)
     globalid (1.2.1)
       activesupport (>= 6.1)
@@ -276,7 +276,7 @@ GEM
       omniauth (~> 2.0)
     orm_adapter (0.5.0)
     parallel (1.24.0)
-    parser (3.3.1.0)
+    parser (3.3.2.0)
       ast (~> 2.4.1)
       racc
     propshaft (0.9.0)
@@ -318,7 +318,7 @@ GEM
     rdoc (6.7.0)
       psych (>= 4.0.0)
     regexp_parser (2.9.2)
-    reline (0.5.7)
+    reline (0.5.8)
       io-console (~> 0.5)
     responders (3.1.1)
       actionpack (>= 5.2)
