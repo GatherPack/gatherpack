@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :variables
   resources :people
   devise_for :users, controllers: { omniauth_callbacks: 'omniauth' }
 
