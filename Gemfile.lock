@@ -108,14 +108,14 @@ GIT
 
 GIT
   remote: https://github.com/rails/solid_queue.git
-  revision: 74627bdfabc3bcdade2bf60afce1c4fd41683b86
+  revision: d2fdf7e4a841bf3ce647a19114f44996623144c0
   branch: main
   specs:
     solid_queue (0.3.1)
       activejob (>= 7.1)
       activerecord (>= 7.1)
       concurrent-ruby (~> 1.2.2)
-      fugit (~> 1.10.1)
+      fugit (~> 1.11.0)
       railties (>= 7.1)
 
 GEM
@@ -168,8 +168,8 @@ GEM
     et-orbi (1.2.11)
       tzinfo
     ffi (1.16.3)
-    fugit (1.10.1)
-      et-orbi (~> 1, >= 1.2.7)
+    fugit (1.11.0)
+      et-orbi (~> 1, >= 1.2.11)
       raabro (~> 1.4)
     globalid (1.2.1)
       activesupport (>= 6.1)
@@ -318,7 +318,7 @@ GEM
     rdoc (6.7.0)
       psych (>= 4.0.0)
     regexp_parser (2.9.2)
-    reline (0.5.7)
+    reline (0.5.8)
       io-console (~> 0.5)
     responders (3.1.1)
       actionpack (>= 5.2)
