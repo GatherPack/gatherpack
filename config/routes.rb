@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :reports do
+    get 'run', on: :member
+  end
   resources :variables
   resources :people
   devise_for :users, controllers: { omniauth_callbacks: 'omniauth' }

@@ -1,0 +1,23 @@
+<%= search_form_for @q do |f| %>
+<div class="card">
+  <div class="card-header">
+    <h1>Reports</h1>
+  </div>
+  <div class="card-body">
+  </div>
+  <div class="card-footer">
+    <%= link_to "New report", new_report_path, class: 'btn btn-success' %>
+    <%= f.submit 'Search', class: 'btn btn-primary' %>
+  </div>
+</div>
+<% end %>
+
+<div id="reports" class="row">
+  <% @reports.each do |report| %>
+    <div class="col-md-3">
+      <%= render report %>
+    </div>
+  <% end %>
+</div>
+
+<%= paginate @reports %>

@@ -6,3 +6,9 @@
     background-color: white;
   }
 }
+
+.code-editor textarea.form-control {
+  font-family: $font-family-monospace;
+  background-color: $greige-darkest;
+  color: $greige-lightest;
+}
