@@ -1,0 +1,10 @@
+<div class="card" id="<%= dom_id team %>">
+  <div class="card-header" style="background-color: <%= team.color %>;">
+    <%= link_to team, style: "color: #{contrasting_color(team.color)}" do %>
+      <%= i team.team_type.icon %> <%= team.name %>
+    <% end %>
+  </div>
+  <div class="card-body">
+    <%= pluralize team.people.count, 'member' %>
+  </div>
+</div>

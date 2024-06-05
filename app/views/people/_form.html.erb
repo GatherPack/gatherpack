@@ -30,6 +30,9 @@
     <%= f.input :dietary_restrictions %>
   </div>
   <div class="col-md">
+    <%= f.association :teams, as: :check_boxes, label_method: :name %>
+  </div>
+  <div class="col-md">
     <% if @person.user %>
       <%= f.simple_fields_for :user do |ff| %>
         <%= ff.input :email %>

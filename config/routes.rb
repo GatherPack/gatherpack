@@ -1,7 +1,11 @@
 Rails.application.routes.draw do
   resources :variables
+  resources :teams
+  resources :team_types
   resources :people
   devise_for :users, controllers: { omniauth_callbacks: 'omniauth' }
+
+  get '/setup' => 'welcome#setup', as: :setup
 
   mount MissionControl::Jobs::Engine, at: '/jobs'
 
