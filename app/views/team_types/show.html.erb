@@ -1,0 +1,17 @@
+<div class="card">
+  <div class="card-header">
+    <h1><%= i @team_type.icon %> <%= @team_type.identifier_name %></h1>
+  </div>
+  <div class="card-body">
+    <h2>Teams</h2>
+    <ul>
+      <% @team_type.teams.each do |team| %>
+        <li><%= link_to team.name, team %></li>
+      <% end %>
+    </ul>
+  </div>
+  <div class="card-footer">
+    <%= link_to 'Edit', edit_team_type_path(@team_type), class: 'btn btn-warning' %>
+    <%= link_to 'Delete', @team_type, class: 'btn btn-danger', data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %>
+  </div>
+</div>
