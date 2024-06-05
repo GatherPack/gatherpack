@@ -1,0 +1,13 @@
+<%= f.error_notification %>
+<%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+<div class="row">
+  <div class="col-md-6">
+    <%= f.input :name %>
+  </div>
+  <div class="col-md-6">
+    <%= f.input :klass, as: :select, collection: Variable::TYPES, label: 'Type' %>
+  </div>
+</div>
+
+<%= f.input :raw_value, label: 'Value' %>

@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :variables
   resources :teams
   resources :team_types
   resources :people

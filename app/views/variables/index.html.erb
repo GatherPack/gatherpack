@@ -1,0 +1,25 @@
+<%= search_form_for @q do |f| %>
+<div class="card">
+  <div class="card-header">
+    <h1>Variables</h1>
+  </div>
+  <div class="card-body">
+    <%= f.input :name_cont, label: 'Name' %>
+    <%= f.input :raw_value_cont, label: 'Value' %>
+  </div>
+  <div class="card-footer">
+    <%= link_to "New variable", new_variable_path, class: 'btn btn-success' %>
+    <%= f.submit 'Search', class: 'btn btn-primary' %>
+  </div>
+</div>
+<% end %>
+
+<div id="variables" class="row">
+  <% @variables.each do |variable| %>
+    <div class="col-md-3">
+      <%= render variable %>
+    </div>
+  <% end %>
+</div>
+
+<%= paginate @variables %>

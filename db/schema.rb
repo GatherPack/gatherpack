@@ -47,6 +47,10 @@ ActiveRecord::Schema[8.0].define(version: 2024_05_29_234613) do
 #   Unknown type 'uuid' for column 'id'
 
 
+# Could not dump table "variables" because of following StandardError
+#   Unknown type 'uuid' for column 'id'
+
+
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "memberships", "people"
