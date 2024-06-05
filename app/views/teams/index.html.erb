@@ -1,0 +1,31 @@
+<%= search_form_for @q do |f| %>
+<div class="card">
+  <div class="card-header">
+    <h1>Teams</h1>
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col">
+        <%= f.input :name_cont, label: 'Name' %>
+      </div>
+      <div class="col">
+        <%= f.input :team_type_id_eq, label: 'Team Type', as: :select, collection: TeamType.all  %>
+      </div>
+    </div>
+  </div>
+  <div class="card-footer">
+    <%= link_to "New team", new_team_path, class: 'btn btn-success' %>
+    <%= f.submit 'Search', class: 'btn btn-primary' %>
+  </div>
+</div>
+<% end %>
+
+<div id="teams" class="row">
+  <% @teams.each do |team| %>
+    <div class="col-md-3">
+      <%= render team %>
+    </div>
+  <% end %>
+</div>
+
+<%= paginate @teams %>
