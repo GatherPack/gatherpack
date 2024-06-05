@@ -1,0 +1,23 @@
+<%= search_form_for @q do |f| %>
+<div class="card">
+  <div class="card-header">
+    <h1>Team types</h1>
+  </div>
+  <div class="card-body">
+  </div>
+  <div class="card-footer">
+    <%= link_to "New team type", new_team_type_path, class: 'btn btn-success' %>
+    <%= f.submit 'Search', class: 'btn btn-primary' %>
+  </div>
+</div>
+<% end %>
+
+<div id="team_types" class="row">
+  <% @team_types.each do |team_type| %>
+    <div class="col-md-3">
+      <%= render team_type %>
+    </div>
+  <% end %>
+</div>
+
+<%= paginate @team_types %>
