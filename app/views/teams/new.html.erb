@@ -1,0 +1,14 @@
+<%= simple_form_for(@team) do |f| %>
+<div class="card">
+  <div class="card-header">
+    <h1>New team</h1>
+  </div>
+  <div class="card-body">
+    <%= render "form", f: f %>
+  </div>
+  <div class="card-footer">
+    <%= link_to "Cancel", teams_path, class: 'btn btn-warning' %>
+    <%= f.button :submit, class: 'btn btn-primary' %>
+  </div>
+</div>
+<% end %>

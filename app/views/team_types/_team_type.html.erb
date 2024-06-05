@@ -1,0 +1,10 @@
+<div class="card" id="<%= dom_id team_type %>">
+  <div class="card-header">
+    <%= link_to team_type do %>
+      <%= i team_type.icon %> <%= team_type.name %>
+    <% end %>
+  </div>
+  <div class="card-body"> 
+    <%= pluralize team_type.teams.count, 'team' %>
+  </div>
+</div>

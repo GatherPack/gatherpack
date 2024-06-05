@@ -83,3 +83,5 @@ gem 'omniauth-rails_csrf_protection', '~> 1.0'
 gem 'ransack', '~> 4.1'
 
 gem 'kaminari', '~> 1.2'
+
+gem "color", "~> 1.8"

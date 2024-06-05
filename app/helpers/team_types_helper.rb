@@ -1,0 +1,2 @@
+module TeamTypesHelper
+end
