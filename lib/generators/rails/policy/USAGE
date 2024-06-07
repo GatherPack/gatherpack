@@ -1,8 +1,8 @@
 Description:
-    Generates a policy for a model with the given name.
+    Explain the generator
 
 Example:
-    rails generate pundit:policy user
+    bin/rails generate policy Thing
 
     This will create:
-        app/policies/user_policy.rb
+        what/will/it/create
