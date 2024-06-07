@@ -1,9 +1,9 @@
-class TeamsController < ApplicationController
+class TeamsController < InternalController
   before_action :set_team, only: %i[ show edit update destroy ]
 
   # GET /teams
   def index
-    @q = Team.ransack(params[:q])
+    @q = policy_scope(Team).ransack(params[:q])
     @teams = @q.result(distinct: true).page(params[:page]).includes(:team_type, :people)
   end
 
@@ -13,7 +13,7 @@ class TeamsController < ApplicationController
 
   # GET /teams/new
   def new
-    @team = Team.new
+    @team = authorize Team.new
   end
 
   # GET /teams/1/edit
@@ -22,7 +22,7 @@ class TeamsController < ApplicationController
 
   # POST /teams
   def create
-    @team = Team.new(team_params)
+    @team = authorize Team.new(team_params)
 
     if @team.save
       redirect_to @team, notice: 'Team was successfully created.'
@@ -49,7 +49,7 @@ class TeamsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_team
-      @team = Team.find(params[:id])
+      @team = policy_scope(Team).find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.

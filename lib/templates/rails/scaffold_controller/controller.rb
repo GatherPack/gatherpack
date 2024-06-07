@@ -1,10 +1,10 @@
 <% module_namespacing do -%>
-class <%= controller_class_name %>Controller < ApplicationController
+class <%= controller_class_name %>Controller < InternalController
   before_action :set_<%= singular_table_name %>, only: %i[ show edit update destroy ]
 
   # GET <%= route_url %>
   def index
-    @q = <%= class_name %>.ransack(params[:q])
+    @q = policy_scope(<%= class_name %>).ransack(params[:q])
     @<%= plural_table_name %> = @q.result(distinct: true).page(params[:page])
   end
 
@@ -14,7 +14,7 @@ class <%= controller_class_name %>Controller < ApplicationController
 
   # GET <%= route_url %>/new
   def new
-    @<%= singular_table_name %> = <%= orm_class.build(class_name) %>
+    @<%= singular_table_name %> = authorize <%= orm_class.build(class_name) %>
   end
 
   # GET <%= route_url %>/1/edit
@@ -23,7 +23,7 @@ class <%= controller_class_name %>Controller < ApplicationController
 
   # POST <%= route_url %>
   def create
-    @<%= singular_table_name %> = <%= orm_class.build(class_name, "#{singular_table_name}_params") %>
+    @<%= singular_table_name %> = authorize <%= orm_class.build(class_name, "#{singular_table_name}_params") %>
 
     if @<%= orm_instance.save %>
       redirect_to <%= redirect_resource_name %>, notice: <%= %("#{human_name} was successfully created.") %>
@@ -50,7 +50,7 @@ class <%= controller_class_name %>Controller < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_<%= singular_table_name %>
-      @<%= singular_table_name %> = <%= orm_class.find(class_name, "params[:id]") %>
+      @<%= singular_table_name %> = policy_scope(<%= class_name %>).<%= orm_class.find(class_name, "params[:id]") %>
     end
 
     # Only allow a list of trusted parameters through.
