@@ -1,0 +1,2 @@
+class TeamTypePolicy < AdminPolicy
+end

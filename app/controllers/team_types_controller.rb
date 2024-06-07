@@ -1,10 +1,11 @@
-class TeamTypesController < ApplicationController
+class TeamTypesController < InternalController
   before_action :set_team_type, only: %i[ show edit update destroy ]
+  before_action :check_for_admin
 
   # GET /team_types
   def index
     @q = TeamType.ransack(params[:q])
-    @team_types = @q.result(distinct: true).page(params[:page]).includes(:teams)
+    @team_types = authorize @q.result(distinct: true).page(params[:page]).includes(:teams)
   end
 
   # GET /team_types/1
@@ -13,7 +14,7 @@ class TeamTypesController < ApplicationController
 
   # GET /team_types/new
   def new
-    @team_type = TeamType.new
+    @team_type = authorize TeamType.new
   end
 
   # GET /team_types/1/edit
@@ -49,7 +50,7 @@ class TeamTypesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_team_type
-      @team_type = TeamType.find(params[:id])
+      @team_type = authorize TeamType.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.

@@ -1,0 +1,2 @@
+class VariablePolicy < AdminPolicy
+end
