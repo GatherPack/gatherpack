@@ -7,6 +7,12 @@
   }
 }
 
+.code-editor textarea.form-control {
+  font-family: $font-family-monospace;
+  background-color: $greige-darkest;
+  color: $greige-lightest;
+}
+
 .form-check .form-check-input {
   float: none;
   margin-left: 0;

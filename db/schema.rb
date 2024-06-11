@@ -35,6 +35,7 @@ ActiveRecord::Schema[8.0].define(version: 2024_06_07_223327) do
 #   Unknown type 'uuid' for column 'id'
 
 
+# Could not dump table "reports" because of following StandardError
 # Could not dump table "team_types" because of following StandardError
 #   Unknown type 'uuid' for column 'id'
 

@@ -1,9 +1,12 @@
 Rails.application.routes.draw do
+  resources :reports do
+    get 'run', on: :member
+  end
   resources :variables
   resources :teams
   resources :team_types
   resources :people
-  devise_for :users, controllers: { omniauth_callbacks: 'omniauth' }
+  devise_for :users, controllers: { omniauth_callbacks: 'omniauth', registrations: 'users/registrations' }
 
   get '/setup' => 'welcome#setup', as: :setup
 
