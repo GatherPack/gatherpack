@@ -109,10 +109,10 @@ GIT
 
 GIT
   remote: https://github.com/rails/solid_queue.git
-  revision: afb5fe23b283c60cfe70b85558726ba0187f5609
+  revision: 6d10767f6f6f1678a026961221c2c72879dc7402
   branch: main
   specs:
-    solid_queue (0.3.2)
+    solid_queue (0.3.3)
       activejob (>= 7.1)
       activerecord (>= 7.1)
       concurrent-ruby (>= 1.3.1)
@@ -303,7 +303,7 @@ GEM
       nio4r (~> 2.0)
     raabro (1.4.0)
     racc (1.8.0)
-    rack (3.0.11)
+    rack (3.1.0)
     rack-protection (4.0.0)
       base64 (>= 0.1.0)
       rack (>= 3.0.0, < 4)
