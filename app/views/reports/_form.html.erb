@@ -1,0 +1,5 @@
+<%= f.error_notification %>
+<%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+<%= f.input :name %>
+<%= f.input :code, wrapper_html: { class: 'code-editor' }, input_html: { rows: 12 } %>

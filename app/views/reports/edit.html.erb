@@ -1,0 +1,14 @@
+<%= simple_form_for(@report) do |f| %>
+<div class="card">
+  <div class="card-header">
+    <h1>Editing <%= @report.identifier_name %></h1>
+  </div>
+  <div class="card-body">
+    <%= render "form", f: f %>
+  </div>
+  <div class="card-footer">
+    <%= link_to "Cancel", @report, class: 'btn btn-warning' %>
+    <%= f.button :submit, class: 'btn btn-primary' %>
+  </div>
+</div>
+<% end %>
