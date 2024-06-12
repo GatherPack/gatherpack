@@ -22,12 +22,13 @@
     </div>
     <div class="card-body">
       <%- if controller_name != 'sessions' %>
-        <%= link_to "Sign in", new_session_path(resource_name), class: 'btn btn-primary' %>
-        <br>
+        <div style="margin-bottom: 15px;">
+          <%= link_to "Sign in", new_session_path(resource_name), class: 'btn btn-primary' %>
+        </div>
       <% end %>
       <%- if devise_mapping.omniauthable? %>
         <%- resource_class.omniauth_providers.each do |provider| %>
-          <br /><%= button_to "Sign in with #{OmniAuth::Utils.camelize(provider)}", omniauth_authorize_path(resource_name, provider), data: { turbo: false }, class: 'btn btn-secondary' %><br />
+          <%= button_to "Sign in with #{OmniAuth::Utils.camelize(provider)}", omniauth_authorize_path(resource_name, provider), data: { turbo: false }, class: 'btn btn-secondary' %><br />
         <% end %>
       <% end %>
     </div>
