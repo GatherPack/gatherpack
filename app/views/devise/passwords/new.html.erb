@@ -9,8 +9,6 @@
       </div>
       <div class="card-body">
         <%= simple_form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
-          <%= render "devise/shared/error_messages", resource: resource %>
-
           <div class="field">
             <%= f.input :email, autofocus: true, autocomplete: "email" %>
           </div>
@@ -21,15 +19,15 @@
         <% end %>
       </div>
     </div>
-  </div>
-  <div class="col-md-6">
+
     <div class="card">
       <div class="card-header">
-        <h2>Sign In or Sign Up With Another Account</h2>
+        <h2>Create an Account with Email &amp; Password</h2>
       </div>
       <div class="card-body">
-        <%= render "devise/shared/links" %>
+        <%= link_to 'Sign Up', new_registration_path(resource_name), class: 'btn btn-primary' %>
       </div>
     </div>
   </div>
+  <%= render "devise/shared/links" %>
 </div>
