@@ -1,9 +1,9 @@
-class PeopleController < ApplicationController
+class PeopleController < InternalController
   before_action :set_person, only: %i[ show edit update destroy ]
 
   # GET /people
   def index
-    @q = Person.ransack(params[:q])
+    @q = policy_scope(Person).ransack(params[:q])
     @people = @q.result(distinct: true).page(params[:page])
   end
 
@@ -13,7 +13,7 @@ class PeopleController < ApplicationController
 
   # GET /people/new
   def new
-    @person = Person.new
+    @person = authorize Person.new
   end
 
   # GET /people/1/edit
@@ -22,7 +22,7 @@ class PeopleController < ApplicationController
 
   # POST /people
   def create
-    @person = Person.new(person_params)
+    @person = authorize Person.new(person_params)
 
     if @person.save
       redirect_to @person, notice: 'Person was successfully created.'
@@ -49,7 +49,7 @@ class PeopleController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_person
-      @person = Person.find(params[:id])
+      @person = policy_scope(Person).find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.

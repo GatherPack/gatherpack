@@ -13,6 +13,10 @@ class Person < ApplicationRecord
     [ 'user' ]
   end
 
+  def admin
+    user&.admin
+  end
+
   private
 
   def check_display_name

@@ -11,23 +11,40 @@
       
         <hr class="my-2">
 
-        <%= nav_heading 'Stuff & Things' %>
+        <%= nav_heading 'People' %>
 
         <%= nav_link 'People', people_path, 'users' %>
         <%= nav_link 'Teams', teams_path, 'people-group' %>
+        <%= nav_link 'Badges', '#', 'certificate' %>
+        <%= nav_link 'Tokens', '#', 'id-badge' %>
+
+        <%= nav_heading 'Time' %>
+
         <%= nav_link 'Events', '#', 'calendar' %>
         <%= nav_link 'Time', '#', 'business-time' %>
-        <%= nav_link 'Tags', '#', 'tag' %>
-        <%= nav_link 'Announcements', '#', 'comment' %>
+        
+        <%= nav_heading 'Finance' %>
+
         <%= nav_link 'Accounts', '#', 'receipt' %>
+
+        <%= nav_heading 'Content' %>
+
+        <%= nav_link 'Announcements', '#', 'comment' %>
         <%= nav_link 'Pages', '#', 'file-lines' %>
 
-        <hr class="my-2">
+        <% if admin? %>
+          <hr class="my-2">
 
-        <%= nav_link 'Variables', variables_path, 'database' %>
-        <%= nav_link 'Reports', reports_path, 'file-code' %>
-        <%= nav_link 'Hooks', '#', 'timeline' %>
-        <%= nav_link 'Setup', setup_path, 'cogs' %>
+          <%= nav_heading 'Automation' %>
+
+          <%= nav_link 'Variables', variables_path, 'database' %>
+          <%= nav_link 'Reports', '#', 'file-code' %>
+          <%= nav_link 'Hooks', '#', 'timeline' %>
+
+          <%= nav_heading 'Setup' %>
+
+          <%= nav_link 'Setup', setup_path, 'cogs' %>
+        <% end %>
       </div>
     </div>
   </div>

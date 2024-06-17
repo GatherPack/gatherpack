@@ -1,10 +1,10 @@
-class VariablesController < ApplicationController
+class VariablesController < InternalController
   before_action :set_variable, only: %i[ show edit update destroy ]
 
   # GET /variables
   def index
     @q = Variable.ransack(params[:q])
-    @variables = @q.result(distinct: true).page(params[:page])
+    @variables = authorize @q.result(distinct: true).page(params[:page])
   end
 
   # GET /variables/1
@@ -13,7 +13,7 @@ class VariablesController < ApplicationController
 
   # GET /variables/new
   def new
-    @variable = Variable.new
+    @variable = authorize Variable.new
   end
 
   # GET /variables/1/edit
@@ -49,7 +49,7 @@ class VariablesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_variable
-      @variable = Variable.find(params[:id])
+      @variable = authorize Variable.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
