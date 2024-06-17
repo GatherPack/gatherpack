@@ -1,0 +1,40 @@
+<%= search_form_for @q do |f| %>
+<div class="card">
+  <div class="card-header">
+    <h1>Events</h1>
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col">
+        <%= f.input :name_cont, label: 'Name' %>
+      </div>
+      <div class="col">
+        <%= f.input :start_time, label: 'Start Time' %>
+      </div>
+      <div class="col">
+        <%= f.input :end_time, label: 'End Time' %>
+      </div>
+      <div class="col">
+        <%= f.input :location, label: 'Location' %>
+      </div>
+      <div class="col">
+        <%= f.input :event_type_id_eq, label: 'Event Type', as: :select, collection: EventType.all %>
+      </div>
+    </div>
+  </div>
+  <div class="card-footer">
+    <%= link_to "New event", new_event_path, class: 'btn btn-success' %>
+    <%= f.submit 'Search', class: 'btn btn-primary' %>
+  </div>
+</div>
+<% end %>
+
+<div id="events" class="row">
+  <% @events.each do |event| %>
+    <div class="col-md-3">
+      <%= render event %>
+    </div>
+  <% end %>
+</div>
+
+<%= paginate @events %>
