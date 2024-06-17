@@ -1,0 +1,13 @@
+<div class="card">
+  <div class="card-header">
+    <h1><%= @event.identifier_name %></h1>
+  </div>
+  <div class="card-body">
+    <%= @event.start_time.to_fs :long_ordinal %> - <%= @event.end_time.to_fs :long_ordinal %><br>
+    Location: <%= @event.location %>
+  </div>
+  <div class="card-footer">
+    <%= link_to 'Edit', edit_event_path(@event), class: 'btn btn-warning' %>
+    <%= link_to 'Delete', @event, class: 'btn btn-danger', data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %>
+  </div>
+</div>

@@ -1,0 +1,19 @@
+<div class="card" id="<%= dom_id event %>">
+  <div class="card-header">
+    <div class="row">
+      <div class="col-md-9">
+        <%= link_to event.identifier_name, event %>
+      </div>
+      <div class="col-md-3">
+        <% if !event.team %>
+          <span class="badge rounded-pill bg-info text-dark">System</span>
+        <% else %>
+          <span class="badge rounded-pill" style="background-color:<%= event.team.color %>;color:<%= contrasting_color(event.team.color) %>"><%= event.team.name %></span>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <%= event.start_time.to_fs :short %> - <%= event.end_time.to_fs :short %> at <%= event.location %>
+  </div>
+</div>
