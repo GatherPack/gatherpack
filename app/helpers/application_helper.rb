@@ -7,4 +7,13 @@ module ApplicationHelper
       '#fff'
     end
   end
+
+  def as_badge(obj)
+    case obj
+    when Badge
+      badge_as_badge(obj)
+    when Team
+      team_as_badge(obj)
+    end.html_safe
+  end
 end

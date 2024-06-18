@@ -1,0 +1,10 @@
+<div class="card" id="<%= dom_id badge %>">
+  <div class="card-header">
+    <%= link_to badge do %>
+      <%= as_badge badge %> <%= badge.identifier_name %>
+    <% end %>
+  </div>
+  <div class="card-body">
+    <%= pluralize badge.people.count, 'person' %>
+  </div>
+</div>

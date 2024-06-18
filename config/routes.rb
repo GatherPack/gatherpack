@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :badges
+  resources :badge_types
   resources :reports do
     get 'run', on: :member
   end
