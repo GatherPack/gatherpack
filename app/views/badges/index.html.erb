@@ -1,0 +1,34 @@
+<%= search_form_for @q do |f| %>
+<div class="card">
+  <div class="card-header">
+    <h1>Badges</h1>
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col">
+        <%= f.input :name_or_description_or_short_cont, label: 'Name' %>
+      </div>
+      <div class="col">
+        <%= f.input :badge_type_id_eq, label: 'Badge Type', as: :select, collection: BadgeType.all  %>
+      </div>
+      <div class="col">
+        <%= f.input :team_id_eq, label: 'Team', as: :select, collection: Team.all  %>
+      </div>
+    </div>
+  </div>
+  <div class="card-footer">
+    <%= link_to "New badge", new_badge_path, class: 'btn btn-success' if policy(Badge).new? %>
+    <%= f.submit 'Search', class: 'btn btn-primary' %>
+  </div>
+</div>
+<% end %>
+
+<div id="badges" class="row">
+  <% @badges.each do |badge| %>
+    <div class="col-md-3">
+      <%= render badge %>
+    </div>
+  <% end %>
+</div>
+
+<%= paginate @badges %>

@@ -5,7 +5,7 @@ module FontAwesomeHelper
     if size
       klass += ' ' + size
     end
-    klass += ' fa-' + icon
+    klass += icon =~ /^fa-/ ? ' ' + icon : ' fa-' + icon 
     tag.i class: klass
   end
 
