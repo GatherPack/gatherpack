@@ -4,7 +4,7 @@ class TeamPolicy < ApplicationPolicy
       if user.admin
         scope.all
       else
-        scope.where(id: user.team_ids)
+        scope.where(id: person.team_ids)
       end
     end
   end

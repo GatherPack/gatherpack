@@ -37,10 +37,14 @@
 
           <%= nav_heading 'Automation' %>
 
-        <%= nav_link 'Variables', variables_path, 'database' %>
-        <%= nav_link 'Reports', '#', 'file-code' %>
-        <%= nav_link 'Hooks', '#', 'timeline' %>
-        <%= nav_link 'Setup', setup_path, 'cogs' %>
+          <%= nav_link 'Variables', variables_path, 'database' %>
+          <%= nav_link 'Reports', reports_path, 'file-code' %>
+          <%= nav_link 'Hooks', '#', 'timeline' %>
+
+          <%= nav_heading 'Setup' %>
+
+          <%= nav_link 'Setup', setup_path, 'cogs' %>
+        <% end %>
       </div>
     </div>
   </div>
