@@ -3,7 +3,7 @@ class EventsController < ApplicationController
 
   # GET /events
   def index
-    @q = Event.ransack(params[:q])
+    @q = policy_scope(Event).ransack(params[:q])
     @events = @q.result(distinct: true).page(params[:page]).includes(:event_type)
   end
 
@@ -13,7 +13,7 @@ class EventsController < ApplicationController
 
   # GET /events/new
   def new
-    @event = Event.new
+    @event = authorize Event.new
   end
 
   # GET /events/1/edit
@@ -22,7 +22,7 @@ class EventsController < ApplicationController
 
   # POST /events
   def create
-    @event = Event.new(event_params)
+    @event = authorize Event.new(event_params)
 
     if @event.save
       redirect_to @event, notice: "Event was successfully created."
