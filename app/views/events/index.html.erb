@@ -6,19 +6,16 @@
   <div class="card-body">
     <div class="row">
       <div class="col">
-        <%= f.input :name_cont, label: 'Name' %>
+        <%= f.input :name_i_cont, label: 'Name' %>
       </div>
       <div class="col">
-        <%= f.input :start_time, label: 'Start Time' %>
-      </div>
-      <div class="col">
-        <%= f.input :end_time, label: 'End Time' %>
-      </div>
-      <div class="col">
-        <%= f.input :location, label: 'Location' %>
+        <%= f.input :location_i_cont, label: 'Location' %>
       </div>
       <div class="col">
         <%= f.input :event_type_id_eq, label: 'Event Type', as: :select, collection: EventType.all %>
+      </div>
+      <div class="col">
+        <%= f.input :team_id_eq, label: 'Teams', as: :select, collection: Team.all %>
       </div>
     </div>
   </div>

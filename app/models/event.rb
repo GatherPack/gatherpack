@@ -3,11 +3,11 @@ class Event < ApplicationRecord
   belongs_to :team, optional: true
 
   def self.ransackable_attributes(auth_object = nil)
-    ['name', 'start_time', 'end_time', 'location', 'event_type_id']
+    ['name', 'start_time', 'end_time', 'location', 'event_type_id', 'team_id']
   end
 
   def self.ransackable_associations(auth_object = nil)
-    ['event_type']
+    ['event_type', 'team']
   end
 
   validate :valid_times
