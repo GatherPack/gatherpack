@@ -225,16 +225,16 @@ GEM
     kaminari-core (1.2.2)
     language_server-protocol (3.17.0.3)
     lint_roller (1.1.0)
-    litestream (0.10.3)
+    litestream (0.10.4)
       logfmt (>= 0.0.10)
       sqlite3
-    litestream (0.10.3-arm64-darwin)
+    litestream (0.10.4-arm64-darwin)
       logfmt (>= 0.0.10)
       sqlite3
-    litestream (0.10.3-x86_64-darwin)
+    litestream (0.10.4-x86_64-darwin)
       logfmt (>= 0.0.10)
       sqlite3
-    litestream (0.10.3-x86_64-linux)
+    litestream (0.10.4-x86_64-linux)
       logfmt (>= 0.0.10)
       sqlite3
     logfmt (0.0.10)
@@ -476,7 +476,7 @@ DEPENDENCIES
   importmap-rails
   kamal
   kaminari (~> 1.2)
-  litestream (~> 0.10.1)
+  litestream (~> 0.10.4)
   mission_control-jobs!
   omniauth (~> 2.1)
   omniauth-rails_csrf_protection (~> 1.0)

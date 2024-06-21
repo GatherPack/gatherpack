@@ -60,7 +60,7 @@ end
 
 gem 'activerecord-enhancedsqlite3-adapter', '~> 0.8.0'
 
-gem 'litestream', '~> 0.10.1'
+gem 'litestream', '~> 0.10.4'
 
 gem 'solid_queue', github: 'rails/solid_queue', branch: 'main'
 gem 'mission_control-jobs', github: 'rails/mission_control-jobs', branch: 'main'
