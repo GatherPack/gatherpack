@@ -199,7 +199,7 @@ GEM
       rdoc (>= 4.0.0)
       reline (>= 0.4.2)
     json (2.7.2)
-    kamal (1.7.0)
+    kamal (1.7.2)
       activesupport (>= 7.0)
       base64 (~> 0.2)
       bcrypt_pbkdf (~> 1.0)
@@ -252,7 +252,6 @@ GEM
     mini_magick (4.13.1)
     mini_mime (1.1.5)
     minitest (5.24.0)
-    mutex_m (0.2.0)
     net-imap (0.4.13)
       date
       net-protocol
@@ -399,9 +398,8 @@ GEM
     sqlpkg (0.2.3.1-arm64-darwin)
     sqlpkg (0.2.3.1-x86_64-darwin)
     sqlpkg (0.2.3.1-x86_64-linux)
-    sshkit (1.22.2)
+    sshkit (1.23.0)
       base64
-      mutex_m
       net-scp (>= 1.1.2)
       net-sftp (>= 2.1.2)
       net-ssh (>= 2.8.0)
