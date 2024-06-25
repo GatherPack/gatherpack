@@ -1,5 +1,4 @@
-<% module_namespacing do -%>
-class <%= class_name %>Policy < ApplicationPolicy
+class BadgePolicy < ApplicationPolicy
   class Scope < ApplicationPolicy::Scope
     def resolve
       if user.admin
@@ -9,5 +8,12 @@ class <%= class_name %>Policy < ApplicationPolicy
       end
     end
   end
+
+  def new?
+    person.teams.present? || user.admin
+  end
+
+  def create?
+    person.teams.include?(record.team) || user.admin
+  end
 end
-<% end -%>
