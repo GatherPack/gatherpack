@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
   resources :relationship_types
+  resources :events
+  resources :event_types
   resources :reports do
     get 'run', on: :member
   end

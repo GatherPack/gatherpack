@@ -1,0 +1,14 @@
+<%= simple_form_for(@event_type) do |f| %>
+<div class="card">
+  <div class="card-header">
+    <h1>Editing <%= @event_type.identifier_name %></h1>
+  </div>
+  <div class="card-body">
+    <%= render "form", f: f %>
+  </div>
+  <div class="card-footer">
+    <%= link_to "Cancel", @event_type, class: 'btn btn-warning' %>
+    <%= f.button :submit, class: 'btn btn-primary' %>
+  </div>
+</div>
+<% end %>

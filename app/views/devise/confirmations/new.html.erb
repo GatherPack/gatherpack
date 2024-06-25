@@ -1,16 +1,32 @@
-<h2>Resend confirmation instructions</h2>
-
-<%= form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
-
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email", value: (resource.pending_reconfirmation? ? resource.unconfirmed_email : resource.email) %>
+<div class="row fullscreen">
+  <div class="col-12">
+    <div class="logoline">Get Together with <%= image_tag( 'logo.svg', alt: 'GatherPack', class: 'logo') %> GatherPack</a></div>
   </div>
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-header">
+        <h2>Resend confirmation instructions</h2>
+      </div>
+      <div class="card-body">
+        <%= simple_form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }) do |f| %>
+          <div class="field">
+            <%= f.input :email, autofocus: true, autocomplete: "email", value: (resource.pending_reconfirmation? ? resource.unconfirmed_email : resource.email) %>
+          </div>
 
-  <div class="actions">
-    <%= f.submit "Resend confirmation instructions" %>
+          <div class="actions">
+            <%= f.submit "Resend confirmation instructions", class: 'btn btn-secondary' %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <h2>Create an Account with Email &amp; Password</h2>
+      </div>
+      <div class="card-body">
+        <%= link_to 'Sign Up', new_registration_path(resource_name), class: 'btn btn-primary' %>
+      </div>
+    </div>
   </div>
-<% end %>
-
-<%= render "devise/shared/links" %>
+  <%= render "devise/shared/links" %>
+</div>

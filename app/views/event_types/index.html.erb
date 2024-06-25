@@ -1,0 +1,23 @@
+<%= search_form_for @q do |f| %>
+<div class="card">
+  <div class="card-header">
+    <h1>Event types</h1>
+  </div>
+  <div class="card-body">
+  </div>
+  <div class="card-footer">
+    <%= link_to "New event type", new_event_type_path, class: 'btn btn-success' %>
+    <%= f.submit 'Search', class: 'btn btn-primary' %>
+  </div>
+</div>
+<% end %>
+
+<div id="event_types" class="row">
+  <% @event_types.each do |event_type| %>
+    <div class="col-md-3">
+      <%= render event_type %>
+    </div>
+  <% end %>
+</div>
+
+<%= paginate @event_types %>
