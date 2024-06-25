@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_06_07_223327) do
+ActiveRecord::Schema[8.0].define(version: 2024_06_25_001715) do
 # Could not dump table "action_text_rich_texts" because of following StandardError
 #   Unknown type 'uuid' for column 'id'
 
@@ -32,6 +32,10 @@ ActiveRecord::Schema[8.0].define(version: 2024_06_07_223327) do
 
 
 # Could not dump table "people" because of following StandardError
+#   Unknown type 'uuid' for column 'id'
+
+
+# Could not dump table "relationship_types" because of following StandardError
 #   Unknown type 'uuid' for column 'id'
 
 
