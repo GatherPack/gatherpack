@@ -2,6 +2,8 @@ class Person < ApplicationRecord
   belongs_to :user, optional: true
   has_many :memberships
   has_many :teams, through: :memberships
+  has_many :badge_assignments
+  has_many :badges, through: :badge_assignments
   before_save :check_display_name
   accepts_nested_attributes_for :user
 
