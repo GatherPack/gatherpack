@@ -1,0 +1,23 @@
+<%= search_form_for @q do |f| %>
+<div class="card">
+  <div class="card-header">
+    <h1>Relationships</h1>
+  </div>
+  <div class="card-body">
+  </div>
+  <div class="card-footer">
+    <%= link_to "New relationship", new_relationship_path, class: 'btn btn-success' %>
+    <%= f.submit 'Search', class: 'btn btn-primary' %>
+  </div>
+</div>
+<% end %>
+
+<div id="relationships" class="row">
+  <% @relationships.each do |relationship| %>
+    <div class="col-md-3">
+      <%= render relationship %>
+    </div>
+  <% end %>
+</div>
+
+<%= paginate @relationships %>

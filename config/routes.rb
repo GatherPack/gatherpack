@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :relationships
   resources :relationship_types
   resources :events
   resources :event_types

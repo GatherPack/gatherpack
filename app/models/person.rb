@@ -1,6 +1,8 @@
 class Person < ApplicationRecord
   belongs_to :user, optional: true
   has_many :memberships
+  has_many :relationship_parent, class_name: 'Relationship', foreign_key: 'parent_id'
+  has_many :relationship_child, class_name: 'Relationship', foreign_key: 'child_id'
   has_many :teams, through: :memberships
   before_save :check_display_name
   accepts_nested_attributes_for :user
