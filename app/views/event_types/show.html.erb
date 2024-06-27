@@ -1,0 +1,17 @@
+<div class="card">
+  <div class="card-header">
+    <h1><%= @event_type.identifier_name %></h1>
+  </div>
+  <div class="card-body">
+    <h2>Events</h2>
+    <ul>
+      <% @event_type.events.each do |event| %>
+        <li><%= link_to event.name, event %></li>
+      <% end %>
+    </ul>
+  </div>
+  <div class="card-footer">
+    <%= link_to 'Edit', edit_event_type_path(@event_type), class: 'btn btn-warning' %>
+    <%= link_to 'Delete', @event_type, class: 'btn btn-danger', data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %>
+  </div>
+</div>
