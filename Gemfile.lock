@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/rails/mission_control-jobs.git
-  revision: 2d6d7ea3c5790b96b28c57ae4ff86c2e99cd2a0f
+  revision: d6eee5bf62ea284a6ef874d0c34b8b5d7db86088
   branch: main
   specs:
     mission_control-jobs (0.2.1)
@@ -12,7 +12,7 @@ GIT
 
 GIT
   remote: https://github.com/rails/rails.git
-  revision: de4d8744744acab2dd9db0683ccf784ea45810b2
+  revision: 6045f257fbbff039edb2542c9859488cec0dcaa9
   branch: main
   specs:
     actioncable (8.0.0.alpha)
@@ -81,7 +81,7 @@ GIT
       connection_pool (>= 2.2.5)
       drb
       i18n (>= 1.6, < 2)
-      logger
+      logger (>= 1.4.2)
       minitest (>= 5.1)
       tzinfo (~> 2.0, >= 2.0.5)
     rails (8.0.0.alpha)
@@ -109,7 +109,7 @@ GIT
 
 GIT
   remote: https://github.com/rails/solid_queue.git
-  revision: 6d10767f6f6f1678a026961221c2c72879dc7402
+  revision: 4b36e244fc30b16fb1adcfbbef47d0367a2ffd24
   branch: main
   specs:
     solid_queue (0.3.3)
@@ -199,7 +199,7 @@ GEM
       rdoc (>= 4.0.0)
       reline (>= 0.4.2)
     json (2.7.2)
-    kamal (1.7.2)
+    kamal (1.7.3)
       activesupport (>= 7.0)
       base64 (~> 0.2)
       bcrypt_pbkdf (~> 1.0)
@@ -337,7 +337,7 @@ GEM
     responders (3.1.1)
       actionpack (>= 5.2)
       railties (>= 5.2)
-    rexml (3.3.0)
+    rexml (3.3.1)
       strscan
     rubocop (1.64.1)
       json (~> 2.3)
