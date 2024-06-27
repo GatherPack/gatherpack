@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :events
+  resources :event_types
   resources :reports do
     get 'run', on: :member
   end
