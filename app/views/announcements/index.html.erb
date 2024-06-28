@@ -6,13 +6,13 @@
   <div class="card-body">
     <div class="row">
       <div class="col">
-        <%= f.input :title_i_cont, label: 'Name' %>
+        <%= f.input :title_i_cont, label: 'Title' %>
       </div>
       <div class="col">
-        <%= f.input :content_i_cont, label: 'Name' %>
+        <%= f.input :content_i_cont, label: 'Content' %>
       </div>
       <div class="col">
-        <%= f.input :team_id_eq, label: 'Team', as: :select, collection: Team.all %>
+        <%= f.input :team_id_eq, label: 'Team', as: :select, collection: policy_scope(Team) %>
       </div>
     </div>
   </div>

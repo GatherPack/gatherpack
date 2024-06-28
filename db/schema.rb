@@ -40,6 +40,9 @@ ActiveRecord::Schema[8.0].define(version: 2024_06_24_230015) do
 
 
 # Could not dump table "badges" because of following StandardError
+#   Unknown type 'uuid' for column 'id'
+
+
 # Could not dump table "event_types" because of following StandardError
 #   Unknown type 'uuid' for column 'id'
 
