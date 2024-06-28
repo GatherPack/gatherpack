@@ -10,8 +10,4 @@ module Rails
       hook_for :test_framework
     end
   end
-<<<<<<< HEAD
 end
-=======
-end
->>>>>>> 9a156e3 (8 add pundit and some basic policies)
