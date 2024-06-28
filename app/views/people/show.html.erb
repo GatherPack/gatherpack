@@ -3,6 +3,28 @@
     <h1><%= @person.identifier_name %></h1>
   </div>
   <div class="card-body">
+    <div class="row">
+      <div class="col">
+        <img src="<%= "https://http.cat/404.jpeg" %>">
+      </div>
+      <div class="col">
+        <p><b>Email: </b><%= @person.user.email %></p>
+        <p><b>Phone: </b><%= @person.phone_number %></p>
+        <p><b>Birthday: </b><%= @person.birthday %></p>
+        <p><b>Address: </b><%= @person.address %></p>
+        <p><b>Dietary Restrictions: </b><%= @person.dietary_restrictions %></p>
+        <p><b>Shirt Size: </b><%= @person.shirt_size %></p>
+        <p><b>Gender: </b><%= @person.gender %></p>
+      </div>
+      <div class="col">
+        <h3>Teams</h3>
+        <ul>
+          <% @person.teams.each do |team| %>
+            <li><%= link_to team.name, team, style: "color: " + team.color %></li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
   </div>
   <div class="card-footer">
     <%= link_to 'Edit', edit_person_path(@person), class: 'btn btn-warning' %>
