@@ -24,3 +24,20 @@
     background-color: $greige-darkest;
   }
 }
+
+.form-control.fancy_color {
+  border: none;
+  color: inherit!important;
+  background-color: inherit!important;
+}
+.fancy-color-container {
+  display: flex;
+  padding: 0;
+  border-color: #403a22;
+  background-color: #fffdf6;
+  --bs-gutter-x: 0;
+  align-items: center;
+}
+.fancy-color-picker-col {
+  border-right: 1px solid #403a22;
+}
