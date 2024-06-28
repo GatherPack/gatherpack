@@ -1,0 +1,24 @@
+<%= f.error_notification %>
+<%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+<div class="row">
+  <div class="col-6">
+    <%= f.input :name %>
+    <%= f.input :description %>
+    <%= f.input :start_time %>
+    <%= f.input :end_time %>
+    <%= f.input :location %>
+  </div>
+  <div class="col-6">
+    <div class="row">
+      <div class="col">
+        <%= f.association :event_type %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <%= f.association :team %>
+      </div>
+    </div>
+  </div>
+</div>
