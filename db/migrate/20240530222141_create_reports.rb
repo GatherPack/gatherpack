@@ -1,6 +1,6 @@
 class CreateReports < ActiveRecord::Migration[8.0]
   def change
-    create_table :reports, id: :uuid do |t|
+    create_table :reports, id: KeyTypePicker.key_type do |t|
       t.string :name
       t.text :code
 
