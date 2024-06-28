@@ -1,0 +1,19 @@
+<div class="card" id="<%= dom_id event %>">
+  <div class="card-header">
+    <div class="row">
+      <div class="col-md-10">
+        <%= link_to event.identifier_name, event %>
+      </div>
+      <div class="col-md-2">
+        <% if !event.team %>
+          <span class="badge rounded-pill bg-info"><%= i('star', family: 'solid') %></span>
+        <% else %>
+          <%= link_to i(event.team.team_type.icon), team_path(event.team), class: "badge rounded-pill", style: "background-color:#{event.team.color};color:#{contrasting_color(event.team.color)}" %></span>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <%= event.start_time.to_fs :short %> - <%= event.end_time.to_fs :short %> at <%= event.location %>
+  </div>
+</div>
