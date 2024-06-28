@@ -20,7 +20,10 @@
         <h3>Teams</h3>
         <ul>
           <% @person.teams.each do |team| %>
-            <li><%= link_to team.name, team, style: "color: " + team.color %></li>
+            <li><%= link_to team, style: "text-decoration-color: " + team.color do %>
+              <%= i team.team_type.icon %>
+              <%= content_tag :span, team.identifier_name, style: "color: " + team.color %>
+            <% end %></li>
           <% end %>
         </ul>
       </div>
