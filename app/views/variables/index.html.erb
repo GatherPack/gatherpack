@@ -4,8 +4,14 @@
     <h1>Variables</h1>
   </div>
   <div class="card-body">
-    <%= f.input :name_cont, label: 'Name' %>
-    <%= f.input :raw_value_cont, label: 'Value' %>
+    <div class="row">
+      <div class="col">
+        <%= f.input :name_cont, label: 'Name' %>
+      </div>
+      <div class="col">
+        <%= f.input :raw_value_cont, label: 'Value' %>
+      </div>
+    </div>
   </div>
   <div class="card-footer">
     <%= link_to "New variable", new_variable_path, class: 'btn btn-success' %>
