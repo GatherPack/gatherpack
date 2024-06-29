@@ -4,6 +4,14 @@
     <h1>Team types</h1>
   </div>
   <div class="card-body">
+    <div class="row">
+      <div class="col">
+        <%= f.input :name_i_cont, label: "Name" %>
+      </div>
+      <div class="col">
+        <%= f.input :icon_i_cont, label: "Icon" %>
+      </div>
+    </div>
   </div>
   <div class="card-footer">
     <%= link_to "New team type", new_team_type_path, class: 'btn btn-success' %>
