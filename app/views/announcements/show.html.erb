@@ -6,7 +6,7 @@
     <%= @announcement.content %>
   </div>
   <div class="card-footer">
-    <%= link_to 'Edit', edit_announcement_path(@announcement), class: 'btn btn-warning' %>
-    <%= link_to 'Delete', @announcement, class: 'btn btn-danger', data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %>
+    <%= link_to 'Edit', edit_announcement_path(@announcement), class: 'btn btn-warning' if policy(@announcement).update? %>
+    <%= link_to 'Delete', @announcement, class: 'btn btn-danger', data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } if policy(@announcement).destroy? %>
   </div>
 </div>

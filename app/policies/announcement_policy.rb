@@ -4,7 +4,7 @@ class AnnouncementPolicy < ApplicationPolicy
       if user.admin
         scope.all
       else
-        scope.where(announcement: person.teams.map(&:announcements)).or(scope.where(team_id: ""))
+        scope.where(team_id: person.teams.map(&:id)).or(scope.where(team_id: ""))
       end
     end
   end
@@ -19,6 +19,6 @@ class AnnouncementPolicy < ApplicationPolicy
 
   private
   def has_perms
-    user.admin || user.teams.includes?(record.team)
+    user.admin || person.teams.include?(record.team)
   end
 end
