@@ -7,7 +7,7 @@
     Location: <%= @event.location %>
   </div>
   <div class="card-footer">
-    <%= link_to 'Edit', edit_event_path(@event), class: 'btn btn-warning' %>
-    <%= link_to 'Delete', @event, class: 'btn btn-danger', data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %>
+    <%= link_to 'Edit', edit_event_path(@event), class: 'btn btn-warning' if policy(@event).update? %>
+    <%= link_to 'Delete', @event, class: 'btn btn-danger', data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } if policy(@event).update? %>
   </div>
 </div>

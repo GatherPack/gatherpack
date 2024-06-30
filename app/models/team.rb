@@ -5,6 +5,8 @@ class Team < ApplicationRecord
   has_many :people, through: :memberships
   has_many :events
 
+  validates :name, presence: true
+
   def self.ransackable_attributes(auth_object = nil)
     ['name', 'team_type_id']
   end

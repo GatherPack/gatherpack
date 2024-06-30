@@ -20,7 +20,7 @@
     </div>
   </div>
   <div class="card-footer">
-    <%= link_to "New event", new_event_path, class: 'btn btn-success' %>
+    <%= link_to "New event", new_event_path, class: 'btn btn-success' if policy(Event).create? %>
     <%= f.submit 'Search', class: 'btn btn-primary' %>
   </div>
 </div>
