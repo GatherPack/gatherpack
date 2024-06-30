@@ -1,5 +1,6 @@
 class Team < ApplicationRecord
   belongs_to :team_type
+  has_many :announcements
   has_many :memberships
   has_many :people, through: :memberships
   has_many :events
