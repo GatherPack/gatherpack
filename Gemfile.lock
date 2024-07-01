@@ -109,7 +109,7 @@ GIT
 
 GIT
   remote: https://github.com/rails/solid_queue.git
-  revision: 4b36e244fc30b16fb1adcfbbef47d0367a2ffd24
+  revision: 664931da38548e5a3845952fe24b24f5285950ee
   branch: main
   specs:
     solid_queue (0.3.3)
@@ -251,7 +251,7 @@ GEM
     matrix (0.4.2)
     mini_magick (4.13.1)
     mini_mime (1.1.5)
-    minitest (5.24.0)
+    minitest (5.24.1)
     net-imap (0.4.14)
       date
       net-protocol
