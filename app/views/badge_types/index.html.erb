@@ -1,4 +1,4 @@
-<%= search_form_for @q do |f| %>
+<%= search_form_for @q, data: {"controller": "turbo_search", "turbo_frame": "results"} do |f| %>
 <div class="card">
   <div class="card-header">
     <h1>Badge types</h1>
@@ -8,17 +8,19 @@
   </div>
   <div class="card-footer">
     <%= link_to "New badge type", new_badge_type_path, class: 'btn btn-success' %>
-    <%= f.submit 'Search', class: 'btn btn-primary' %>
+    <%= f.submit 'Search', class: 'btn btn-primary', data: { action: "turbo_search#search" } %>
   </div>
 </div>
 <% end %>
 
-<div id="badge_types" class="row">
-  <% @badge_types.each do |badge_type| %>
-    <div class="col-md-3">
-      <%= render badge_type %>
-    </div>
-  <% end %>
-</div>
+<%= turbo_frame_tag "results" do %>
+  <div id="badge_types" class="row">
+    <% @badge_types.each do |badge_type| %>
+      <div class="col-md-3">
+        <%= render badge_type %>
+      </div>
+    <% end %>
+  </div>
 
-<%= paginate @badge_types %>
+  <%= paginate @badge_types %>
+<% end %>
