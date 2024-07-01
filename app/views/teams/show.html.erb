@@ -5,6 +5,7 @@
   <div class="card-body">
   </div>
   <div class="card-footer">
+    <%= link_to 'Memberships', team_memberships_path(@team), class: 'btn btn-info' if admin? %>
     <%= link_to 'Edit', edit_team_path(@team), class: 'btn btn-warning' %>
     <%= link_to 'Delete', @team, class: 'btn btn-danger', data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %>
   </div>
