@@ -8,4 +8,8 @@ class PersonPolicy < ApplicationPolicy
       end
     end
   end
+
+  def destroy?
+    user.admin?
+  end
 end

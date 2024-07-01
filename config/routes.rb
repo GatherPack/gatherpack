@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   resources :badge_types
   resources :events
   resources :event_types
+  resources :announcements
   resources :reports do
     get 'run', on: :member
   end
