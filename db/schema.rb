@@ -27,6 +27,22 @@ ActiveRecord::Schema[8.0].define(version: 2024_06_25_215852) do
 #   Unknown type 'uuid' for column 'id'
 
 
+# Could not dump table "announcements" because of following StandardError
+#   Unknown type 'uuid' for column 'id'
+
+
+# Could not dump table "badge_assignments" because of following StandardError
+#   Unknown type 'uuid' for column 'id'
+
+
+# Could not dump table "badge_types" because of following StandardError
+#   Unknown type 'uuid' for column 'id'
+
+
+# Could not dump table "badges" because of following StandardError
+#   Unknown type 'uuid' for column 'id'
+
+
 # Could not dump table "event_types" because of following StandardError
 #   Unknown type 'uuid' for column 'id'
 
@@ -73,6 +89,9 @@ ActiveRecord::Schema[8.0].define(version: 2024_06_25_215852) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "badge_assignments", "badges"
+  add_foreign_key "badge_assignments", "people"
+  add_foreign_key "badges", "badge_types"
   add_foreign_key "events", "event_types"
   add_foreign_key "memberships", "people"
   add_foreign_key "memberships", "teams"

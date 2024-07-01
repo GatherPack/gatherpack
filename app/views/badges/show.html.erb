@@ -1,0 +1,20 @@
+<div class="card">
+  <div class="card-header">
+    <h1><%= as_badge @badge %> <%= @badge.identifier_name %></h1>
+  </div>
+  <div class="card-body">
+    <%= @badge.description %>
+
+    <div class="row">
+      <% @badge.people.each do |person| %>
+        <div class="col-md-3">
+          <%= render person %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <div class="card-footer">
+    <%= link_to 'Edit', edit_badge_path(@badge), class: 'btn btn-warning' if policy(@badge).edit? %>
+    <%= link_to 'Delete', @badge, class: 'btn btn-danger', data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } if policy(@badge).destroy? %>
+  </div>
+</div>

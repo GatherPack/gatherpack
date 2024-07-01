@@ -1,0 +1,2 @@
+class BadgeTypePolicy < AdminPolicy
+end

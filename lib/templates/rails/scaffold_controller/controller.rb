@@ -26,7 +26,7 @@ class <%= controller_class_name %>Controller < InternalController
     @<%= singular_table_name %> = authorize <%= orm_class.build(class_name, "#{singular_table_name}_params") %>
 
     if @<%= orm_instance.save %>
-      redirect_to <%= redirect_resource_name %>, notice: <%= %("#{human_name} was successfully created.") %>
+      redirect_to <%= redirect_resource_name %>, notice: <%= %('#{human_name} was successfully created.') %>
     else
       render :new, status: :unprocessable_entity
     end
@@ -35,7 +35,7 @@ class <%= controller_class_name %>Controller < InternalController
   # PATCH/PUT <%= route_url %>/1
   def update
     if @<%= orm_instance.update("#{singular_table_name}_params") %>
-      redirect_to <%= redirect_resource_name %>, notice: <%= %("#{human_name} was successfully updated.") %>, status: :see_other
+      redirect_to <%= redirect_resource_name %>, notice: <%= %('#{human_name} was successfully updated.') %>, status: :see_other
     else
       render :edit, status: :unprocessable_entity
     end
@@ -44,13 +44,13 @@ class <%= controller_class_name %>Controller < InternalController
   # DELETE <%= route_url %>/1
   def destroy
     @<%= orm_instance.destroy %>
-    redirect_to <%= index_helper %>_url, notice: <%= %("#{human_name} was successfully destroyed.") %>, status: :see_other
+    redirect_to <%= index_helper %>_url, notice: <%= %('#{human_name} was successfully destroyed.') %>, status: :see_other
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_<%= singular_table_name %>
-      @<%= singular_table_name %> = policy_scope(<%= class_name %>).<%= orm_class.find(class_name, "params[:id]") %>
+      @<%= singular_table_name %> = policy_scope(<%= class_name %>).find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.

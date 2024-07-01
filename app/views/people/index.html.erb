@@ -7,7 +7,7 @@
     <%= f.input :display_name_cont, label: 'Name' %>
   </div>
   <div class="card-footer">
-    <%= link_to "New person", new_person_path, class: 'btn btn-success' %>
+    <%= link_to "New person", new_person_path, class: 'btn btn-success' if policy(Person).create?%>
     <%= f.submit 'Search', class: 'btn btn-primary' %>
   </div>
 </div>

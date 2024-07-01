@@ -31,6 +31,7 @@
   </div>
   <div class="col-md">
     <%= f.association :teams, as: :check_boxes, label_method: :name %>
+    <%= f.association :badges, as: :check_boxes, label_method: :name, collection: policy_scope(Badge) %>
   </div>
   <div class="col-md">
     <% if @person.user %>

@@ -1,8 +1,11 @@
 Rails.application.routes.draw do
+  resources :badges
+  resources :badge_types
   resources :relationships
   resources :relationship_types
   resources :events
   resources :event_types
+  resources :announcements
   resources :reports do
     get 'run', on: :member
   end

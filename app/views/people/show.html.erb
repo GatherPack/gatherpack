@@ -5,7 +5,7 @@
   <div class="card-body">
   </div>
   <div class="card-footer">
-    <%= link_to 'Edit', edit_person_path(@person), class: 'btn btn-warning' %>
-    <%= link_to 'Delete', @person, class: 'btn btn-danger', data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %>
+    <%= link_to 'Edit', edit_person_path(@person), class: 'btn btn-warning' if policy(@person).update? %>
+    <%= link_to 'Delete', @person, class: 'btn btn-danger', data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } if policy(@person).destroy? %>
   </div>
 </div>

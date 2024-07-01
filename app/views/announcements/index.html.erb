@@ -1,0 +1,34 @@
+<%= search_form_for @q do |f| %>
+<div class="card">
+  <div class="card-header">
+    <h1>Announcements</h1>
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col">
+        <%= f.input :title_i_cont, label: 'Title' %>
+      </div>
+      <div class="col">
+        <%= f.input :content_i_cont, label: 'Content' %>
+      </div>
+      <div class="col">
+        <%= f.input :team_id_eq, label: 'Team', as: :select, collection: policy_scope(Team) %>
+      </div>
+    </div>
+  </div>
+  <div class="card-footer">
+    <%= link_to "New announcement", new_announcement_path, class: 'btn btn-success' if policy(Announcement).create? %>
+    <%= f.submit 'Search', class: 'btn btn-primary' %>
+  </div>
+</div>
+<% end %>
+
+<div id="announcements" class="row">
+  <% @announcements.each do |announcement| %>
+    <div class="col-md-3">
+      <%= render announcement %>
+    </div>
+  <% end %>
+</div>
+
+<%= paginate @announcements %>

@@ -4,6 +4,8 @@ class Person < ApplicationRecord
   has_many :relationship_parent, class_name: 'Relationship', foreign_key: 'parent_id'
   has_many :relationship_child, class_name: 'Relationship', foreign_key: 'child_id'
   has_many :teams, through: :memberships
+  has_many :badge_assignments
+  has_many :badges, through: :badge_assignments
   before_save :check_display_name
   accepts_nested_attributes_for :user
 

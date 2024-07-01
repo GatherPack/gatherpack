@@ -5,7 +5,7 @@ class <%= class_name %>Policy < ApplicationPolicy
       if user.admin
         scope.all
       else
-        scope.where(team: user.teams)
+        scope.where(team: person.teams).or(scope.where(team_id: ""))
       end
     end
   end
