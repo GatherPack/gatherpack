@@ -12,7 +12,7 @@ GIT
 
 GIT
   remote: https://github.com/rails/rails.git
-  revision: b9d6759401c3d50a51e0a7650cb2331f4218d11f
+  revision: 599023dc03790b3c062aa4517854e0da5b25a891
   branch: main
   specs:
     actioncable (8.0.0.alpha)
@@ -109,7 +109,7 @@ GIT
 
 GIT
   remote: https://github.com/rails/solid_queue.git
-  revision: 4b36e244fc30b16fb1adcfbbef47d0367a2ffd24
+  revision: 664931da38548e5a3845952fe24b24f5285950ee
   branch: main
   specs:
     solid_queue (0.3.3)
@@ -251,7 +251,7 @@ GEM
     matrix (0.4.2)
     mini_magick (4.13.1)
     mini_mime (1.1.5)
-    minitest (5.24.0)
+    minitest (5.24.1)
     net-imap (0.4.14)
       date
       net-protocol
@@ -358,7 +358,7 @@ GEM
     rubocop-performance (1.21.1)
       rubocop (>= 1.48.1, < 2.0)
       rubocop-ast (>= 1.31.1, < 2.0)
-    rubocop-rails (2.25.0)
+    rubocop-rails (2.25.1)
       activesupport (>= 4.2.0)
       rack (>= 1.1)
       rubocop (>= 1.33.0, < 2.0)
