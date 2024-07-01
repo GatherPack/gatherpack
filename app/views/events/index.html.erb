@@ -15,12 +15,12 @@
         <%= f.input :event_type_id_eq, label: 'Event Type', as: :select, collection: EventType.all %>
       </div>
       <div class="col">
-        <%= f.input :team_id_eq, label: 'Teams', as: :select, collection: Team.all %>
+        <%= f.input :team_id_eq, label: 'Teams', as: :select, collection: policy_scope(Team) %>
       </div>
     </div>
   </div>
   <div class="card-footer">
-    <%= link_to "New event", new_event_path, class: 'btn btn-success' %>
+    <%= link_to "New event", new_event_path, class: 'btn btn-success' if policy(Event).create? %>
     <%= f.submit 'Search', class: 'btn btn-primary' %>
   </div>
 </div>

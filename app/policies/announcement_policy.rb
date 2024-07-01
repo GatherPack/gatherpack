@@ -1,4 +1,4 @@
-class EventPolicy < ApplicationPolicy
+class AnnouncementPolicy < ApplicationPolicy
   class Scope < ApplicationPolicy::Scope
     def resolve
       if user.admin
