@@ -12,7 +12,7 @@ GIT
 
 GIT
   remote: https://github.com/rails/rails.git
-  revision: 599023dc03790b3c062aa4517854e0da5b25a891
+  revision: 738fde4782a1a457341aae54b80fa9844ba73904
   branch: main
   specs:
     actioncable (8.0.0.alpha)
@@ -305,7 +305,7 @@ GEM
       activesupport (>= 3.0.0)
     raabro (1.4.0)
     racc (1.8.0)
-    rack (3.1.4)
+    rack (3.1.6)
     rack-protection (4.0.0)
       base64 (>= 0.1.0)
       rack (>= 3.0.0, < 4)
