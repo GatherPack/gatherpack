@@ -27,16 +27,17 @@ module ApplicationHelper
 
     "alert-" + bootstrap_type
   end
+
   def flash_to_icon(type)
     case type
     when 'success'
-      bootstrap_icon = '#check-circle-fill'
+      bootstrap_icon = 'circle-check'
     when 'warning', 'danger'
-      bootstrap_icon = '#exclamation-triangle-fill'
+      bootstrap_icon = 'triangle-exclamation'
     else
-      bootstrap_icon = '#info-fill'
+      bootstrap_icon = 'circle-info'
     end
 
-    bootstrap_icon
+    "fa-" + bootstrap_icon
   end
 end
