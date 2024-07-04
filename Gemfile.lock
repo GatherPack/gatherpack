@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/rails/mission_control-jobs.git
-  revision: d6eee5bf62ea284a6ef874d0c34b8b5d7db86088
+  revision: 0ddff4339f76dd94aa2b1bb4530404b00f33ac74
   branch: main
   specs:
     mission_control-jobs (0.2.1)
@@ -12,7 +12,7 @@ GIT
 
 GIT
   remote: https://github.com/rails/rails.git
-  revision: 738fde4782a1a457341aae54b80fa9844ba73904
+  revision: 4fa56814f18fd3da49c83931fa773caa727d8096
   branch: main
   specs:
     actioncable (8.0.0.alpha)
@@ -404,7 +404,7 @@ GEM
       net-scp (>= 1.1.2)
       net-sftp (>= 2.1.2)
       net-ssh (>= 2.8.0)
-    standard (1.39.0)
+    standard (1.39.1)
       language_server-protocol (~> 3.17.0.2)
       lint_roller (~> 1.0)
       rubocop (~> 1.64.0)
