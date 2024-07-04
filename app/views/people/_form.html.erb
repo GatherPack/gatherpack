@@ -2,24 +2,58 @@
 <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
 <div class="row">
-  <div class="col-md">
-    <%= f.input :first_name %>
+  <div class="col-md-4">
+    <div class="row mb-2">
+      <div class="col">
+        <input type="button" value="Loading..." id="activate-webcam">
+      </div>
+      <div class="col">
+        <input type="button" value="Capture" id="capture-image" style="display: none">
+      </div>
+    </div>
+
+    <canvas id="capture-canvas" style="display: none"></canvas>
+    <img id="avatar-img" src="<%= get_avatar_url(@person.avatar) %>">
+    <video id="capture-video"></video>
+    
+    <div class="row mt-2">
+      <div class="col">
+        <%= f.input :avatar, label: false %>
+      </div>
+    </div>
   </div>
-  <div class="col-md">
-    <%= f.input :last_name %>
-  </div>
-  <div class="col-md">
-    <%= f.input :display_name %>
-  </div>
-  <div class="col-md-2">
-    <%= f.input :gender %>
-  </div>
-  <div class="col-md-2">
-    <%= f.input :shirt_size %>
+  <div class="col">
+    <div class="row">
+      <div class="col">
+        <%= f.input :first_name %>
+      </div>
+      <div class="col">
+        <%= f.input :last_name %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <%= f.input :display_name %>
+      </div>
+      <div class="col">
+        <div class="row">
+          <div class="col">
+            <%= f.input :gender %>
+          </div>
+          <div class="col">
+            <%= f.input :shirt_size %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      
+    </div>
   </div>
 </div>
 
-<div class="row">
+<div class="row mt-4">
   <div class="col-md">
     <%= f.input :phone_number %>
 
