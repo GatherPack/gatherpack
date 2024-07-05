@@ -64,7 +64,7 @@
     <%= f.input :dietary_restrictions %>
   </div>
   <div class="col-md">
-    <%= f.association :teams, as: :check_boxes, label_method: :name %>
+    <%= f.association :teams, as: :check_boxes, label_method: :name, collection: get_joinable_teams(@person, current_user) %>
     <%= f.association :badges, as: :check_boxes, label_method: :name, collection: policy_scope(Badge) %>
   </div>
   <div class="col-md">

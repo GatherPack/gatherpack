@@ -8,4 +8,17 @@ class TeamPolicy < ApplicationPolicy
       end
     end
   end
+
+  def new?
+    has_perms
+  end
+
+  def update?
+    has_perms
+  end
+
+  private
+  def has_perms
+    user.admin
+  end
 end
