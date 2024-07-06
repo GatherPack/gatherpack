@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/rails/mission_control-jobs.git
-  revision: d6eee5bf62ea284a6ef874d0c34b8b5d7db86088
+  revision: 0ddff4339f76dd94aa2b1bb4530404b00f33ac74
   branch: main
   specs:
     mission_control-jobs (0.2.1)
@@ -12,7 +12,7 @@ GIT
 
 GIT
   remote: https://github.com/rails/rails.git
-  revision: b9d6759401c3d50a51e0a7650cb2331f4218d11f
+  revision: 0d30e84878223df68efda3b0e1741611d9682a45
   branch: main
   specs:
     actioncable (8.0.0.alpha)
@@ -109,7 +109,7 @@ GIT
 
 GIT
   remote: https://github.com/rails/solid_queue.git
-  revision: 4b36e244fc30b16fb1adcfbbef47d0367a2ffd24
+  revision: 664931da38548e5a3845952fe24b24f5285950ee
   branch: main
   specs:
     solid_queue (0.3.3)
@@ -251,7 +251,7 @@ GEM
     matrix (0.4.2)
     mini_magick (4.13.1)
     mini_mime (1.1.5)
-    minitest (5.24.0)
+    minitest (5.24.1)
     net-imap (0.4.14)
       date
       net-protocol
@@ -305,7 +305,7 @@ GEM
       activesupport (>= 3.0.0)
     raabro (1.4.0)
     racc (1.8.0)
-    rack (3.1.4)
+    rack (3.1.6)
     rack-protection (4.0.0)
       base64 (>= 0.1.0)
       rack (>= 3.0.0, < 4)
@@ -358,7 +358,7 @@ GEM
     rubocop-performance (1.21.1)
       rubocop (>= 1.48.1, < 2.0)
       rubocop-ast (>= 1.31.1, < 2.0)
-    rubocop-rails (2.25.0)
+    rubocop-rails (2.25.1)
       activesupport (>= 4.2.0)
       rack (>= 1.1)
       rubocop (>= 1.33.0, < 2.0)
@@ -404,7 +404,7 @@ GEM
       net-scp (>= 1.1.2)
       net-sftp (>= 2.1.2)
       net-ssh (>= 2.8.0)
-    standard (1.39.0)
+    standard (1.39.1)
       language_server-protocol (~> 3.17.0.2)
       lint_roller (~> 1.0)
       rubocop (~> 1.64.0)

@@ -1,0 +1,32 @@
+<%= search_form_for @q, url: team_memberships_path(@team) do |f| %>
+<div class="card">
+  <div class="card-header">
+    <h1>Memberships</h1>
+  </div>
+  <div class="card-body">
+    <%= f.input :person_display_name_cont, label: 'Name' %>
+  </div>
+  <div class="card-footer">
+    <%= f.submit 'Search', class: 'btn btn-primary' %>
+  </div>
+</div>
+<% end %>
+
+<div id="memberships">
+  <div class="row bg-primary-subtle align-items-center py-1 mb-1">
+    <div class="col-md">
+      Person
+    </div>
+    <div class="col-md">
+      Manager?
+    </div>
+    <div class="col-md">
+      &nbsp;
+    </div>
+  </div>
+  <% @memberships.each do |membership| %>
+    <%= render membership %>
+  <% end %>
+</div>
+
+<%= paginate @memberships %>

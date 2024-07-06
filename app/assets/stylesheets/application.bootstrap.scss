@@ -89,7 +89,12 @@ $form-feedback-valid-color: inherit;
 
   img {
     height: 1em;
+    width: auto;
   }
+}
+
+img {
+  width: 100%
 }
 
 main {

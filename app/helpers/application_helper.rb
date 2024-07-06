@@ -16,4 +16,28 @@ module ApplicationHelper
       team_as_badge(obj)
     end.html_safe
   end
+
+  def flash_to_class(type)
+    case type
+    when 'notice'
+      bootstrap_type = 'info';
+    else
+      bootstrap_type = type;
+    end
+
+    "alert-" + bootstrap_type
+  end
+
+  def flash_to_icon(type)
+    case type
+    when 'success'
+      bootstrap_icon = 'circle-check'
+    when 'warning', 'danger'
+      bootstrap_icon = 'triangle-exclamation'
+    else
+      bootstrap_icon = 'circle-info'
+    end
+
+    "fa-" + bootstrap_icon
+  end
 end

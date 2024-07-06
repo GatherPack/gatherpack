@@ -8,7 +8,9 @@ Rails.application.routes.draw do
     get 'run', on: :member
   end
   resources :variables
-  resources :teams
+  resources :teams do
+    resources :memberships, only: %i[ index update destroy ]
+  end
   resources :team_types
   resources :people
   devise_for :users, controllers: { omniauth_callbacks: 'omniauth', registrations: 'users/registrations' }
