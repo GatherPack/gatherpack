@@ -1,25 +1,34 @@
-<%= search_form_for @q do |f| %>
+<%= search_form_for @q, data: {"controller": "turbo_search", "turbo_frame": "results"} do |f| %>
 <div class="card">
   <div class="card-header">
     <h1>Variables</h1>
   </div>
   <div class="card-body">
-    <%= f.input :name_cont, label: 'Name' %>
-    <%= f.input :raw_value_cont, label: 'Value' %>
+    <div class="row">
+      <div class="col">
+        <%= f.input :name_cont, label: 'Name' %>
+      </div>
+      <div class="col">
+        <%= f.input :raw_value_cont, label: 'Value' %>
+      </div>
+    </div>
   </div>
   <div class="card-footer">
     <%= link_to "New variable", new_variable_path, class: 'btn btn-success' %>
-    <%= f.submit 'Search', class: 'btn btn-primary' %>
+    <%= f.submit 'Search', class: 'btn btn-primary', data: { action: "turbo_search#search" } %>
+    <%= link_to 'Clear search', request.path, class: "btn btn-dark", data: { action: "turbo_search#clear" } %>
   </div>
 </div>
 <% end %>
 
-<div id="variables" class="row">
-  <% @variables.each do |variable| %>
-    <div class="col-md-3">
-      <%= render variable %>
-    </div>
-  <% end %>
-</div>
+<%= turbo_frame_tag "results" do %>
+  <div id="variables" class="row">
+    <% @variables.each do |variable| %>
+      <div class="col-md-3">
+        <%= render variable %>
+      </div>
+    <% end %>
+  </div>
 
-<%= paginate @variables %>
+  <%= paginate @variables %>
+<% end %>
