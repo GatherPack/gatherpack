@@ -1,4 +1,5 @@
 class Event < ApplicationRecord
+  includes Hookable
   belongs_to :event_type
   belongs_to :team, optional: true
 

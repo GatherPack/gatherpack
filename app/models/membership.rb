@@ -1,4 +1,5 @@
 class Membership < ApplicationRecord
+  includes Hookable
   belongs_to :person
   belongs_to :team
 

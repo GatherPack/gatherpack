@@ -1,4 +1,5 @@
 class Team < ApplicationRecord
+  includes Hookable
   belongs_to :team_type
   has_many :announcements
   has_many :memberships
