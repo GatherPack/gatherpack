@@ -42,3 +42,4 @@
 !/app/assets/builds/.keep
 
 /node_modules
+*.code-workspace
