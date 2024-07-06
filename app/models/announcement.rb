@@ -1,4 +1,5 @@
 class Announcement < ApplicationRecord
+  includes Hookable
   belongs_to :team, optional: true
 
   validates :title, presence: true

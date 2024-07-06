@@ -1,0 +1,23 @@
+<%= search_form_for @q do |f| %>
+<div class="card">
+  <div class="card-header">
+    <h1>Hooks</h1>
+  </div>
+  <div class="card-body">
+  </div>
+  <div class="card-footer">
+    <%= link_to "New hook", new_hook_path, class: 'btn btn-success' %>
+    <%= f.submit 'Search', class: 'btn btn-primary' %>
+  </div>
+</div>
+<% end %>
+
+<div id="hooks" class="row">
+  <% @hooks.each do |hook| %>
+    <div class="col-md-3">
+      <%= render hook %>
+    </div>
+  <% end %>
+</div>
+
+<%= paginate @hooks %>
