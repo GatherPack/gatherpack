@@ -8,6 +8,7 @@
   <div class="card-footer">
     <%%= link_to "New <%= human_name.downcase %>", <%= new_helper(type: :path) %>, class: 'btn btn-success' %>
     <%%= f.submit 'Search', class: 'btn btn-primary', data: { action: "turbo_search#search" } %>
+    <%%= link_to 'Clear search', request.path, class: "btn btn-dark", data: { action: "turbo_search#clear" } %>
   </div>
 </div>
 <%% end %>
