@@ -8,7 +8,7 @@
         <div class="mb-3">
           <h2>Badges</h2>
           <div class="row">
-            <% @team.badges.each do |badge| %>
+            <% @team.badges.order(name: :asc).first(16).each do |badge| %>
               <div class="col-sm-3 mb-3">
                 <%= link_to badge do %>
                   <%= as_badge badge %> <%= badge.identifier_name %>
@@ -33,7 +33,7 @@
         <div class="mb-3">
           <h3>Events</h3>
           <ul>
-            <% @team.events.order(created_at: :desc).last(5).each do |event| %>
+            <% @team.events.order(created_at: :asc).last(5).each do |event| %>
               <li><%= link_to event.name, event %></li>
             <% end %>
           </ul>
