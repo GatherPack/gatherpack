@@ -3,6 +3,52 @@
     <h1><%= i @team.team_type.icon %> <%= @team.identifier_name %></h1>
   </div>
   <div class="card-body">
+    <div class="row">
+      <div class="col">
+        <div style="margin-bottom: 20px;">
+          <h2>People</h2>
+          <ul>
+            <% @team.people.each do |person| %>
+              <li><%= link_to person.display_name, person %></li>
+            <% end %>
+          </ul>
+        </div>
+        <div style="margin-bottom: 20px;">
+          <h2>Badges</h2>
+          <ul>
+            <% @team.badges.each do |badge| %>
+              <li>
+                <%= link_to badge do %>
+                  <%= as_badge badge %> <%= badge.identifier_name %>
+                <% end %>
+              </li>
+            <% end %>
+          </ul>
+          <%= link_to 'Show All Team Badges', team_badges_path(@team) %>
+        </div>
+      </div>
+      <div class="col">
+        <h2>Recent Activities</h2>
+        <div style="margin-bottom: 15px;">
+          <h3>Announcements</h3>
+          <ul>
+            <% @team.announcements.last(5).each do |announcement| %>
+              <li><%= link_to announcement.title, announcement %></li>
+            <% end %>
+          </ul>
+          <%= link_to 'Show All Team Announcements', team_announcements_path(@team) %>
+        </div>
+        <div style="margin-bottom: 15px;">
+          <h3>Events</h3>
+          <ul>
+            <% @team.events.last(5).each do |event| %>
+              <li><%= link_to event.name, event %></li>
+            <% end %>
+          </ul>
+          <%= link_to 'Show All Team Events', team_events_path(@team) %>
+        </div>
+      </div>
+    </div>
   </div>
   <div class="card-footer">
     <%= link_to 'Memberships', team_memberships_path(@team), class: 'btn btn-info' if admin? %>

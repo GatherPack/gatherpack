@@ -11,9 +11,11 @@
       <div class="col">
         <%= f.input :badge_type_id_eq, label: 'Badge Type', as: :select, collection: BadgeType.all  %>
       </div>
-      <div class="col">
-        <%= f.input :team_id_eq, label: 'Team', as: :select, collection: Team.all  %>
-      </div>
+      <% if @team.nil? %>
+        <div class="col">
+          <%= f.input :team_id_eq, label: 'Team', as: :select, collection: Team.all  %>
+        </div>
+      <% end %>
     </div>
   </div>
   <div class="card-footer">
