@@ -1,4 +1,4 @@
-<%= search_form_for @q, url: team_memberships_path(@team) do |f| %>
+<%= search_form_for @q, data: {"controller": "turbo_search", "turbo_frame": "results"} do |f| %>
 <div class="card">
   <div class="card-header">
     <h1>Memberships</h1>
@@ -7,26 +7,29 @@
     <%= f.input :person_display_name_cont, label: 'Name' %>
   </div>
   <div class="card-footer">
-    <%= f.submit 'Search', class: 'btn btn-primary' %>
+    <%= f.submit 'Search', class: 'btn btn-primary', data: { action: "turbo_search#search" } %>
+    <%= link_to 'Clear search', request.path, class: "btn btn-dark", data: { action: "turbo_search#clear" } %>
   </div>
 </div>
 <% end %>
 
-<div id="memberships">
-  <div class="row bg-primary-subtle align-items-center py-1 mb-1">
-    <div class="col-md">
-      Person
+<%= turbo_frame_tag "results" do %>
+  <div id="memberships">
+    <div class="row bg-primary-subtle align-items-center py-1 mb-1">
+      <div class="col-md">
+        Person
+      </div>
+      <div class="col-md">
+        Manager?
+      </div>
+      <div class="col-md">
+        &nbsp;
+      </div>
     </div>
-    <div class="col-md">
-      Manager?
-    </div>
-    <div class="col-md">
-      &nbsp;
-    </div>
+    <% @memberships.each do |membership| %>
+      <%= render membership %>
+    <% end %>
   </div>
-  <% @memberships.each do |membership| %>
-    <%= render membership %>
-  <% end %>
-</div>
+<% end %>
 
 <%= paginate @memberships %>
