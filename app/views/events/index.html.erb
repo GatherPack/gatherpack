@@ -14,11 +14,9 @@
       <div class="col">
         <%= f.input :event_type_id_eq, label: 'Event Type', as: :select, collection: EventType.all %>
       </div>
-      <% if @team.nil? %>
-        <div class="col">
-          <%= f.input :team_id_eq, label: 'Teams', as: :select, collection: policy_scope(Team) %>
-        </div>
-      <% end %>
+      <div class="col">
+        <%= f.input :team_id_eq, label: 'Teams', as: :select, collection: policy_scope(Team) %>
+      </div>
     </div>
   </div>
   <div class="card-footer">

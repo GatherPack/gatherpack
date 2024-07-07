@@ -11,11 +11,9 @@
       <div class="col">
         <%= f.input :content_i_cont, label: 'Content' %>
       </div>
-      <% if @team.nil? %>
-        <div class="col">
-          <%= f.input :team_id_eq, label: 'Team', as: :select, collection: policy_scope(Team) %>
-        </div>
-      <% end %>
+      <div class="col">
+        <%= f.input :team_id_eq, label: 'Team', as: :select, collection: policy_scope(Team) %>
+      </div>
     </div>
   </div>
   <div class="card-footer">

@@ -46,24 +46,6 @@ class TeamsController < InternalController
     redirect_to teams_url, notice: 'Team was successfully destroyed.', status: :see_other
   end
 
-  def announcements
-    @q = @team.announcements.ransack(params[:q])
-    @announcements = @q.result(distinct: true).page(params[:page])
-    render 'announcements/index'
-  end
-
-  def badges
-    @q = @team.badges.ransack(params[:q])
-    @badges = @q.result(distinct: true).page(params[:page])
-    render 'badges/index'
-  end
-
-  def events
-    @q = @team.events.ransack(params[:q])
-    @events = @q.result(distinct: true).page(params[:page]).includes(:event_type)
-    render 'events/index'
-  end
-
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_team
