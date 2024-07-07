@@ -1,7 +1,7 @@
 class CreateAnnouncements < ActiveRecord::Migration[8.0]
   def change
     create_table :announcements, id: :uuid do |t|
-      t.text :title
+      t.string :title
       t.text :content
       t.datetime :start_time
       t.datetime :end_time
