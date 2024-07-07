@@ -10,9 +10,6 @@ Rails.application.routes.draw do
   resources :variables
   resources :teams do
     resources :memberships, only: %i[ index update destroy ]
-    get 'announcements', to: 'teams#announcements'
-    get 'badges', to: 'teams#badges'
-    get 'events', to: 'teams#events'
   end
   resources :team_types
   resources :people
