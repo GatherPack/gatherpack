@@ -1,5 +1,5 @@
 class Badge < ApplicationRecord
-  includes Hookable
+  include CanBeHooked
   belongs_to :badge_type
   belongs_to :team, optional: true
   has_many :badge_assignments
