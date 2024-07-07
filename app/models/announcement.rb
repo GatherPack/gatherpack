@@ -1,5 +1,5 @@
 class Announcement < ApplicationRecord
-  includes Hookable
+  include CanBeHooked
   belongs_to :team, optional: true
 
   validates :title, presence: true
