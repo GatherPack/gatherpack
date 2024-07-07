@@ -9,6 +9,7 @@ import "trix"
 import "@rails/actiontext"
 
 import "photo_capture"
+import "font_awesome"
 
 document.addEventListener("turbo:load", ev => {
     document.querySelectorAll('.fancy-color-container input[type="color"]').forEach(elem => {
