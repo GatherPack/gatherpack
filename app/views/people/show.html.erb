@@ -8,7 +8,7 @@
         <img src="<%= get_avatar_url(@person.avatar) %>">
       </div>
       <div class="col">
-        <p><b>Email: </b><%= if @person.user.nil? then "This person doesn't have a user attached." else person.user.email end %></p>
+        <p><b>Email: </b><%= if @person.user.nil? then "This person doesn't have a user attached." else @person.user.email end %></p>
         <p><b>Phone: </b><%= @person.phone_number %></p>
         <p><b>Birthday: </b><%= @person.birthday %></p>
         <p><b>Address: </b><%= @person.address %></p>
