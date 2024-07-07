@@ -1,6 +1,5 @@
 class TeamsController < InternalController
   before_action :set_team, only: %i[ show edit update destroy ]
-  before_action :set_team_for_attributes, only: %i[ announcements badges events ]
 
   # GET /teams
   def index
@@ -69,10 +68,6 @@ class TeamsController < InternalController
     # Use callbacks to share common setup or constraints between actions.
     def set_team
       @team = policy_scope(Team).find(params[:id])
-    end
-
-    def set_team_for_attributes
-      @team = policy_scope(Team).find(params[:team_id])
     end
 
     # Only allow a list of trusted parameters through.
