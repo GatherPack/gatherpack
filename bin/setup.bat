@@ -18,7 +18,4 @@ REM echo SQLPKG DIRECTORY: %SQLPKG_INSTALL_DIR%
 REM call bundle exec sqlpkg install
 
 echo PREPARING DATABASE
-call rails db:migrate:primary
-call rails db:migrate:queue
-call rails db:migrate:cache
-call rails db:migrate:errors
+call rails db:migrate:primary db:migrate:queue db:migrate:cache db:migrate:errors

@@ -9,6 +9,8 @@ class ApplicationController < ActionController::Base
 
   helper_method :admin?
 
+  rescue_from Pundit::NotAuthorizedError, with: :pundit_not_authorized
+
   private
 
   def check_for_user
@@ -17,5 +19,9 @@ class ApplicationController < ActionController::Base
 
   def check_for_admin
     redirect_to root_path, notice: 'You are not allowed to do that' unless admin?
+  end
+
+  def pundit_not_authorized
+    redirect_to root_path, notice: 'You are not allowed to do that'
   end
 end
