@@ -12,7 +12,7 @@ GIT
 
 GIT
   remote: https://github.com/rails/rails.git
-  revision: cacf96ecd053f0a3d64c7bf478dac63f98e6aa6d
+  revision: 16f1222753cac0a554a2acd8f4ffa3f23d51d945
   branch: main
   specs:
     actioncable (8.0.0.alpha)
@@ -251,7 +251,7 @@ GEM
       net-smtp
     marcel (1.0.4)
     matrix (0.4.2)
-    mini_magick (4.13.1)
+    mini_magick (4.13.2)
     mini_mime (1.1.5)
     minitest (5.24.1)
     net-imap (0.4.14)
@@ -445,7 +445,7 @@ GEM
       bindex (>= 0.4.0)
       railties (>= 6.0.0)
     webrick (1.8.1)
-    websocket (1.2.10)
+    websocket (1.2.11)
     websocket-driver (0.7.6)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
