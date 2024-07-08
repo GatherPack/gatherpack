@@ -119,6 +119,14 @@ GIT
       fugit (~> 1.11.0)
       railties (>= 7.1)
 
+GIT
+  remote: https://github.com/wobschalli/gretel.git
+  revision: 8ef080db4f38db9c0728133160610709b53b1427
+  specs:
+    gretel (5.0.0)
+      actionview (>= 6.1)
+      railties (>= 6.1)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -471,6 +479,7 @@ DEPENDENCIES
   cssbundling-rails
   debug
   devise (~> 4.9)
+  gretel!
   image_processing (~> 1.2)
   importmap-rails
   kamal
