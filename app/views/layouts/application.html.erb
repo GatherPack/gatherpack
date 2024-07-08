@@ -33,6 +33,9 @@
             </div>
           <% end %>
 
+          <%= breadcrumbs display_single_fragment: true, style: :bootstrap5 %>
+          <% breadcrumb :root %>
+
           <%= yield %>
         </main>
       </div>
