@@ -1,6 +1,6 @@
 <div class="card" id="<%= dom_id badge %>">
   <div class="card-header">
-    <%= link_to badge do %>
+    <%= link_to badge, "data-turbo": "false" do %>
       <%= as_badge badge %> <%= badge.identifier_name %>
     <% end %>
   </div>

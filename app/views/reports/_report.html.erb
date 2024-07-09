@@ -1,8 +1,8 @@
 <div class="card" id="<%= dom_id report %>">
   <div class="card-header">
-    <%= link_to report.identifier_name, report %>
+    <%= link_to report.identifier_name, report, "data-turbo": "false" %>
   </div>
   <div class="card-footer">
-    <%= link_to 'Run', run_report_path(report), class: 'btn btn-sm btn-success' %>
+    <%= link_to 'Run', run_report_path(report), class: 'btn btn-sm btn-success', "data-turbo": "false" %>
   </div>
 </div>
