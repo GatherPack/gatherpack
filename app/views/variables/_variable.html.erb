@@ -1,6 +1,6 @@
 <div class="card" id="<%= dom_id variable %>">
   <div class="card-header">
-    <%= link_to variable.identifier_name, variable %>
+    <%= link_to variable.identifier_name, variable, "data-turbo": "false" %>
   </div>
   <div class="card-body">
     <%= variable.value.to_s %>
