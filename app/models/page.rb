@@ -9,6 +9,14 @@ class Page < ApplicationRecord
   validate :manager_editor_needs_team
   validate :manager_viewer_needs_team
 
+  def self.ransackable_attributes(auth_object = nil)
+    [ 'content', 'title', 'team_id' ]
+  end
+
+  def self.ransackable_associations(auth_object = nil)
+    [ 'team' ]
+  end
+
   private
 
   def manager_editor_needs_team

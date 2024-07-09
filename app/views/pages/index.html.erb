@@ -4,6 +4,17 @@
     <h1>Pages</h1>
   </div>
   <div class="card-body">
+    <div class="row">
+      <div class="col-md">
+        <%= f.input :title_cont, label: 'Title' %>
+      </div>
+      <div class="col-md">
+        <%= f.input :content_cont, label: 'Content' %>
+      </div>
+      <div class="col-md">
+        <%= f.input :team_id_eq, label: 'Team', as: :select, collection: Team.all  %>
+      </div>
+    </div>
   </div>
   <div class="card-footer">
     <%= link_to "New page", new_page_path, class: 'btn btn-success' %>
