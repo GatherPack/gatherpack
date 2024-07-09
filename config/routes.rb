@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :pages
   resources :badges
   resources :badge_types
   resources :events
