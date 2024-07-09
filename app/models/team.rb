@@ -6,6 +6,7 @@ class Team < ApplicationRecord
   has_many :memberships
   has_many :people, through: :memberships
   has_many :events
+  has_many :pages
 
   validates :name, presence: true
 
@@ -15,5 +16,9 @@ class Team < ApplicationRecord
 
   def self.ransackable_associations(auth_object = nil)
     ['team_type']
+  end
+
+  def managers
+    people.joins(:memberships).where(memberships: { manager: true })
   end
 end

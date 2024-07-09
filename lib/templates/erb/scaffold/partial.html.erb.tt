@@ -1,5 +1,5 @@
 <div class="card" id="<%%= dom_id <%= singular_name %> %>">
   <div class="card-header">
-    <%%= link_to <%= singular_table_name %>.identifier_name, <%= singular_table_name %> %>
+    <%%= link_to <%= singular_table_name %>.identifier_name, <%= singular_table_name %>, 'data-turbo': false %>
   </div>
 </div>

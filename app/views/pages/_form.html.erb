@@ -1,0 +1,26 @@
+<%= f.error_notification %>
+<%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+<div class="row">
+  <div class="col-md">
+    <%= f.input :title %>
+  </div>
+  <div class="col-md">
+    <%= f.association :team %>
+  </div>
+  <div class="col-md">
+    <%= f.input :viewer, as: :select, collection: Page::PERMISSION_LEVELS %>
+  </div>
+  <div class="col-md">
+    <%= f.input :editor, as: :select, collection: Page::PERMISSION_LEVELS %>
+  </div>
+</div>
+
+<%= f.input :content %>
+
+<% if admin? %>
+  <div class="alert alert-danger">
+    <%= f.input :dynamic, label: 'Enable ERB Parsing?' %>  
+  </div>
+<% end %>
+  
