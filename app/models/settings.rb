@@ -68,11 +68,5 @@ class Settings
 
     @settings = Hash.new
     add_setting(:title, :string, "Site Name", "GatherPack", nil, "The name of the site")
-
-    add_setting(:color_lightest, :fancy_color, "Lightest", "#fffdf6", "Colors", nil)
-    add_setting(:color_light, :fancy_color, "Light", "#ddd7c2", "Colors", nil)
-    add_setting(:color, :fancy_color, "Main", "#a59e86", "Colors", nil)
-    add_setting(:color_dark, :fancy_color, "Dark", "#6d6753", "Colors", nil)
-    add_setting(:color_darkest, :fancy_color, "Darkest", "#403a22", "Colors", nil)
   end
 end
