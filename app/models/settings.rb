@@ -9,12 +9,9 @@ class Settings
       @setting_type = setting_type || :text
       @name = name
       @value = store.transaction { store.fetch(setting_key, default_value) }
+      @default_value = default_value
       @group = group || "Site Settings"
       @description = description || ""
-    end
-
-    def value
-      @value
     end
 
     def value=(val)
@@ -22,13 +19,14 @@ class Settings
       store.transaction do
         store[@setting_key] = val
       end
+      @value = val
     end
 
     def in_group?(group)
       group == @group
     end
 
-    attr_reader :name, :setting_type, :description, :group
+    attr_reader :name, :setting_type, :description, :group, :setting_key, :value, :default_value
   end
 
   class <<self
@@ -69,8 +67,6 @@ class Settings
     @store = PStore.new("storage/settings.pstore") # NOTE: We may want to switch to using ActiveStorage
 
     @settings = Hash.new
-    add_setting(:test_setting, :text, "Site Name", "Gatherpack", nil, "The name of the site")
-    add_setting(:other_setting, :number, "Other setting", 12, nil, nil)
-    add_setting(:another_setting, :number, "Another setting", 16, "Some more settings", nil)
+    add_setting(:test_setting, :string, "Site Name", "Gatherpack", nil, "The name of the site")
   end
 end
