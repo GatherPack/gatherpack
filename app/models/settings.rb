@@ -31,11 +31,11 @@ class Settings
 
   class <<self
     def [](setting)
-      instance.settings[setting]
+      get(setting).value
     end
 
     def get(setting)
-      self[setting].value
+      instance.settings[setting]
     end
     
     def set(setting, val)
@@ -43,7 +43,7 @@ class Settings
     end
 
     def []=(*args)
-      self.set(*args)
+      set(*args)
     end
 
     def settings(group)
@@ -67,6 +67,12 @@ class Settings
     @store = PStore.new("storage/settings.pstore") # NOTE: We may want to switch to using ActiveStorage
 
     @settings = Hash.new
-    add_setting(:test_setting, :string, "Site Name", "Gatherpack", nil, "The name of the site")
+    add_setting(:title, :string, "Site Name", "GatherPack", nil, "The name of the site")
+
+    add_setting(:color_lightest, :fancy_color, "Lightest", "#fffdf6", "Colors", nil)
+    add_setting(:color_light, :fancy_color, "Light", "#ddd7c2", "Colors", nil)
+    add_setting(:color, :fancy_color, "Main", "#a59e86", "Colors", nil)
+    add_setting(:color_dark, :fancy_color, "Dark", "#6d6753", "Colors", nil)
+    add_setting(:color_darkest, :fancy_color, "Darkest", "#403a22", "Colors", nil)
   end
 end
