@@ -43,3 +43,9 @@
 
 /node_modules
 *.code-workspace
+
+/vendor
+!/vendor/.keep
+
+/vendor/javascript
+!/vendor/javascript/.keep
