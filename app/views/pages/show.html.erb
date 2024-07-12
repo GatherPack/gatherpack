@@ -3,11 +3,7 @@
     <h1><%= @page.identifier_name %></h1>
   </div>
   <div class="card-body">
-    <% if @page.dynamic %>
-      <%= simple_format ERB.new(@page.content).result(binding) %>
-    <% else %>
-      <%= simple_format @page.content %>
-    <% end %>
+    <%= format_page_content @page %>
   </div>
   <div class="card-footer">
     <%= link_to 'Edit', edit_page_path(@page), class: 'btn btn-warning' if policy(@page).edit? %>

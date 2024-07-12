@@ -9,10 +9,10 @@
     <%= f.association :team %>
   </div>
   <div class="col-md">
-    <%= f.input :viewer, as: :select, collection: Page::PERMISSION_LEVELS %>
+    <%= f.input :viewer, as: :select, collection: Page::PERMISSION_LEVELS, include_blank: false %>
   </div>
   <div class="col-md">
-    <%= f.input :editor, as: :select, collection: Page::PERMISSION_LEVELS %>
+    <%= f.input :editor, as: :select, collection: Page::PERMISSION_LEVELS, include_blank: false %>
   </div>
 </div>
 
