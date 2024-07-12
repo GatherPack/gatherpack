@@ -2,4 +2,7 @@
   <div class="card-header">
     <%= link_to page.identifier_name, page, 'data-turbo': false %>
   </div>
+  <div class="card-body">
+    <%= format_page_content(page).truncate(50, separator: ' ') %>
+  </div>
 </div>
