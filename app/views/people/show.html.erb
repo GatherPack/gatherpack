@@ -1,8 +1,44 @@
+<% breadcrumb @person %>
+
 <div class="card">
   <div class="card-header">
     <h1><%= @person.identifier_name %></h1>
   </div>
   <div class="card-body">
+    <div class="row">
+      <div class="col">
+        <img src="<%= get_avatar_url(@person.avatar) %>">
+      </div>
+      <div class="col">
+        <p><b>Email: </b><%= if @person.user.nil? then "This person doesn't have a user attached." else @person.user.email end %></p>
+        <p><b>Phone: </b><%= @person.phone_number %></p>
+        <p><b>Birthday: </b><%= @person.birthday %></p>
+        <p><b>Address: </b><%= @person.address %></p>
+        <p><b>Dietary Restrictions: </b><%= @person.dietary_restrictions %></p>
+        <p><b>Shirt Size: </b><%= @person.shirt_size %></p>
+        <p><b>Gender: </b><%= @person.gender %></p>
+      </div>
+      <div class="col">
+        <div class="mb-3">
+          <h3>Teams</h3>
+          <% @person.teams.each do |team| %>
+            <%= link_to team do %>
+              <%= as_badge team %>
+            <% end %>
+          <% end %>
+        </div>
+        <h3>Badges</h3>
+        <div class="row">
+          <% @person.badges.order(name: :asc).each do |badge| %>
+            <div class="col-sm-3 mb-3 fs-3">
+              <%= link_to badge do %>
+                <%= as_badge badge %>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
   </div>
   <div class="card-footer">
     <%= link_to 'Edit', edit_person_path(@person), class: 'btn btn-warning' if policy(@person).update? %>

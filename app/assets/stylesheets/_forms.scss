@@ -24,3 +24,76 @@
     background-color: $greige-darkest;
   }
 }
+
+.form-control.fancy_color {
+  border: none;
+  color: inherit !important;
+  background-color: inherit !important;
+}
+
+.fancy-color-container {
+  display: flex;
+  padding: 0;
+  border-color: $greige-darkest;
+  background-color: $greige-lightest;
+  --bs-gutter-x: 0;
+  align-items: center;
+}
+.fancy-color-picker-col {
+  border-right: 1px solid $greige-darkest;
+}
+
+#capture-video {
+  width: 100%;
+}
+
+.icon-select-wrapper {
+  border-color: $greige-darkest;
+  background-color: $greige-lightest;
+  padding: 0;
+}
+
+.icon-input-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.icon-select-wrapper input {
+  border: none;
+  color: inherit !important;
+  background-color: inherit !important;
+  padding-left: calc(12px + 2em);
+}
+
+.icon-input-wrapper .main-icon {
+  position: absolute;
+  width: 1em;
+  padding-left: 12px;
+}
+
+.icon-select-list {
+  border-top: solid $greige-darkest 1px;
+}
+
+.icon-select-list div {
+  margin-bottom: 2px;
+  padding: 2px;
+  padding-left: 12px;
+  padding-right: 12px;
+  transition: ease-in-out background-color .125s;
+  cursor: pointer;
+  align-items: center;
+}
+.icon-select-list div svg {
+  width: 1em;
+}
+
+
+.icon-select-list div:hover {
+  background-color: $greige-light;
+}
+
+input.datetime {
+  border-color: $greige-darkest;
+  background-color: $greige-lightest;
+}

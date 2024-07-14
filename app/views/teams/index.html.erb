@@ -1,4 +1,6 @@
-<%= search_form_for @q do |f| %>
+<% breadcrumb :teams %>
+
+<%= search_form_for @q, data: {"controller": "turbo_search", "turbo_frame": "results"} do |f| %>
 <div class="card">
   <div class="card-header">
     <h1>Teams</h1>
@@ -15,17 +17,20 @@
   </div>
   <div class="card-footer">
     <%= link_to "New team", new_team_path, class: 'btn btn-success' %>
-    <%= f.submit 'Search', class: 'btn btn-primary' %>
+    <%= f.submit 'Search', class: 'btn btn-primary', data: { action: "turbo_search#search" } %>
+    <%= link_to 'Clear search', request.path, class: "btn btn-dark", data: { action: "turbo_search#clear" } %>
   </div>
 </div>
 <% end %>
 
-<div id="teams" class="row">
-  <% @teams.each do |team| %>
-    <div class="col-md-3">
-      <%= render team %>
-    </div>
-  <% end %>
-</div>
+<%= turbo_frame_tag "results" do %>
+  <div id="teams" class="row">
+    <% @teams.each do |team| %>
+      <div class="col-md-3">
+        <%= render team %>
+      </div>
+    <% end %>
+  </div>
 
-<%= paginate @teams %>
+  <%= paginate @teams %>
+<% end %>
