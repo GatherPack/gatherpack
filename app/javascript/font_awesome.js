@@ -103,4 +103,15 @@ document.addEventListener("turbo:load", async ev => {
         icon.addEventListener("input", inputFunc);
         inputFunc(null);
     });
+
+    let badges = document.getElementsByClassName("badge");
+    for (let i = 0; i < badges.length; i++) {
+        const badge = badges[i];
+        if (icons.includes(badge.innerText)) {
+            let elem = document.createElement('i');
+            elem.classList.add("fa-solid", "fa-" + badge.innerText);
+            badge.innerHTML = "";
+            badge.appendChild(elem);
+        }
+    }
 });
