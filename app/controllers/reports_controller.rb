@@ -1,4 +1,4 @@
-class ReportsController < ApplicationController
+class ReportsController < InternalController
   before_action :set_report, only: %i[ show run edit update destroy ]
 
   # GET /reports

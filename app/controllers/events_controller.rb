@@ -1,4 +1,4 @@
-class EventsController < ApplicationController
+class EventsController < InternalController
   before_action :set_event, only: %i[ show edit update destroy ]
 
   # GET /events
