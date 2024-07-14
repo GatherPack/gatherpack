@@ -31,8 +31,6 @@ module Gatherpack
 
     config.generators do |g|
       g.orm :active_record, primary_key_type: KeyTypePicker.key_type
-
-      # g.scaffold_controller :new_scaffold #hope this works
     end
   end
 end

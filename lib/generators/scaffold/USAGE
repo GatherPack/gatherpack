@@ -2,7 +2,7 @@ Description:
     Explain the generator
 
 Example:
-    bin/rails generate new_scaffold Thing
+    bin/rails generate scaffold Thing
 
     This will create:
         what/will/it/create

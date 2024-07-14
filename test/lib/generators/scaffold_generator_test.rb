@@ -1,8 +1,8 @@
 require "test_helper"
-require "generators/new_scaffold/new_scaffold_generator"
+require "generators/scaffold/scaffold_generator"
 
-class NewScaffoldGeneratorTest < Rails::Generators::TestCase
-  tests NewScaffoldGenerator
+class ScaffoldGeneratorTest < Rails::Generators::TestCase
+  tests ScaffoldGenerator
   destination Rails.root.join("tmp/generators")
   setup :prepare_destination
 
