@@ -6,6 +6,7 @@ class Person < ApplicationRecord
   has_many :badges, through: :badge_assignments
   before_save :check_display_name
   accepts_nested_attributes_for :user
+  has_one_attached :avatar
 
   def self.ransackable_attributes(auth_object = nil)
     [ 'address', 'birthday', 'created_at', 'dietary_restrictions', 'display_name', 'first_name', 'gender', 'id', 'last_name', 'phone_number', 'shirt_size', 'updated_at', 'user_id' ]

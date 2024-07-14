@@ -4,7 +4,6 @@ class Event < ApplicationRecord
 
   validates :name, presence: true
   validates :start_time, presence: true
-  validates :start_time, presence: true
 
   def self.ransackable_attributes(auth_object = nil)
     ['name', 'start_time', 'end_time', 'location', 'event_type_id', 'team_id']
@@ -18,6 +17,8 @@ class Event < ApplicationRecord
 
   private
   def valid_times
-    errors.add(:end_time, 'Your event cannot end before it starts!') if end_time.before?(start_time)
+    if start_time? && end_time? then
+      errors.add(:end_time, 'cannot be before start time!') if end_time.before?(start_time)
+    end
   end
 end

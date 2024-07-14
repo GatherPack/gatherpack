@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/rails/mission_control-jobs.git
-  revision: d6eee5bf62ea284a6ef874d0c34b8b5d7db86088
+  revision: 0ddff4339f76dd94aa2b1bb4530404b00f33ac74
   branch: main
   specs:
     mission_control-jobs (0.2.1)
@@ -12,7 +12,7 @@ GIT
 
 GIT
   remote: https://github.com/rails/rails.git
-  revision: b9d6759401c3d50a51e0a7650cb2331f4218d11f
+  revision: 4867559a10a342e7c27dacdf0ec42702455b29be
   branch: main
   specs:
     actioncable (8.0.0.alpha)
@@ -109,7 +109,7 @@ GIT
 
 GIT
   remote: https://github.com/rails/solid_queue.git
-  revision: 4b36e244fc30b16fb1adcfbbef47d0367a2ffd24
+  revision: 664931da38548e5a3845952fe24b24f5285950ee
   branch: main
   specs:
     solid_queue (0.3.3)
@@ -140,6 +140,7 @@ GEM
     bcrypt (3.1.20)
     bcrypt_pbkdf (1.1.1)
     bcrypt_pbkdf (1.1.1-arm64-darwin)
+    bcrypt_pbkdf (1.1.1-x64-mingw-ucrt)
     bcrypt_pbkdf (1.1.1-x86_64-darwin)
     bigdecimal (3.1.8)
     bindex (0.8.1)
@@ -182,6 +183,7 @@ GEM
     ffi (1.17.0-arm-linux-gnu)
     ffi (1.17.0-arm-linux-musl)
     ffi (1.17.0-arm64-darwin)
+    ffi (1.17.0-x64-mingw-ucrt)
     ffi (1.17.0-x86-linux-gnu)
     ffi (1.17.0-x86-linux-musl)
     ffi (1.17.0-x86_64-darwin)
@@ -203,7 +205,7 @@ GEM
       activesupport (>= 6.0.0)
       railties (>= 6.0.0)
     io-console (0.7.2)
-    irb (1.13.2)
+    irb (1.14.0)
       rdoc (>= 4.0.0)
       reline (>= 0.4.2)
     json (2.7.2)
@@ -257,9 +259,9 @@ GEM
       net-smtp
     marcel (1.0.4)
     matrix (0.4.2)
-    mini_magick (4.13.1)
+    mini_magick (4.13.2)
     mini_mime (1.1.5)
-    minitest (5.24.0)
+    minitest (5.24.1)
     net-imap (0.4.14)
       date
       net-protocol
@@ -281,6 +283,8 @@ GEM
       racc (~> 1.4)
     nokogiri (1.16.6-arm64-darwin)
       racc (~> 1.4)
+    nokogiri (1.16.6-x64-mingw-ucrt)
+      racc (~> 1.4)
     nokogiri (1.16.6-x86-linux)
       racc (~> 1.4)
     nokogiri (1.16.6-x86_64-darwin)
@@ -296,7 +300,7 @@ GEM
       omniauth (~> 2.0)
     orm_adapter (0.5.0)
     parallel (1.25.1)
-    parser (3.3.3.0)
+    parser (3.3.4.0)
       ast (~> 2.4.1)
       racc
     propshaft (0.9.0)
@@ -313,7 +317,7 @@ GEM
       activesupport (>= 3.0.0)
     raabro (1.4.0)
     racc (1.8.0)
-    rack (3.1.4)
+    rack (3.1.7)
     rack-protection (4.0.0)
       base64 (>= 0.1.0)
       rack (>= 3.0.0, < 4)
@@ -333,7 +337,7 @@ GEM
       nokogiri (~> 1.14)
     rainbow (3.1.1)
     rake (13.2.1)
-    ransack (4.1.1)
+    ransack (4.2.0)
       activerecord (>= 6.1.5)
       activesupport (>= 6.1.5)
       i18n
@@ -360,13 +364,13 @@ GEM
       unicode-display_width (>= 2.4.0, < 3.0)
     rubocop-ast (1.31.3)
       parser (>= 3.3.1.0)
-    rubocop-minitest (0.35.0)
+    rubocop-minitest (0.35.1)
       rubocop (>= 1.61, < 2.0)
       rubocop-ast (>= 1.31.1, < 2.0)
     rubocop-performance (1.21.1)
       rubocop (>= 1.48.1, < 2.0)
       rubocop-ast (>= 1.31.1, < 2.0)
-    rubocop-rails (2.25.0)
+    rubocop-rails (2.25.1)
       activesupport (>= 4.2.0)
       rack (>= 1.1)
       rubocop (>= 1.33.0, < 2.0)
@@ -398,6 +402,7 @@ GEM
     sqlite3 (2.0.2-arm-linux-gnu)
     sqlite3 (2.0.2-arm-linux-musl)
     sqlite3 (2.0.2-arm64-darwin)
+    sqlite3 (2.0.2-x64-mingw-ucrt)
     sqlite3 (2.0.2-x86-linux-gnu)
     sqlite3 (2.0.2-x86-linux-musl)
     sqlite3 (2.0.2-x86_64-darwin)
@@ -412,7 +417,7 @@ GEM
       net-scp (>= 1.1.2)
       net-sftp (>= 2.1.2)
       net-ssh (>= 2.8.0)
-    standard (1.39.0)
+    standard (1.39.1)
       language_server-protocol (~> 3.17.0.2)
       lint_roller (~> 1.0)
       rubocop (~> 1.64.0)
@@ -436,6 +441,8 @@ GEM
       railties (>= 6.0.0)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
+    tzinfo-data (1.2024.1)
+      tzinfo (>= 1.0.0)
     unicode-display_width (2.5.0)
     useragent (0.16.10)
     warden (1.2.9)
@@ -446,7 +453,7 @@ GEM
       bindex (>= 0.4.0)
       railties (>= 6.0.0)
     webrick (1.8.1)
-    websocket (1.2.10)
+    websocket (1.2.11)
     websocket-driver (0.7.6)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
@@ -463,6 +470,7 @@ PLATFORMS
   arm-linux-gnu
   arm-linux-musl
   arm64-darwin
+  x64-mingw-ucrt
   x86-linux
   x86-linux-gnu
   x86-linux-musl
@@ -507,4 +515,4 @@ DEPENDENCIES
   web-console
 
 BUNDLED WITH
-   2.5.14
+   2.5.15
