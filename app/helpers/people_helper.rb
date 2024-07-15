@@ -10,7 +10,7 @@ module PeopleHelper
 
     available_teams = person.teams + current_user.person.teams.where(join_permission: Team.join_permissions[:added_by_current_member])
     current_user.person.teams.where(join_permission: Team.join_permissions[:added_by_manager]).each do |t|
-      if !t.memberships.where(person_id: current_user.person.id, manager: true).empty?
+      if !t.managers.include?(current_user.person)
         available_teams.append t
       end
     end
