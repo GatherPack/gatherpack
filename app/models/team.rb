@@ -18,4 +18,8 @@ class Team < ApplicationRecord
   def self.ransackable_associations(auth_object = nil)
     ['team_type']
   end
+
+  def managers
+    people.joins(:memberships).where(memberships: { manager: true })
+  end
 end

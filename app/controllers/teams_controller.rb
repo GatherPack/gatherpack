@@ -33,7 +33,7 @@ class TeamsController < InternalController
 
   # PATCH/PUT /teams/1
   def update
-    if @team.update(team_params)
+    if authorize(@team).update(team_params)
       redirect_to @team, notice: 'Team was successfully updated.', status: :see_other
     else
       render :edit, status: :unprocessable_entity
@@ -54,6 +54,6 @@ class TeamsController < InternalController
 
     # Only allow a list of trusted parameters through.
     def team_params
-      params.require(:team).permit(:name, :color, :team_type_id, :join_permission, person_ids: [])
+      params.require(:team).permit(policy(@team).permitted_attributes)
     end
 end
