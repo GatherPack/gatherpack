@@ -17,7 +17,7 @@ class TeamPolicy < ApplicationPolicy
     has_perms
   end
 
-  def permitted_attributes
+  def permitted_attributes_for_update
     if user.admin?
       [ :name, :color, :team_type_id, :join_permission, person_ids: [] ]
     else
