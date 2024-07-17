@@ -109,7 +109,7 @@ GIT
 
 GIT
   remote: https://github.com/rails/solid_queue.git
-  revision: fa0a5cbc7f157fbc963a3a676ab1f813cb0e1673
+  revision: 90f4e132b07f0a982a91d6c45db4df7e9a7b0e65
   branch: main
   specs:
     solid_queue (0.3.3)
