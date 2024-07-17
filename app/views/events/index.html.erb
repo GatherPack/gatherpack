@@ -28,13 +28,8 @@
 <% end %>
 
 <%= turbo_frame_tag "results" do %>
-  <div id="events" class="row">
-    <% @events.each do |event| %>
-      <div class="col-md-3">
-        <%= render event %>
-      </div>
-    <% end %>
+  <div data-controller="calendar" data-calendar-url-path-value="<%= events_path %>" data-calendar-events-value="<%= @events.to_json %>">
+    <div id="calendar" data-turbo="false">
+    </div>
   </div>
-
-  <%= paginate @events %>
 <% end %>
