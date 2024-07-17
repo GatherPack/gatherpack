@@ -12,7 +12,7 @@ GIT
 
 GIT
   remote: https://github.com/rails/rails.git
-  revision: 4867559a10a342e7c27dacdf0ec42702455b29be
+  revision: 099776069c4be64be8be7e3fdb0232d7824a38a9
   branch: main
   specs:
     actioncable (8.0.0.alpha)
@@ -109,7 +109,7 @@ GIT
 
 GIT
   remote: https://github.com/rails/solid_queue.git
-  revision: 664931da38548e5a3845952fe24b24f5285950ee
+  revision: fa0a5cbc7f157fbc963a3a676ab1f813cb0e1673
   branch: main
   specs:
     solid_queue (0.3.3)
@@ -201,7 +201,7 @@ GEM
       rdoc (>= 4.0.0)
       reline (>= 0.4.2)
     json (2.7.2)
-    kamal (1.7.3)
+    kamal (1.8.0)
       activesupport (>= 7.0)
       base64 (~> 0.2)
       bcrypt_pbkdf (~> 1.0)
@@ -209,9 +209,8 @@ GEM
       dotenv (~> 2.8)
       ed25519 (~> 1.2)
       net-ssh (~> 7.0)
-      sshkit (>= 1.22.2, < 2.0)
+      sshkit (>= 1.23.0, < 2.0)
       thor (~> 1.2)
-      x25519 (~> 1.0, >= 1.0.10)
       zeitwerk (~> 2.5)
     kaminari (1.2.2)
       activesupport (>= 4.1.0)
@@ -449,7 +448,6 @@ GEM
     websocket-driver (0.7.6)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
-    x25519 (1.0.10)
     xpath (3.2.0)
       nokogiri (~> 1.8)
     zeitwerk (2.6.16)
