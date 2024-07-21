@@ -1,5 +1,6 @@
 import { Controller } from "@hotwired/stimulus"
 import FullCalendar from "fullcalendar"
+import chroma from "chroma-js";
 
 // Connects to data-controller="calendar"
 export default class extends Controller {
@@ -25,15 +26,17 @@ export default class extends Controller {
       },
 
       events: this.eventsValue.map(element => {
+        let icon_background_color = element.team == null ? "#3788d8" : element.team.color
         return {
           id: element.id,
           title: element.name,
           start: new Date(element.start_time),
           end: new Date(element.end_time),
           url: this.urlPathValue + "/" + element.id,
-          // backgroundColor: element.team == null ? "" : element.team.color,
           extendedProps: {
-            icon: `fa-${element.team == null ? "star" : element.team.team_type.icon}`
+            icon: `fa-${element.team == null ? "star" : element.team.team_type.icon}`,
+            iconBackgroundColor: icon_background_color,
+            iconColor: chroma(icon_background_color).luminance() > 0.5 ? "#6d6753" : "#fffdf6"
           }
         }
       }),
@@ -42,9 +45,11 @@ export default class extends Controller {
         const query = calendar.view.type === "listMonth" ? ".fc-list-event-title" : ".fc-event-title"
 
         let span = document.createElement("span")
-        span.classList.add("badge", "rounded-pill") 
+        span.classList.add("badge", "rounded-pill", "ms-2")
+        span.style.backgroundColor = info.event.extendedProps.iconBackgroundColor
         let icon = document.createElement("i")
-        icon.classList.add("fa-solid", info.event.extendedProps.icon)
+        icon.classList.add("fa-solid", "fa-fw", info.event.extendedProps.icon)
+        icon.style.color = info.event.extendedProps.iconColor
         span.append(icon)
 
         info.el.querySelector(query).append(span)
