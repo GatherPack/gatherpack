@@ -1,11 +1,10 @@
 import { Controller } from "@hotwired/stimulus"
 import FullCalendar from "fullcalendar"
-import chroma from "chroma-js";
+import chroma from "chroma-js"
 
 // Connects to data-controller="calendar"
 export default class extends Controller {
   static values = {
-    urlPath: String,
     events: Array
   }
 
@@ -15,7 +14,6 @@ export default class extends Controller {
       initialView: "dayGridMonth",
       editable: false,
       fixedWeekCount: false,
-      navLinks: true,
       weekNumbers: true,
       dayMaxEventRows: true,
 
@@ -32,7 +30,7 @@ export default class extends Controller {
           title: element.name,
           start: new Date(element.start_time),
           end: new Date(element.end_time),
-          url: this.urlPathValue + "/" + element.id,
+          url: "events/" + element.id,
           extendedProps: {
             icon: `fa-${element.team == null ? "star" : element.team.team_type.icon}`,
             iconBackgroundColor: icon_background_color,
