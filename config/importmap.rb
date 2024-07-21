@@ -11,3 +11,4 @@ pin 'bootstrap', to: 'bootstrap.min.js'
 pin 'trix'
 pin '@rails/actiontext', to: 'actiontext.esm.js'
 pin 'fullcalendar'
+pin "chroma-js" # @2.4.2
