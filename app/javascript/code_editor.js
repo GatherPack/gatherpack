@@ -1,8 +1,10 @@
 import {basicSetup} from "codemirror"
 import {EditorView, keymap} from "@codemirror/view"
+import {EditorState} from "@codemirror/state"
 import {indentMore, indentLess} from "@codemirror/commands"
 import {ruby} from '@codemirror/legacy-modes/mode/ruby'
 import {html} from '@codemirror/lang-html'
+import {json} from '@codemirror/lang-json'
 import {markdown} from '@codemirror/lang-markdown'
 import {completionStatus, acceptCompletion} from '@codemirror/autocomplete'
 import {tags} from "@lezer/highlight"
@@ -47,38 +49,60 @@ const indentIfNoOptions = ({state, dispatch}) => {
 
 const indentWithTab = {key: "Tab", run: indentIfNoOptions, shift: indentLess}
 
-document.addEventListener("turbo:load", ev => {
+let codeLangs = {
+    "ruby": StreamLanguage.define(ruby),
+    "html": html(),
+    "markdown": markdown(),
+    "md": markdown(),
+    "json": json()
+}
+
+function genCodeEditor(doc, codeLang, readonly, fallbackLang = "ruby") {
+    let lang = null;
+    if (codeLang in codeLangs) {
+        lang = codeLangs[codeLang]
+    } else {
+        lang = codeLangs[fallbackLang]
+    }
+
+    return new EditorView({
+        extensions: [
+            basicSetup,
+            keymap.of([indentWithTab]),
+            lang,
+            syntaxHighlighting(defaultHighlightStyle, {fallback: true}), 
+            EditorView.theme(autoHeight), 
+            syntaxHighlighting(highlightStyle),
+            EditorState.readOnly.of(readonly)
+        ],
+        doc
+    });
+}
+
+function doModifications() {
     document.querySelectorAll(".code-editor>textarea").forEach(textarea => {
+        if (textarea.style.display == "none") return;
+
         autoHeight["&"].height = getComputedStyle(textarea).height;
 
         let codeLang = textarea.getAttribute("data-lang");
+        let readonly = textarea.getAttribute("readonly") == "true";
 
-        let lang = null;
-        if (codeLang == "ruby") {
-            lang = StreamLanguage.define(ruby);
-        } else if (codeLang == "html") {
-            lang = html();
-        } else if (codeLang == "markdown") {
-            lang = markdown();
-        } else {
-            lang = StreamLanguage.define(ruby);
-        }
-
-        view = new EditorView({
-            extensions: [
-                basicSetup,
-                keymap.of([indentWithTab]),
-                lang,
-                syntaxHighlighting(defaultHighlightStyle, {fallback: true}), 
-                EditorView.theme(autoHeight), 
-                syntaxHighlighting(highlightStyle)],
-            doc: textarea.value
-        });
+        view = genCodeEditor(textarea.value, codeLang, readonly)
         
         textarea.parentNode.insertBefore(view.dom, textarea);
         textarea.style.display = "none";
         textarea.form.addEventListener("submit", () => {
-          textarea.value = view.state.doc.toString()
+            textarea.value = view.state.doc.toString();
         });
     });
+    document.querySelectorAll("code").forEach(codeElem => {
+        let codeLang = codeElem.getAttribute("data-lang");
+        view = genCodeEditor(codeElem.firstChild.innerText, codeLang, true, "json");
+        codeElem.replaceWith(view.dom);
+    });
+}
+
+document.addEventListener("turbo:load", ev => {
+    setInterval(doModifications, 500);
 });
