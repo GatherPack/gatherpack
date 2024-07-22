@@ -18,7 +18,7 @@ pin "@codemirror/language", to: "@codemirror--language.js" # @6.10.2
 pin "@codemirror/lint", to: "@codemirror--lint.js" # @6.8.1
 pin "@codemirror/search", to: "@codemirror--search.js" # @6.5.6
 pin "@codemirror/state", to: "@codemirror--state.js" # @6.4.1
-pin "@codemirror/view", to: "@codemirror--view.js" # @6.28.4
+pin "@codemirror/view", to: "@codemirror--view.js" # @6.28.6
 pin "@lezer/common", to: "@lezer--common.js" # @1.2.1
 pin "@lezer/highlight", to: "@lezer--highlight.js" # @1.2.0
 pin "crelt" # @1.0.6
@@ -34,3 +34,5 @@ pin "@lezer/javascript", to: "@lezer--javascript.js" # @1.4.17
 pin "@lezer/lr", to: "@lezer--lr.js" # @1.4.1
 pin "@codemirror/lang-markdown", to: "@codemirror--lang-markdown.js" # @6.2.5
 pin "@lezer/markdown", to: "@lezer--markdown.js" # @1.3.0
+pin "@codemirror/lang-json", to: "@codemirror--lang-json.js" # @6.0.1
+pin "@lezer/json", to: "@lezer--json.js" # @1.0.2
