@@ -3,7 +3,12 @@ require "pstore"
 class Settings
   include Singleton
 
+  attr_accessor :store
+  attr_reader :settings
+
   class Setting
+    attr_reader :name, :setting_type, :description, :group, :setting_key, :value, :default_value
+
     def initialize(store, setting_key, setting_type, name, default_value, group, description)
       @setting_key = setting_key
       @setting_type = setting_type || :text
@@ -25,8 +30,6 @@ class Settings
     def in_group?(group)
       group == @group
     end
-
-    attr_reader :name, :setting_type, :description, :group, :setting_key, :value, :default_value
   end
 
   class <<self
@@ -54,9 +57,6 @@ class Settings
       instance.settings.values.map(&:group).uniq
     end
   end
-
-  attr_accessor :store
-  attr_reader :settings
 
   private
   def add_setting(setting_key, *args)
