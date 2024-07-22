@@ -16,6 +16,7 @@ export default class extends Controller {
       fixedWeekCount: false,
       weekNumbers: true,
       dayMaxEventRows: true,
+      timeZone: "UTC",
 
       headerToolbar: {
         left: "prev,next today",
