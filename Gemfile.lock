@@ -12,7 +12,7 @@ GIT
 
 GIT
   remote: https://github.com/rails/rails.git
-  revision: 16f1222753cac0a554a2acd8f4ffa3f23d51d945
+  revision: 72741db81e26a2e8c6dd63ca3bfa98aff6ab961b
   branch: main
   specs:
     actioncable (8.0.0.alpha)
@@ -109,10 +109,10 @@ GIT
 
 GIT
   remote: https://github.com/rails/solid_queue.git
-  revision: 664931da38548e5a3845952fe24b24f5285950ee
+  revision: ac477d7b45f530026f36456ee114f223d86fd4ef
   branch: main
   specs:
-    solid_queue (0.3.3)
+    solid_queue (0.3.4)
       activejob (>= 7.1)
       activerecord (>= 7.1)
       concurrent-ruby (>= 1.3.1)
@@ -201,7 +201,7 @@ GEM
       rdoc (>= 4.0.0)
       reline (>= 0.4.2)
     json (2.7.2)
-    kamal (1.7.3)
+    kamal (1.8.0)
       activesupport (>= 7.0)
       base64 (~> 0.2)
       bcrypt_pbkdf (~> 1.0)
@@ -209,9 +209,8 @@ GEM
       dotenv (~> 2.8)
       ed25519 (~> 1.2)
       net-ssh (~> 7.0)
-      sshkit (>= 1.22.2, < 2.0)
+      sshkit (>= 1.23.0, < 2.0)
       thor (~> 1.2)
-      x25519 (~> 1.0, >= 1.0.10)
       zeitwerk (~> 2.5)
     kaminari (1.2.2)
       activesupport (>= 4.1.0)
@@ -292,7 +291,7 @@ GEM
       omniauth (~> 2.0)
     orm_adapter (0.5.0)
     parallel (1.25.1)
-    parser (3.3.3.0)
+    parser (3.3.4.0)
       ast (~> 2.4.1)
       racc
     propshaft (0.9.0)
@@ -302,14 +301,14 @@ GEM
       railties (>= 7.0.0)
     psych (5.1.2)
       stringio
-    public_suffix (6.0.0)
+    public_suffix (6.0.1)
     puma (6.4.2)
       nio4r (~> 2.0)
     pundit (2.3.2)
       activesupport (>= 3.0.0)
     raabro (1.4.0)
     racc (1.8.0)
-    rack (3.1.6)
+    rack (3.1.7)
     rack-protection (4.0.0)
       base64 (>= 0.1.0)
       rack (>= 3.0.0, < 4)
@@ -329,7 +328,7 @@ GEM
       nokogiri (~> 1.14)
     rainbow (3.1.1)
     rake (13.2.1)
-    ransack (4.1.1)
+    ransack (4.2.0)
       activerecord (>= 6.1.5)
       activesupport (>= 6.1.5)
       i18n
@@ -341,7 +340,7 @@ GEM
     responders (3.1.1)
       actionpack (>= 5.2)
       railties (>= 5.2)
-    rexml (3.3.1)
+    rexml (3.3.2)
       strscan
     rubocop (1.64.1)
       json (~> 2.3)
@@ -356,7 +355,7 @@ GEM
       unicode-display_width (>= 2.4.0, < 3.0)
     rubocop-ast (1.31.3)
       parser (>= 3.3.1.0)
-    rubocop-minitest (0.35.0)
+    rubocop-minitest (0.35.1)
       rubocop (>= 1.61, < 2.0)
       rubocop-ast (>= 1.31.1, < 2.0)
     rubocop-performance (1.21.1)
@@ -373,10 +372,11 @@ GEM
       rubocop-performance
       rubocop-rails
     ruby-progressbar (1.13.0)
-    ruby-vips (2.2.1)
+    ruby-vips (2.2.2)
       ffi (~> 1.12)
+      logger
     rubyzip (2.3.2)
-    selenium-webdriver (4.22.0)
+    selenium-webdriver (4.23.0)
       base64 (~> 0.2)
       logger (~> 1.4)
       rexml (~> 3.2, >= 3.2.5)
@@ -409,7 +409,7 @@ GEM
       net-scp (>= 1.1.2)
       net-sftp (>= 2.1.2)
       net-ssh (>= 2.8.0)
-    standard (1.39.1)
+    standard (1.39.2)
       language_server-protocol (~> 3.17.0.2)
       lint_roller (~> 1.0)
       rubocop (~> 1.64.0)
@@ -427,7 +427,7 @@ GEM
     strscan (3.1.0)
     thor (1.3.1)
     timeout (0.4.1)
-    turbo-rails (2.0.5)
+    turbo-rails (2.0.6)
       actionpack (>= 6.0.0)
       activejob (>= 6.0.0)
       railties (>= 6.0.0)
@@ -449,7 +449,6 @@ GEM
     websocket-driver (0.7.6)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
-    x25519 (1.0.10)
     xpath (3.2.0)
       nokogiri (~> 1.8)
     zeitwerk (2.6.16)
@@ -506,4 +505,4 @@ DEPENDENCIES
   web-console
 
 BUNDLED WITH
-   2.5.14
+   2.5.15
