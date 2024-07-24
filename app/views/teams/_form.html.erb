@@ -6,7 +6,7 @@
     <%= f.input :name %>
     <%= f.input :color, as: :fancy_color %>
     <%= f.association :team_type %>
-    <%= f.input :join_permission, collection: Team.join_permissions.keys %>
+    <%= f.input :join_permission, collection: Team.join_permissions.keys, label_method: :titleize %>
   </div>
   <div class="col-8">
     <%= f.association :people, as: :check_boxes, label_method: :display_name %>
