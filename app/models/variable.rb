@@ -1,7 +1,7 @@
 class Variable < ApplicationRecord
-  TYPES = %i[ string int float structure ]
+  TYPES = %w[ string int float structure ]
 
-  validates :name, presence: true, format: { without: /\w/, message: 'must not have spaces' }
+  validates :name, presence: true, format: { without: /\W/, message: 'must not have spaces' }
   validates :klass, presence: true, inclusion: { in: TYPES, message: 'is not valid' }
 
   def self.ransackable_attributes(auth_object = nil)
@@ -12,11 +12,15 @@ class Variable < ApplicationRecord
     nil if raw_value.blank?
     case klass
     when 'structure'
-      JSON.parse(raw_value)
+      begin
+        JSON.parse(raw_value)
+      rescue JSON::ParserError
+        { "value"=>raw_value }
+      end
     when 'int'
-      Integer(raw_value)
+      raw_value.to_i
     when 'float'
-      Float(raw_value)
+      raw_value.to_f
     else
       raw_value
     end
