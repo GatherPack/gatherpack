@@ -14,10 +14,14 @@ class PeopleController < InternalController
   # GET /people/new
   def new
     @person = authorize Person.new
+    @person.user = User.new
   end
 
   # GET /people/1/edit
   def edit
+    if @person.user.nil?
+      @person.user = User.new
+    end
   end
 
   # POST /people
@@ -54,6 +58,6 @@ class PeopleController < InternalController
 
     # Only allow a list of trusted parameters through.
     def person_params
-      params.require(:person).permit(:first_name, :last_name, :display_name, :gender, :shirt_size, :phone_number, :address, :birthday, :dietary_restrictions, :user_id, :avatar, team_ids: [], badge_ids: [])
+      params.require(:person).permit(:first_name, :last_name, :display_name, :gender, :shirt_size, :phone_number, :address, :birthday, :dietary_restrictions, :user_id, :avatar, user_attributes: [ :id, :email, :password, :password_confirmation ], team_ids: [], badge_ids: [])
     end
 end
