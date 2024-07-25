@@ -1,7 +1,10 @@
 Rails.application.routes.draw do
   resources :badges
   resources :badge_types
-  resources :events
+  resources :events do
+    resources :checkins, except: %i[ index ]
+    
+  end
   resources :event_types
   resources :announcements
   resources :reports do
