@@ -25,17 +25,17 @@ export default class extends Controller {
       },
 
       events: this.eventsValue.map(element => {
-        let icon_background_color = element.team == null ? "#3788d8" : element.team.color
+        let background_color = element.team == null ? "#3788d8" : element.team.color
         return {
           id: element.id,
           title: element.name,
           start: new Date(element.start_time),
           end: new Date(element.end_time),
           url: "events/" + element.id,
+          backgroundColor: background_color,
+          textColor: chroma(background_color).luminance() > 0.5 ? "#6d6753" : "#fffdf6",
           extendedProps: {
-            icon: `fa-${element.team == null ? "star" : element.team.team_type.icon}`,
-            iconBackgroundColor: icon_background_color,
-            iconColor: chroma(icon_background_color).luminance() > 0.5 ? "#6d6753" : "#fffdf6"
+            icon: `fa-${element.team == null ? "star" : element.team.team_type.icon}`
           }
         }
       }),
@@ -44,14 +44,15 @@ export default class extends Controller {
         const query = calendar.view.type === "listMonth" ? ".fc-list-event-title" : ".fc-event-title"
 
         let span = document.createElement("span")
-        span.classList.add("badge", "rounded-pill", "ms-2")
-        span.style.backgroundColor = info.event.extendedProps.iconBackgroundColor
+        span.classList.add("d-inline-block", "badge", "rounded-pill", "me-1", "border")
+        span.style.backgroundColor = info.event.backgroundColor
+        span.style.borderColor = info.event.borderColor
         let icon = document.createElement("i")
         icon.classList.add("fa-solid", "fa-fw", info.event.extendedProps.icon)
-        icon.style.color = info.event.extendedProps.iconColor
+        icon.style.color = info.event.textColor
         span.append(icon)
 
-        info.el.querySelector(query).append(span)
+        info.el.querySelector(query).prepend(span)
       }
     })
 
