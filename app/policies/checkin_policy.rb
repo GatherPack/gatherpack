@@ -4,4 +4,8 @@ class CheckinPolicy < ApplicationPolicy
       scope.all
     end
   end
+
+  def update?
+    record.person == person || user.admin
+  end
 end

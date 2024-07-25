@@ -5,8 +5,8 @@ module EventsHelper
       event.end_time == nil ? "" : 
         " - " + event.end_time.to_fs(format_type)
     ]
-    if include_location
-      parts << event.location != "" ? " at " + event.location : ""
+    if include_location && event.location.present?
+      parts << " at " + event.location
     end
     
     parts.join

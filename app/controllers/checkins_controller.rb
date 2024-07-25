@@ -20,7 +20,7 @@ class CheckinsController < InternalController
     @checkin = authorize @event.checkins.build(checkin_params)
 
     if @checkin.save
-      redirect_to [@event, @checkin], notice: 'Checkin was successfully created.'
+      redirect_to @event, notice: 'Checkin was successfully created.'
     else
       render :new, status: :unprocessable_entity
     end
