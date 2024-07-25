@@ -29,3 +29,15 @@ cd gatherpack
 bin/setup
 bin/dev
 ```
+
+### Settings
+
+Settings can be added in the `app/models/settings.rb` file in the `initialize` function at the bottom.
+Settings follow the format of
+```ruby
+add_setting(:id, :setting_type, "name", default_value, "group/category", "description")
+```
+eg.
+```ruby
+add_setting(:my_setting, :int, "My Setting", 15, "Very important settings", "Stores an integer")
+```
