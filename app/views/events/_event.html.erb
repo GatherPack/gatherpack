@@ -14,6 +14,6 @@
     </div>
   </div>
   <div class="card-body">
-    <%= event.start_time.to_fs :short %> - <%= event.end_time.to_fs :short %> at <%= event.location %>
+    <%= format_event_time_date(event, :short, true) %>
   </div>
 </div>

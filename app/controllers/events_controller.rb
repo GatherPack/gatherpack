@@ -9,6 +9,8 @@ class EventsController < InternalController
 
   # GET /events/1
   def show
+    @q = policy_scope(@event.checkins).ransack(params[:q])
+    @checkins = @q.result(distinct: true).page(params[:page])
   end
 
   # GET /events/new

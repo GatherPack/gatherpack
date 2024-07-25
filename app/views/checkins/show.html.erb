@@ -1,0 +1,17 @@
+<div class="card">
+  <div class="card-header">
+    <h1><%= @checkin.person.display_name %> @ <%= @event.name %></h1>
+  </div>
+  <div class="card-body">
+    <% if @checkin.notes.present? %>
+      <strong>Notes:</strong><br>
+      <%= @checkin.notes %>
+    <% else %>
+      <em>No notes present</em>
+    <% end %>
+  </div>
+  <div class="card-footer">
+    <%= link_to 'Edit', edit_event_checkin_path(@event, @checkin), class: 'btn btn-warning' %>
+    <%= link_to 'Checkout', [@event, @checkin], class: 'btn btn-danger', data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %>
+  </div>
+</div>
