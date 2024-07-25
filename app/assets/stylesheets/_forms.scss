@@ -97,3 +97,28 @@ input.datetime {
   border-color: $greige-darkest;
   background-color: $greige-lightest;
 }
+
+.cm-editor {
+  background-color: $greige-darkest;
+}
+.cm-editor .cm-gutters {
+  background-color: $greige-lightest;
+}
+.cm-editor .cm-activeLineGutter {
+  background-color: $greige-light;
+}
+.cm-editor .cm-activeLine {
+  background-color: scale-color($greige-dark, $alpha: -85%);
+}
+
+.cm-editor .cm-selectionBackground {
+  background-color: scale-color($greige-dark, $alpha: -65%);
+}
+
+.cm-editor .cm-content {
+  color: #9d9586;
+}
+
+.cm-editor.cm-focused .cm-selectionBackground {
+  background-color: scale-color($greige-dark, $alpha: -50%) !important;
+}

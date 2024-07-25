@@ -3,7 +3,7 @@
     <h1><%= @report.identifier_name %></h1>
   </div>
   <div class="card-body">
-    <code><pre><%= @report.code %></pre></code>
+    <code data-lang="ruby"><pre><%= @report.code %></pre></code>
   </div>
   <div class="card-footer">
     <%= link_to 'Run', run_report_path(@report), class: 'btn btn-success' %>
