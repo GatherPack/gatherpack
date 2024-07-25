@@ -3,15 +3,19 @@
     <h1><%= @checkin.person.display_name %> @ <%= @event.name %></h1>
   </div>
   <div class="card-body">
-    <% if @checkin.notes.present? %>
-      <strong>Notes:</strong><br>
-      <%= @checkin.notes %>
-    <% else %>
-      <em>No notes present</em>
-    <% end %>
+    <div class="row">
+      <div class="col-3">
+        <img src="<%= get_avatar_url(@checkin.person.avatar) %>">
+      </div>
+      <div class="col">
+        <%= render "notes", notes: @checkin.notes %>
+      </div>
+    </div>
   </div>
-  <div class="card-footer">
-    <%= link_to 'Edit', edit_event_checkin_path(@event, @checkin), class: 'btn btn-warning' %>
-    <%= link_to 'Checkout', [@event, @checkin], class: 'btn btn-danger', data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %>
-  </div>
+  <% if policy(@checkin).update? || policy(@checkin).destroy? %>
+    <div class="card-footer">
+      <%= link_to 'Edit', edit_event_checkin_path(@event, @checkin), class: 'btn btn-warning' if policy(@checkin).update? %>
+      <%= link_to 'Checkout', [@event, @checkin], class: 'btn btn-danger', data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } if policy(@checkin).destroy? %>
+    </div>
+  <% end %>
 </div>
