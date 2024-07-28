@@ -1,0 +1,2 @@
+class HookPolicy < AdminPolicy
+end

@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  include CanBeHooked
   has_one :person
   accepts_nested_attributes_for :person
   # Include default devise modules. Others available are:

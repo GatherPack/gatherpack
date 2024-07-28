@@ -1,4 +1,5 @@
 class Team < ApplicationRecord
+  include CanBeHooked
   belongs_to :team_type
   has_many :announcements
   has_many :badges

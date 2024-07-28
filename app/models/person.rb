@@ -1,4 +1,5 @@
 class Person < ApplicationRecord
+  include CanBeHooked
   belongs_to :user, optional: true
   has_many :memberships
   has_many :teams, through: :memberships
