@@ -1,4 +1,6 @@
 class Announcement < ApplicationRecord
+  has_paper_trail
+
   belongs_to :team, optional: true
 
   validates :title, presence: true

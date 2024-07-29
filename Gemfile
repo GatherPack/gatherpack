@@ -87,3 +87,5 @@ gem 'kaminari', '~> 1.2'
 gem "color", "~> 1.8"
 
 gem "pundit", "~> 2.3"
+
+gem "paper_trail"
