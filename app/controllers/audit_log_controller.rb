@@ -1,5 +1,5 @@
 class AuditLogController < ApplicationController
-  before_action :set_version, only: %i[ show destory revert ]
+  before_action :set_version, only: %i[ show destroy ]
   before_action :check_for_admin
 
   def index
@@ -9,10 +9,9 @@ class AuditLogController < ApplicationController
   def show
   end
 
-  def destory
-  end
-
-  def revert
+  def destroy
+    @version.destroy!
+    redirect_to audit_log_index_path, notice: "Log was successfully destroyed.", status: :see_other
   end
 
   private

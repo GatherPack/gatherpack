@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :audit_log, only: %i[ index show destory ]
+  resources :audit_log, only: %i[ index show destroy ]
   resources :badges
   resources :badge_types
   resources :events

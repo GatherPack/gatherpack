@@ -6,8 +6,9 @@
     <ul class="list-unstyled">
       <li>Item ID: <%= version.item_id %></li>
       <li>Event: <%= version.event %></li>
-      <li>Whodunnit: <%= version.whodunnit %></li>
+      <li>Whodunnit: <% if !version.whodunnit.nil? %><%= link_to User.find(version.whodunnit).person.identifier_name, User.find(version.whodunnit).person %><% end %></li>
     </ul>
     <%= link_to 'View', audit_log_path(version.id), class: 'btn btn-secondary' %>
+    <%= link_to 'Delete', audit_log_path(version.id), class: 'btn btn-danger', data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %>
   </div>
 </div>
