@@ -16,8 +16,12 @@ class Person < ApplicationRecord
     [ 'user' ]
   end
 
-  def admin
+  def admin?
     user&.admin
+  end
+
+  def manager?
+    memberships.where(manager: true).any?
   end
 
   private

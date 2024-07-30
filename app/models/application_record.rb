@@ -3,7 +3,7 @@ class ApplicationRecord < ActiveRecord::Base
   before_create :maybe_assign_id
 
   def identifier_name
-    try(:display_name) || try(:name) || try(:id)
+    try(:display_name) || try(:name) || try(:title) || try(:id)
   end
 
   private

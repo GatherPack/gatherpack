@@ -50,7 +50,7 @@ class <%= controller_class_name %>Controller < InternalController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_<%= singular_table_name %>
-      @<%= singular_table_name %> = policy_scope(<%= class_name %>).find(params[:id])
+      @<%= singular_table_name %> = authorize policy_scope(<%= class_name %>).find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
