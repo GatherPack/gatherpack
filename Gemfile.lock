@@ -1,4 +1,13 @@
 GIT
+  remote: https://github.com/paper-trail-gem/paper_trail.git
+  revision: 67a1ec2a4f0785297fd86b5bc281b4aa9be78fe0
+  branch: master
+  specs:
+    paper_trail (15.1.0)
+      activerecord (>= 6.1)
+      request_store (~> 1.4)
+
+GIT
   remote: https://github.com/rails/mission_control-jobs.git
   revision: 0ddff4339f76dd94aa2b1bb4530404b00f33ac74
   branch: main
@@ -290,9 +299,6 @@ GEM
       actionpack (>= 4.2)
       omniauth (~> 2.0)
     orm_adapter (0.5.0)
-    paper_trail (15.1.0)
-      activerecord (>= 6.1)
-      request_store (~> 1.4)
     parallel (1.25.1)
     parser (3.3.4.0)
       ast (~> 2.4.1)
@@ -491,7 +497,7 @@ DEPENDENCIES
   mission_control-jobs!
   omniauth (~> 2.1)
   omniauth-rails_csrf_protection (~> 1.0)
-  paper_trail
+  paper_trail!
   propshaft
   puma (>= 5.0)
   pundit (~> 2.3)

@@ -88,4 +88,4 @@ gem "color", "~> 1.8"
 
 gem "pundit", "~> 2.3"
 
-gem "paper_trail"
+gem "paper_trail", github: "paper-trail-gem/paper_trail", branch: "master"
