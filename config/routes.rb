@@ -11,6 +11,9 @@ Rails.application.routes.draw do
   resources :teams do
     resources :memberships, only: %i[ index update destroy ]
   end
+  resources :settings, only: %i[ index ] do
+    post 'update', on: :collection, as: 'update'
+  end
   resources :team_types
   resources :people
   devise_for :users, controllers: { omniauth_callbacks: 'omniauth', registrations: 'users/registrations' }

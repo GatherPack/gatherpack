@@ -28,13 +28,12 @@
 <% end %>
 
 <%= turbo_frame_tag "results" do %>
-  <div id="events" class="row">
-    <% @events.each do |event| %>
-      <div class="col-md-3">
-        <%= render event %>
+  <div class="card">
+    <div class="card-body">
+      <div data-controller="calendar" data-calendar-events-value="<%= @events.as_json(include: { team: { only: %i[ name color ], include: { team_type: { only: :icon } } } }).to_json %>">
+        <div id="calendar" data-turbo="false">
+        </div>
       </div>
-    <% end %>
+    </div>
   </div>
-
-  <%= paginate @events %>
 <% end %>
