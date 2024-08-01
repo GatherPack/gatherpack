@@ -3,7 +3,7 @@
     <h1><%= @event.identifier_name %></h1>
   </div>
   <div class="card-body">
-    <%= @event.start_time.to_fs :long_ordinal %> - <%= @event.end_time.to_fs :long_ordinal %><br>
+    <%= @event.start_time.to_fs :long_ordinal %><% if !@event.end_time.nil? %> - <%= @event.end_time.to_fs :long_ordinal %><% end %><br>
     Location: <%= @event.location %>
   </div>
   <div class="card-footer">
