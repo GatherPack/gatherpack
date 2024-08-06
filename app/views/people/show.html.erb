@@ -15,6 +15,16 @@
         <p><b>Dietary Restrictions: </b><%= @person.dietary_restrictions %></p>
         <p><b>Shirt Size: </b><%= @person.shirt_size %></p>
         <p><b>Gender: </b><%= @person.gender %></p>
+        <p><b>Tokens: </b></p>
+        <table>
+          <tbody>
+            <% @person.tokens.each do |token| %>
+              <tr>
+                <td><%= token.identifier_name %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
       </div>
       <div class="col">
         <div class="mb-3">

@@ -7,5 +7,6 @@
   <div class="card-footer">
     <%= link_to 'Edit', edit_token_path(@token), class: 'btn btn-warning' %>
     <%= link_to 'Delete', @token, class: 'btn btn-danger', data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %>
+    <%= link_to 'Back to Tokens', tokens_path, class: 'btn btn-dark' %>
   </div>
 </div>
