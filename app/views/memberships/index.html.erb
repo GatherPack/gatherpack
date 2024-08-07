@@ -1,3 +1,5 @@
+<% breadcrumb :memberships, @team %>
+
 <%= search_form_for @q, url: team_memberships_path(@team), data: {"controller": "turbo_search", "turbo_frame": "results"} do |f| %>
 <div class="card">
   <div class="card-header">
