@@ -1,3 +1,5 @@
+<% breadcrumb :root %>
+
 <div class="row">
   <div class="col-md-4">
     <div class="card">
@@ -17,6 +19,10 @@
         <h2>Calendar</h2>
       </div>
       <div class="card-body">
+        <div data-controller="calendar" data-calendar-events-value="<%= policy_scope(Event).as_json(include: { team: { only: %i[ name color ], include: { team_type: { only: :icon } } } }).to_json %>">
+          <div id="calendar" data-turbo="false">
+          </div>
+        </div>
       </div>
     </div>
   </div>
