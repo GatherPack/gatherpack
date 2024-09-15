@@ -26,12 +26,12 @@ const autoHeight = {
 console.log(tags)
 const highlightStyle = HighlightStyle.define([
     {tag: tags.keyword, color: "#cfa757"},
-    {tag: tags.comment, color: "#736e64", fontStyle: "italic"},
-    {tag: [tags.operator, tags.punctuation, tags.contentSeparator], color: "#828078"},
+    {tag: tags.comment, color: "#96959d", fontStyle: "italic"},
+    {tag: [tags.operator, tags.punctuation, tags.contentSeparator], color: "#d3d0c3"},
     {tag: [tags.string, tags.quote], color: "#83a655"},
-    {tag: [tags.atom, tags.regexp, tags.link], color: "#4e6773"},
-    {tag: [tags.number, tags.bracket, tags.literal, tags.list], color: "#66754b"},
-    {tag: tags.name, color: "#857955"},
+    {tag: [tags.atom, tags.regexp, tags.link], color: "#9dd3ed"},
+    {tag: [tags.number, tags.bracket, tags.literal, tags.list], color: "#b4e758"},
+    {tag: tags.name, color: "#e1cf97"},
     {tag: [tags.className, tags.namespace, tags.typeName, tags.heading], color: "#90a35b"},
     {tag: tags.strong, fontWeight: "bold"},
     {tag: tags.emphasis, fontStyle: "italic"},
