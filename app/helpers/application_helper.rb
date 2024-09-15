@@ -14,18 +14,20 @@ module ApplicationHelper
       badge_as_badge(obj)
     when Team
       team_as_badge(obj)
+    when Token
+      token_as_badge(obj)
     end.html_safe
   end
 
   def flash_to_class(type)
     case type
     when 'notice'
-      bootstrap_type = 'info';
+      bootstrap_type = 'info'
     else
-      bootstrap_type = type;
+      bootstrap_type = type
     end
 
-    "alert-" + bootstrap_type
+    'alert-' + bootstrap_type
   end
 
   def flash_to_icon(type)
@@ -38,6 +40,6 @@ module ApplicationHelper
       bootstrap_icon = 'circle-info'
     end
 
-    "fa-" + bootstrap_icon
+    'fa-' + bootstrap_icon
   end
 end
