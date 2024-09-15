@@ -4,6 +4,7 @@ class Person < ApplicationRecord
   has_many :teams, through: :memberships
   has_many :badge_assignments
   has_many :badges, through: :badge_assignments
+  has_many :tokens, as: :tokenable
   before_save :check_display_name
   accepts_nested_attributes_for :user, reject_if: proc { |attribute| attribute['password'].empty? }
   has_one_attached :avatar

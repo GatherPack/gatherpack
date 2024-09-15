@@ -16,9 +16,4 @@ test:
 
 production:
  <<: *default
- dispatchers:
-  - recurring_tasks:
-      periodic_litestream_backup_verfication_job:
-        class: Litestream::VerificationJob
-        args: []
-        schedule: every day at 1am EST
+      

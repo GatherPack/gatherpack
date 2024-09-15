@@ -10,4 +10,5 @@
   </div>
 </div>
 
-<%= f.input :raw_value, label: 'Value' %>
+<%= f.input :raw_value, label: 'Value', wrapper_html: { class: 'code-editor' }, input_html: { rows: 12, data: { lang: "json" } } %>
+
