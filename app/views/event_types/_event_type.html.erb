@@ -1,6 +1,6 @@
 <div class="card" id="<%= dom_id event_type %>">
   <div class="card-header">
-    <%= link_to event_type.identifier_name, "data-turbo": "false", event_type %>
+    <%= link_to event_type.identifier_name, event_type, "data-turbo": "false" %>
   </div>
   <div class="card-body">
     <%= pluralize event_type.events.count, 'event' %>
