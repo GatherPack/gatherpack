@@ -1,8 +1,11 @@
+<% breadcrumb @token %>
+
 <div class="card">
   <div class="card-header">
     <h1><%= @token.identifier_name %></h1>
   </div>
   <div class="card-body">
+    <p>Belongs to <%= link_to @token.tokenable.identifier_name, @token.tokenable %></p>
   </div>
   <div class="card-footer">
     <%= link_to 'Edit', edit_token_path(@token), class: 'btn btn-warning' %>
