@@ -47,7 +47,78 @@
   width: 100%;
 }
 
+.icon-select-wrapper {
+  border-color: $greige-darkest;
+  background-color: $greige-lightest;
+  padding: 0;
+}
+
+.icon-input-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.icon-select-wrapper input {
+  border: none;
+  color: inherit !important;
+  background-color: inherit !important;
+  padding-left: calc(12px + 2em);
+}
+
+.icon-input-wrapper .main-icon {
+  position: absolute;
+  width: 1em;
+  padding-left: 12px;
+}
+
+.icon-select-list {
+  border-top: solid $greige-darkest 1px;
+}
+
+.icon-select-list div {
+  margin-bottom: 2px;
+  padding: 2px;
+  padding-left: 12px;
+  padding-right: 12px;
+  transition: ease-in-out background-color .125s;
+  cursor: pointer;
+  align-items: center;
+}
+.icon-select-list div svg {
+  width: 1em;
+}
+
+
+.icon-select-list div:hover {
+  background-color: $greige-light;
+}
+
 input.datetime {
   border-color: $greige-darkest;
   background-color: $greige-lightest;
+}
+
+.cm-editor {
+  background-color: $greige-darkest;
+}
+.cm-editor .cm-gutters {
+  background-color: $greige-lightest;
+}
+.cm-editor .cm-activeLineGutter {
+  background-color: $greige-light;
+}
+.cm-editor .cm-activeLine {
+  background-color: scale-color($greige-dark, $alpha: -85%);
+}
+
+.cm-editor .cm-selectionBackground {
+  background-color: scale-color($greige-dark, $alpha: -65%);
+}
+
+.cm-editor .cm-content {
+  color: #9d9586;
+}
+
+.cm-editor.cm-focused .cm-selectionBackground {
+  background-color: scale-color($greige-dark, $alpha: -50%) !important;
 }
