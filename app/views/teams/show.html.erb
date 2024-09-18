@@ -1,12 +1,60 @@
-<div class="card">
+<% breadcrumb @team %>
+
+<div class="card mb-3">
   <div class="card-header">
     <h1><%= i @team.team_type.icon %> <%= @team.identifier_name %></h1>
   </div>
   <div class="card-body">
+    <div class="row">
+      <div class="col">
+        <div class="mb-3">
+          <h2>Badges</h2>
+          <div class="row">
+            <% @team.badges.order(name: :asc).first(16).each do |badge| %>
+              <div class="col-sm-3 mb-3">
+                <%= link_to badge do %>
+                  <%= as_badge badge %> <%= badge.identifier_name %>
+                <% end %>
+              </div>
+            <% end %>
+          </div>
+          <%= link_to 'Show All Team Badges', badges_path(q: { team_id_eq: @team.id }) %>
+        </div>
+      </div>
+      <div class="col">
+        <h2>Recent Activities</h2>
+        <div class="mb-3">
+          <h3>Announcements</h3>
+          <ul>
+            <% @team.announcements.visible.each do |announcement| %>
+              <li><%= link_to announcement.title, announcement %></li>
+            <% end %>
+          </ul>
+          <%= link_to 'Show All Team Announcements', announcements_path(q: { team_id_eq: @team.id }) %>
+        </div>
+        <div class="mb-3">
+          <h3>Events</h3>
+          <ul>
+            <% @team.events.order(created_at: :asc).last(5).each do |event| %>
+              <li><%= link_to event.name, event %></li>
+            <% end %>
+          </ul>
+          <%= link_to 'Show All Team Events', events_path(q: { team_id_eq: @team.id }) %>
+        </div>
+      </div>
+    </div>
   </div>
   <div class="card-footer">
     <%= link_to 'Memberships', team_memberships_path(@team), class: 'btn btn-info' if admin? %>
     <%= link_to 'Edit', edit_team_path(@team), class: 'btn btn-warning' %>
     <%= link_to 'Delete', @team, class: 'btn btn-danger', data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %>
   </div>
+</div>
+<h2>People</h2>
+<div class="row mb-3">
+  <% @team.people.each do |person| %>
+    <div class="col-md-3">
+      <%= render person %>
+    </div>
+  <% end %>
 </div>

@@ -1,0 +1,31 @@
+<% breadcrumb :settings %>
+
+  <%= simple_form_for :settings, url: update_settings_path do |f| %>
+    <% Settings.groups.each do |group| %>
+      <div class="card">
+        <div class="card-header">
+          <h1><%= group %></h1>
+        </div>
+        <div class="card-body">  
+          <% Settings.settings(group).each do |setting| %>
+            <div class="row align-items-end">
+              <%= f.input setting.setting_key, as: setting.setting_type, 
+                                              label: setting.name, 
+                                              placeholder: setting.default_value,
+                                              input_html: { value: setting.value }, 
+                                              wrapper_html: { class: 'col' } %>
+              <div class="col mb-3">
+                <%= setting.description %>
+                <br>
+                Default: <%= setting.default_value %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+        <div class="card-footer">
+          <%= f.submit 'Save', class: 'btn btn-lg btn-success' %>
+          <%= link_to 'Cancel', :back, class: 'btn btn-lg btn-primary' %>
+        </div>
+      </div>
+    <% end %>
+  <% end %>

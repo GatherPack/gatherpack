@@ -1,3 +1,5 @@
+<% breadcrumb @person %>
+
 <div class="card">
   <div class="card-header">
     <h1><%= @person.identifier_name %></h1>
@@ -17,15 +19,28 @@
         <p><b>Gender: </b><%= @person.gender %></p>
       </div>
       <div class="col">
-        <h3>Teams</h3>
-        <ul>
+        <div class="mb-3">
+          <h3>Teams</h3>
           <% @person.teams.each do |team| %>
-            <li><%= link_to team, style: "text-decoration-color: " + team.color do %>
-              <%= i team.team_type.icon %>
-              <%= content_tag :span, team.identifier_name, style: "color: " + team.color %>
-            <% end %></li>
+            <%= link_to team do %>
+              <%= as_badge team %>
+            <% end %>
           <% end %>
-        </ul>
+        </div>
+        <h3>Badges</h3>
+        <div class="row">
+          <% @person.badges.order(name: :asc).each do |badge| %>
+            <div class="col-sm-3 mb-3 fs-3">
+              <%= link_to badge do %>
+                <%= as_badge badge %>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+        <h3>Tokens</h3>
+        <% @person.tokens.each do |token| %>
+          <%= as_badge token %>
+        <% end %>
       </div>
     </div>
   </div>

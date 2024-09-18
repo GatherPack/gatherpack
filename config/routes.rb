@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :tokens
   resources :hooks
   resources :badges
   resources :badge_types
@@ -12,11 +13,15 @@ Rails.application.routes.draw do
   resources :teams do
     resources :memberships, only: %i[ index update destroy ]
   end
+  resources :settings, only: %i[ index ] do
+    post 'update', on: :collection, as: 'update'
+  end
   resources :team_types
   resources :people
   devise_for :users, controllers: { omniauth_callbacks: 'omniauth', registrations: 'users/registrations' }
 
   get '/setup' => 'welcome#setup', as: :setup
+  get 'search' => 'search#index', as: :search
 
   mount MissionControl::Jobs::Engine, at: '/jobs'
 
