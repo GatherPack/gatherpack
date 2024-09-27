@@ -1,0 +1,35 @@
+<% breadcrumb :hooks %>
+
+<%= search_form_for @q, data: {"controller": "turbo_search", "turbo_frame": "results"} do |f| %>
+<div class="card">
+  <div class="card-header">
+    <h1>Hooks</h1>
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col">
+        <%= f.input :name_i_cont, label: 'Name' %>
+      </div>
+      <div class="col">
+        <%= f.input :event_i_cont, label: 'Event' %>
+      </div>
+    </div>
+  </div>
+  <div class="card-footer">
+    <%= link_to "New hook", new_hook_path, class: 'btn btn-success' %>
+    <%= f.submit 'Search', class: 'btn btn-primary' %>
+  </div>
+</div>
+<% end %>
+
+<%= turbo_frame_tag "results" do %>
+  <div id="hooks" class="row">
+    <% @hooks.each do |hook| %>
+      <div class="col-md-3">
+        <%= render hook %>
+      </div>
+    <% end %>
+  </div>
+<% end %>
+
+<%= paginate @hooks %>
