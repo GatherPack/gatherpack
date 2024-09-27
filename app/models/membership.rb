@@ -1,4 +1,5 @@
 class Membership < ApplicationRecord
+  include CanBeHooked
   belongs_to :person
   belongs_to :team
 

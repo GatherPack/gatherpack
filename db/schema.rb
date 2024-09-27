@@ -59,6 +59,10 @@ ActiveRecord::Schema[8.0].define(version: 2024_07_06_185930) do
 #   Unknown type 'uuid' for column 'id'
 
 
+# Could not dump table "hooks" because of following StandardError
+#   Unknown type 'uuid' for column 'id'
+
+
 # Could not dump table "memberships" because of following StandardError
 #   Unknown type 'uuid' for column 'id'
 
