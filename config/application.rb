@@ -29,7 +29,9 @@ module Gatherpack
     config.active_job.queue_adapter = :solid_queue
     config.solid_queue.connects_to = { database: { writing: :queue } }
 
-    config.generators { |g| g.orm :active_record, primary_key_type: KeyTypePicker.key_type }
+    config.generators do |g|
+      g.orm :active_record, primary_key_type: KeyTypePicker.key_type
+    end
   end
 end
 
