@@ -16,7 +16,7 @@
   </div>
 </div>
 
-<%= f.input :content %>
+<%= f.input :content, wrapper_html: { class: 'code-editor' }, input_html: { rows: 12, data: { lang: "html" } } %>
 
 <% if admin? %>
   <div class="alert alert-danger">
