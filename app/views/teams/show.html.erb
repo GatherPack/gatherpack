@@ -20,6 +20,15 @@
           </div>
           <%= link_to 'Show All Team Badges', badges_path(q: { team_id_eq: @team.id }) %>
         </div>
+        <div class="mb-3">
+          <h2>Pages</h2>
+          <ul>
+            <% @team.pages.order(created_at: :asc).last(5).each do |page| %>
+              <li><%= link_to page.title, page %></li>
+            <% end %>
+          </ul>
+          <%= link_to 'Show All Team Pages', pages_path(q: { team_id_eq: @team.id }) %>
+        </div>
       </div>
       <div class="col">
         <h2>Recent Activities</h2>

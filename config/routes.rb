@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :pages
   resources :tokens
   resources :hooks
   resources :badges
