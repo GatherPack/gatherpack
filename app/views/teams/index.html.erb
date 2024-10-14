@@ -16,7 +16,7 @@
     </div>
   </div>
   <div class="card-footer">
-    <%= link_to "New team", new_team_path, class: 'btn btn-success' %>
+    <%= link_to "New team", new_team_path, class: 'btn btn-success' if policy(Team).new? %>
     <%= f.submit 'Search', class: 'btn btn-primary', data: { action: "turbo_search#search" } %>
     <%= link_to 'Clear search', request.path, class: "btn btn-dark", data: { action: "turbo_search#clear" } %>
   </div>

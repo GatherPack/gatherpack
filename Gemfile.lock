@@ -266,6 +266,15 @@ GEM
     mini_magick (4.13.2)
     mini_mime (1.1.5)
     minitest (5.25.1)
+    monetize (1.13.0)
+      money (~> 6.12)
+    money (6.19.0)
+      i18n (>= 0.6.4, <= 2)
+    money-rails (1.15.0)
+      activesupport (>= 3.0)
+      monetize (~> 1.9)
+      money (~> 6.13)
+      railties (>= 3.0)
     net-imap (0.4.17)
       date
       net-protocol
@@ -498,6 +507,8 @@ DEPENDENCIES
   kaminari (~> 1.2)
   litestream (~> 0.10.1)
   mission_control-jobs!
+  money (~> 6.19)
+  money-rails (~> 1.15)
   omniauth (~> 2.1)
   omniauth-rails_csrf_protection (~> 1.0)
   propshaft

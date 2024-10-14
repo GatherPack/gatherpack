@@ -6,8 +6,10 @@ class Person < ApplicationRecord
   has_many :badge_assignments
   has_many :badges, through: :badge_assignments
   has_many :tokens, as: :tokenable
+  has_many :account_relationships, as: :holder
+  has_many :accounts, through: :account_relationships
   before_save :check_display_name
-  accepts_nested_attributes_for :user, reject_if: proc { |attribute| attribute['password'].empty? }
+  accepts_nested_attributes_for :user
   has_one_attached :avatar
 
   def self.ransackable_attributes(auth_object = nil)

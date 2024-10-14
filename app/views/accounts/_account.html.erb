@@ -1,0 +1,8 @@
+<div class="card" id="<%= dom_id account %>">
+  <div class="card-header">
+    <%= link_to account.identifier_name, account, 'data-turbo': false %>
+  </div>
+  <div class="card-body">
+    <%= as_currency account.balance %>
+  </div>
+</div>
