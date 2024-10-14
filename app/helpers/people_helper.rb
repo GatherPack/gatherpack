@@ -1,6 +1,6 @@
 module PeopleHelper
   def get_avatar_url(avatar)
-    avatar.attached? ? url_for(avatar) : asset_path("default_profile.png")
+    avatar.attached? ? url_for(avatar) : asset_path('default_profile.png')
   end
 
   def get_joinable_teams(person, current_user)
@@ -19,5 +19,10 @@ module PeopleHelper
     end
 
     available_teams
+  end
+
+  def person_as_badge(person)
+    content = i('user') + ' ' + person.identifier_name
+    tag.span content, class: 'badge text-bg-primary'
   end
 end

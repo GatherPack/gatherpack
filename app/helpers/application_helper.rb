@@ -16,6 +16,10 @@ module ApplicationHelper
       team_as_badge(obj)
     when Token
       token_as_badge(obj)
+    when Person
+      person_as_badge(obj)
+    when Account
+      account_as_badge(obj)
     end.html_safe
   end
 
