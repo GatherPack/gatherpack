@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_06_28_232252) do
+ActiveRecord::Schema[8.0].define(version: 2024_07_24_185550) do
 # Could not dump table "action_text_rich_texts" because of following StandardError
 #   Unknown type 'uuid' for column 'id'
 
@@ -48,6 +48,10 @@ ActiveRecord::Schema[8.0].define(version: 2024_06_28_232252) do
 
 
 # Could not dump table "badges" because of following StandardError
+#   Unknown type 'uuid' for column 'id'
+
+
+# Could not dump table "checkins" because of following StandardError
 #   Unknown type 'uuid' for column 'id'
 
 
@@ -92,6 +96,8 @@ ActiveRecord::Schema[8.0].define(version: 2024_06_28_232252) do
   add_foreign_key "badge_assignments", "badges"
   add_foreign_key "badge_assignments", "people"
   add_foreign_key "badges", "badge_types"
+  add_foreign_key "checkins", "events"
+  add_foreign_key "checkins", "people"
   add_foreign_key "events", "event_types"
   add_foreign_key "memberships", "people"
   add_foreign_key "memberships", "teams"
