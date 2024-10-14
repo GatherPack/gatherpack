@@ -1,9 +1,9 @@
 GIT
   remote: https://github.com/rails/mission_control-jobs.git
-  revision: 24060cd0b737555b61bd591dcd2ec52465d71dfa
+  revision: fe9db51fb3b3c04c4cd97d79480546c64db278d7
   branch: main
   specs:
-    mission_control-jobs (0.3.1)
+    mission_control-jobs (0.3.2)
       importmap-rails
       irb (~> 1.13)
       propshaft
@@ -13,7 +13,7 @@ GIT
 
 GIT
   remote: https://github.com/rails/rails.git
-  revision: 13d5f87208921cc5139cd53b280c42f23c334826
+  revision: d64611bc5a71a749d10c4da295e80fe182b5d7ea
   branch: main
   specs:
     actioncable (8.0.0.beta1)
@@ -112,7 +112,7 @@ GIT
 
 GIT
   remote: https://github.com/rails/solid_queue.git
-  revision: 29b18477431287b42f3268682ca7338268036306
+  revision: 51c75bec01c8c53f2fe573822f0158e8b62030aa
   branch: main
   specs:
     solid_queue (1.0.0)
@@ -205,7 +205,7 @@ GEM
     image_processing (1.13.0)
       mini_magick (>= 4.9.5, < 5)
       ruby-vips (>= 2.0.17, < 3)
-    importmap-rails (2.0.1)
+    importmap-rails (2.0.3)
       actionpack (>= 6.0.0)
       activesupport (>= 6.0.0)
       railties (>= 6.0.0)
@@ -214,7 +214,7 @@ GEM
       rdoc (>= 4.0.0)
       reline (>= 0.4.2)
     json (2.7.2)
-    kamal (2.0.0)
+    kamal (2.2.2)
       activesupport (>= 7.0)
       base64 (~> 0.2)
       bcrypt_pbkdf (~> 1.0)
@@ -266,7 +266,7 @@ GEM
     mini_magick (4.13.2)
     mini_mime (1.1.5)
     minitest (5.25.1)
-    net-imap (0.4.16)
+    net-imap (0.4.17)
       date
       net-protocol
     net-pop (0.1.2)
@@ -279,7 +279,7 @@ GEM
       net-ssh (>= 5.0.0, < 8.0.0)
     net-smtp (0.5.0)
       net-protocol
-    net-ssh (7.2.3)
+    net-ssh (7.3.0)
     nio4r (2.7.3)
     nokogiri (1.16.7-aarch64-linux)
       racc (~> 1.4)
@@ -308,7 +308,7 @@ GEM
     parser (3.3.5.0)
       ast (~> 2.4.1)
       racc
-    propshaft (1.0.0)
+    propshaft (1.1.0)
       actionpack (>= 7.0.0)
       activesupport (>= 7.0.0)
       rack
@@ -322,7 +322,7 @@ GEM
       activesupport (>= 3.0.0)
     raabro (1.4.0)
     racc (1.8.1)
-    rack (3.1.7)
+    rack (3.1.8)
     rack-protection (4.0.0)
       base64 (>= 0.1.0)
       rack (>= 3.0.0, < 4)
@@ -354,16 +354,15 @@ GEM
     responders (3.1.1)
       actionpack (>= 5.2)
       railties (>= 5.2)
-    rexml (3.3.7)
-    rubocop (1.65.1)
+    rexml (3.3.8)
+    rubocop (1.66.1)
       json (~> 2.3)
       language_server-protocol (>= 3.17.0)
       parallel (~> 1.10)
       parser (>= 3.3.0.2)
       rainbow (>= 2.2.2, < 4.0)
       regexp_parser (>= 2.4, < 3.0)
-      rexml (>= 3.2.5, < 4.0)
-      rubocop-ast (>= 1.31.1, < 2.0)
+      rubocop-ast (>= 1.32.2, < 2.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (>= 2.4.0, < 3.0)
     rubocop-ast (1.32.3)
@@ -371,7 +370,7 @@ GEM
     rubocop-minitest (0.36.0)
       rubocop (>= 1.61, < 2.0)
       rubocop-ast (>= 1.31.1, < 2.0)
-    rubocop-performance (1.21.1)
+    rubocop-performance (1.22.1)
       rubocop (>= 1.48.1, < 2.0)
       rubocop-ast (>= 1.31.1, < 2.0)
     rubocop-rails (2.26.2)
@@ -424,18 +423,18 @@ GEM
       net-sftp (>= 2.1.2)
       net-ssh (>= 2.8.0)
       ostruct
-    standard (1.40.0)
+    standard (1.41.0)
       language_server-protocol (~> 3.17.0.2)
       lint_roller (~> 1.0)
-      rubocop (~> 1.65.0)
+      rubocop (~> 1.66.0)
       standard-custom (~> 1.0.0)
-      standard-performance (~> 1.4)
+      standard-performance (~> 1.5)
     standard-custom (1.0.2)
       lint_roller (~> 1.0)
       rubocop (~> 1.50)
-    standard-performance (1.4.0)
+    standard-performance (1.5.0)
       lint_roller (~> 1.1)
-      rubocop-performance (~> 1.21.0)
+      rubocop-performance (~> 1.22.0)
     stimulus-rails (1.3.4)
       railties (>= 6.0.0)
     stringio (3.1.1)
@@ -465,7 +464,7 @@ GEM
     websocket-extensions (0.1.5)
     xpath (3.2.0)
       nokogiri (~> 1.8)
-    zeitwerk (2.6.18)
+    zeitwerk (2.7.0)
 
 PLATFORMS
   aarch64-linux
@@ -520,4 +519,4 @@ DEPENDENCIES
   web-console
 
 BUNDLED WITH
-   2.5.20
+   2.5.21
