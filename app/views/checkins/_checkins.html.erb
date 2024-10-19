@@ -9,7 +9,12 @@
       </div>
   </div>
   <div class="card-footer">
-    <%= link_to "Checkin", new_event_checkin_path(event), class: 'btn btn-success' %>
+    <% if event.locked %>
+      <div class="btn btn-success disabled">Checkin</div>  
+    <% else %>
+      <%= link_to "Checkin", new_event_checkin_path(event), class: 'btn btn-success' %>
+    <% end %>
+
     <%= f.submit 'Search', class: 'btn btn-primary', data: { action: "turbo_search#search" } %>
     <%= link_to 'Clear search', request.path, class: "btn btn-dark", data: { action: "turbo_search#clear" } %>
   </div>

@@ -5,6 +5,14 @@ class CheckinPolicy < ApplicationPolicy
     end
   end
 
+  def create?
+    !record.event.locked
+  end
+
+  def new?
+    true
+  end
+
   def update?
     record.person == person || user.admin
   end
