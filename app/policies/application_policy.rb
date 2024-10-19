@@ -33,7 +33,7 @@ class ApplicationPolicy
   end
 
   def destroy?
-    true
+    update?
   end
 
   def person

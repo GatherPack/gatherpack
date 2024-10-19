@@ -1,2 +1,2 @@
-web: bin\rails server
+web: rails server
 css: yarn watch:css
