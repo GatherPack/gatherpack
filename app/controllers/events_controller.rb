@@ -56,6 +56,6 @@ class EventsController < InternalController
 
     # Only allow a list of trusted parameters through.
     def event_params
-      params.require(:event).permit(:name, :description, :start_time, :end_time, :location, :event_type_id, :team_id)
+      params.require(:event).permit(:name, :description, :start_time, :end_time, :location, :event_type_id, :team_id, :locked)
     end
 end
