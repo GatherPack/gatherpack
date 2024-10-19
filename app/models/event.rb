@@ -1,4 +1,5 @@
 class Event < ApplicationRecord
+  include CanBeHooked
   belongs_to :event_type
   belongs_to :team, optional: true
   

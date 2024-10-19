@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :pages
+  resources :tokens
+  resources :hooks
   resources :badges
   resources :badge_types
   resources :events do
@@ -22,6 +25,7 @@ Rails.application.routes.draw do
   devise_for :users, controllers: { omniauth_callbacks: 'omniauth', registrations: 'users/registrations' }
 
   get '/setup' => 'welcome#setup', as: :setup
+  get 'search' => 'search#index', as: :search
 
   mount MissionControl::Jobs::Engine, at: '/jobs'
 

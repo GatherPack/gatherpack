@@ -10,6 +10,7 @@ import "@rails/actiontext"
 
 import "photo_capture"
 import "font_awesome"
+import "code_editor"
 
 document.addEventListener("turbo:load", ev => {
     document.querySelectorAll('.fancy-color-container input[type="color"]').forEach(elem => {
