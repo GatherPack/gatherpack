@@ -1,0 +1,22 @@
+.breadcrumb {
+  color: black;
+  display: flex;
+  justify-content: center;
+}
+
+.breadcrumb-link {
+  color: $greige-darkest;
+}
+
+.breadcrumb-current {
+  color: $greige-dark;
+}
+
+.breadcrumb-container {
+  display: flex;
+  align-items: start;
+  justify-content: end; 
+  background-color: rgb(239, 236, 227);
+  padding-left: 1rem;
+  padding-top: 1rem;
+}

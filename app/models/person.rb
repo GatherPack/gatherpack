@@ -1,12 +1,14 @@
 class Person < ApplicationRecord
+  include CanBeHooked
   belongs_to :user, optional: true
   has_many :memberships
   has_many :teams, through: :memberships
   has_many :badge_assignments
   has_many :badges, through: :badge_assignments
   has_many :checkins
+  has_many :tokens, as: :tokenable
   before_save :check_display_name
-  accepts_nested_attributes_for :user
+  accepts_nested_attributes_for :user, reject_if: proc { |attribute| attribute['password'].empty? }
   has_one_attached :avatar
 
   def self.ransackable_attributes(auth_object = nil)
@@ -17,8 +19,12 @@ class Person < ApplicationRecord
     [ 'user' ]
   end
 
-  def admin
+  def admin?
     user&.admin
+  end
+
+  def manager?
+    memberships.where(manager: true).any?
   end
 
   private

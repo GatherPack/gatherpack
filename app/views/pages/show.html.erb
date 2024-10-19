@@ -1,0 +1,12 @@
+<div class="card">
+  <div class="card-header">
+    <h1><%= @page.identifier_name %></h1>
+  </div>
+  <div class="card-body">
+    <%= format_page_content @page %>
+  </div>
+  <div class="card-footer">
+    <%= link_to 'Edit', edit_page_path(@page), class: 'btn btn-warning' if policy(@page).edit? %>
+    <%= link_to 'Delete', @page, class: 'btn btn-danger', data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } if policy(@page).destroy? %>
+  </div>
+</div>

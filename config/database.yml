@@ -22,17 +22,17 @@ primary: &primary
 queue: &queue
   <<: *default
   migrations_paths: db/queue_migrate
-  database: storage/<%= Rails.env %>-queue.sqlite3
+  database: storage/<%= `git branch --show-current`.chomp || "development" %>-queue.sqlite3
 
 cache: &cache
   <<: *default
   migrations_paths: db/cache_migrate
-  database: storage/<%= Rails.env %>-cache.sqlite3
+  database: storage/<%= `git branch --show-current`.chomp || "development" %>-cache.sqlite3
 
 errors: &errors
   <<: *default
   migrations_paths: db/errors_migrate
-  database: storage/<%= Rails.env %>-errors.sqlite3
+  database: storage/<%= `git branch --show-current`.chomp || "development" %>-errors.sqlite3
 
 # ENVIRONMENT CONFIGURATIONS
 development:
