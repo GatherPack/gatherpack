@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :transactions, only: %i[ index create ]
+  resources :accounts
   resources :pages
   resources :tokens
   resources :hooks

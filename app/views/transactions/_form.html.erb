@@ -1,0 +1,22 @@
+<%= f.error_notification %>
+<%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+<div class="form-inputs">
+  <% if @account %>
+    <%= f.input :account_id, as: :hidden, input_html: { value: @account.id } %>
+  <% else %>
+    <%= f.association :account, collection: policy_scope(Account) %>
+    <%= hidden_field_tag :redirect_target, transactions_path %>
+  <% end %>
+
+  <div class="row">
+    <div class="col-md-6">
+      <%= f.input :comment %>
+    </div>
+    <div class="col-md-6">
+      <%= f.input :amount %>
+    </div>
+  </div>
+
+  <%= f.button :submit, class: 'btn btn-primary' %>
+</div>

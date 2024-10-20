@@ -16,7 +16,7 @@
     </div>
   </div>
   <div class="card-footer">
-    <%= link_to "New hook", new_hook_path, class: 'btn btn-success' %>
+    <%= link_to "New hook", new_hook_path, class: 'btn btn-success' if policy(Hook).new? %>
     <%= f.submit 'Search', class: 'btn btn-primary' %>
   </div>
 </div>
