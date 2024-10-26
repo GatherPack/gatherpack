@@ -5,7 +5,7 @@ class Checkin < ApplicationRecord
   validates :person, presence: true
   
   def self.ransackable_attributes(auth_object = nil)
-    ['person_display_name']
+    ['person.display_name']
   end
 
   def self.ransackable_associations(auth_object = nil)
