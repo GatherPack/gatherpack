@@ -1,6 +1,6 @@
 <div class="card" id="<%= dom_id hook %>">
   <div class="card-header">
-    <%= link_to hook.identifier_name, hook %>
+    <%= link_to hook.identifier_name, hook, "data-turbo": "false" %>
   </div>
   <div class="card-body">
     <p>Runs on <%= hook.event %></p>
