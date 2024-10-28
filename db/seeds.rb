@@ -33,7 +33,7 @@ end
 team = Team.find_or_create_by!(name: "Test Team", color: "#f5c211", team_type: team_type, join_permission: "added_by_admin")
 badge = Badge.find_or_create_by!(name: "Test Badge", color: "#2ec27e", short: "anchor", badge_type: badge_type, team: team)
 token = Token.find_or_create_by!(value: "Test Token") do |token|
-  token.tokenable = users[0]
+  token.tokenable = persons[0]
 end
 event = Event.find_or_create_by!(name: "Test Event",
                                  description: "Test Event Description",
@@ -53,14 +53,14 @@ page = Page.find_or_create_by!(title: "Test Page",
                                editor: "manager",
                                dynamic: false,
                                team: team)
-variable = Variable.find_or_create_by!(name: "TestVariable",
+variable = Variable.find_or_create_by!(name: "test_variable",
                                        klass: "string",
-                                       raw_value: "\"Test String Variable Content \"")
+                                       raw_value: "\"Test String Variable Content\"")
 report = Report.find_or_create_by!(name: "Test Report",
-                                   code: "Test Report Content")
+                                   code: "def test_report_function\n \"Test Report Content\"\nend\ntest_report_function")
 hook = Hook.find_or_create_by!(name: "Test Hook",
                                event: "announcement - update",
-                               code: "puts \"Test Hook Content\"")
+                               code: "def test_hook_function\n \"Test Hook Content\"\nend\ntest_hook_function")
 4.times do |time|
   badge_assignment = BadgeAssignment.find_or_create_by!(person: persons[time * 2], badge: badge)
   membership = Membership.find_or_create_by!(team: team, person: persons[time * 2 + 1], manager: false)
