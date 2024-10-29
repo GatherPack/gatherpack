@@ -1,0 +1,2 @@
+class RelationshipTypePolicy < AdminPolicy
+end

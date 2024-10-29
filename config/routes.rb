@@ -18,7 +18,10 @@ Rails.application.routes.draw do
     post 'update', on: :collection, as: 'update'
   end
   resources :team_types
-  resources :people
+  resources :people do
+    resources :relationships, only: %i[ new create destroy ]
+  end
+  resources :relationship_types
   devise_for :users, controllers: { omniauth_callbacks: 'omniauth', registrations: 'users/registrations' }
 
   get '/setup' => 'welcome#setup', as: :setup

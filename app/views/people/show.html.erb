@@ -22,25 +22,35 @@
         <div class="mb-3">
           <h3>Teams</h3>
           <% @person.teams.each do |team| %>
-            <%= link_to team do %>
-              <%= as_badge team %>
-            <% end %>
+            <%= as_badge team %>
           <% end %>
         </div>
-        <h3>Badges</h3>
-        <div class="row">
-          <% @person.badges.order(name: :asc).each do |badge| %>
-            <div class="col-sm-3 mb-3 fs-3">
-              <%= link_to badge do %>
+        <div class="mb-3">
+          <h3>Badges</h3>
+          <div class="row">
+            <% @person.badges.order(name: :asc).each do |badge| %>
+              <div class="col-sm-3 mb-1">
                 <%= as_badge badge %>
-              <% end %>
-            </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+        <div class="mb-3">
+          <h3>Tokens</h3>
+          <div class="row">
+            <% @person.tokens.each do |token| %>
+              <div class="col-sm-3 mb-1">
+                <%= as_badge token %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+        <div class="mb-3">
+          <h3>Relationships</h3>
+          <% @person.relationships.each do |relationship| %>
+            <%= as_badge relationship, @person %>
           <% end %>
         </div>
-        <h3>Tokens</h3>
-        <% @person.tokens.each do |token| %>
-          <%= as_badge token %>
-        <% end %>
       </div>
     </div>
   </div>
