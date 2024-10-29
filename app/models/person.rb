@@ -26,6 +26,10 @@ class Person < ApplicationRecord
     memberships.where(manager: true).any?
   end
 
+  def relationships
+    Relationship.where(parent_id: id).or(Relationship.where(child_id: id))
+  end
+
   private
 
   def check_display_name

@@ -1,0 +1,23 @@
+<% breadcrumb :relationship, @person %>
+
+<%= simple_form_for([@person, @relationship]) do |f| %>
+  <div class="card">
+  <div class="card-header">
+    <h1>New Relationship</h1>
+  </div>
+  <div class="card-body">
+
+    <pre><%= @relationship.to_json %></pre>
+    <%= f.association :relationship_type, label_method: :identifier_name %>
+
+    <% if @relationship.relationship_type %>
+      <%= f.association :parent, label: @relationship.relationship_type.parent_label, label_method: :identifier_name %>
+      <%= f.association :child, label: @relationship.relationship_type.child_label, label_method: :identifier_name %>
+    <% end %>
+  </div>
+  <div class="card-footer">
+    <%= link_to "Cancel", @person, class: 'btn btn-warning' %>
+    <%= f.button :submit, class: 'btn btn-primary' %>
+  </div>
+</div>
+<% end %>

@@ -1,5 +1,7 @@
 module BadgesHelper
   def badge_as_badge(badge)
-    tag.span badge.short, class: 'badge', style: "background-color: #{badge.color}; color: #{contrasting_color(badge.color)}"
+    link_to badge do
+      tag.span badge.short, class: 'badge', style: "background-color: #{badge.color}; color: #{contrasting_color(badge.color)}"
+    end
   end
 end

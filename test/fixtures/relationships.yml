@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  relationship_type: one
+  parent_entity: one
+  child_entity: one
+
+two:
+  relationship_type: two
+  parent_entity: two
+  child_entity: two
