@@ -5,11 +5,14 @@
     <h1><%= @event.identifier_name %></h1>
   </div>
   <div class="card-body">
-    <%= @event.start_time.to_fs :long_ordinal %><% if !@event.end_time.nil? %> - <%= @event.end_time.to_fs :long_ordinal %><% end %><br>
-    Location: <%= @event.location %>
+    When: <%= format_event_time_date(@event, :long_ordinal, false) %><br>
+    <%= @event.location != "" ? "Where: " + @event.location : "" %>
   </div>
-  <div class="card-footer">
-    <%= link_to 'Edit', edit_event_path(@event), class: 'btn btn-warning' if policy(@event).update? %>
-    <%= link_to 'Delete', @event, class: 'btn btn-danger', data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } if policy(@event).update? %>
-  </div>
+  <% if policy(@event).update? || policy(@event).destroy? %>
+    <div class="card-footer">
+      <%= link_to 'Edit', edit_event_path(@event), class: 'btn btn-warning' if policy(@event).update? %>
+      <%= link_to 'Delete', @event, class: 'btn btn-danger', data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } if policy(@event).destroy? %>
+    </div>
+  <% end %>
 </div>
+<%= render "checkins/checkins", q: @q, checkins: @checkins, event: @event %>
