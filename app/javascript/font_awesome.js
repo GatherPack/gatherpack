@@ -19,40 +19,6 @@ async function sendQuery(query) {
       })).json() 
 }
 
-function searchIcons(query, limit=15) {
-    let queryTerms = query.split(/-|_| /);
-
-    let sortedResults = [];
-    for (let i = 0; i < queryTerms.length * 2 + 1; i++) {
-        sortedResults.push([])
-    }
-    let matchedResults = 0;
-    window.icons.forEach(icon => {
-        var iconMatch = queryTerms.length * 2;
-        queryTerms.forEach(term => {
-            term = term.toLowerCase();
-            if (icon == term) iconMatch -= 1;
-            if (icon.includes(term)) iconMatch -= 1;
-        });
-        if (iconMatch != queryTerms.length) {
-            matchedResults++;
-        }
-        sortedResults[iconMatch].push(icon);
-    });
-    let finalResults = [];
-    for (let i = 0; i < sortedResults.length; i++) {
-        for (let j = 0; j < sortedResults[i].length; j++) {
-            if (i != sortedResults.length - 1 || matchedResults == 0) {
-                finalResults.push(sortedResults[i][j]);
-                limit--;
-                if (limit == 0) return finalResults;
-            }
-        }
-    }
-    return finalResults;
-}
-window.searchIcons = searchIcons;
-
 function setListValues(list, values, elem_type="li", elem_modifier=null) {
     list.innerHTML = "";
     values.forEach(value => {
@@ -78,7 +44,7 @@ document.addEventListener("turbo:load", async ev => {
             let iconType = icons.includes(icon.value) ? icon.value : "circle-question";
             icon.parentElement.firstChild.setAttribute("data-icon", iconType);
 
-            setListValues(list, searchIcons(icon.value, 6), "div", elem => {
+            setListValues(list, search(window.icons, icon.value, 6), "div", elem => {
                 let iconElem = document.createElement("i");
                 iconElem.classList.add("fa-solid", "fa-" + elem.innerText);
                 elem.innerHTML = "&emsp;" + elem.innerText;

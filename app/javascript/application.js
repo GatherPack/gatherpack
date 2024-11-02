@@ -9,6 +9,7 @@ import "trix"
 import "@rails/actiontext"
 
 import "photo_capture"
+import "search"
 import "font_awesome"
 import "code_editor"
 
