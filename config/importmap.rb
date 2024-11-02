@@ -2,6 +2,7 @@
 
 pin 'application'
 pin 'photo_capture'
+pin 'search'
 pin 'font_awesome'
 pin 'code_editor'
 pin '@hotwired/turbo-rails', to: 'turbo.min.js'
