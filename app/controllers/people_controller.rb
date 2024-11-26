@@ -4,11 +4,14 @@ class PeopleController < InternalController
   # GET /people
   def index
     @q = policy_scope(Person).ransack(params[:q])
-    @people = @q.result(distinct: true).page(params[:page])
+    @people = @q.result(distinct: true).order(last_name: :asc, first_name: :asc).page(params[:page])
   end
 
   # GET /people/1
   def show
+    @teams = policy_scope(@person.teams).order.includes(:team_type).order('team_type.name': :asc, name: :asc)
+    @badges = policy_scope(@person.badges).order(name: :asc)
+    @tokens = policy_scope(@person.tokens).order(value: :asc)
   end
 
   # GET /people/new
@@ -29,6 +32,11 @@ class PeopleController < InternalController
     @person = authorize Person.new(person_params)
 
     if @person.save
+      if @person.email
+        pw = Spicy::Proton.pair
+        User.create(email: @person.email, person: @person, password: pw)
+        flash[:info] = "User was successfully created, password set to #{pw}"
+      end
       redirect_to @person, notice: 'Person was successfully created.'
     else
       render :new, status: :unprocessable_entity
@@ -58,6 +66,6 @@ class PeopleController < InternalController
 
     # Only allow a list of trusted parameters through.
     def person_params
-      params.require(:person).permit(:first_name, :last_name, :display_name, :gender, :shirt_size, :phone_number, :address, :birthday, :dietary_restrictions, :user_id, :avatar, user_attributes: [ :id, :email, :password, :password_confirmation ], team_ids: [], badge_ids: [])
+      params.require(:person).permit(:first_name, :last_name, :display_name, :gender, :shirt_size, :phone_number, :address, :birthday, :dietary_restrictions, :user_id, :avatar, :email, user_attributes: [ :id, :email, :password, :password_confirmation ], team_ids: [], badge_ids: [])
     end
 end

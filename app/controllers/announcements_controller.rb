@@ -4,7 +4,7 @@ class AnnouncementsController < InternalController
   # GET /announcements
   def index
     @q = policy_scope(Announcement).ransack(params[:q])
-    @announcements = @q.result(distinct: true).page(params[:page])
+    @announcements = @q.result(distinct: true).order(end_time: :asc, start_time: :asc).page(params[:page])
   end
 
   # GET /announcements/1
@@ -13,7 +13,7 @@ class AnnouncementsController < InternalController
 
   # GET /announcements/new
   def new
-    @announcement = authorize Announcement.new
+    @announcement = authorize Announcement.new(start_time: Time.now, end_time: Time.now + 1.week)
   end
 
   # GET /announcements/1/edit

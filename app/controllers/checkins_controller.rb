@@ -8,7 +8,7 @@ class CheckinsController < InternalController
 
   # GET /checkins/new
   def new
-    @checkin = authorize Checkin.new
+    @checkin = authorize @event.checkins.build
   end
 
   # GET /checkins/1/edit

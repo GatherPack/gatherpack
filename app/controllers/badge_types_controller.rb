@@ -4,7 +4,7 @@ class BadgeTypesController < InternalController
   # GET /badge_types
   def index
     @q = policy_scope(BadgeType).ransack(params[:q])
-    @badge_types = @q.result(distinct: true).page(params[:page])
+    @badge_types = @q.result(distinct: true).order(name: :asc).page(params[:page])
   end
 
   # GET /badge_types/1

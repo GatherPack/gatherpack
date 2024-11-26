@@ -10,15 +10,14 @@ class EventPolicy < ApplicationPolicy
   end
 
   def new?
-    has_perms
+    person.managed_teams.present? || user.admin
+  end
+
+  def create?
+    person.managed_teams.include?(record.team) || user.admin
   end
 
   def update?
-    has_perms
-  end
-
-  private
-  def has_perms
-    user.admin || person.teams.include?(record.team)
+    person.managed_teams.include?(record.team) || user.admin
   end
 end

@@ -1,6 +1,9 @@
 <header class="navbar navbar-expand-lg bg-dark">
   <div class="container-fluid">
-    <a class="navbar-brand" href="/"><%= image_tag 'logo.svg' %></a>
+    <a class="navbar-brand" href="/">
+      <%= image_tag 'logo.svg' %>
+      <%= Settings[:title] %>
+    </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
       <%= i 'bars' %>
     </button>
@@ -8,8 +11,8 @@
       <ul class="navbar-nav me-auto mb-2 mb-lg-0 d-flex align-items-center">
       </ul>
       <form class="d-flex" role="search" action="<%= search_path %>">
-        <input class="form-control me-2" type="search" name="q" placeholder="Search anything..." aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Search</button>
+        <input class="form-control me-2" type="search" name="q" placeholder="Search for anything..." aria-label="Search">
+        <button class="btn btn-success" type="submit">Search</button>
       </form>
     </div>
   </div>
