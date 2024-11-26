@@ -2,7 +2,12 @@
 
 <div class="card">
   <div class="card-header">
-    <h1><%= @account.identifier_name %></h1>
+    <h1>
+      <% if @account.team %>
+        <%= link_to i(@account.team.team_type.icon), team_path(@account.team), class: "badge rounded-pill", style: "background-color:#{@account.team.color};color:#{contrasting_color(@account.team.color)}", "data-turbo": "false", title: "Belongs to #{@account.team.name}" %>&nbsp;
+      <% end %>
+      <%= @account.identifier_name %>
+    </h1>
   </div>
   <div class="card-body">
     <div class="row align-items-center justify-content-around">
@@ -13,7 +18,7 @@
         </div>
       </div>
       <div class="col-md-6">
-        <% if policy(@transaction).create? %>
+        <% if policy(@transaction).new? %>
           <%= simple_form_for(@transaction) do |f| %>
             <%= render 'transactions/form', f: f %>
           <% end %>

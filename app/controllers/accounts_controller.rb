@@ -4,7 +4,7 @@ class AccountsController < InternalController
   # GET /accounts
   def index
     @q = policy_scope(Account).ransack(params[:q])
-    @accounts = @q.result(distinct: true).page(params[:page])
+    @accounts = @q.result(distinct: true).order(name: :asc).page(params[:page])
   end
 
   # GET /accounts/1

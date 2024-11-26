@@ -3,24 +3,26 @@ class AccountPolicy < ApplicationPolicy
     def resolve
       if user.admin?
         scope.all
-      elsif person.manager?
-        scope.where(team: person.teams)
       else
-        scope.where(id: person.accounts.pluck(:id))
+        scope.where(id: person.accounts.pluck(:id)).or(scope.where(team: person.teams))
       end
     end
   end
 
   def show?
-    user.admin || record&.team&.managers&.include?(person) || record&.holders&.include?(person)
+    user.admin || person.teams.include?(record.team) || record&.holders&.include?(person)
+  end
+
+  def new?
+    user.admin || person.manager?
   end
 
   def create?
-    user.admin? || person.manager?
+    user.admin || person.managed_teams.include?(record.team) 
   end
 
   def update?
-    user.admin || record&.team&.managers&.include?(user)
+    user.admin || person.managed_teams.include?(record.team) 
   end
 
   def destroy?
