@@ -9,7 +9,7 @@ class PeopleController < InternalController
 
   # GET /people/1
   def show
-    @teams = policy_scope(@person.teams).order.includes(:team_type).order('team_type.name': :asc, name: :asc)
+    @teams = policy_scope(@person.teams).includes(:team_type).order('team_type.name': :asc, name: :asc)
     @badges = policy_scope(@person.badges).order(name: :asc)
     @tokens = policy_scope(@person.tokens).order(value: :asc)
     @accounts = policy_scope(@person.accounts).order(name: :asc)
