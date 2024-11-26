@@ -9,5 +9,5 @@ end
 
 crumb :run do |report|
   link "Run", report
-  parent :report
+  parent :report, report
 end
