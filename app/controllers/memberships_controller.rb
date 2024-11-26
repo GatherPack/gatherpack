@@ -4,8 +4,8 @@ class MembershipsController < InternalController
 
   # GET /memberships
   def index
-    @q = policy_scope(Membership).ransack(params[:q])
-    @memberships = @q.result(distinct: true).includes(:person).page(params[:page])
+    @q = policy_scope(Membership).where(team: @team).ransack(params[:q])
+    @memberships = @q.result(distinct: true).includes(:person).order('person.last_name': :asc, 'person.first_name': :asc).page(params[:page])
   end
 
   # POST /memberships

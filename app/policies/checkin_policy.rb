@@ -6,14 +6,14 @@ class CheckinPolicy < ApplicationPolicy
   end
 
   def create?
-    !record.event.locked
+    !record.event.locked? || user.admin || (record.event.team && record.event.team.managers.include?(person))
   end
 
   def new?
-    true
+    create?
   end
 
   def update?
-    record.person == person || user.admin
+    record.person == person || user.admin || (record.event.team && record.event.team.managers.include?(person))
   end
 end

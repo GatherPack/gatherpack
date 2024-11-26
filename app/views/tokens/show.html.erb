@@ -5,7 +5,11 @@
     <h1><%= @token.identifier_name %></h1>
   </div>
   <div class="card-body">
-    <p>Belongs to <%= link_to @token.tokenable.identifier_name, @token.tokenable %></p>
+    <% if @token.tokenable.present? %>
+      <p>Belongs to <%= link_to @token.tokenable.identifier_name, @token.tokenable %></p>
+    <% else %>
+      <p>This token is currently unassigned.</p>
+    <% end %>
   </div>
   <div class="card-footer">
     <%= link_to 'Edit', edit_token_path(@token), class: 'btn btn-warning' %>

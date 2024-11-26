@@ -8,8 +8,9 @@ class Person < ApplicationRecord
   has_many :checkins
   has_many :tokens, as: :tokenable
   before_save :check_display_name
-  accepts_nested_attributes_for :user, reject_if: proc { |attribute| attribute['password'].empty? }
+  accepts_nested_attributes_for :user
   has_one_attached :avatar
+  attr_accessor :email
 
   def self.ransackable_attributes(auth_object = nil)
     [ 'address', 'birthday', 'created_at', 'dietary_restrictions', 'display_name', 'first_name', 'gender', 'id', 'last_name', 'phone_number', 'shirt_size', 'updated_at', 'user_id' ]
@@ -24,7 +25,15 @@ class Person < ApplicationRecord
   end
 
   def manager?
-    memberships.where(manager: true).any?
+    user&.admin || memberships.where(manager: true).any?
+  end
+
+  def managed_teams
+    user&.admin? ? Team.all : Team.joins(:memberships).where(memberships: { person_id: id, manager: true })
+  end
+
+  def managed_people
+    user&.admin ? Person.all : Person.joins(:memberships).where(memberships: { team_id: managed_teams.select(:id) }).distinct
   end
 
   private

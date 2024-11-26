@@ -2,9 +2,15 @@
 
 <div class="card">
   <div class="card-header">
-    <h1><%= @announcement.title %></h1>
+    <h1><% if @announcement.team %>
+      <%= link_to i(@announcement.team.team_type.icon), team_path(@announcement.team), class: "badge rounded-pill", style: "background-color:#{@announcement.team.color};color:#{contrasting_color(@announcement.team.color)}", "data-turbo": "false", title: "Posted in #{@announcement.team.name}" %>
+    <% end %>
+    <%= @announcement.title %></h1>
   </div>
   <div class="card-body">
+    <p>
+      <em>Runs from <%= nice_datetime_range @announcement.start_time, @announcement.end_time %></em>
+    </p>
     <%= @announcement.content %>
   </div>
   <div class="card-footer">

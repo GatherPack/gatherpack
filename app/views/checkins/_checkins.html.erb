@@ -9,10 +9,10 @@
       </div>
   </div>
   <div class="card-footer">
-    <% if event.locked %>
-      <div class="btn btn-success disabled">Checkin</div>  
+    <% if policy(@checkin).create? %>
+      <%= link_to "Check Someone In", new_event_checkin_path(event), class: 'btn btn-success' %>
     <% else %>
-      <%= link_to "Checkin", new_event_checkin_path(event), class: 'btn btn-success' %>
+      <div class="btn btn-success disabled">Check In Locked</div>  
     <% end %>
 
     <%= f.submit 'Search', class: 'btn btn-primary', data: { action: "turbo_search#search" } %>
@@ -24,7 +24,7 @@
 <%= turbo_frame_tag "results" do %>
   <div id="checkins" class="row">
     <% checkins.each do |checkin| %>
-      <div class="col-md-3">
+      <div class="col-6 col-md-2">
         <%= render checkin %>
       </div>
     <% end %>

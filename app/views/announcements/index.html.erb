@@ -29,8 +29,18 @@
 <%= turbo_frame_tag "results" do %>
   <div id="announcements" class="row">
     <% @announcements.each do |announcement| %>
-      <div class="col-md-3">
-        <%= render announcement %>
+    <div class="col-12 col-md-6">
+        <div class="card" id="<%= dom_id announcement %>">
+          <div class="card-header">
+            <% if announcement.team %>
+              <%= link_to i(announcement.team.team_type.icon), team_path(announcement.team), class: "badge rounded-pill", style: "background-color:#{announcement.team.color};color:#{contrasting_color(announcement.team.color)}", "data-turbo": "false", title: "Posted in #{announcement.team.name}" %>
+            <% end %>
+            <%= link_to announcement.title, announcement, "data-turbo": "false" %>
+          </div>
+          <div class="card-body">
+            <%= announcement.content.truncate(80) %>
+          </div>
+        </div>
       </div>
     <% end %>
   </div>
