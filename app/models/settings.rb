@@ -68,5 +68,8 @@ class Settings
 
     @settings = Hash.new
     add_setting(:title, :string, "Site Name", "GatherPack", nil, "The name of the site")
+    add_setting(:time_zone, :time_zone, "Time Zone", "", nil, "The default time zone")
+    add_setting(:shirt_sizes, :string, "Shirt Sizes", "Youth S, Youth M, Youth L, S, M, L, XL, XXL, 3XL, 4XL", 'People', "Comma-separated list of valid shirt sizes")
+    add_setting(:gender_options, :string, "Gender Options", "M, F, X", 'People', "Comma-separated list of valid gender options")
   end
 end

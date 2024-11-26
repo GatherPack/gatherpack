@@ -9,16 +9,11 @@ class AnnouncementPolicy < ApplicationPolicy
     end
   end
 
-  def new?
-    has_perms
+  def create?
+    user.admin || person.manager?
   end
 
   def update?
-    has_perms
-  end
-
-  private
-  def has_perms
-    user.admin || person.teams.include?(record.team)
+    user.admin || (record.team && person.managed_teams.include?(record.team))
   end
 end

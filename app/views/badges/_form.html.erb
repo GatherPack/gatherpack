@@ -16,8 +16,8 @@
   </div>
   <div class="col-md-6">
     <%= f.association :badge_type %>
-    <%= f.association :team, collection: policy_scope(Team) %>
+    <%= f.association :team, collection: current_user.person.managed_teams, include_blank: admin? %>
 
-    <%= f.association :people, as: :check_boxes, collection: @badge.team ? @badge.team.people : Person.all, label_method: :identifier_name %>
+    <%= f.association :people, as: :check_boxes, collection: (@badge.team ? @badge.team.people : Person.all).order(last_name: :asc, first_name: :asc), label_method: :identifier_name %>
   </div>
 </div>

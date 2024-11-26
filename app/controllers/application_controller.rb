@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   include Pundit::Authorization
+  around_action :set_time_zone
   # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
   # allow_browser versions: :modern # commenting this out may break javascript for some people...
 
@@ -23,5 +24,9 @@ class ApplicationController < ActionController::Base
 
   def pundit_not_authorized
     redirect_to root_path, notice: 'You are not allowed to do that'
+  end
+
+  def set_time_zone(&block)
+    Time.use_zone(Settings[:time_zone], &block)
   end
 end
