@@ -3,8 +3,10 @@ class TransactionPolicy < ApplicationPolicy
     def resolve
       if user.admin
         scope.all
+      elsif person.manager?
+        scope.includes(:account).where('account.team': person.managed_teams).or(scope.where(account_id: person.accounts.pluck(:id)))
       else
-        scope.where(team: person.teams).or(scope.where(team_id: ''))
+        scope.includes(:account).where('account.team': person.teams).or(scope.where(account_id: person.accounts.pluck(:id)))
       end
     end
   end
