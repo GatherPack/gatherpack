@@ -6,7 +6,17 @@
     <h1>New person</h1>
   </div>
   <div class="card-body">
-    <%= render "form", f: f %>
+    <div class="row">
+      <div class="col-6 col-md-4">
+        <%= f.input :first_name %>
+      </div>
+      <div class="col-6 col-md-4">
+        <%= f.input :last_name %>
+      </div>
+      <div class="col-12 col-md-4">
+        <%= f.input :email, hint: 'Leave blank to create a person without a user' %>
+      </div>
+    </div>
   </div>
   <div class="card-footer">
     <%= link_to "Cancel", people_path, class: 'btn btn-warning' %>

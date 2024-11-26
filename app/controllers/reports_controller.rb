@@ -4,7 +4,7 @@ class ReportsController < InternalController
   # GET /reports
   def index
     @q = Report.ransack(params[:q])
-    @reports = @q.result(distinct: true).page(params[:page])
+    @reports = @q.result(distinct: true).order(name: :asc).page(params[:page])
   end
 
   # GET /reports/1
