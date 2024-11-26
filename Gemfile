@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 # Use main development branch of Rails
-gem 'rails', github: 'rails/rails', branch: 'main'
+gem 'rails', '~> 8.0'
 # The modern asset pipeline for Rails [https://github.com/rails/propshaft]
 gem 'propshaft'
 # Use sqlite3 as the database for Active Record
@@ -62,7 +62,7 @@ gem 'activerecord-enhancedsqlite3-adapter', '~> 0.8.0'
 
 gem 'litestream', '~> 0.10.1'
 
-gem 'solid_queue', github: 'rails/solid_queue', branch: 'main'
+gem 'solid_queue'
 gem 'mission_control-jobs', github: 'rails/mission_control-jobs', branch: 'main'
 
 gem 'solid_cache', '~> 0.6.0'
@@ -84,8 +84,10 @@ gem 'ransack', '~> 4.1'
 
 gem 'kaminari', '~> 1.2'
 
-gem "color", "~> 1.8"
+gem 'color', '~> 1.8'
 
-gem "pundit", "~> 2.3"
+gem 'pundit', '~> 2.3'
 
-gem "gretel", github: 'wobschalli/gretel' #change to main gem once it has support for rails 8
+gem 'gretel', github: 'wobschalli/gretel' # change to main gem once it has support for rails 8
+
+gem "spicy-proton", "~> 2.1"

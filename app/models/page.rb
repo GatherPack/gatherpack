@@ -8,8 +8,7 @@ class Page < ApplicationRecord
   validates :viewer, inclusion: { in: PERMISSION_LEVELS }
   validates :editor, inclusion: { in: PERMISSION_LEVELS }
   validates :editor, inclusion: { in: [ 'admin' ], message: 'must be restricted to admins when enabling ERB parsing' }, if: -> { dynamic == true }
-  validate :manager_permission_needs_team
-  validate :permission_hierarchy
+  validate :permissions_make_sense
 
   def self.ransackable_attributes(auth_object = nil)
     [ 'content', 'title', 'team_id' ]
@@ -21,12 +20,9 @@ class Page < ApplicationRecord
 
   private
 
-  def manager_permission_needs_team
+  def permissions_make_sense
     errors.add(:editor, "can't be 'manager' if there's no team") if editor == 'manager' && team.nil?
     errors.add(:viewer, "can't be 'manager' if there's no team") if viewer == 'manager' && team.nil?
-  end
-
-  def permission_hierarchy
     errors.add(:viewer, "can't be higher than the editor permission") if PERMISSION_LEVELS.find_index(editor) < PERMISSION_LEVELS.find_index(viewer)
   end
 end

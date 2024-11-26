@@ -5,21 +5,7 @@
     <h1><%= as_badge @badge %> <%= @badge.identifier_name %></h1>
   </div>
   <div class="card-body">
-    <div class="row">
-      <div class="col-md-6 col-lg-4">
-        <%= @badge.description %>
-      </div>
-      <div class="col-md-6 col-lg-8">
-        <div class="row">
-          <% @badge.people.each do |person| %>
-            <div class="col-6 col-lg-3">
-              <%= render person %>
-            </div>
-          <% end %>
-        </div>
-      </div>
-    </div>
-    
+    <%= @badge.description %>
   </div>
   <div class="card-footer">
     <%= link_to 'Edit', edit_badge_path(@badge), class: 'btn btn-warning' if policy(@badge).edit? %>
@@ -27,4 +13,12 @@
   </div>
 </div>
 
+<h2>People</h2>
+<div class="row">
+  <% policy_scope(@badge.people).order(last_name: :asc, first_name: :asc).each do |person| %>
+    <div class="col-6 col-md-2">
+      <%= render person %>
+    </div>
+  <% end %>
+</div>
     

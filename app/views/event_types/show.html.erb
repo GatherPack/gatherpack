@@ -7,7 +7,7 @@
   <div class="card-body">
     <h2>Events</h2>
     <ul>
-      <% @event_type.events.each do |event| %>
+      <% @event_type.events.order(start_time: :asc).each do |event| %>
         <li><%= link_to event.name, event %></li>
       <% end %>
     </ul>
