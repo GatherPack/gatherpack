@@ -4,7 +4,7 @@ class TokensController < InternalController
   # GET /tokens
   def index
     @q = policy_scope(Token).ransack(params[:q])
-    @tokens = @q.result(distinct: true).page(params[:page])
+    @tokens = @q.result(distinct: true).order(value: :asc).page(params[:page])
   end
 
   # GET /tokens/1

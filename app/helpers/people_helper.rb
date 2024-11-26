@@ -18,7 +18,7 @@ module PeopleHelper
       available_teams += Team.all.where(join_permission: Team.join_permissions[:has_account])
     end
 
-    available_teams
+    available_teams.uniq
   end
 
   def person_as_badge(person)

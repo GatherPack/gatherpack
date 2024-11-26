@@ -2,7 +2,7 @@
   <div class="card-header">
     <%= link_to person.identifier_name, person, "data-turbo": "false" %>
   </div>
-  <div class="card-body">
-    <img src="<%= get_avatar_url(person.avatar) %>">
+  <div class="card-body person-img-container">
+    <%= image_tag get_avatar_url(person.avatar), class: 'person-img' %>
   </div>
 </div>

@@ -5,7 +5,7 @@ class TeamTypesController < InternalController
   # GET /team_types
   def index
     @q = TeamType.ransack(params[:q])
-    @team_types = authorize @q.result(distinct: true).page(params[:page]).includes(:teams)
+    @team_types = authorize @q.result(distinct: true).order(name: :asc).page(params[:page]).includes(:teams)
   end
 
   # GET /team_types/1

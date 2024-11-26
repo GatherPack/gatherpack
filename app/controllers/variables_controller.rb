@@ -4,7 +4,7 @@ class VariablesController < InternalController
   # GET /variables
   def index
     @q = Variable.ransack(params[:q])
-    @variables = authorize @q.result(distinct: true).page(params[:page])
+    @variables = authorize @q.result(distinct: true).order(name: :asc).page(params[:page])
   end
 
   # GET /variables/1

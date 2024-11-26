@@ -2,6 +2,8 @@ class Event < ApplicationRecord
   include CanBeHooked
   belongs_to :event_type
   belongs_to :team, optional: true
+  
+  has_many :checkins
 
   validates :name, presence: true
   validates :start_time, presence: true

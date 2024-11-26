@@ -4,7 +4,7 @@ class PagePolicy < ApplicationPolicy
       if user.admin
         scope.all
       else
-        scope.where(team: person.teams).or(scope.where(team_id: ""))
+        scope.where(team: person.teams).or(scope.where(team_id: "")).or(scope.where(viewer: "public"))
       end
     end
   end

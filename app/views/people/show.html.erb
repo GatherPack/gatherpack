@@ -6,54 +6,72 @@
   </div>
   <div class="card-body">
     <div class="row">
-      <div class="col">
-        <img src="<%= get_avatar_url(@person.avatar) %>">
+      <div class="col-12 col-sm-6 col-lg-4 person-img-container">
+        <%= image_tag get_avatar_url(@person.avatar), class: 'person-img' %>
       </div>
-      <div class="col">
+      <div class="col-12 col-sm-6 col-lg-4">
         <p><b>Email: </b><%= if @person.user.nil? then "This person doesn't have a user attached." else @person.user.email end %></p>
         <p><b>Phone: </b><%= @person.phone_number %></p>
-        <p><b>Birthday: </b><%= @person.birthday %></p>
+        <p><b>Birthday: </b><%= nice_date(@person.birthday) %></p>
         <p><b>Address: </b><%= @person.address %></p>
         <p><b>Dietary Restrictions: </b><%= @person.dietary_restrictions %></p>
         <p><b>Shirt Size: </b><%= @person.shirt_size %></p>
         <p><b>Gender: </b><%= @person.gender %></p>
       </div>
-      <div class="col">
-        <div class="mb-3">
-          <h3>Teams</h3>
-          <% policy_scope(@person.teams).each do |team| %>
-            <%= link_to team do %>
-              <%= as_badge team %>
+      <div class="col-12 col-sm-6 col-lg-4">
+        <% if @teams.any? %>
+          <div class="mb-3">
+            <h3>Teams</h3>
+            <% @teams.each do |team| %>
+              <%= link_to team, class: 'undecorated' do %>
+                <%= as_badge team %>
+              <% end %>
             <% end %>
-          <% end %>
-        </div>
+          </div>
+        <% end %>
 
-        <div class="mb-3">
-          <h3>Badges</h3>
-          <% policy_scope(@person.badges).order(name: :asc).each do |badge| %>
-            <%= link_to badge do %>
-              <%= as_badge badge %>
-            <% end %>
-          <% end %>
-        </div>
+        <% if @badges.any? || @person.user&.admin? %>
+          <div class="mb-3">
+            <h3>Badges</h3>
+            <div class="row">
+              <% if @person.user&.admin? %>
+                <div class="col-4 col-xl-2 mb-3 fs-3">
+                  <span class="badge" title="Site Admin" style="background-color: black; color: #dd2; border: thick solid #bb1;"><%= i 'crown' %></span>
+                </div>
+              <% end %>
 
-        <div class="mb-3">
-          <h3>Tokens</h3>
-          <% policy_scope(@person.tokens).each do |token| %>
-            <%= link_to token do %>
-              <%= as_badge token %>
-            <% end %>
-          <% end %>
-        </div>
+              <% @badges.each do |badge| %>
+                <div class="col-4 col-xl-2 mb-3 fs-3">
+                  <%= link_to badge, class: 'undecorated' do %>
+                    <%= as_badge badge %>
+                  <% end %>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
 
-        <div class="mb-3">
-          <h3>Accounts</h3>
-          <% policy_scope(@person.accounts).each do |account| %>
-            <%= link_to account do %>
-              <%= as_badge account %>
+        <% if @tokens.any? %>
+          <div class="mb-3">
+            <h3>Tokens</h3>
+            <% policy_scope(@person.tokens).each do |token| %>
+              <%= link_to token, class: 'undecorated' do %>
+                <%= as_badge token %>
+              <% end %>
             <% end %>
-          <% end %>
-        </div>
+          </div>
+        <% end %>
+
+        <% if @accounts.any? %>
+          <div class="mb-3">
+            <h3>Accounts</h3>
+            <% @accounts.each do |account| %>
+              <%= link_to account do %>
+                <%= as_badge account %>
+              <% end %>
+            <% end %>
+          </div>
+        <% end %>
       </div>
     </div>
   </div>
