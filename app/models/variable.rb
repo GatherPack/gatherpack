@@ -1,4 +1,6 @@
 class Variable < ApplicationRecord
+  has_paper_trail versions: { class_name: "Version" }
+
   TYPES = %w[ string int float structure ]
 
   validates :name, presence: true, format: { without: /\W/, message: 'must not have spaces' }
