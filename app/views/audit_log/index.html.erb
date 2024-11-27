@@ -1,0 +1,9 @@
+<% breadcrumb :audit_log %>
+
+<div id="logs" class="row">
+  <% @logs.order(created_at: :desc).each do |log| %>
+    <div class="col-md-3">
+      <%= render log %>
+    </div>
+  <% end %>
+</div>

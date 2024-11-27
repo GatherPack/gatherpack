@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :audit_log, only: %i[ index show destroy ]
   resources :pages
   resources :tokens
   resources :hooks
@@ -6,7 +7,6 @@ Rails.application.routes.draw do
   resources :badge_types
   resources :events do
     resources :checkins, except: %i[ index ]
-    
   end
   resources :event_types
   resources :announcements
