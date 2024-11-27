@@ -1,5 +1,6 @@
 class Badge < ApplicationRecord
   include CanBeHooked
+  has_paper_trail versions: { class_name: "Version" }
   belongs_to :badge_type
   belongs_to :team, optional: true
   has_many :badge_assignments
