@@ -1,0 +1,14 @@
+<div class="card" id="<%= dom_id version %>">
+  <div class="card-header">
+    <%= link_to audit_log_path(version.id), "data-turbo": "false" do %>
+      <%= version.created_at %> (<%= time_ago_in_words(version.created_at.to_time, include_seconds: true) %> ago)
+    <% end %>
+  </div>
+  <div class="card-body">
+    <ul class="list-unstyled">
+      <li><b>Event</b>: <%= version.event %></li>
+      <li><b>Whodunnit</b>: <%= User.find_by_id(version.whodunnit)&.person.display_name %></li>
+      <li><b>Model</b>: <%= version.item_type.titleize %></li>
+    </ul>
+  </div>
+</div>
