@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
-  resources :audit_log, only: %i[ index show destroy ] do
-    post 'revert', to: 'audit_log#revert', on: :member
+  resources :audit_logs, only: %i[ index show destroy ] do
+    post 'revert', to: 'audit_logs#revert', on: :member
   end
   resources :pages
   resources :tokens

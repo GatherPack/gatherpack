@@ -1,6 +1,6 @@
 class User < ApplicationRecord
   include CanBeHooked
-  has_paper_trail versions: { class_name: "Version" }
+  has_paper_trail versions: { class_name: "AuditLog" }
   has_one :person
   accepts_nested_attributes_for :person
   # Include default devise modules. Others available are:

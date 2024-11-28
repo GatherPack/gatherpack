@@ -1,9 +1,9 @@
-class AuditLogController < ApplicationController
+class AuditLogsController < ApplicationController
   before_action :check_for_admin
   before_action :set_log, only: %i[ show destroy revert ]
 
   def index
-    @q = Version.all.ransack(params[:q])
+    @q = AuditLog.all.ransack(params[:q])
     @logs = @q.result(distinct: true).order(created_at: :desc).page(params[:page])
   end
 
@@ -15,7 +15,7 @@ class AuditLogController < ApplicationController
     @log.destroy!
 
     respond_to do |format|
-      format.html { redirect_to audit_log_index_url, notice: "Log was successfully destroyed." }
+      format.html { redirect_to audit_logs_url, notice: "Log was successfully destroyed." }
       format.json { head :no_content }
     end
   end
@@ -24,7 +24,7 @@ class AuditLogController < ApplicationController
     @log.reify&.save
 
     respond_to do |format|
-      format.html { redirect_to audit_log_index_url, notice: "Successfully reverted to version #{@log.created_at}." }
+      format.html { redirect_to audit_logs_url, notice: "Successfully reverted to version #{@log.created_at}." }
       format.json { head :no_content }
     end
   end
@@ -32,6 +32,6 @@ class AuditLogController < ApplicationController
   private
 
   def set_log
-    @log = Version.all.find(params[:id])
+    @log = AuditLog.all.find(params[:id])
   end
 end

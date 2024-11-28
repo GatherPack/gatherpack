@@ -1,6 +1,6 @@
 class Event < ApplicationRecord
   include CanBeHooked
-  has_paper_trail versions: { class_name: "Version" }
+  has_paper_trail versions: { class_name: "AuditLog" }
   belongs_to :event_type
   belongs_to :team, optional: true
   
