@@ -3,7 +3,8 @@ class AuditLogController < ApplicationController
   before_action :set_log, only: %i[ show destroy revert ]
 
   def index
-    @logs = Version.all
+    @q = Version.all.ransack(params[:q])
+    @logs = @q.result(distinct: true).order(created_at: :desc).page(params[:page])
   end
 
   def show
