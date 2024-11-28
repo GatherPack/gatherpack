@@ -9,7 +9,7 @@
   <div class="card-body">
     <ul class="list-unstyled">
       <li><b>Event</b>: <%= audit_log.event %></li>
-      <li><b>Whodunnit</b>: <%= User.find_by_id(audit_log.whodunnit)&.person.display_name %></li>
+      <li><b>Whodunnit</b>: <%= User.find_by_id(audit_log.whodunnit)&.person&.display_name %></li>
       <li><b>Model</b>: <%= audit_log.item_type.titleize %></li>
     </ul>
   </div>

@@ -6,6 +6,14 @@
     <h1>Audit Log</h1>
   </div>
   <div class="card-body">
+    <div class="row">
+      <div class="col">
+        <%= f.input :event_eq, label: 'Event', as: :select, collection: ['create', 'update', 'destroy'] %>
+      </div>
+      <div class="col">
+        <%= f.input :whodunnit_eq, label: 'Whodunnit', as: :select, collection: User.all.map { |u| [u.person.display_name, u.id] } %>
+      </div>
+    </div>
   </div>
   <div class="card-footer">
     <%= f.submit 'Search', class: 'btn btn-primary', data: { action: "turbo_search#search" } %>
