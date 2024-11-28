@@ -1,5 +1,5 @@
 class EventType < ApplicationRecord
-  has_paper_trail versions: { class_name: "Version" }
+  has_paper_trail versions: { class_name: "AuditLog" }
   has_many :events
 
   validates :name, presence: true

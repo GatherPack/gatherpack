@@ -1,0 +1,2 @@
+class AuditLog < AbstractVersion
+end

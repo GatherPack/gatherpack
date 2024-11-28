@@ -1,6 +1,6 @@
 class Announcement < ApplicationRecord
   include CanBeHooked
-  has_paper_trail versions: { class_name: "Version" }
+  has_paper_trail versions: { class_name: "AuditLog" }
   belongs_to :team, optional: true
 
   validates :title, presence: true

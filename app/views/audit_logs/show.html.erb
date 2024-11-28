@@ -14,7 +14,7 @@
   </div>
   <div class="card-footer">
     <%= link_to "Revert this change", revert_audit_log_path(@log), data: { turbo_method: :post, turbo_confirm: "Are you sure?" }, class: "btn btn-warning" %>
-    <%= link_to "Destroy this log", audit_log_path(@log), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "btn btn-danger" %>
+    <%= link_to "Destroy this log", @log, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "btn btn-danger" %>
   </div>
 </div>
 

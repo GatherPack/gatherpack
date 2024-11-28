@@ -1,5 +1,5 @@
 class Page < ApplicationRecord
-  has_paper_trail versions: { class_name: "Version" }
+  has_paper_trail versions: { class_name: "AuditLog" }
   belongs_to :team, optional: true
 
   PERMISSION_LEVELS = %w[ public user team manager admin ]

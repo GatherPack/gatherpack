@@ -1,5 +1,5 @@
 class Variable < ApplicationRecord
-  has_paper_trail versions: { class_name: "Version" }
+  has_paper_trail versions: { class_name: "AuditLog" }
 
   TYPES = %w[ string int float structure ]
 

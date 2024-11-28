@@ -1,0 +1,16 @@
+<div class="card" id="<%= dom_id audit_log %>">
+  <div class="card-header">
+    <%= link_to audit_log, "data-turbo": "false" do %>
+      <%= audit_log.created_at %>
+      <br>
+      (<%= time_ago_in_words(audit_log.created_at.to_time, include_seconds: true) %> ago)
+    <% end %>
+  </div>
+  <div class="card-body">
+    <ul class="list-unstyled">
+      <li><b>Event</b>: <%= audit_log.event %></li>
+      <li><b>Whodunnit</b>: <%= User.find_by_id(audit_log.whodunnit)&.person.display_name %></li>
+      <li><b>Model</b>: <%= audit_log.item_type.titleize %></li>
+    </ul>
+  </div>
+</div>
