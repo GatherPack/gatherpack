@@ -13,6 +13,9 @@
       <div class="col">
         <%= f.input :whodunnit_eq, label: 'Whodunnit', as: :select, collection: User.all.map { |u| [u.person.display_name, u.id] } %>
       </div>
+      <div class="col">
+        <%= f.input :item_type_eq, label: 'Model' %>
+      </div>
     </div>
   </div>
   <div class="card-footer">
