@@ -3,8 +3,8 @@ class AuditLogsController < ApplicationController
   before_action :set_log, only: %i[ show destroy revert ]
 
   def index
-    @q = AuditLog.all.ransack(params[:q])
-    @logs = @q.result(distinct: true).order(created_at: :desc).page(params[:page])
+    @q = AuditLog.ransack(params[:q])
+    @logs = authorize @q.result(distinct: true).order(created_at: :desc).page(params[:page])
   end
 
   def show
@@ -32,6 +32,6 @@ class AuditLogsController < ApplicationController
   private
 
   def set_log
-    @log = AuditLog.all.find(params[:id])
+    @log = authorize AuditLog.find(params[:id])
   end
 end
