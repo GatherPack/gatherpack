@@ -91,3 +91,5 @@ gem 'pundit', '~> 2.3'
 gem 'gretel', github: 'wobschalli/gretel' # change to main gem once it has support for rails 8
 
 gem "spicy-proton", "~> 2.1"
+
+gem "paper_trail", "~> 16.0"

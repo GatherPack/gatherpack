@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_09_04_193154) do
+ActiveRecord::Schema[8.0].define(version: 2024_05_22_180061) do
   create_table "solid_queue_blocked_executions", force: :cascade do |t|
     t.bigint "job_id", null: false
     t.string "queue_name", null: false
@@ -32,7 +32,7 @@ ActiveRecord::Schema[8.0].define(version: 2024_09_04_193154) do
   end
 
   create_table "solid_queue_failed_executions", force: :cascade do |t|
-    t.bigint "job_id", null: false
+    t.integer "job_id", null: false
     t.text "error"
     t.datetime "created_at", null: false
     t.index ["job_id"], name: "index_solid_queue_failed_executions_on_job_id", unique: true
@@ -70,9 +70,8 @@ ActiveRecord::Schema[8.0].define(version: 2024_09_04_193154) do
     t.string "hostname"
     t.text "metadata"
     t.datetime "created_at", null: false
-    t.string "name", null: false
+    t.string "name"
     t.index ["last_heartbeat_at"], name: "index_solid_queue_processes_on_last_heartbeat_at"
-    t.index ["name", "supervisor_id"], name: "index_solid_queue_processes_on_name_and_supervisor_id", unique: true
     t.index ["supervisor_id"], name: "index_solid_queue_processes_on_supervisor_id"
   end
 
@@ -87,7 +86,7 @@ ActiveRecord::Schema[8.0].define(version: 2024_09_04_193154) do
   end
 
   create_table "solid_queue_recurring_executions", force: :cascade do |t|
-    t.bigint "job_id", null: false
+    t.integer "job_id", null: false
     t.string "task_key", null: false
     t.datetime "run_at", null: false
     t.datetime "created_at", null: false

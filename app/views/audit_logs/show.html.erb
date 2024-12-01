@@ -1,0 +1,59 @@
+<% breadcrumb @log %>
+
+<div class="card mb-3">
+  <div class="card-header">
+    <h1><%= @log.created_at %></h1>
+  </div>
+  <div class="card-body">
+    <ul class="list-unstyled">
+      <li><%= time_ago_in_words(@log.created_at.to_time, include_seconds: true) %> ago</li>
+      <li><b>Event</b>: <%= @log.event %></li>
+      <li><b>Whodunnit</b>: <%= User.find_by_id(@log.whodunnit)&.person&.display_name %></li>
+      <li><b>Model</b>: <%= @log.item_type.titleize %></li>
+    </ul>
+  </div>
+  <div class="card-footer">
+    <%= link_to "Revert", revert_audit_log_path(@log), data: { turbo_method: :post, turbo_confirm: "Are you sure?" }, class: "btn btn-warning" %>
+    <%= link_to "Delete", @log, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "btn btn-danger" %>
+  </div>
+</div>
+
+<div class="card mb-3">
+  <div class="card-header">
+    <h2>Changes</h2>
+  </div>
+  <div class="card-body">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Attribute</th>
+          <th scope="col">Before</th>
+          <th scope="col">After</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @log_hash.each do |key, value| %>
+          <tr>
+            <th scope="row">
+              <%= key %>
+            </th>
+            <td>
+              <% if value[0].nil? %>
+                <i>nil</i>
+              <% else %>
+                <%= value[0] %>
+              <% end %>
+            </td>
+            <td>
+              <% if value[1].nil? %>
+                <i>nil</i>
+              <% else %>
+                <%= value[1] %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,6 +1,8 @@
 class ApplicationController < ActionController::Base
   include Pundit::Authorization
   around_action :set_time_zone
+
+  before_action :set_paper_trail_whodunnit
   # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
   # allow_browser versions: :modern # commenting this out may break javascript for some people...
 

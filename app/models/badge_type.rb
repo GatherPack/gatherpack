@@ -1,4 +1,5 @@
 class BadgeType < ApplicationRecord
+  has_paper_trail versions: { class_name: "AuditLog" }
   has_many :badges
 
   validates :name, presence: true

@@ -1,0 +1,38 @@
+<% breadcrumb :audit_logs %>
+
+<%= search_form_for @q, data: {"controller": "turbo_search", "turbo_frame": "results"} do |f| %>
+<div class="card">
+  <div class="card-header">
+    <h1>Audit Log</h1>
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col">
+        <%= f.input :event_eq, label: 'Event', as: :select, collection: ['create', 'update', 'destroy'] %>
+      </div>
+      <div class="col">
+        <%= f.input :whodunnit_eq, label: 'Whodunnit', as: :select, collection: User.all.map { |u| [u.person.display_name, u.id] } %>
+      </div>
+      <div class="col">
+        <%= f.input :item_type_eq, label: 'Model' %>
+      </div>
+    </div>
+  </div>
+  <div class="card-footer">
+    <%= f.submit 'Search', class: 'btn btn-primary', data: { action: "turbo_search#search" } %>
+    <%= link_to 'Clear search', request.path, class: "btn btn-dark", data: { action: "turbo_search#clear" } %>
+  </div>
+</div>
+<% end %>
+
+<%= turbo_frame_tag "results" do %>
+  <div id="logs" class="row">
+    <% @logs.each do |log| %>
+      <div class="col-md-3">
+        <%= render log %>
+      </div>
+    <% end %>
+  </div>
+<% end %>
+
+<%= paginate @logs %>
