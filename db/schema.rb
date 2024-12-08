@@ -11,6 +11,14 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[8.0].define(version: 2024_10_14_232518) do
+# Could not dump table "account_relationships" because of following StandardError
+#   Unknown type 'uuid' for column 'id'
+
+
+# Could not dump table "accounts" because of following StandardError
+#   Unknown type 'uuid' for column 'id'
+
+
 # Could not dump table "action_text_rich_texts" because of following StandardError
 #   Unknown type 'uuid' for column 'id'
 
@@ -95,6 +103,10 @@ ActiveRecord::Schema[8.0].define(version: 2024_10_14_232518) do
 #   Unknown type 'uuid' for column 'id'
 
 
+# Could not dump table "transactions" because of following StandardError
+#   Unknown type 'uuid' for column 'id'
+
+
 # Could not dump table "users" because of following StandardError
 #   Unknown type 'uuid' for column 'id'
 
@@ -103,6 +115,7 @@ ActiveRecord::Schema[8.0].define(version: 2024_10_14_232518) do
 #   Unknown type 'uuid' for column 'id'
 
 
+  add_foreign_key "account_relationships", "accounts"
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "badge_assignments", "badges"
@@ -115,4 +128,5 @@ ActiveRecord::Schema[8.0].define(version: 2024_10_14_232518) do
   add_foreign_key "memberships", "teams"
   add_foreign_key "people", "users"
   add_foreign_key "teams", "team_types"
+  add_foreign_key "transactions", "accounts"
 end
