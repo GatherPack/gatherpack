@@ -28,6 +28,7 @@ module Gatherpack
 
     config.active_job.queue_adapter = :solid_queue
     config.solid_queue.connects_to = { database: { writing: :queue } }
+    config.active_record.yaml_column_permitted_classes = [ Symbol, Date, Time, ActiveSupport::TimeWithZone, ActiveSupport::TimeZone ]
 
     config.generators do |g|
       g.orm :active_record, primary_key_type: KeyTypePicker.key_type
