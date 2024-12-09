@@ -1,5 +1,6 @@
 class Person < ApplicationRecord
   include CanBeHooked
+  has_paper_trail versions: { class_name: "AuditLog" }
   belongs_to :user, optional: true
   has_many :memberships, dependent: :destroy
   has_many :teams, through: :memberships

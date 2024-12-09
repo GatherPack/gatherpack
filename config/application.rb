@@ -25,6 +25,7 @@ module Gatherpack
     # config.eager_load_paths << Rails.root.join("extras")
 
     config.active_job.queue_adapter = :solid_queue
+    config.active_record.yaml_column_permitted_classes = [ Symbol, Date, Time, ActiveSupport::TimeWithZone, ActiveSupport::TimeZone ]
 
     config.generators do |g|
       g.orm :active_record, primary_key_type: :uuid
