@@ -1,0 +1,29 @@
+<% breadcrumb :accounts %>
+
+<%= search_form_for @q, data: {"controller": "turbo_search", "turbo-frame": "results"} do |f| %>
+<div class="card">
+  <div class="card-header">
+    <h1>Accounts</h1>
+  </div>
+  <div class="card-body">
+  </div>
+  <div class="card-footer">
+    <%= link_to "New account", new_account_path, class: 'btn btn-success' if policy(Account).new? %>
+    <%= f.submit 'Search', class: 'btn btn-primary', data: { action: "turbo_search#search" } %>
+    <%= link_to 'Clear search', request.path, class: "btn btn-dark", data: { action: "turbo_search#clear" } %>
+    <%= link_to "Quick Transaction", transactions_path, class: 'btn btn-info' if policy(Transaction).new? && @accounts.any? %>
+  </div>
+</div>
+<% end %>
+
+<%= turbo_frame_tag "results" do %>
+  <div id="accounts" class="row">
+    <% @accounts.each do |account| %>
+      <div class="col-md-3">
+        <%= render account %>
+      </div>
+    <% end %>
+  </div>
+
+  <%= paginate @accounts %>
+<% end %>

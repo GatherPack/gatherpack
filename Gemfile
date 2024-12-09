@@ -88,7 +88,11 @@ gem 'color', '~> 1.8'
 
 gem 'pundit', '~> 2.3'
 
-gem 'gretel', github: 'wobschalli/gretel' # change to main gem once it has support for rails 8
+gem "gretel", github: 'wobschalli/gretel' #change to main gem once it has support for rails 8
+
+gem "money", "~> 6.19"
+
+gem "money-rails", "~> 1.15"
 
 gem "spicy-proton", "~> 2.1"
 
