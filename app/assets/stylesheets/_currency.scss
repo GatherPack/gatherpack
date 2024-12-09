@@ -1,0 +1,9 @@
+.money {
+  font-family: $font-family-monospace;
+
+  &.money-positive { color: #226622; }
+  &.money-negative { color: #662222; }
+  &.money-zero { color: #444444; }
+
+  .money-whole, .money-decimal { font-weight: bold; }
+}

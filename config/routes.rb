@@ -2,6 +2,8 @@ Rails.application.routes.draw do
   resources :audit_logs, only: %i[ index show destroy ] do
     post 'revert', to: 'audit_logs#revert', on: :member
   end
+  resources :transactions, only: %i[ index create ]
+  resources :accounts
   resources :pages
   resources :tokens
   resources :hooks

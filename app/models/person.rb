@@ -8,6 +8,8 @@ class Person < ApplicationRecord
   has_many :badges, through: :badge_assignments
   has_many :checkins
   has_many :tokens, as: :tokenable
+  has_many :account_relationships, as: :holder
+  has_many :accounts, through: :account_relationships
   before_save :check_display_name
   accepts_nested_attributes_for :user
   has_one_attached :avatar
