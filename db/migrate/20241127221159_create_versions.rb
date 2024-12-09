@@ -9,10 +9,10 @@ class CreateVersions < ActiveRecord::Migration[8.0]
   TEXT_BYTES = 1_073_741_823
 
   def change
-    create_table :versions do |t|
+    create_table :versions, id: :uuid do |t|
       # Consider using bigint type for performance if you are going to store only numeric ids.
       # t.bigint   :whodunnit
-      t.uuid   :whodunnit
+      t.uuid     :whodunnit
 
       # Known issue in MySQL: fractional second precision
       # -------------------------------------------------
@@ -31,7 +31,7 @@ class CreateVersions < ActiveRecord::Migration[8.0]
       # t.datetime :created_at, limit: 6
       t.datetime :created_at
 
-      t.uuid   :item_id,   null: false
+      t.uuid     :item_id,   null: false
       t.string   :item_type, null: false
       t.string   :event,     null: false
       t.text     :object, limit: TEXT_BYTES

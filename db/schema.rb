@@ -385,7 +385,7 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_27_221160) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "versions", force: :cascade do |t|
+  create_table "versions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "whodunnit"
     t.datetime "created_at"
     t.uuid "item_id", null: false
