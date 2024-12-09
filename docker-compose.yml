@@ -1,0 +1,15 @@
+services:
+  db:
+    image: postgres
+    environment: 
+      POSTGRES_PASSWORD: 'password'
+    volumes:
+      - ./tmp/db:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+  
+  mailcatcher:
+    image: schickling/mailcatcher
+    ports:
+      - '1080:1080'
+      - '1025:1025'

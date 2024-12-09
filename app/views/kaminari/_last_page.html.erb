@@ -7,5 +7,5 @@
     remote:        data-remote
 -%>
 <span class="last">
-  <%= link_to_unless current_page.last?, t('views.pagination.last').html_safe, url, remote: remote, class: 'btn btn-primary' %>
+  <%= link_to t('views.pagination.last').html_safe, url, remote: remote, class: ['btn', 'btn-primary', current_page.last? ? 'disabled' : ''], disabled: current_page.last? %>
 </span>

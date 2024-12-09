@@ -3,7 +3,7 @@ class Badge < ApplicationRecord
   has_paper_trail versions: { class_name: "AuditLog" }
   belongs_to :badge_type
   belongs_to :team, optional: true
-  has_many :badge_assignments
+  has_many :badge_assignments, dependent: :destroy
   has_many :people, through: :badge_assignments
 
   validates :name, presence: true

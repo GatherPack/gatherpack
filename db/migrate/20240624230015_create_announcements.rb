@@ -5,7 +5,7 @@ class CreateAnnouncements < ActiveRecord::Migration[8.0]
       t.text :content
       t.datetime :start_time
       t.datetime :end_time
-      t.references :team, null: true, type: :uuid
+      t.references :team, null: true, foreign_key: false, type: :uuid
 
       t.timestamps
     end

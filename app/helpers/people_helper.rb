@@ -5,20 +5,14 @@ module PeopleHelper
 
   def get_joinable_teams(person, current_user)
     if current_user.admin?
-      return Team.all
+      return Team.all.to_a
     end
 
-    available_teams = person.teams + current_user.person.teams.where(join_permission: Team.join_permissions[:added_by_current_member])
-    current_user.person.teams.where(join_permission: Team.join_permissions[:added_by_manager]).each do |t|
-      if !t.managers.include?(current_user.person)
-        available_teams.append t
-      end
-    end
-    if !person.user.nil?
-      available_teams += Team.all.where(join_permission: Team.join_permissions[:has_account])
-    end
-
-    available_teams.uniq
+    (
+      Team.where(join_permission: Team.join_permissions[:has_account]).includes(:team_type).to_a +
+      person.teams.includes(:team_type).to_a +
+      current_user.person.managed_teams.includes(:team_type).to_a
+    ).uniq.sort_by { |t| [t.team_type.name, t.name] }
   end
 
   def person_as_badge(person)
