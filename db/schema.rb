@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_11_27_221160) do
+ActiveRecord::Schema[8.0].define(version: 2024_10_14_232518) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -385,33 +385,17 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_27_221160) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "versions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "whodunnit"
-    t.datetime "created_at"
-    t.uuid "item_id", null: false
-    t.string "item_type", null: false
-    t.string "event", null: false
-    t.text "object"
-    t.text "object_changes"
-    t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
-  end
-
   add_foreign_key "account_relationships", "accounts"
-  add_foreign_key "accounts", "teams"
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "badge_assignments", "badges"
   add_foreign_key "badge_assignments", "people"
   add_foreign_key "badges", "badge_types"
-  add_foreign_key "badges", "teams"
   add_foreign_key "checkins", "events"
   add_foreign_key "checkins", "people"
   add_foreign_key "events", "event_types"
-  add_foreign_key "events", "teams"
   add_foreign_key "memberships", "people"
   add_foreign_key "memberships", "teams"
-  add_foreign_key "pages", "teams"
-  add_foreign_key "people", "users"
   add_foreign_key "solid_queue_blocked_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
   add_foreign_key "solid_queue_claimed_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
   add_foreign_key "solid_queue_failed_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
