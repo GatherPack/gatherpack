@@ -40,7 +40,7 @@ class Settings
     def get(setting)
       instance.settings[setting]
     end
-    
+
     def set(setting, val)
       instance.settings[setting].value = val
     end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_10_14_232518) do
+ActiveRecord::Schema[8.0].define(version: 2024_11_27_221160) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -383,6 +383,17 @@ ActiveRecord::Schema[8.0].define(version: 2024_10_14_232518) do
     t.text "raw_value"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "versions", force: :cascade do |t|
+    t.uuid "whodunnit"
+    t.datetime "created_at"
+    t.uuid "item_id", null: false
+    t.string "item_type", null: false
+    t.string "event", null: false
+    t.text "object"
+    t.text "object_changes"
+    t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
   end
 
   add_foreign_key "account_relationships", "accounts"

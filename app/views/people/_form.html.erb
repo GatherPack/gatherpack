@@ -52,7 +52,7 @@
         <%= f.input :address %>
       </div>
       <div class="col-12 col-md-6">
-        <%= f.input :birthday %>
+        <%= f.input :birthday, as: :string, input_html: { type: :date } %>
       </div>
       <div class="col-12 col-md-6">
         <%= f.input :dietary_restrictions %>
