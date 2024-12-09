@@ -4,7 +4,7 @@ class Team < ApplicationRecord
   has_many :announcements
   has_many :badges
   has_many :events
-  has_many :memberships
+  has_many :memberships, dependent: :destroy
   has_many :people, through: :memberships
   has_many :events
   has_many :pages
