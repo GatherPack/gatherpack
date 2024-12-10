@@ -12,11 +12,11 @@ class TransactionPolicy < ApplicationPolicy
   end
 
   def new?
-    user.admin? || person.manager?
+    user.admin? || record.is_a?(Transaction) && record&.account&.team&.managers&.include?(person)
   end
 
   def create?
-    user.admin? || record.account.team.managers.include?(person)
+    user.admin? || record&.account&.team&.managers&.include?(person)
   end
 
   def update?
