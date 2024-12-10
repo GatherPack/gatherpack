@@ -8,4 +8,12 @@ class TokenPolicy < ApplicationPolicy
       end
     end
   end
+
+  def create?
+    user.admin? || person.manager?
+  end
+
+  def edit?
+    create?
+  end
 end
