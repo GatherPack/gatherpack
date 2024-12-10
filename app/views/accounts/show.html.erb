@@ -17,13 +17,13 @@
           <%= as_currency @account.balance %>
         </div>
       </div>
-      <div class="col-md-6">
-        <% if policy(@transaction).new? %>
+      <% if policy(@transaction).new? %>
+        <div class="col-md-6">
           <%= simple_form_for(@transaction) do |f| %>
             <%= render 'transactions/form', f: f %>
           <% end %>
-        <% end %>
-      </div>
+        </div>
+      <% end %>
       <div class="col-md-2">
         <h2>Account Holders</h2>
 

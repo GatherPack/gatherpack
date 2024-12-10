@@ -8,8 +8,8 @@
 -%>
 <%= paginator.render do -%>
   <nav class="pagination my-3" role="navigation" aria-label="pager">
-    <%= first_page_tag unless current_page.first? %>
-    <%= prev_page_tag unless current_page.first? %>
+    <%= first_page_tag %>
+    <%= prev_page_tag %>
     <div class="btn-group" role="group">
       <% each_page do |page| -%>
         <% if page.display_tag? -%>
@@ -20,8 +20,8 @@
       <% end -%>
     </div>
     <% unless current_page.out_of_range? %>
-      <%= next_page_tag unless current_page.last? %>
-      <%= last_page_tag unless current_page.last? %>
+      <%= next_page_tag %>
+      <%= last_page_tag %>
     <% end %>
   </nav>
 <% end -%>

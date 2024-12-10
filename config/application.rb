@@ -6,8 +6,6 @@ require 'rails/all'
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-require_relative '../lib/patches/key_type_picker'
-
 module Gatherpack
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
@@ -27,10 +25,10 @@ module Gatherpack
     # config.eager_load_paths << Rails.root.join("extras")
 
     config.active_job.queue_adapter = :solid_queue
-    config.solid_queue.connects_to = { database: { writing: :queue } }
+    config.active_record.yaml_column_permitted_classes = [ Symbol, Date, Time, ActiveSupport::TimeWithZone, ActiveSupport::TimeZone ]
 
     config.generators do |g|
-      g.orm :active_record, primary_key_type: KeyTypePicker.key_type
+      g.orm :active_record, primary_key_type: :uuid
     end
   end
 end

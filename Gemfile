@@ -6,6 +6,7 @@ gem 'rails', '~> 8.0'
 gem 'propshaft'
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3', '>= 1.4'
+gem 'pg', "~> 1.1"
 # Use the Puma web server [https://github.com/puma/puma]
 gem 'puma', '>= 5.0'
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
@@ -28,8 +29,18 @@ gem 'cssbundling-rails'
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: %i[ windows jruby ]
 
+# Use the database-backed adapters for Rails.cache, Active Job, and Action Cable
+gem "solid_cache"
+gem "solid_queue"
+gem "solid_cable"
+
+gem "mission_control-jobs"
+
 # Deploy this application anywhere as a Docker container [https://kamal-deploy.org]
 gem 'kamal', require: false
+
+# Add HTTP asset caching/compression and X-Sendfile acceleration to Puma [https://github.com/basecamp/thruster/]
+gem "thruster", require: false
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 gem 'image_processing', '~> 1.2'
@@ -58,17 +69,6 @@ group :test do
   gem 'selenium-webdriver'
 end
 
-gem 'activerecord-enhancedsqlite3-adapter', '~> 0.8.0'
-
-gem 'litestream', '~> 0.10.1'
-
-gem 'solid_queue'
-gem 'mission_control-jobs', github: 'rails/mission_control-jobs', branch: 'main'
-
-gem 'solid_cache', '~> 0.6.0'
-
-gem 'sqlpkg', '~> 0.2.3'
-
 # to add back in once he gets it updated for rails 8
 # gem "solid_errors", github: "fractaledmind/solid_errors", branch: "main"
 
@@ -95,3 +95,5 @@ gem "money", "~> 6.19"
 gem "money-rails", "~> 1.15"
 
 gem "spicy-proton", "~> 2.1"
+
+gem "paper_trail", "~> 16.0"

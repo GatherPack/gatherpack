@@ -52,7 +52,7 @@
         <%= f.input :address %>
       </div>
       <div class="col-12 col-md-6">
-        <%= f.input :birthday %>
+        <%= f.input :birthday, as: :string, input_html: { type: :date } %>
       </div>
       <div class="col-12 col-md-6">
         <%= f.input :dietary_restrictions %>
@@ -82,7 +82,7 @@
     <% end %>
   </div>
   <div class="col-md">
-    <%= f.association :teams, as: :check_boxes, label_method: :name, collection: get_joinable_teams(@person, current_user).includes(:team_type).order('team_type.name': :asc, name: :asc) %>
+    <%= f.association :teams, as: :check_boxes, label_method: :name, collection: get_joinable_teams(@person, current_user) %>
   </div>
   <div class="col-md">
     <%= f.association :badges, as: :check_boxes, label_method: :name, collection: Pundit.policy_scope(@person.user, Badge).order(name: :asc) %>
