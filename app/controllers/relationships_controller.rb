@@ -7,6 +7,7 @@ class RelationshipsController < ApplicationController
 
   def create
     @relationship = Relationship.new(relationship_params)
+    @relationship.created_by = current_user.person
     @relationship.node_occupant = @person
     @relationship.reify
     if @relationship.parent.present? && @relationship.child.present?
