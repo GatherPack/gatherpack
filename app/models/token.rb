@@ -1,4 +1,6 @@
 class Token < ApplicationRecord
+  include CanBeHooked
+  has_paper_trail versions: { class_name: "AuditLog" }
   belongs_to :tokenable, polymorphic: true, optional: true
   validates :value, uniqueness: true
 
