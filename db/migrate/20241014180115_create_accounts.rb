@@ -1,8 +1,8 @@
 class CreateAccounts < ActiveRecord::Migration[8.0]
   def change
-    create_table :accounts, id: KeyTypePicker.key_type do |t|
+    create_table :accounts, id: :uuid do |t|
       t.string :name
-      t.references :team, null: true, type: :uuid
+      t.references :team, null: true, foreign_key: false, type: :uuid
 
       t.timestamps
     end

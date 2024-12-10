@@ -7,5 +7,5 @@
     remote:        data-remote
 -%>
 <span class="prev mx-2">
-  <%= link_to_unless current_page.first?, t('views.pagination.previous').html_safe, url, rel: 'prev', remote: remote, class: 'btn btn-primary' %>
+  <%= link_to t('views.pagination.previous').html_safe, url, rel: 'prev', remote: remote, class: ['btn', 'btn-primary', current_page.first? ? 'disabled' : ''], disabled: current_page.first? %>
 </span>

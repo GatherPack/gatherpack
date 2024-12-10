@@ -1,13 +1,14 @@
 class Person < ApplicationRecord
   include CanBeHooked
+  has_paper_trail versions: { class_name: "AuditLog" }
   belongs_to :user, optional: true
-  has_many :memberships
+  has_many :memberships, dependent: :destroy
   has_many :teams, through: :memberships
-  has_many :badge_assignments
+  has_many :badge_assignments, dependent: :destroy
   has_many :badges, through: :badge_assignments
-  has_many :checkins
+  has_many :checkins, dependent: :destroy
   has_many :tokens, as: :tokenable
-  has_many :account_relationships, as: :holder
+  has_many :account_relationships, as: :holder, dependent: :destroy
   has_many :accounts, through: :account_relationships
   before_save :check_display_name
   accepts_nested_attributes_for :user

@@ -1,10 +1,11 @@
 class Team < ApplicationRecord
   include CanBeHooked
+  has_paper_trail versions: { class_name: "AuditLog" }
   belongs_to :team_type
   has_many :announcements
   has_many :badges
   has_many :events
-  has_many :memberships
+  has_many :memberships, dependent: :destroy
   has_many :people, through: :memberships
   has_many :events
   has_many :pages
