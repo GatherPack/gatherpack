@@ -4,7 +4,7 @@ class BadgePolicy < ApplicationPolicy
       if user.admin
         scope.all
       else
-        scope.where(team: person.teams).or(scope.where(team_id: ""))
+        scope.where(team: person.teams).or(scope.where(team_id: nil))
       end
     end
   end

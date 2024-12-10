@@ -4,13 +4,13 @@ class AccountPolicy < ApplicationPolicy
       if user.admin?
         scope.all
       else
-        scope.where(id: person.accounts.pluck(:id)).or(scope.where(team: person.teams))
+        scope.where(id: person.accounts.pluck(:id)).or(scope.where(team: person.managed_teams))
       end
     end
   end
 
   def show?
-    user.admin || person.teams.include?(record.team) || record&.holders&.include?(person)
+    user.admin || person.managed_teams.include?(record.team) || record&.holders&.include?(person)
   end
 
   def new?
@@ -18,7 +18,7 @@ class AccountPolicy < ApplicationPolicy
   end
 
   def create?
-    user.admin || person.managed_teams.include?(record.team) 
+    update?
   end
 
   def update?
