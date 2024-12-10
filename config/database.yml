@@ -13,22 +13,46 @@ default: &default
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
 development:
-  <<: *default
-  database: gatherpack_development
-  username: postgres
-  password: password
-  host: localhost
+  primary:
+    <<: *default
+    database: gatherpack_development
+    username: postgres
+    password: password
+    host: localhost
+  versions:
+    <<: *default
+    database: gatherpack_development_versions
+    username: postgres
+    password: password
+    host: localhost
+    migrations_paths: db/versions_migrate
 
 test:
-  <<: *default
-  database: gatherpack_test
-  username: postgres
-  password: password
-  host: localhost
+  primary:
+    <<: *default
+    database: gatherpack_test
+    username: postgres
+    password: password
+    host: localhost
+  versions:
+    <<: *default
+    database: gatherpack_development_versions
+    username: postgres
+    password: password
+    host: localhost
+    migrations_paths: db/versions_migrate
 
 production:
-  <<: *default
-  host: localhost
-  username: postgres
-  password: password
-  database: gatherpack_production
+  primary:
+    <<: *default
+    host: localhost
+    username: postgres
+    password: password
+    database: gatherpack_production
+  versions:
+    <<: *default
+    database: gatherpack_development_versions
+    username: postgres
+    password: password
+    host: localhost
+    migrations_paths: db/versions_migrate
