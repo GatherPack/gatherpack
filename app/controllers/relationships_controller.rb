@@ -7,6 +7,8 @@ class RelationshipsController < ApplicationController
 
   def create
     @relationship = Relationship.new(relationship_params)
+    @relationship.node_occupant = @person
+    @relationship.reify
     if @relationship.parent.present? && @relationship.child.present?
       authorize @relationship
       if @relationship.save
@@ -28,6 +30,6 @@ class RelationshipsController < ApplicationController
   end
 
   def relationship_params
-    params.require(:relationship).permit(:parent_id, :child_id, :relationship_type_id)
+    params.require(:relationship).permit(:parent_id, :child_id, :relationship_type_id, :start_node)
   end
 end
