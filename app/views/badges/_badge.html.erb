@@ -5,6 +5,6 @@
     <% end %>
   </div>
   <div class="card-body">
-    <%= pluralize badge.people.count, 'person' %>
+    <%= pluralize policy_scope(badge.people).count, 'person' %>
   </div>
 </div>
