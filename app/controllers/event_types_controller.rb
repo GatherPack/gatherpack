@@ -5,7 +5,7 @@ class EventTypesController < InternalController
   # GET /event_types
   def index
     @q = EventType.ransack(params[:q])
-    @event_types = @q.result(distinct: true).page(params[:page]).includes(:events)
+    @event_types = @q.result(distinct: true).order(name: :asc).page(params[:page]).includes(:events)
   end
 
   # GET /event_types/1

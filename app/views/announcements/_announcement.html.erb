@@ -1,19 +1,11 @@
 <div class="card" id="<%= dom_id announcement %>">
   <div class="card-header">
-    <div class="row">
-      <div class="col-md-10">
-        <%= link_to announcement.title, announcement, "data-turbo": "false" %>
-      </div>
-      <div class="col-md-2">
-        <% if !announcement.team %>
-          <span class="badge rounded-pill bg-info"><%= i('star', family: 'solid') %></span>
-        <% else %>
-          <%= link_to i(announcement.team.team_type.icon), team_path(announcement.team), class: "badge rounded-pill", style: "background-color:#{announcement.team.color};color:#{contrasting_color(announcement.team.color)}", "data-turbo": "false" %>
-        <% end %>
-      </div>
-    </div>
+    <% if announcement.team %>
+      <%= link_to i(announcement.team.team_type.icon), team_path(announcement.team), class: "badge rounded-pill", style: "background-color:#{announcement.team.color};color:#{contrasting_color(announcement.team.color)}", "data-turbo": "false", title: "Posted in #{announcement.team.name}" %>
+    <% end %>
+    <%= link_to announcement.title, announcement, "data-turbo": "false" %>
   </div>
   <div class="card-body">
-    <%= announcement.content.truncate(20) %>
+    <%= announcement.content %>
   </div>
 </div>

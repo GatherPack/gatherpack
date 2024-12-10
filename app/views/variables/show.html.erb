@@ -6,9 +6,9 @@
   </div>
   <div class="card-body">
     <% if @variable.klass == 'structure' %>
-      <code><pre><%= JSON.pretty_generate @variable.value %></pre></code>
+      <code data-lang="ruby"><pre><%= JSON.pretty_generate @variable.value %></pre></code>
     <% else %>
-      <%= @variable.value %>
+      <code data-lang="ruby"><pre><%= @variable.value %></pre></code>
     <% end %>
   </div>
   <div class="card-footer">

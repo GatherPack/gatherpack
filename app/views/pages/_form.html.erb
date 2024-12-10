@@ -6,13 +6,13 @@
     <%= f.input :title %>
   </div>
   <div class="col-md">
-    <%= f.association :team %>
+    <%= f.association :team, collection: current_user.person.managed_teams.includes(:team_type).order('team_type.name': :asc, name: :asc), include_blank: admin? %>
   </div>
   <div class="col-md">
-    <%= f.input :viewer, as: :select, collection: Page::PERMISSION_LEVELS, include_blank: false %>
+    <%= f.input :viewer, as: :select, collection: page_permissions, include_blank: false %>
   </div>
   <div class="col-md">
-    <%= f.input :editor, as: :select, collection: Page::PERMISSION_LEVELS, include_blank: false %>
+    <%= f.input :editor, as: :select, collection: page_permissions, include_blank: false %>
   </div>
 </div>
 

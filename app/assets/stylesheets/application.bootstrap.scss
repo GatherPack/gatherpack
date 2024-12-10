@@ -69,8 +69,8 @@ $form-feedback-valid-color: inherit;
 @import 'cards';
 @import 'badges';
 @import 'breadcrumbs';
-
-@import 'actiontext.css';
+@import 'currency';
+@import 'people';
 
 .fullscreen {
   height: 100vh;
@@ -106,4 +106,16 @@ code pre {
   color: $greige-lightest;
   background-color: $greige-darkest;
   padding: 0.5rem;
+}
+
+.tight {
+  line-height: 0.9;
+}
+
+.hidden {
+  margin: 0 !important;
+}
+
+a.undecorated {
+  text-decoration: none;
 }
