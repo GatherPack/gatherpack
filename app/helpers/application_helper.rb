@@ -18,6 +18,10 @@ module ApplicationHelper
       token_as_badge(obj)
     when Relationship
       relationship_as_badge(obj, opt)
+    when Person
+      person_as_badge(obj)
+    when Account
+      account_as_badge(obj)
     end.html_safe
   end
 
@@ -43,5 +47,25 @@ module ApplicationHelper
     end
 
     'fa-' + bootstrap_icon
+  end
+
+  def nice_date t
+    t&.strftime('%B %-d, %Y')
+  end
+
+  def nice_datetime t
+    t&.strftime('%-I:%M %p %B %-d, %Y')
+  end
+
+  def nice_time t
+    t&.strftime('%-I:%M %p')
+  end
+
+  def nice_datetime_range a, b
+    if (b - a) < 24*60
+      "#{nice_time a} to #{nice_time b}, #{nice_date b}"
+    else
+      "#{nice_datetime a} to #{nice_datetime b}"
+    end
   end
 end

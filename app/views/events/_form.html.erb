@@ -8,6 +8,7 @@
     <%= f.input :start_time %>
     <%= f.input :end_time %>
     <%= f.input :location %>
+    <%= f.input :locked %>
   </div>
   <div class="col-6">
     <div class="row">
@@ -17,7 +18,7 @@
     </div>
     <div class="row">
       <div class="col">
-        <%= f.association :team %>
+        <%= f.association :team, collection: current_user.person.managed_teams, include_blank: admin? %>
       </div>
     </div>
   </div>

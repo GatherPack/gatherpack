@@ -7,7 +7,7 @@
   <div class="card-body">
     <h2>Teams</h2>
     <ul>
-      <% @team_type.teams.each do |team| %>
+      <% @team_type.teams.order(name: :asc).each do |team| %>
         <li><%= link_to team.name, team %></li>
       <% end %>
     </ul>

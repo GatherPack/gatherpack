@@ -4,7 +4,7 @@ class PagesController < InternalController
   # GET /pages
   def index
     @q = policy_scope(Page).ransack(params[:q])
-    @pages = @q.result(distinct: true).page(params[:page])
+    @pages = @q.result(distinct: true).order(title: :asc).page(params[:page])
   end
 
   # GET /pages/1

@@ -1,6 +1,6 @@
 module PeopleHelper
   def get_avatar_url(avatar)
-    avatar.attached? ? url_for(avatar) : asset_path("default_profile.png")
+    avatar.attached? ? url_for(avatar) : asset_path('default_profile.png')
   end
 
   def get_joinable_teams(person, current_user)
@@ -18,6 +18,13 @@ module PeopleHelper
       available_teams += Team.all.where(join_permission: Team.join_permissions[:has_account])
     end
 
-    available_teams
+    available_teams.uniq
+  end
+
+  def person_as_badge(person)
+    content = i('user') + ' ' + person.identifier_name
+    link_to person, class: 'undecorated' do
+      tag.span content, class: 'badge text-bg-primary'
+    end
   end
 end

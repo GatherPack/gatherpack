@@ -6,4 +6,15 @@ module PagesHelper
       simple_format page.content
     end
   end
+
+  def page_permissions
+    permissions = %w[public user team]
+    if current_user.person.manager?
+      permissions << 'manager'
+    end
+    if current_user.person.admin?
+      permissions << 'admin'
+    end
+    permissions
+  end
 end

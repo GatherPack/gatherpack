@@ -3,6 +3,6 @@
 
 <div class="form-inputs">
   <%= f.input :value %>
-  <%= f.input :tokenable_id, as: :select, collection: Person.all.map { |p| [p.display_name, p.id] } %>
+  <%= f.input :tokenable_id, as: :select, collection: current_user.person.managed_people.map { |p| [p.identifier_name, p.id] }, label: 'Assign To' %>
   <%= f.input :tokenable_type, as: :hidden, input_html: { :value => "Person"} %>
 </div>

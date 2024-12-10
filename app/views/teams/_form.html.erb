@@ -9,6 +9,6 @@
     <%= f.input :join_permission, collection: Team.join_permissions.keys, label_method: :titleize %>
   </div>
   <div class="col-8">
-    <%= f.association :people, as: :check_boxes, label_method: :display_name %>
+    <%= f.association :people, as: :check_boxes, label_method: :display_name, collection: current_user.person.managed_people.order(last_name: :asc, first_name: :asc) %>
   </div>
 </div>

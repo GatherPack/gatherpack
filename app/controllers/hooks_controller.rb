@@ -5,7 +5,7 @@ class HooksController < InternalController
   # GET /hooks
   def index
     @q = Hook.ransack(params[:q])
-    @hooks = @q.result(distinct: true).page(params[:page])
+    @hooks = @q.result(distinct: true).order(event: :asc, name: :asc).page(params[:page])
   end
 
   # GET /hooks/1
