@@ -1,4 +1,6 @@
 class Relationship < ApplicationRecord
+  include CanBeHooked
+  has_paper_trail versions: { class_name: "AuditLog" }
   belongs_to :relationship_type
   belongs_to :parent, class_name: :Person
   belongs_to :child, class_name: :Person
@@ -26,12 +28,17 @@ class Relationship < ApplicationRecord
   private
 
   def no_self_relationships
-    errors.add(:parent, "cannot be the same person as the child") if parent != nil && parent == child
+    if parent != nil && parent == child
+      errors.add(:parent, "cannot be the same person as the child") 
+      errors.add(:child, "cannot be the same person as the parent") 
+    end
   end
 
   def permission_check
-    binding.irb
-    errors.add(:parent, 'does not meet relationship requirements') unless case relationship_type.permission
+    errors.tap do |t|
+       t.add(:parent, 'does not meet relationship requirements')
+       t.add(:child, 'does not meet relationship requirements')
+    end unless case relationship_type.permission
     when 'added_by_admin'
       created_by.user.admin?
     when 'added_by_manager'
