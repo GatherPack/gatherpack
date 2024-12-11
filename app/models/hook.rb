@@ -1,6 +1,6 @@
 class Hook < ApplicationRecord
   def self.catalog
-    targets = ['announcements', 'badges', 'badge_assignments', 'events', 'checkin', 'memberships', 'people', 'teams', 'users', 'accounts', 'transactions', 'page', 'token'].map do |k|
+    targets = ['announcements', 'badges', 'badge_assignments', 'events', 'checkin', 'memberships', 'people', 'relationships', 'teams', 'users', 'accounts', 'transactions', 'page', 'token'].map do |k|
       ['create', 'update', 'destroy'].map { |e| [k.singularize, e].join(' - ') }
     end.flatten
     

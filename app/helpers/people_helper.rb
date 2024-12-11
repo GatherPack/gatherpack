@@ -17,6 +17,8 @@ module PeopleHelper
 
   def person_as_badge(person)
     content = i('user') + ' ' + person.identifier_name
-    tag.span content, class: 'badge text-bg-primary'
+    link_to person, class: 'undecorated' do
+      tag.span content, class: 'badge text-bg-primary'
+    end
   end
 end

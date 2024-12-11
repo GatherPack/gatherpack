@@ -72,10 +72,20 @@
             <% end %>
           </div>
         <% end %>
+
+        <% if @relationships.any? %>
+          <div class="mb-3">
+            <h3>Relationships</h3>
+            <% @relationships.each do |relationship| %>
+              <%= as_badge relationship, @person %>
+            <% end %>
+          </div>
+        <% end %>
       </div>
     </div>
   </div>
   <div class="card-footer">
+    <%= link_to 'Add Relationship', new_person_relationship_path(@person), class: 'btn btn-info' if policy(@person.relationships.build).create? %>
     <%= link_to 'Edit', edit_person_path(@person), class: 'btn btn-warning' if policy(@person).update? %>
     <%= link_to 'Delete', @person, class: 'btn btn-danger', data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } if policy(@person).destroy? %>
   </div>

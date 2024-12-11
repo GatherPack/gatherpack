@@ -5,6 +5,10 @@
   &:focus {
     background-color: white;
   }
+
+  &.disabled {
+    background-color: $greige-light;
+  }
 }
 
 .code-editor textarea.form-control {

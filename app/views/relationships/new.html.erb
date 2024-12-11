@@ -1,0 +1,27 @@
+<% breadcrumb :relationship, @person %>
+
+<%= simple_form_for([@person, @relationship]) do |f| %>
+  <div class="card">
+  <div class="card-header">
+    <h1>New Relationship</h1>
+  </div>
+  <div class="card-body">
+    <%= f.input :start_node, as: :select, label: "What is #{@person.identifier_name} to the other person?", collection: policy_scope(RelationshipNode), label_method: :to_s, value_method: :to_id %>
+
+    <% if @relationship.relationship_type %>
+      <div class="row">
+        <div class="col-12 col-md-6">
+          <%= f.association :parent, label: @relationship.relationship_type.parent_label, label_method: :identifier_name, disabled: @relationship.node_occupant == @relationship.parent, collection: policy_scope(Person) %>
+        </div>
+        <div class="col-12 col-md-6">
+          <%= f.association :child, label: @relationship.relationship_type.child_label, label_method: :identifier_name, disabled: @relationship.node_occupant == @relationship.child, collection: policy_scope(Person) %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  <div class="card-footer">
+    <%= link_to "Cancel", @person, class: 'btn btn-warning' %>
+    <%= f.button :submit, (@relationship.relationship_type ? 'Create Relationship' : 'Continue'), class: 'btn btn-primary' %>
+  </div>
+</div>
+<% end %>
