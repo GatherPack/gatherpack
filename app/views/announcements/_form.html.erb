@@ -2,9 +2,24 @@
 <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
 <div class="form-inputs">
-  <%= f.input :title %>
+  <div class="row">
+    <div class="col-12 col-md-6">
+      <%= f.input :title %>
+    </div>
+    <div class="col-12 col-md-6">
+      <%= f.association :team, collection: current_user.person.managed_teams, include_blank: admin? %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12 col-md-6">
+      <%= f.input :start_time %>
+    </div>
+    <div class="col-12 col-md-6">
+      <%= f.input :end_time %>
+    </div>
+  </div>
+  
   <%= f.input :content %>
-  <%= f.input :start_time %>
-  <%= f.input :end_time %>
-  <%= f.association :team, collection: current_user.person.managed_teams, include_blank: admin? %>
+  
+  
 </div>

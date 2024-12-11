@@ -8,11 +8,12 @@ module PagesHelper
   end
 
   def page_permissions
-    permissions = %w[public user team]
+    permissions = %w[user team]
     if current_user.person.manager?
       permissions << 'manager'
     end
     if current_user.person.admin?
+      permissions.unshift 'public'
       permissions << 'admin'
     end
     permissions
