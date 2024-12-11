@@ -1,8 +1,12 @@
 class Hook < ApplicationRecord
   def self.catalog
-    ['announcements', 'badges', 'events', 'memberships', 'people', 'teams', 'users', 'relationship'].map do |k|
+    targets = ['announcements', 'badges', 'badge_assignments', 'events', 'checkin', 'memberships', 'people', 'relationships', 'teams', 'users', 'accounts', 'transactions', 'page', 'token'].map do |k|
       ['create', 'update', 'destroy'].map { |e| [k.singularize, e].join(' - ') }
     end.flatten
+    
+    targets << 'token - activate'
+
+    targets.sort
   end
 
   def self.ransackable_attributes(auth_object = nil)
