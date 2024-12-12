@@ -1,0 +1,32 @@
+<% breadcrumb @relationship_type %>
+
+<div class="card">
+  <div class="card-header">
+    <h1><%= @relationship_type.identifier_name %></h1>
+  </div>
+  <div class="card-body">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th><%= @relationship_type.parent_label %></th>
+          <th></th>
+          <th><%= @relationship_type.child_label %></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @relationship_type.relationships.each do |relationship| %>
+          <tr>
+            <td><%= link_to relationship.parent.identifier_name, relationship.parent %></td>
+            <td></td>
+            <td><%= link_to relationship.child.identifier_name, relationship.child %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    
+  </div>
+  <div class="card-footer">
+    <%= link_to 'Edit', edit_relationship_type_path(@relationship_type), class: 'btn btn-warning' %>
+    <%= link_to 'Delete', @relationship_type, class: 'btn btn-danger', data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %>
+  </div>
+</div>

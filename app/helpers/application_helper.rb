@@ -8,7 +8,7 @@ module ApplicationHelper
     end
   end
 
-  def as_badge(obj)
+  def as_badge(obj, opt = nil)
     case obj
     when Badge
       badge_as_badge(obj)
@@ -16,6 +16,8 @@ module ApplicationHelper
       team_as_badge(obj)
     when Token
       token_as_badge(obj)
+    when Relationship
+      relationship_as_badge(obj, opt)
     when Person
       person_as_badge(obj)
     when Account

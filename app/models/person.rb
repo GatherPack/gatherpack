@@ -39,6 +39,10 @@ class Person < ApplicationRecord
     user&.admin ? Person.all : Person.joins(:memberships).where(memberships: { team_id: managed_teams.select(:id) }).distinct
   end
 
+  def relationships
+    Relationship.where(parent_id: id).or(Relationship.where(child_id: id))
+  end
+
   private
 
   def check_display_name
