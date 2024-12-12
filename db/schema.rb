@@ -186,6 +186,25 @@ ActiveRecord::Schema[8.0].define(version: 2024_10_14_232518) do
     t.index ["user_id"], name: "index_people_on_user_id"
   end
 
+  create_table "relationship_types", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "parent_label"
+    t.string "child_label"
+    t.integer "permission", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "relationships", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "relationship_type_id", null: false
+    t.uuid "parent_id", null: false
+    t.uuid "child_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["child_id"], name: "index_relationships_on_child_id"
+    t.index ["parent_id"], name: "index_relationships_on_parent_id"
+    t.index ["relationship_type_id"], name: "index_relationships_on_relationship_type_id"
+  end
+
   create_table "reports", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.text "code"
@@ -396,6 +415,9 @@ ActiveRecord::Schema[8.0].define(version: 2024_10_14_232518) do
   add_foreign_key "events", "event_types"
   add_foreign_key "memberships", "people"
   add_foreign_key "memberships", "teams"
+  add_foreign_key "relationships", "people", column: "child_id"
+  add_foreign_key "relationships", "people", column: "parent_id"
+  add_foreign_key "relationships", "relationship_types"
   add_foreign_key "solid_queue_blocked_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
   add_foreign_key "solid_queue_claimed_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
   add_foreign_key "solid_queue_failed_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade

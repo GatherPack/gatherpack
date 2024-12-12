@@ -13,6 +13,7 @@ class PeopleController < InternalController
     @badges = policy_scope(@person.badges).order(name: :asc)
     @tokens = policy_scope(@person.tokens).order(value: :asc)
     @accounts = policy_scope(@person.accounts).order(name: :asc)
+    @relationships = policy_scope(@person.relationships).includes(:relationship_type).order('relationship_type.parent_label': :asc, 'relationship_type.child_label': :asc, created_at: :asc)
   end
 
   # GET /people/new
