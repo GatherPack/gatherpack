@@ -29,6 +29,6 @@ class ApplicationController < ActionController::Base
   end
 
   def set_time_zone(&block)
-    Time.use_zone(Settings[:time_zone], &block)
+    Time.use_zone(Settings[:time_zone].presence || 'UTC', &block)
   end
 end
