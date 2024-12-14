@@ -1,0 +1,13 @@
+<% breadcrumb @time_clock_period %>
+
+<div class="card">
+  <div class="card-header">
+    <h1><%= @time_clock_period.identifier_name %></h1>
+  </div>
+  <div class="card-body">
+  </div>
+  <div class="card-footer">
+    <%= link_to 'Edit', edit_time_clock_period_path(@time_clock_period), class: 'btn btn-warning' %>
+    <%= link_to 'Delete', @time_clock_period, class: 'btn btn-danger', data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %>
+  </div>
+</div>

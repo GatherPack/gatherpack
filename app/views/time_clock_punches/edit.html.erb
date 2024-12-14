@@ -1,0 +1,16 @@
+<% breadcrumb @time_clock_punch %>
+
+<%= simple_form_for(@time_clock_punch) do |f| %>
+<div class="card">
+  <div class="card-header">
+    <h1>Editing <%= @time_clock_punch.identifier_name %></h1>
+  </div>
+  <div class="card-body">
+    <%= render "form", f: f %>
+  </div>
+  <div class="card-footer">
+    <%= link_to "Cancel", @time_clock_punch, class: 'btn btn-warning' %>
+    <%= f.button :submit, class: 'btn btn-primary' %>
+  </div>
+</div>
+<% end %>
