@@ -30,6 +30,14 @@ module Gatherpack
     config.generators do |g|
       g.orm :active_record, primary_key_type: :uuid
     end
+
+    if ENV['POSTMARK_API_TOKEN']
+      config.action_mailer.delivery_method = :postmark
+      config.action_mailer.postmark_settings = { api_token: ENV['POSTMARK_API_TOKEN'] }
+      config.action_mailbox.ingress = :postmark
+    end
+
+    config.mission_control.jobs.http_basic_auth_enabled = false
   end
 end
 
