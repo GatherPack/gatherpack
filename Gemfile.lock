@@ -263,6 +263,11 @@ GEM
       racc
     pg (1.5.9)
     pg (1.5.9-x64-mingw-ucrt)
+    postmark (1.25.1)
+      json
+    postmark-rails (0.22.1)
+      actionmailer (>= 3.0.0)
+      postmark (>= 1.21.3, < 2.0)
     propshaft (1.1.0)
       actionpack (>= 7.0.0)
       activesupport (>= 7.0.0)
@@ -496,6 +501,7 @@ DEPENDENCIES
   omniauth-rails_csrf_protection (~> 1.0)
   paper_trail (~> 16.0)
   pg (~> 1.1)
+  postmark-rails (~> 0.22.1)
   propshaft
   puma (>= 5.0)
   pundit (~> 2.3)
