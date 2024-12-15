@@ -4,7 +4,7 @@ class CreateTimeClockPeriods < ActiveRecord::Migration[8.0]
       t.string :name
       t.datetime :start_time
       t.datetime :end_time
-      t.integer :permission
+      t.integer :permission, default: 0, null: false
       t.references :team, null: false, foreign_key: true, type: :uuid
 
       t.timestamps
