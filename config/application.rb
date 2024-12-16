@@ -33,9 +33,9 @@ module Gatherpack
       g.orm :active_record, primary_key_type: :uuid
     end
 
-    if ::Settings[:postmark_key]
+    if Settings[:postmark_key]
       config.action_mailer.delivery_method = :postmark
-      config.action_mailer.postmark_settings = { api_token: ::Settings[:postmark_key] }
+      config.action_mailer.postmark_settings = { api_token: Settings[:postmark_key] }
       config.action_mailbox.ingress = :postmark
     end
 
