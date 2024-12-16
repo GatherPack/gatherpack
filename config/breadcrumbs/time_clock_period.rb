@@ -1,5 +1,5 @@
 crumb :time_clock_periods do
-  link "Time_clock_periods", time_clock_periods_path
+  link "Time Clock Periods", time_clock_periods_path
 end
 
 crumb :time_clock_period do |time_clock_period|
