@@ -8,9 +8,9 @@
   <div class="card-body">
   </div>
   <div class="card-footer">
-    <%= link_to "New account", new_account_path, class: 'btn btn-success' if policy(Account).new? %>
+    <%= link_to "New Account", new_account_path, class: 'btn btn-success' if policy(Account).new? %>
     <%= f.submit 'Search', class: 'btn btn-primary', data: { action: "turbo_search#search" } %>
-    <%= link_to 'Clear search', request.path, class: "btn btn-dark", data: { action: "turbo_search#clear" } %>
+    <%= link_to 'Clear Search', request.path, class: "btn btn-dark", data: { action: "turbo_search#clear" } %>
     <%= link_to "Quick Transaction", transactions_path, class: 'btn btn-info' if policy(Transaction).new? && @accounts.any? %>
   </div>
 </div>

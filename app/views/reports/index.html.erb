@@ -9,9 +9,9 @@
     <%= f.input :name_i_cont, label: 'Name' %>
   </div>
   <div class="card-footer">
-    <%= link_to "New report", new_report_path, class: 'btn btn-success' if policy(Report).new? %>
+    <%= link_to "New Report", new_report_path, class: 'btn btn-success' if policy(Report).new? %>
     <%= f.submit 'Search', class: 'btn btn-primary', data: { action: "turbo_search#search" } %>
-    <%= link_to 'Clear search', request.path, class: "btn btn-dark", data: { action: "turbo_search#clear" } %>
+    <%= link_to 'Clear Search', request.path, class: "btn btn-dark", data: { action: "turbo_search#clear" } %>
   </div>
 </div>
 <% end %>
