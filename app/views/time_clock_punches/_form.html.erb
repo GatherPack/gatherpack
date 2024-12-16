@@ -4,6 +4,7 @@
 <div class="form-inputs">
   <%= f.input :start_time %>
   <%= f.input :end_time %>
-  <%= f.association :person %>
+  <%= f.association :person, label_method: :identifier_name %>
   <%= f.association :time_clock_period %>
+  <%= f.input :note %>
 </div>

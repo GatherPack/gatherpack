@@ -54,6 +54,6 @@ class TimeClockPunchesController < InternalController
 
     # Only allow a list of trusted parameters through.
     def time_clock_punch_params
-      params.require(:time_clock_punch).permit(:start_time, :end_time, :person_id, :time_clock_period_id)
+      params.require(:time_clock_punch).permit(:start_time, :end_time, :person_id, :time_clock_period_id, :note)
     end
 end

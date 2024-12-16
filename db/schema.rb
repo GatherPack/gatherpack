@@ -374,6 +374,7 @@ ActiveRecord::Schema[8.0].define(version: 2024_12_14_191736) do
   create_table "time_clock_punches", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "start_time"
     t.datetime "end_time"
+    t.string "note"
     t.uuid "person_id", null: false
     t.uuid "time_clock_period_id", null: false
     t.datetime "created_at", null: false
