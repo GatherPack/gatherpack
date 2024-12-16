@@ -6,6 +6,7 @@
     <h1>Reports</h1>
   </div>
   <div class="card-body">
+    <%= f.input :name_i_cont, label: 'Name' %>
   </div>
   <div class="card-footer">
     <%= link_to "New report", new_report_path, class: 'btn btn-success' if policy(Report).new? %>
