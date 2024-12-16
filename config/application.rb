@@ -2,6 +2,8 @@ require_relative 'boot'
 ENV['RANSACK_FORM_BUILDER'] = '::SimpleForm::FormBuilder'
 require 'rails/all'
 
+require_relative '../lib/settings.rb'
+
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
@@ -31,9 +33,9 @@ module Gatherpack
       g.orm :active_record, primary_key_type: :uuid
     end
 
-    if ENV['POSTMARK_API_TOKEN']
+    if ::Settings[:postmark_key]
       config.action_mailer.delivery_method = :postmark
-      config.action_mailer.postmark_settings = { api_token: ENV['POSTMARK_API_TOKEN'] }
+      config.action_mailer.postmark_settings = { api_token: ::Settings[:postmark_key] }
       config.action_mailbox.ingress = :postmark
     end
 
