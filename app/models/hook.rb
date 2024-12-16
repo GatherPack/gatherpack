@@ -16,4 +16,8 @@ class Hook < ApplicationRecord
   def self.ransackable_attributes(auth_object = nil)
     %w[ name event ]
   end
+
+  def run(model)
+    eval(code, binding, name, 0)
+  end
 end
