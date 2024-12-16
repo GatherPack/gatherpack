@@ -6,6 +6,14 @@
     <h1>Accounts</h1>
   </div>
   <div class="card-body">
+    <div class="row">
+      <div class="col">
+        <%= f.input :name_i_cont, label: 'Name' %>
+      </div>
+      <div class="col">
+        <%= f.input :team_id_eq, label: 'Teams', as: :select, collection: policy_scope(Team) %>
+      </div>
+    </div>
   </div>
   <div class="card-footer">
     <%= link_to "New Account", new_account_path, class: 'btn btn-success' if policy(Account).new? %>
