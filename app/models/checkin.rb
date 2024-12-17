@@ -3,7 +3,7 @@ class Checkin < ApplicationRecord
   has_paper_trail versions: { class_name: "AuditLog" }
   belongs_to :person
   belongs_to :event
-  has_many :checkin_field_responses
+  has_many :checkin_field_responses, dependent: :destroy
   accepts_nested_attributes_for :checkin_field_responses
 
   validates :person, presence: true
