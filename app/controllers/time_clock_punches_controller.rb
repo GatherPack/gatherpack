@@ -23,6 +23,7 @@ class TimeClockPunchesController < InternalController
   # POST /time_clock_punches
   def create
     @time_clock_punch = authorize TimeClockPunch.new(time_clock_punch_params)
+    @time_clock_punch.created_by = current_user.person
 
     if @time_clock_punch.save
       redirect_to @time_clock_punch, notice: 'Time clock punch was successfully created.'

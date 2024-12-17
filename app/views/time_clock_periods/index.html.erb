@@ -20,6 +20,7 @@
   </div>
   <div class="card-footer">
     <%= link_to "New Time Clock Period", new_time_clock_period_path, class: 'btn btn-success' %>
+    <%= link_to "Time Clock Punches", time_clock_punches_path, class: 'btn btn-primary' %>
     <%= f.submit 'Search', class: 'btn btn-primary', data: { action: "turbo_search#search" } %>
     <%= link_to 'Clear Search', request.path, class: "btn btn-dark", data: { action: "turbo_search#clear" } %>
   </div>
@@ -27,6 +28,7 @@
 <% end %>
 
 <%= turbo_frame_tag "results" do %>
+  <%#= TODO MAKE IT LOOK BETTER AND ONLY SHOW PERMITTED PUNCHES %>
   <div id="time_clock_periods" class="row">
     <% @time_clock_periods.each do |time_clock_period| %>
       <div class="col-md-3">
