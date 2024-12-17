@@ -25,6 +25,7 @@ class AnnouncementsController < InternalController
     @announcement = authorize Announcement.new(announcement_params)
 
     if @announcement.save
+      AnnouncementNotificationRouter.new(@announcement).run
       redirect_to @announcement, notice: "Announcement was successfully created."
     else
       render :new, status: :unprocessable_entity
@@ -34,6 +35,7 @@ class AnnouncementsController < InternalController
   # PATCH/PUT /announcements/1
   def update
     if @announcement.update(announcement_params)
+      AnnouncementNotificationRouter.new(@announcement).run
       redirect_to @announcement, notice: "Announcement was successfully updated.", status: :see_other
     else
       render :edit, status: :unprocessable_entity
