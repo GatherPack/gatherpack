@@ -8,11 +8,10 @@
     <td>Still Clocked In</td>
     <td><%= ((Time.now - time_clock_punch.start_time) / 3600 * 20).round / 20.0 %></td>
   <% end %>
-  <td><%= link_to time_clock_punch.time_clock_period.name, time_clock_period_path(time_clock_punch.time_clock_period), class: 'btn btn-light', 'data-turbo': false unless time_clock_punch.time_clock_period.nil? %></td>
-  <% if current_user.person.manager? %>
-    <td>
-      <%= link_to 'Edit', edit_time_clock_punch_path(time_clock_punch), class: 'btn btn-warning', 'data-turbo': false %>
-      <%= link_to 'Delete', time_clock_punch, class: 'btn btn-danger', data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %>
-    </td>
-  <% end %>
+  <td><%= link_to time_clock_punch.time_clock_period.name, time_clock_period_path(time_clock_punch.time_clock_period), class: 'btn btn-secondary', 'data-turbo': false unless time_clock_punch.time_clock_period.nil? %></td>
+  <td>
+    <%= link_to 'Edit', edit_time_clock_punch_path(time_clock_punch), class: 'btn btn-warning', 'data-turbo': false if policy(TimeClockPunch).edit?(time_clock_punch) %>
+    <%= link_to 'Delete', time_clock_punch, class: 'btn btn-danger', data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } if policy(TimeClockPunch).destroy?(time_clock_punch) %>
+    <%#= TODO DUPLICATE A PUNCH %>
+  </td>
 </tr>
