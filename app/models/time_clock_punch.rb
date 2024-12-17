@@ -2,8 +2,7 @@ class TimeClockPunch < ApplicationRecord
   belongs_to :person
   belongs_to :time_clock_period, optional: true
 
-  validate :permission_check
-  validate :valid_times
+  validate :permission_check, :valid_times
 
   validates :start_time, presence: true
 
@@ -16,6 +15,12 @@ class TimeClockPunch < ApplicationRecord
   def self.ransackable_associations(auth_object = nil)
     %w[ person time_clock_period ]
   end
+
+  def identifier_name
+    "#{person.display_name} - #{start_time.strftime('%m/%d/%Y %I:%M%p')} to #{end_time.strftime('%m/%d/%Y %I:%M%p')}"
+  end
+
+  private
 
   def permission_check
     true if :time_clock_period.nil?
@@ -33,11 +38,6 @@ class TimeClockPunch < ApplicationRecord
                end
   end
 
-  def identifier_name
-    "#{person.display_name} - #{start_time.strftime('%m/%d/%Y %I:%M%p')} to #{end_time.strftime('%m/%d/%Y %I:%M%p')}"
-  end
-
-  private
   def valid_times
     if end_time.present?
       errors.add(:end_time, 'cannot be before start time!') if end_time.before? start_time
