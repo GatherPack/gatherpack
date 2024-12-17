@@ -9,6 +9,10 @@ class TimeClockPeriodsController < InternalController
 
   # GET /time_clock_periods/1
   def show
+    # TODO SEARCH FOR PUNCHES IN PERIOD SHOW
+    # @q = policy_scope(TimeClockPunch).where(time_clock_period: @time_clock_period).ransack(params[:q])
+    # @time_clock_punches = @q.result(distinct: true).page(params[:page])
+    @time_clock_punches = policy_scope(TimeClockPunch).where(time_clock_period: @time_clock_period)
   end
 
   # GET /time_clock_periods/new

@@ -1,5 +1,18 @@
-<div class="card" id="<%= dom_id time_clock_punch %>">
-  <div class="card-header">
-    <%= link_to time_clock_punch.identifier_name, time_clock_punch, 'data-turbo': false %>
-  </div>
-</div>
+<tr id="<%= dom_id time_clock_punch %>">
+  <td><%= link_to time_clock_punch.person.display_name, time_clock_punch.person, class: 'btn btn-primary', 'data-turbo': false %></td>
+  <td><%= time_clock_punch.start_time.strftime('%m/%d/%Y %I:%M%p') %></td>
+  <% if time_clock_punch.end_time.present? %>
+    <td><%= time_clock_punch.end_time.strftime('%m/%d/%Y %I:%M%p') %></td>
+    <td><%= ((time_clock_punch.end_time - time_clock_punch.start_time) / 3600 * 20).round / 20.0 %></td>
+  <% else %>
+    <td>Still Clocked In</td>
+    <td><%= ((Time.now - time_clock_punch.start_time) / 3600 * 20).round / 20.0 %></td>
+  <% end %>
+  <td><%= link_to time_clock_punch.time_clock_period.name, time_clock_period_path(time_clock_punch.time_clock_period), class: 'btn btn-light', 'data-turbo': false unless time_clock_punch.time_clock_period.nil? %></td>
+  <% if current_user.person.manager? %>
+    <td>
+      <%= link_to 'Edit', edit_time_clock_punch_path(time_clock_punch), class: 'btn btn-warning', 'data-turbo': false %>
+      <%= link_to 'Delete', time_clock_punch, class: 'btn btn-danger', data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %>
+    </td>
+  <% end %>
+</tr>
