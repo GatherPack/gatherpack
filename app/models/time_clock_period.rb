@@ -14,8 +14,8 @@ class TimeClockPeriod < ApplicationRecord
 
   private
   def valid_times
-    if start_time? && end_time? then
-      errors.add(:end_time, 'cannot be before start time!') if end_time.before?(start_time)
+    if start_time.present? && end_time.present?
+      errors.add(:end_time, 'cannot be before start time!') if end_time.before? start_time
     end
   end
 end

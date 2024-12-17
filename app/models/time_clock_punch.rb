@@ -6,7 +6,6 @@ class TimeClockPunch < ApplicationRecord
   validate :valid_times
 
   validates :start_time, presence: true
-  validates :end_time, presence: true
 
   attr_accessor :created_by
 
@@ -36,8 +35,8 @@ class TimeClockPunch < ApplicationRecord
 
   private
   def valid_times
-    if start_time? && end_time? then
-      errors.add(:end_time, 'cannot be before start time!') if end_time.before?(start_time)
+    if end_time.present?
+      errors.add(:end_time, 'cannot be before start time!') if end_time.before? start_time
     end
   end
 end
