@@ -32,13 +32,29 @@
 <% end %>
 
 <%= turbo_frame_tag "results" do %>
-  <%#= TODO MAKE IT LOOK BETTER %>
-  <div id="time_clock_punches" class="row">
-    <% @time_clock_punches.each do |time_clock_punch| %>
-      <div class="col-md-3">
-        <%= render time_clock_punch %>
-      </div>
-    <% end %>
+  <div class="card">
+    <div class="card-body">
+      <table class="table">
+        <thead>
+        <tr>
+          <th scope="col"><h3>Person</h3></th>
+          <th scope="col"><h3>Start Time</h3></th>
+          <th scope="col"><h3>End Time</h3></th>
+          <th scope="col"><h3>Period</h3></th>
+        </tr>
+        </thead>
+        <tbody>
+          <% @time_clock_punches.each do |time_clock_punch| %>
+            <tr>
+              <td><%= time_clock_punch.person.display_name %></td>
+              <td><%= time_clock_punch.start_time.strftime('%m/%d/%Y %I:%M%p') %></td>
+              <td><%= time_clock_punch.end_time.strftime('%m/%d/%Y %I:%M%p') %></td>
+              <td><%= time_clock_punch.time_clock_period.name %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
   </div>
 
   <%= paginate @time_clock_punches %>

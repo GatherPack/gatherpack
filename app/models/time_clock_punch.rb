@@ -33,6 +33,10 @@ class TimeClockPunch < ApplicationRecord
                end
   end
 
+  def identifier_name
+    "#{person.display_name} - #{start_time.strftime('%m/%d/%Y %I:%M%p')} to #{end_time.strftime('%m/%d/%Y %I:%M%p')}"
+  end
+
   private
   def valid_times
     if end_time.present?
