@@ -13,10 +13,15 @@
       </tr>
       </thead>
       <tbody>
-      <% @time_clock_punches.order(end_time: :desc).each do |time_clock_punch| %>
-        <%= render time_clock_punch %>
+      <% if @time_clock_punches.present? %>
+        <% @time_clock_punches.order(end_time: :desc).each do |time_clock_punch| %>
+          <%= render time_clock_punch %>
+        <% end %>
+      <% else %>
+        <tr>
+          <td colspan="6">No time clock punches found.</td>
+        </tr>
       <% end %>
-      <%#= TODO NOTE IF EMPTY %>
       </tbody>
     </table>
   </div>
