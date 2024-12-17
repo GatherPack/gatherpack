@@ -9,7 +9,7 @@ class TimeClockPunch < ApplicationRecord
   attr_accessor :created_by
 
   def self.ransackable_attributes(auth_object = nil)
-    %w[ person_display_name start_time end_time time_clock_period_id ]
+    %w[ person.display_name start_time end_time time_clock_period_id ]
   end
 
   def self.ransackable_associations(auth_object = nil)
