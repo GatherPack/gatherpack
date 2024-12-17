@@ -14,6 +14,7 @@ class TimeClockPeriodsController < InternalController
   # GET /time_clock_periods/new
   def new
     @time_clock_period = authorize TimeClockPeriod.new
+    @permissions_keys = TimeClockPeriod.permissions.keys.reject { |key| key == 'added_by_admin' unless current_user.admin }.reject { |key| key == 'added_by_manager' unless current_user.person.managed_teams.present? }
   end
 
   # GET /time_clock_periods/1/edit
