@@ -365,7 +365,7 @@ ActiveRecord::Schema[8.0].define(version: 2024_12_14_191736) do
     t.datetime "start_time"
     t.datetime "end_time"
     t.integer "permission", default: 0, null: false
-    t.uuid "team_id", null: false
+    t.uuid "team_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["team_id"], name: "index_time_clock_periods_on_team_id"
@@ -376,7 +376,7 @@ ActiveRecord::Schema[8.0].define(version: 2024_12_14_191736) do
     t.datetime "end_time"
     t.string "note"
     t.uuid "person_id", null: false
-    t.uuid "time_clock_period_id", null: false
+    t.uuid "time_clock_period_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["person_id"], name: "index_time_clock_punches_on_person_id"
