@@ -1,28 +1,35 @@
 <%#= TODO COULD MAKE A ROUNDED TABLE?! %>
 <div class="card">
   <div class="card-body">
-    <table class="table">
-      <thead>
-      <tr>
-        <th scope="col"><h3>Person</h3></th>
-        <th scope="col"><h3>Start Time</h3></th>
-        <th scope="col"><h3>End Time</h3></th>
-        <th scope="col"><h3>Hours</h3></th>
-        <th scope="col"><h3>Period</h3></th>
-        <th scope="col"><h3>Actions</h3></th>
-      </tr>
-      </thead>
-      <tbody>
-      <% if @time_clock_punches.present? %>
-        <% @time_clock_punches.order(end_time: :desc).each do |time_clock_punch| %>
-          <%= render time_clock_punch %>
-        <% end %>
-      <% else %>
+    <% if @time_clock_punches.present? %>
+      <table class="table">
+        <thead>
         <tr>
-          <td colspan="6">No time clock punches found.</td>
+          <th scope="col"><h3>Person</h3></th>
+          <th scope="col"><h3>Start Time</h3></th>
+          <th scope="col"><h3>End Time</h3></th>
+          <th scope="col"><h3>Hours</h3></th>
+          <th scope="col"><h3>Period</h3></th>
+          <% @time_clock_punches.each do |time_clock_punch| %>
+            <% if policy(time_clock_punch).edit? %>
+              <th scope="col"><h3>Actions</h3></th>
+              <% break %>
+            <% end %>
+          <% end %>
         </tr>
+        </thead>
+        <tbody>
+          <% @time_clock_punches.order(end_time: :desc).each do |time_clock_punch| %>
+            <%= render time_clock_punch %>
+          <% end %>
+        </tbody>
+      </table>
+    <% else %>
+      <% if @time_clock_period.nil? %>
+        <div><h3>No time clock punches found.</h3></div>
+      <% else %>
+        <div><h3>No time clock punches found in the <%= @time_clock_period.name %> period.</h3></div>
       <% end %>
-      </tbody>
-    </table>
+    <% end %>
   </div>
 </div>
