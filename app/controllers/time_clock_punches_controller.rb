@@ -1,5 +1,6 @@
 class TimeClockPunchesController < InternalController
   before_action :set_time_clock_punch, only: %i[ show edit update destroy ]
+  before_action :get_add_time_clock_periods_scope, only: %i[ new create edit update ]
 
   # GET /time_clock_punches
   def index
@@ -28,16 +29,6 @@ class TimeClockPunchesController < InternalController
 
   # GET /time_clock_punches/1/edit
   def edit
-    @time_clock_periods = policy_scope(TimeClockPeriod)
-    unless current_user.admin?
-      # keep: periods of teams that they manage with 'added_by_manager' perms, periods of teams that they are in with 'added_by_team_member/user' perms, generic periods with 'added_by_manager/team_member/user' perms)
-      # remove: periods of teams they are in or generic teams with 'added_by_admin' perms
-      @time_clock_periods = @time_clock_periods.reject { |period| period.permission == 'added_by_admin' }
-      # periods of teams they are in and don't manage with 'added_by_manager' perms
-      @time_clock_periods = @time_clock_periods.reject { |period| period.permission == 'added_by_manager' && !current_user.person.managed_teams.include?(period.team) }
-      # periods of teams they are not in
-      @time_clock_periods = @time_clock_periods.reject { |period| !current_user.person.teams.include?(period.team) }
-    end
   end
 
   # POST /time_clock_punches
@@ -71,6 +62,15 @@ class TimeClockPunchesController < InternalController
     # Use callbacks to share common setup or constraints between actions.
     def set_time_clock_punch
       @time_clock_punch = authorize policy_scope(TimeClockPunch).find(params[:id])
+    end
+
+    def get_add_time_clock_periods_scope
+      @time_clock_periods = policy_scope(TimeClockPeriod)
+      unless current_user.admin?
+        @time_clock_periods = @time_clock_periods.reject { |period| period.permission == 'added_by_admin' }
+        @time_clock_periods = @time_clock_periods.reject { |period| period.permission == 'added_by_manager' && !current_user.person.managed_teams.include?(period.team) }
+        @time_clock_periods = @time_clock_periods.reject { |period| !current_user.person.teams.include?(period.team) }
+      end
     end
 
     # Only allow a list of trusted parameters through.
