@@ -5,18 +5,12 @@
   <div class="card-header">
     <h1>Editing <%= @time_clock_period.identifier_name %></h1>
   </div>
-  <% if policy(@time_clock_period).edit? %>
-    <div class="card-body">
-      <%= render "form", f: f %>
-    </div>
-    <div class="card-footer">
-      <%= link_to "Cancel", @time_clock_period, class: 'btn btn-warning' %>
-      <%= f.button :submit, class: 'btn btn-primary' %>
-    </div>
-  <% else %>
-    <div class="card-body">
-      You are not allowed to edit this period!
-    </div>
-  <% end %>
+  <div class="card-body">
+    <%= render "form", f: f %>
+  </div>
+  <div class="card-footer">
+    <%= link_to "Cancel", @time_clock_period, class: 'btn btn-warning' %>
+    <%= f.button :submit, class: 'btn btn-primary' %>
+  </div>
 </div>
 <% end %>

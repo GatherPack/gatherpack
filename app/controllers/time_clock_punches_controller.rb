@@ -1,5 +1,5 @@
 class TimeClockPunchesController < InternalController
-  before_action :set_time_clock_punch, only: %i[ show edit update destroy ]
+  before_action :set_time_clock_punch, only: %i[ edit update destroy ]
   before_action :set_time_clock_period_scope, only: %i[ new create edit update ]
   before_action :permission_check, only: %i[ create update ]
 
@@ -7,10 +7,6 @@ class TimeClockPunchesController < InternalController
   def index
     @q = policy_scope(TimeClockPunch).ransack(params[:q])
     @time_clock_punches = @q.result(distinct: true).page(params[:page])
-  end
-
-  # GET /time_clock_punches/1
-  def show
   end
 
   # GET /time_clock_punches/new
