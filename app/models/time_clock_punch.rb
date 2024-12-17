@@ -17,11 +17,10 @@ class TimeClockPunch < ApplicationRecord
   end
 
   def identifier_name
-    unknown = 'Unknown'
     if end_time.present?
-      "#{person.nil? ? unknown : person.display_name} - #{start_time.strftime('%m/%d/%Y %I:%M%p')} to #{end_time.strftime('%m/%d/%Y %I:%M%p')}"
+      "#{person.nil? ? 'Unknown' : person.display_name} - #{start_time.strftime('%m/%d/%Y %I:%M%p')} to #{end_time.strftime('%m/%d/%Y %I:%M%p')}"
     else
-      "#{person.nil? ? unknown : person.display_name} - #{start_time.strftime('%m/%d/%Y %I:%M%p')} (Still clocked in)"
+      "#{person.nil? ? 'Unknown' : person.display_name} - #{start_time.strftime('%m/%d/%Y %I:%M%p')} (Still clocked in)"
     end
   end
 

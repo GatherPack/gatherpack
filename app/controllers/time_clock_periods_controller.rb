@@ -56,7 +56,7 @@ class TimeClockPeriodsController < InternalController
     end
 
     def permission_keys
-      @permissions_keys = TimeClockPeriod.permissions.keys.reject { |key| %w[ added_by_admin added_by_user ].include? key unless current_user.admin }.reject { |key| key == 'added_by_manager' unless current_user.person.manager? }
+      @permissions_keys = TimeClockPeriod.permissions.keys.reject { |key| key == 'added_by_admin' unless current_user.admin }.reject { |key| key == 'added_by_manager' unless current_user.person.manager? }
     end
 
     # Only allow a list of trusted parameters through.

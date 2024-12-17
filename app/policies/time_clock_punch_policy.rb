@@ -12,8 +12,19 @@ class TimeClockPunchPolicy < ApplicationPolicy
   end
 
   def update?
-    # punch of person who is managed by user, or punch of user with no associated period or with period of permission "added_by_user" or "added_by_team_member"
-    person.managed_people.include?(record.person) || (person == record.person && record.time_clock_period.nil? ? true : %w[ added_by_user added_by_team_member ].include?(record.time_clock_period.permission))
+    # can update punches if admin or punch is not part of any period, i.e. added by self
+    if user.admin || (person == record.person && record.time_clock_period.nil?)
+      true
+    # can update punches if part of a generic period with 'added_by_user' perms
+    elsif record.time_clock_period.team.nil?
+      person == record.person && record.time_clock_period.permission == 'added_by_user'
+    # can update punches if manager of punch's period's team, up to 'added_by_manager' perms
+    elsif person.managed_teams.include?(record.time_clock_period.team)
+      record.time_clock_period.permission != 'added_by_admin'
+    # can update punches if part of punch's period's team and the period has 'added_by_team_member' perms, or if 'added_by_user' perms, and the punch was added by self
+    else
+      (person.teams.include?(record.time_clock_period.team) && record.time_clock_period.permission == 'added_by_team_member') || (person == record.person && record.time_clock_period.permission == 'added_by_user')
+    end
   end
 
   def edit?
