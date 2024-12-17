@@ -10,8 +10,8 @@
   </div>
   <% if policy(checkin).update? || policy(checkin).destroy? %>
     <div class="card-footer">
-      <%= link_to 'Edit', edit_event_checkin_path(checkin.event, checkin), class: 'btn btn-warning' if policy(checkin).update? %>
-      <%= link_to 'Checkout', [checkin.event, checkin], class: 'btn btn-danger', data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } if policy(checkin).destroy? %>
+      <%= link_to 'Edit', edit_event_checkin_path(checkin.event, checkin), "data-turbo": "false", class: 'btn btn-warning' if policy(checkin).update? %>
+      <%= link_to 'Checkout', [checkin.event, checkin], class: 'btn btn-danger', "data-turbo": "false", data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } if policy(checkin).destroy? %>
     </div>
   <% end%>
 </div>
