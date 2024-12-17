@@ -20,8 +20,8 @@
   </div>
   <div class="card-footer">
     <%= link_to 'Back to Time Clock', time_clock_punches_path, class: 'btn btn-success' %>
-    <%= link_to 'Edit', edit_time_clock_period_path(@time_clock_period), class: 'btn btn-warning' if current_user.admin || (@time_clock_period.team.nil? ? false : current_user.person.managed_teams.include?(@time_clock_period.team)) %>
-    <%= link_to 'Delete', @time_clock_period, class: 'btn btn-danger', data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } if current_user.admin || (@time_clock_period.team.nil? ? false : current_user.person.managed_teams.include?(@time_clock_period.team)) %>
+    <%= link_to 'Edit', edit_time_clock_period_path(@time_clock_period), class: 'btn btn-warning' if policy(@time_clock_period).edit? %>
+    <%= link_to 'Delete', @time_clock_period, class: 'btn btn-danger', data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } if policy(@time_clock_period).destroy? %>
   </div>
 </div>
 <% end %>
