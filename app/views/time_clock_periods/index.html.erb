@@ -20,7 +20,7 @@
     </div>
   </div>
   <div class="card-footer">
-    <%= link_to "New Time Clock Period", new_time_clock_period_path, class: 'btn btn-success' if policy(TimeClockPeriod).create? %>
+    <%= link_to "New Time Clock Period", new_time_clock_period_path, class: 'btn btn-success' if policy(TimeClockPeriod).new? %>
     <%= link_to "Time Clock Punches", time_clock_punches_path, class: 'btn btn-primary' %>
     <%= f.submit 'Search', class: 'btn btn-primary', data: { action: "turbo_search#search" } %>
     <%= link_to 'Clear Search', request.path, class: "btn btn-dark", data: { action: "turbo_search#clear" } %>
