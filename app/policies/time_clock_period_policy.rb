@@ -4,7 +4,7 @@ class TimeClockPeriodPolicy < ApplicationPolicy
       if user.admin
         scope.all
       else
-        scope.where(team: person.teams).or(scope.where(team: ''))
+        scope.where(team: person.teams).or(scope.where(team: nil))
       end
     end
   end
