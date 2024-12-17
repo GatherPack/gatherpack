@@ -14,6 +14,16 @@ class TimeClockPunchesController < InternalController
   # GET /time_clock_punches/new
   def new
     @time_clock_punch = authorize TimeClockPunch.new
+    @time_clock_periods = policy_scope(TimeClockPeriod)
+    unless current_user.admin?
+      # keep: periods of teams that they manage with 'added_by_manager' perms, periods of teams that they are in with 'added_by_team_member/user' perms, generic periods with 'added_by_manager/team_member/user' perms)
+      # remove: periods of teams they are in or generic teams with 'added_by_admin' perms
+      @time_clock_periods = @time_clock_periods.reject { |period| period.permission == 'added_by_admin' }
+      # periods of teams they are in and don't manage with 'added_by_manager' perms
+      @time_clock_periods = @time_clock_periods.reject { |period| period.permission == 'added_by_manager' && !current_user.person.managed_teams.include?(period.team) }
+      # periods of teams they are not in
+      @time_clock_periods = @time_clock_periods.reject { |period| !current_user.person.teams.include?(period.team) }
+    end
   end
 
   # GET /time_clock_punches/1/edit

@@ -5,6 +5,6 @@
   <%= f.input :start_time %>
   <%= f.input :end_time %>
   <%= f.association :person, label_method: :identifier_name, collection: [ current_user.person, current_user.person.managed_people ].flatten.uniq %>
-  <%= f.association :time_clock_period, collection: policy_scope(TimeClockPeriod) %>
+  <%= f.association :time_clock_period, collection: @time_clock_periods %>
   <%= f.input :note %>
 </div>

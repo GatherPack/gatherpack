@@ -4,11 +4,7 @@ class TimeClockPeriodPolicy < ApplicationPolicy
       if user.admin
         scope.all
       else
-        if person.manager?
-          scope.where(team: person.managed_teams, permission: 'added_by_manager')
-        else
-          scope.where(team: person.teams, permission: 'added_by_team_member').or(scope.where(permission: 'added_by_user'))
-        end
+        scope.where(team: person.teams).or(scope.where(team: ''))
       end
     end
   end
