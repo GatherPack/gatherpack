@@ -7,7 +7,7 @@
   <%= f.input :end_time %>
   <%= f.input :permission, as: :select, collection: if current_user.admin
                                                       TimeClockPeriod.permissions.keys
-                                                    elsif current_user.person.managed_teams
+                                                    elsif current_user.person.managed_teams.present?
                                                       TimeClockPeriod.permissions.keys.reject { |key| key == 'added_by_admin' }
                                                     else
                                                       TimeClockPeriod.permissions.keys.reject { |key| key == 'added_by_admin' || key == 'added_by_manager' }

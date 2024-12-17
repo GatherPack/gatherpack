@@ -10,6 +10,7 @@
       <div class="col">
         <%= f.input :person_display_name_cont, label: 'Person' %>
       </div>
+      <%#= TODO FIX DATE SEARCH %>
       <div class="col">
         <%= f.input :start_time_gteq, label: 'From', as: :datetime %>
       </div>
@@ -31,7 +32,7 @@
 <% end %>
 
 <%= turbo_frame_tag "results" do %>
-  <%#= TODO MAKE IT LOOK BETTER AND ONLY SHOW PERMITTED PUNCHES %>
+  <%#= TODO MAKE IT LOOK BETTER %>
   <div id="time_clock_punches" class="row">
     <% @time_clock_punches.each do |time_clock_punch| %>
       <div class="col-md-3">
