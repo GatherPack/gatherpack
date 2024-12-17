@@ -31,11 +31,7 @@
 <% end %>
 
 <%= turbo_frame_tag "results" do %>
-<div class="card">
-  <div class="card-body">
-    <%= render "time_clock_punches" %>
-  </div>
-</div>
+  <%= render "time_clock_punches" %>
 
   <%= paginate @time_clock_punches %>
 <% end %>
