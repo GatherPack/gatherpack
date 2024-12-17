@@ -24,6 +24,7 @@ class TimeClockPeriodsController < InternalController
   # POST /time_clock_periods
   def create
     @time_clock_period = authorize TimeClockPeriod.new(time_clock_period_params)
+    @permissions_keys = TimeClockPeriod.permissions.keys.reject { |key| %w[ added_by_admin added_by_user ].include? key unless current_user.admin }.reject { |key| key == 'added_by_manager' unless current_user.person.manager? }
 
     if @time_clock_period.save
       redirect_to @time_clock_period, notice: 'Time clock period was successfully created.'
