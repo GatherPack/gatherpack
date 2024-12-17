@@ -19,6 +19,7 @@ class TimeClockPeriodsController < InternalController
 
   # GET /time_clock_periods/1/edit
   def edit
+    @permissions_keys = TimeClockPeriod.permissions.keys.reject { |key| %w[ added_by_admin added_by_user ].include? key unless current_user.admin }.reject { |key| key == 'added_by_manager' unless current_user.person.manager? }
   end
 
   # POST /time_clock_periods
