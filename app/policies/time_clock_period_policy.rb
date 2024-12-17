@@ -11,5 +11,9 @@ class TimeClockPeriodPolicy < ApplicationPolicy
         end
       end
     end
+
+    def create?
+      user.admin? || person.managed_teams.present?
+    end
   end
 end
