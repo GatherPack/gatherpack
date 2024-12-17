@@ -1,6 +1,6 @@
 class TimeClockPunchesController < InternalController
   before_action :set_time_clock_punch, only: %i[ show edit update destroy ]
-  before_action :get_add_time_clock_periods_scope, only: %i[ new create edit update ]
+  before_action :set_scope_permissions, only: %i[ new create edit update ]
 
   # GET /time_clock_punches
   def index
@@ -34,7 +34,6 @@ class TimeClockPunchesController < InternalController
   # POST /time_clock_punches
   def create
     @time_clock_punch = authorize TimeClockPunch.new(time_clock_punch_params)
-    @time_clock_punch.created_by = current_user.person
 
     if @time_clock_punch.save
       redirect_to time_clock_punches_path, notice: 'Time clock punch was successfully created.'
@@ -64,7 +63,8 @@ class TimeClockPunchesController < InternalController
       @time_clock_punch = authorize policy_scope(TimeClockPunch).find(params[:id])
     end
 
-    def get_add_time_clock_periods_scope
+    def set_scope_permissions
+      @time_clock_punch.created_by = current_user.person
       @time_clock_periods = policy_scope(TimeClockPeriod)
       unless current_user.admin?
         @time_clock_periods = @time_clock_periods.reject { |period| period.permission == 'added_by_admin' }
