@@ -10,12 +10,11 @@
       <div class="col">
         <%= f.input :team_id_eq, label: 'Team', as: :select, collection: policy_scope(Team) %>
       </div>
-      <%#= TODO FIX DATE SEARCH %>
       <div class="col">
-        <%= f.input :start_time_eq, label: 'From', as: :datetime %>
+        <%= f.input :start_time_gteq, label: 'From', as: :datetime %>
       </div>
       <div class="col">
-        <%= f.input :end_time_eq, label: 'To', as: :datetime  %>
+        <%= f.input :end_time_lteq, label: 'To', as: :datetime  %>
       </div>
     </div>
   </div>

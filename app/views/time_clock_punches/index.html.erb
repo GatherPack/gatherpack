@@ -10,7 +10,6 @@
       <div class="col">
         <%= f.input :person_display_name_cont, label: 'Person' %>
       </div>
-      <%#= TODO FIX DATE SEARCH %>
       <div class="col">
         <%= f.input :start_time_gteq, label: 'From', as: :datetime %>
       </div>
@@ -32,7 +31,7 @@
 <% end %>
 
 <%= turbo_frame_tag "results" do %>
-  <%#= TODO CAN WE DO A PRETTIER TABLE?! PLUS ADD EDIT AND DESTROY IF PERMISSIBLE %>
+  <%#= TODO CAN WE DO A PRETTIER TABLE?! PLUS ADD HOURS AND EDIT AND DESTROY IF PERMISSIBLE %>
   <div class="card">
     <div class="card-body">
       <table class="table">
@@ -47,10 +46,10 @@
         <tbody>
           <% @time_clock_punches.each do |time_clock_punch| %>
             <tr>
-              <td><%= time_clock_punch.person.display_name %></td>
+              <td><%= link_to time_clock_punch.person.display_name, time_clock_punch.person, "data-turbo": "false" %></td>
               <td><%= time_clock_punch.start_time.strftime('%m/%d/%Y %I:%M%p') %></td>
               <td><%= time_clock_punch.end_time.strftime('%m/%d/%Y %I:%M%p') %></td>
-              <td><%= time_clock_punch.time_clock_period.name %></td>
+              <td><%= time_clock_punch.time_clock_period.name unless time_clock_punch.time_clock_period.nil? %></td>
             </tr>
           <% end %>
         </tbody>

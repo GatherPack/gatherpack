@@ -36,7 +36,7 @@ class TimeClockPunchesController < InternalController
     @time_clock_punch.created_by = current_user.person
 
     if @time_clock_punch.save
-      redirect_to @time_clock_punch, notice: 'Time clock punch was successfully created.'
+      redirect_to time_clock_punches_path, notice: 'Time clock punch was successfully created.'
     else
       render :new, status: :unprocessable_entity
     end
