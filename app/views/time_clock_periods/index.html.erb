@@ -8,6 +8,9 @@
   <div class="card-body">
     <div class="row">
       <div class="col">
+        <%= f.input :name_cont, label: 'Name' %>
+      </div>
+      <div class="col">
         <%= f.input :team_id_eq, label: 'Team', as: :select, collection: policy_scope(Team) %>
       </div>
       <div class="col">

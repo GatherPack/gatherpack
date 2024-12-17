@@ -5,7 +5,7 @@ class TimeClockPeriod < ApplicationRecord
   validate :valid_times, :permissions_make_sense
 
   def self.ransackable_attributes(auth_object = nil)
-    %w[ team_id start_time end_time ]
+    %w[ name team_id start_time end_time ]
   end
 
   def self.ransackable_associations(auth_object = nil)
