@@ -1,5 +1,6 @@
 class TimeClockPeriodsController < InternalController
   before_action :set_time_clock_period, only: %i[ show edit update destroy ]
+  before_action :permission_keys, only: %i[ new edit ]
 
   # GET /time_clock_periods
   def index
@@ -16,18 +17,15 @@ class TimeClockPeriodsController < InternalController
   # GET /time_clock_periods/new
   def new
     @time_clock_period = authorize TimeClockPeriod.new
-    @permissions_keys = TimeClockPeriod.permissions.keys.reject { |key| %w[ added_by_admin added_by_user ].include? key unless current_user.admin }.reject { |key| key == 'added_by_manager' unless current_user.person.manager? }
   end
 
   # GET /time_clock_periods/1/edit
   def edit
-    @permissions_keys = TimeClockPeriod.permissions.keys.reject { |key| %w[ added_by_admin added_by_user ].include? key unless current_user.admin }.reject { |key| key == 'added_by_manager' unless current_user.person.manager? }
   end
 
   # POST /time_clock_periods
   def create
     @time_clock_period = authorize TimeClockPeriod.new(time_clock_period_params)
-    @permissions_keys = TimeClockPeriod.permissions.keys.reject { |key| %w[ added_by_admin added_by_user ].include? key unless current_user.admin }.reject { |key| key == 'added_by_manager' unless current_user.person.manager? }
 
     if @time_clock_period.save
       redirect_to @time_clock_period, notice: 'Time clock period was successfully created.'
@@ -55,6 +53,10 @@ class TimeClockPeriodsController < InternalController
     # Use callbacks to share common setup or constraints between actions.
     def set_time_clock_period
       @time_clock_period = authorize policy_scope(TimeClockPeriod).find(params[:id])
+    end
+
+    def permission_keys
+      @permissions_keys = TimeClockPeriod.permissions.keys.reject { |key| %w[ added_by_admin added_by_user ].include? key unless current_user.admin }.reject { |key| key == 'added_by_manager' unless current_user.person.manager? }
     end
 
     # Only allow a list of trusted parameters through.

@@ -9,7 +9,19 @@ class TimeClockPeriodPolicy < ApplicationPolicy
     end
   end
 
-  def new?
+  def create?
     user.admin || person.manager?
+  end
+
+  def update?
+    user.admin || (record.team.nil? ? false : person.managed_teams.include?(record.team))
+  end
+
+  def edit?
+    update?
+  end
+
+  def destroy?
+    update?
   end
 end
