@@ -31,18 +31,19 @@ class TimeClockPunch < ApplicationRecord
     if time_clock_period.nil?
       true
     else
-      errors.tap do |t|
-        t.add(:time_clock_period, 'does not meet permission requirements')
-      end unless case time_clock_period.permission
-                 when 'added_by_admin'
-                   created_by.user.admin?
-                 when 'added_by_manager'
-                   created_by.managed_teams.include? time_clock_period.team
-                 when 'added_by_team_member'
-                   created_by.teams.include? time_clock_period.team
-                 when 'added_by_user'
-                   true
-                 end
+      if time_clock_period.team.present?
+        errors.add(:person, 'is not a member of the team that this period part of') unless person.teams.include? time_clock_period.team
+      end
+      errors.add(:time_clock_period, 'does not meet permission requirements') unless case time_clock_period.permission
+        when 'added_by_admin'
+          created_by.user.admin?
+        when 'added_by_manager'
+          created_by.managed_teams.include? time_clock_period.team
+        when 'added_by_team_member'
+          created_by.teams.include? time_clock_period.team
+        when 'added_by_user'
+          true
+        end
     end
   end
 

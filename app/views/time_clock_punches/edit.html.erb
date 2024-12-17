@@ -5,7 +5,7 @@
   <div class="card-header">
     <h1>Editing <%= @time_clock_punch.identifier_name %></h1>
   </div>
-  <% if policy(TimeClockPunch).edit? %>
+  <% if policy(@time_clock_punch).edit? %>
     <div class="card-body">
         <%= render "form", f: f %>
     </div>
