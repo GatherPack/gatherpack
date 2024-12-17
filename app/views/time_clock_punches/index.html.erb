@@ -36,7 +36,7 @@
     <div class="card-body">
       <table class="table">
         <thead>
-        <tr>
+        <tr class="table-primary">
           <th scope="col"><h3>Person</h3></th>
           <th scope="col"><h3>Start Time</h3></th>
           <th scope="col"><h3>End Time</h3></th>
@@ -62,7 +62,7 @@
               <td><%= time_clock_punch.time_clock_period.name unless time_clock_punch.time_clock_period.nil? %></td>
               <% if current_user.person.manager? %>
                 <td>
-                  <%= link_to 'Edit', edit_time_clock_punch_path(time_clock_punch, @time_clock_punches), class: 'btn btn-warning' %>
+                  <%= link_to 'Edit', edit_time_clock_punch_path(time_clock_punch), class: 'btn btn-warning' %>
                   <%= link_to 'Delete', time_clock_punch, class: 'btn btn-danger', data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %>
                 </td>
               <% end %>
