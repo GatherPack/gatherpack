@@ -11,9 +11,9 @@ class TimeClockPeriodPolicy < ApplicationPolicy
         end
       end
     end
+  end
 
-    def new?
-      user.admin || person.manager?
-    end
+  def new?
+    user.admin || person.manager?
   end
 end
