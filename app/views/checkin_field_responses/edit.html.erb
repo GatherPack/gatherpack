@@ -1,0 +1,16 @@
+<% breadcrumb @checkin_field_response %>
+
+<%= simple_form_for(@checkin_field_response) do |f| %>
+<div class="card">
+  <div class="card-header">
+    <h1>Editing <%= @checkin_field_response.identifier_name %></h1>
+  </div>
+  <div class="card-body">
+    <%= render "form", f: f %>
+  </div>
+  <div class="card-footer">
+    <%= link_to "Cancel", @checkin_field_response, class: 'btn btn-warning' %>
+    <%= f.button :submit, class: 'btn btn-primary' %>
+  </div>
+</div>
+<% end %>
