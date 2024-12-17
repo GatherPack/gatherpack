@@ -10,8 +10,8 @@
   <% end %>
   <td><%= link_to time_clock_punch.time_clock_period.name, time_clock_period_path(time_clock_punch.time_clock_period), class: 'btn btn-secondary', 'data-turbo': false unless time_clock_punch.time_clock_period.nil? %></td>
   <td>
-    <%= link_to 'Edit', edit_time_clock_punch_path(time_clock_punch), class: 'btn btn-warning', 'data-turbo': false if policy(TimeClockPunch).edit?(time_clock_punch) %>
-    <%= link_to 'Delete', time_clock_punch, class: 'btn btn-danger', data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } if policy(TimeClockPunch).destroy?(time_clock_punch) %>
+    <%= link_to 'Edit', edit_time_clock_punch_path(time_clock_punch), class: 'btn btn-warning', 'data-turbo': false if policy(time_clock_punch).edit? %>
+    <%= link_to 'Delete', time_clock_punch, class: 'btn btn-danger', data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } if policy(time_clock_punch).destroy? %>
     <%#= TODO DUPLICATE A PUNCH %>
   </td>
 </tr>
