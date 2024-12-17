@@ -21,7 +21,8 @@ class TimeClockPeriod < ApplicationRecord
   end
 
   def permissions_make_sense
-    errors.add(:team, "can't be empty if punches are added by a team manager") if permission == 'added_by_manager' && team.nil?
-    errors.add(:team, "can't be empty if punches are added by a team member") if permission == 'added_by_team_member' && team.nil?
+    errors.add(:team, "can't be empty if \"team\" managers can add punches to this period") if permission == 'added_by_manager' && team.nil?
+    errors.add(:team, "can't be empty if \"team\" members can add punches to this period") if permission == 'added_by_team_member' && team.nil?
+    errors.add(:team, "must be empty if any user can add punches to this period") if permission == 'added_by_user' && team.present?
   end
 end
