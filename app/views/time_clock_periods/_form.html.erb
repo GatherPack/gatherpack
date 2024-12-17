@@ -5,6 +5,12 @@
   <%= f.input :name %>
   <%= f.input :start_time %>
   <%= f.input :end_time %>
-  <%= f.input :permission %>
-  <%= f.association :team %>
+  <%= f.input :permission, as: :select, collection: if current_user.admin
+                                                      TimeClockPeriod.permissions.keys
+                                                    elsif current_user.person.managed_teams
+                                                      TimeClockPeriod.permissions.keys.reject { |key| key == 'added_by_admin' }
+                                                    else
+                                                      TimeClockPeriod.permissions.keys.reject { |key| key == 'added_by_admin' || key == 'added_by_manager' }
+                                                    end, label_method: :titleize, include_blank: false %>
+  <%= f.association :team, collection: current_user.person.managed_teams %> <%#= TODO include_blank false if permission is added_by_manager or added_by_team_member %>
 </div>

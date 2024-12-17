@@ -31,6 +31,7 @@
 <% end %>
 
 <%= turbo_frame_tag "results" do %>
+  <%#= TODO MAKE IT LOOK BETTER AND ONLY SHOW PERMITTED PUNCHES %>
   <div id="time_clock_punches" class="row">
     <% @time_clock_punches.each do |time_clock_punch| %>
       <div class="col-md-3">
