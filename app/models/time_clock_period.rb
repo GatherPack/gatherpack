@@ -2,7 +2,7 @@ class TimeClockPeriod < ApplicationRecord
   belongs_to :team, optional: true
   enum :permission, added_by_admin: 0, added_by_manager: 1, added_by_team_member: 2, added_by_user: 3
 
-  validate :valid_times
+  validate :valid_times, :permissions_make_sense
 
   def self.ransackable_attributes(auth_object = nil)
     %w[ team_id start_time end_time ]
@@ -13,9 +13,15 @@ class TimeClockPeriod < ApplicationRecord
   end
 
   private
+
   def valid_times
     if start_time.present? && end_time.present?
       errors.add(:end_time, 'cannot be before start time!') if end_time.before? start_time
     end
+  end
+
+  def permissions_make_sense
+    errors.add(:team, "can't be empty if punches are added by a team manager") if permission == 'added_by_manager' && team.nil?
+    errors.add(:team, "can't be empty if punches are added by a team member") if permission == 'added_by_team_member' && team.nil?
   end
 end
