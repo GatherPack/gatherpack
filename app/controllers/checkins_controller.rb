@@ -9,6 +9,9 @@ class CheckinsController < InternalController
   # GET /checkins/new
   def new
     @checkin = authorize @event.checkins.build
+    @event.event_type.checkin_fields.each do |field|
+      authorize @checkin.checkin_field_responses.build(checkin_field: field)
+    end
   end
 
   # GET /checkins/1/edit
@@ -49,7 +52,7 @@ class CheckinsController < InternalController
 
     # Only allow a list of trusted parameters through.
     def checkin_params
-      params.require(:checkin).permit(:notes, :person_id)
+      params.require(:checkin).permit(:notes, :person_id, checkin_field_responses_attributes: [:id, :checkin_field_id, :response])
     end
 
     def set_event
