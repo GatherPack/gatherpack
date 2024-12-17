@@ -3,7 +3,7 @@ class TimeClockPunchPolicy < ApplicationPolicy
     def resolve
       if user.admin
         scope.all
-      elsif person.managed_teams.present?
+      elsif person.manager?
         scope.where(person: (person.managed_teams.map(&:person_ids).flatten << person.id).uniq)
       else
         scope.where(person: person)
