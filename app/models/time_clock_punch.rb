@@ -23,19 +23,22 @@ class TimeClockPunch < ApplicationRecord
   private
 
   def permission_check
-    true if :time_clock_period.nil?
-    errors.tap do |t|
-      t.add(:time_clock_period, 'does not meet permission requirements')
-    end unless case time_clock_period.permission
-               when 'added_by_admin'
-                 created_by.user.admin?
-               when 'added_by_manager'
-                 created_by.managed_teams.include? time_clock_period.team
-               when 'added_by_team_member'
-                 created_by.teams.include? time_clock_period.team
-               when 'added_by_user'
-                 true
-               end
+    if time_clock_period.nil?
+      true
+    else
+      errors.tap do |t|
+        t.add(:time_clock_period, 'does not meet permission requirements')
+      end unless case time_clock_period.permission
+                 when 'added_by_admin'
+                   created_by.user.admin?
+                 when 'added_by_manager'
+                   created_by.managed_teams.include? time_clock_period.team
+                 when 'added_by_team_member'
+                   created_by.teams.include? time_clock_period.team
+                 when 'added_by_user'
+                   true
+                 end
+    end
   end
 
   def valid_times
