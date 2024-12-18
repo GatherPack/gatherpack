@@ -1,0 +1,33 @@
+<% breadcrumb @time_clock_period %>
+
+<%= search_form_for @q, data: {"controller": "turbo_search", "turbo-frame": "results"} do |f| %>
+<div class="card">
+  <div class="card-header">
+    <h1><%= @time_clock_period.identifier_name %></h1>
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col">
+        <%= f.input :person_display_name_cont, label: 'Person' %>
+      </div>
+      <div class="col">
+        <%= f.input :start_time_gteq, label: 'Starting After', input_html: { type: "datetime-local" } %>
+      </div>
+      <div class="col">
+        <%= f.input :end_time_lteq, label: 'Ending Before', input_html: { type: "datetime-local" } %>
+      </div>
+    </div>
+  </div>
+  <div class="card-footer">
+    <%= link_to 'Back to Time Clock', time_clock_punches_path, class: 'btn btn-success' %>
+    <%= link_to 'Edit', edit_time_clock_period_path(@time_clock_period), class: 'btn btn-warning' if policy(@time_clock_period).edit? %>
+    <%= link_to 'Delete', @time_clock_period, class: 'btn btn-danger', data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } if policy(@time_clock_period).destroy? %>
+  </div>
+</div>
+<% end %>
+
+<%= turbo_frame_tag "results" do %>
+  <%= render "time_clock_punches/time_clock_punches" %>
+
+  <%= paginate @time_clock_punches %>
+<% end %>
