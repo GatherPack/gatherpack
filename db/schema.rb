@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_10_14_232518) do
+ActiveRecord::Schema[8.0].define(version: 2024_12_17_202140) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -30,6 +30,15 @@ ActiveRecord::Schema[8.0].define(version: 2024_10_14_232518) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["team_id"], name: "index_accounts_on_team_id"
+  end
+
+  create_table "action_mailbox_inbound_emails", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.integer "status", default: 0, null: false
+    t.string "message_id", null: false
+    t.string "message_checksum", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["message_id", "message_checksum"], name: "index_action_mailbox_inbound_emails_uniqueness", unique: true
   end
 
   create_table "action_text_rich_texts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -144,6 +153,32 @@ ActiveRecord::Schema[8.0].define(version: 2024_10_14_232518) do
     t.string "name"
     t.string "event"
     t.text "code"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "mailbox_assignments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "mailbox_id", null: false
+    t.string "target_type", null: false
+    t.uuid "target_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["mailbox_id"], name: "index_mailbox_assignments_on_mailbox_id"
+    t.index ["target_type", "target_id"], name: "index_mailbox_assignments_on_target"
+  end
+
+  create_table "mailbox_messages", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "from"
+    t.string "subject"
+    t.string "body"
+    t.uuid "mailbox_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["mailbox_id"], name: "index_mailbox_messages_on_mailbox_id"
+  end
+
+  create_table "mailboxes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "address"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -360,6 +395,29 @@ ActiveRecord::Schema[8.0].define(version: 2024_10_14_232518) do
     t.index ["team_type_id"], name: "index_teams_on_team_type_id"
   end
 
+  create_table "time_clock_periods", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.integer "permission", default: 0, null: false
+    t.uuid "team_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["team_id"], name: "index_time_clock_periods_on_team_id"
+  end
+
+  create_table "time_clock_punches", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.string "note"
+    t.uuid "person_id", null: false
+    t.uuid "time_clock_period_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["person_id"], name: "index_time_clock_punches_on_person_id"
+    t.index ["time_clock_period_id"], name: "index_time_clock_punches_on_time_clock_period_id"
+  end
+
   create_table "tokens", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "value"
     t.string "tokenable_type"
@@ -413,6 +471,8 @@ ActiveRecord::Schema[8.0].define(version: 2024_10_14_232518) do
   add_foreign_key "checkins", "events"
   add_foreign_key "checkins", "people"
   add_foreign_key "events", "event_types"
+  add_foreign_key "mailbox_assignments", "mailboxes"
+  add_foreign_key "mailbox_messages", "mailboxes"
   add_foreign_key "memberships", "people"
   add_foreign_key "memberships", "teams"
   add_foreign_key "relationships", "people", column: "child_id"
@@ -425,5 +485,8 @@ ActiveRecord::Schema[8.0].define(version: 2024_10_14_232518) do
   add_foreign_key "solid_queue_recurring_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
   add_foreign_key "solid_queue_scheduled_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
   add_foreign_key "teams", "team_types"
+  add_foreign_key "time_clock_periods", "teams"
+  add_foreign_key "time_clock_punches", "people"
+  add_foreign_key "time_clock_punches", "time_clock_periods"
   add_foreign_key "transactions", "accounts"
 end

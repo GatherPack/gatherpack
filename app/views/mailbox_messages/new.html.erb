@@ -1,0 +1,16 @@
+<% breadcrumb :new, "mailbox_message" %>
+
+<%= simple_form_for([@mailbox, @mailbox_message]) do |f| %>
+<div class="card">
+  <div class="card-header">
+    <h1>New mailbox message</h1>
+  </div>
+  <div class="card-body">
+    <%= render "form", f: f %>
+  </div>
+  <div class="card-footer">
+    <%= link_to "Cancel", mailbox_mailbox_messages_path(@mailbox), class: 'btn btn-warning' %>
+    <%= f.button :submit, class: 'btn btn-primary' %>
+  </div>
+</div>
+<% end %>
