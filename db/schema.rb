@@ -397,8 +397,13 @@ ActiveRecord::Schema[8.0].define(version: 2024_12_17_202140) do
 
   create_table "time_clock_periods", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
+<<<<<<< HEAD
     t.datetime "start_time"
     t.datetime "end_time"
+=======
+    t.date "start_time"
+    t.date "end_time"
+>>>>>>> main
     t.integer "permission", default: 0, null: false
     t.uuid "team_id"
     t.datetime "created_at", null: false

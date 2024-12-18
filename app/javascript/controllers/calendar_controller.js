@@ -19,9 +19,17 @@ export default class extends Controller {
       timeZone: "UTC",
 
       headerToolbar: {
-        left: "prev,next today",
+        left: "prev,next " + "today",
         center: "title",
         right: "dayGridMonth,timeGridWeek,listMonth"
+      },
+
+      buttonText: {
+        today: "Today",
+        month: "Month",
+        week: "Week",
+        day: "Day",
+        list: "List"
       },
 
       events: this.eventsValue.map(element => {

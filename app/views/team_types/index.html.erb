@@ -16,9 +16,9 @@
     </div>
   </div>
   <div class="card-footer">
-    <%= link_to "New team type", new_team_type_path, class: 'btn btn-success' if policy(TeamType).new? %>
+    <%= link_to "New Team Type", new_team_type_path, class: 'btn btn-success' if policy(TeamType).new? %>
     <%= f.submit 'Search', class: 'btn btn-primary', data: { action: "turbo_search#search" } %>
-    <%= link_to 'Clear search', request.path, data: { action: "turbo_search#clear" }, class: "btn btn-dark" %>
+    <%= link_to 'Clear Search', request.path, data: { action: "turbo_search#clear" }, class: "btn btn-dark" %>
   </div>
 </div>
 <% end %>
