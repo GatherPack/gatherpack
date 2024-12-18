@@ -11,19 +11,19 @@
         <%= f.input :name_cont, label: 'Name' %>
       </div>
       <div class="col">
-        <%= f.input :team_id_eq, label: 'Team', as: :select, collection: policy_scope(Team) %>
-      </div>
-      <div class="col">
         <%= f.input :start_time_gteq, label: 'From', as: :datetime %>
       </div>
       <div class="col">
         <%= f.input :end_time_lteq, label: 'To', as: :datetime  %>
       </div>
+      <div class="col">
+        <%= f.input :team_id_eq, label: 'Team', as: :select, collection: policy_scope(Team) %>
+      </div>
     </div>
   </div>
   <div class="card-footer">
     <%= link_to "New Time Clock Period", new_time_clock_period_path, class: 'btn btn-success' if policy(TimeClockPeriod).new? %>
-    <%= link_to "Time Clock Punches", time_clock_punches_path, class: 'btn btn-primary' %>
+    <%= link_to "Time Clock Punches", time_clock_punches_path, class: 'btn btn-info' %>
     <%= f.submit 'Search', class: 'btn btn-primary', data: { action: "turbo_search#search" } %>
     <%= link_to 'Clear Search', request.path, class: "btn btn-dark", data: { action: "turbo_search#clear" } %>
   </div>

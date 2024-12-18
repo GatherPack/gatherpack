@@ -5,13 +5,20 @@ class TimeClockPeriodsController < InternalController
   # GET /time_clock_periods
   def index
     @q = policy_scope(TimeClockPeriod).ransack(params[:q])
-    @time_clock_periods = @q.result(distinct: true).page(params[:page])
+    @time_clock_periods = @q.result(distinct: true).order(start_time: :desc, end_time: :desc, name: :asc).page(params[:page])
   end
 
   # GET /time_clock_periods/1
   def show
     @q = policy_scope(TimeClockPunch).where(time_clock_period: @time_clock_period).ransack(params[:q])
-    @time_clock_punches = @q.result(distinct: true).page(params[:page])
+    @time_clock_punches = @q.result(distinct: true).includes(:person).order(start_time: :desc, end_time: :desc, 'person.first_name': :asc, 'person.last_name': :asc).page(params[:page])
+    @time_clock_punches.each do |punch|
+      if policy(punch).edit?
+        @has_editable_punches = true
+        break
+      end
+    end
+    @has_editable_punches ||= false
   end
 
   # GET /time_clock_periods/new
