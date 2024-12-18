@@ -7,6 +7,7 @@ class Person < ApplicationRecord
   has_many :badge_assignments, dependent: :destroy
   has_many :badges, through: :badge_assignments
   has_many :checkins, dependent: :destroy
+  has_many :events, through: :checkins
   has_many :tokens, as: :tokenable
   has_many :account_relationships, as: :holder, dependent: :destroy
   has_many :accounts, through: :account_relationships
