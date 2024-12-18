@@ -25,7 +25,7 @@
     </div>
   </div>
   <div class="card-footer">
-    <%= link_to "New mailbox message", new_mailbox_mailbox_message_path(@mailbox), class: 'btn btn-success' if policy(MailboxMessage).new? %>
+    <%= link_to "New Message", new_mailbox_mailbox_message_path(@mailbox), class: 'btn btn-success' if policy(MailboxMessage).new? %>
     <%= f.submit 'Search Messages', class: 'btn btn-primary', data: { action: "turbo_search#search" } %>
     <%= link_to 'Clear search', request.path, class: "btn btn-dark", data: { action: "turbo_search#clear" } %>
     <%= link_to 'Edit', edit_mailbox_path(@mailbox), class: 'btn btn-warning' if policy(Mailbox).edit? %>
