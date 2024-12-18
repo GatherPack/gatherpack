@@ -10,7 +10,7 @@ class RelationshipNodePolicy < ApplicationPolicy
     end
 
     attr_reader :user, :scope
-    
+
     def resolve
       if user.admin
         scope.all
