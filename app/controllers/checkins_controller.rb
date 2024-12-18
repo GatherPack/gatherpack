@@ -32,7 +32,7 @@ class CheckinsController < InternalController
   # PATCH/PUT /checkins/1
   def update
     if @checkin.update(checkin_params)
-      redirect_to @checkin, notice: 'Checkin was successfully updated.', status: :see_other
+      redirect_to [@event, @checkin], notice: 'Checkin was successfully updated.', status: :see_other
     else
       render :edit, status: :unprocessable_entity
     end
