@@ -3,10 +3,9 @@ source 'https://rubygems.org'
 # Use main development branch of Rails
 gem 'rails', '~> 8.0'
 # The modern asset pipeline for Rails [https://github.com/rails/propshaft]
-gem 'propshaft'
-# Use sqlite3 as the database for Active Record
-gem 'sqlite3', '>= 1.4'
-gem 'pg', "~> 1.1"
+gem "propshaft"
+# Use postgresql as the database for Active Record
+gem "pg", "~> 1.1"
 # Use the Puma web server [https://github.com/puma/puma]
 gem 'puma', '>= 5.0'
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
