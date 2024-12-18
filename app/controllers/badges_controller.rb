@@ -54,7 +54,7 @@ class BadgesController < InternalController
 
     # Only allow a list of trusted parameters through.
     def badge_params
-      if policy(@badge).update?
+      if policy(Badge).new? || policy(@badge).update?
         params.require(:badge).permit(:name, :description, :color, :short, :badge_type_id, :team_id, :permission, person_ids: [])
       else
         params.require(:badge).permit(person_ids: [])

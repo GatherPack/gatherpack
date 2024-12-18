@@ -20,13 +20,15 @@ class BadgePolicy < ApplicationPolicy
   def update?
     case record.permission
     when 'added_by_admin'
-      user.admin?
+      user.admin
     when 'added_by_manager'
       (person.managed_teams.include?(record.team)) || user.admin
     when 'added_by_current_member'
       (person.teams.include?(record.team)) || user.admin
     when 'has_account'
       true
+    else
+      user.admin
     end
   end
 
