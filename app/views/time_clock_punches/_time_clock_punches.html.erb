@@ -1,4 +1,3 @@
-<%#= TODO COULD MAKE A ROUNDED TABLE?! %>
 <div class="card">
   <div class="card-body">
     <% if @time_clock_punches.present? %>
@@ -6,8 +5,7 @@
         <thead>
         <tr>
           <th scope="col"><h3>Person</h3></th>
-          <th scope="col"><h3>Start Time</h3></th>
-          <th scope="col"><h3>End Time</h3></th>
+          <th scope="col"><h3>Start/End Time</h3></th>
           <th scope="col"><h3>Hours</h3></th>
           <th scope="col"><h3>Period</h3></th>
           <% @time_clock_punches.each do |time_clock_punch| %>
@@ -19,7 +17,7 @@
         </tr>
         </thead>
         <tbody>
-          <% @time_clock_punches.order(end_time: :desc).each do |time_clock_punch| %>
+          <% @time_clock_punches.each do |time_clock_punch| %>
             <%= render time_clock_punch %>
           <% end %>
         </tbody>

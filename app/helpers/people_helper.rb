@@ -15,10 +15,16 @@ module PeopleHelper
     ).uniq.sort_by { |t| [t.team_type.name, t.name] }
   end
 
-  def person_as_badge(person)
+  def person_as_badge(person, opt = nil)
     content = i('user') + ' ' + person.identifier_name
-    link_to person, class: 'undecorated' do
-      tag.span content, class: 'badge text-bg-primary'
+    if opt.present? && opt
+      link_to person, class: 'undecorated', 'data-turbo': false do
+        tag.span content, class: 'badge text-bg-primary'
+      end
+    else
+      link_to person, class: 'undecorated' do
+        tag.span content, class: 'badge text-bg-primary'
+      end
     end
   end
 end
