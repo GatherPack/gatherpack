@@ -11,10 +11,10 @@
         <%= f.input :person_display_name_cont, label: 'Person' %>
       </div>
       <div class="col">
-        <%= f.input :start_time_gteq, label: 'From', as: :datetime %>
+        <%= f.input :start_time_gteq, label: 'Starting After', input_html: { type: "datetime-local" } %>
       </div>
       <div class="col">
-        <%= f.input :start_time_lteq, label: 'To', as: :datetime  %>
+        <%= f.input :end_time_lteq, label: 'Ending Before', input_html: { type: "datetime-local" }  %>
       </div>
       <div class="col">
         <%= f.input :time_clock_period_id_eq, label: 'Periods', as: :select, collection: policy_scope(TimeClockPeriod) %>

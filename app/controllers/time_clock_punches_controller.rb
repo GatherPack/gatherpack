@@ -1,7 +1,6 @@
 class TimeClockPunchesController < InternalController
   before_action :set_time_clock_punch, only: %i[ edit update destroy ]
   before_action :set_time_clock_period_scope, only: %i[ new create edit update ]
-  before_action :permission_check, only: %i[ create update ]
 
   # GET /time_clock_punches
   def index
@@ -28,6 +27,7 @@ class TimeClockPunchesController < InternalController
   # POST /time_clock_punches
   def create
     @time_clock_punch = authorize TimeClockPunch.new(time_clock_punch_params)
+    @time_clock_punch.created_by = current_user.person
 
     if @time_clock_punch.save
       redirect_to time_clock_punches_path, notice: 'Time clock punch was successfully created.'
@@ -38,6 +38,7 @@ class TimeClockPunchesController < InternalController
 
   # PATCH/PUT /time_clock_punches/1
   def update
+    @time_clock_punch.created_by = current_user.person
     if @time_clock_punch.update(time_clock_punch_params)
       redirect_to time_clock_punches_path, notice: 'Time clock punch was successfully updated.', status: :see_other
     else
@@ -68,10 +69,6 @@ class TimeClockPunchesController < InternalController
         # periods of teams they are not in
         @time_clock_periods = @time_clock_periods.reject { |period| !current_user.person.teams.include?(period.team) }
       end
-    end
-
-    def permission_check
-      @time_clock_punch.created_by = current_user.person
     end
 
     # Only allow a list of trusted parameters through.

@@ -1,6 +1,6 @@
 class TimeClockPeriodsController < InternalController
   before_action :set_time_clock_period, only: %i[ show edit update destroy ]
-  before_action :permission_keys, only: %i[ new edit ]
+  before_action :permission_keys, only: %i[ new create edit update ]
 
   # GET /time_clock_periods
   def index

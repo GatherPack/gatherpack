@@ -21,7 +21,8 @@ class TimeClockPeriod < ApplicationRecord
   end
 
   def permissions_make_sense
-    errors.add(:team, "can't be empty if \"team\" managers can add punches to this period") if permission == 'added_by_manager' && team.nil?
-    errors.add(:team, "can't be empty if \"team\" members can add punches to this period") if permission == 'added_by_team_member' && team.nil?
+    errors.add(:team, "can't be empty if \"team\" managers can add punches to this period") if team.nil? && permission == 'added_by_manager'
+    errors.add(:team, "can't be empty if \"team\" members can add punches to this period") if team.nil? && permission == 'added_by_team_member'
+    errors.add(:team, "can't be associated with a period that contains non-team member punches in this period (unlink them first)") if team.present? && TimeClockPunch.all.where(time_clock_period: self).any? { |punch| punch.person.teams.exclude? team }
   end
 end
