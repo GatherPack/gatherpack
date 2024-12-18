@@ -7,7 +7,9 @@ Rails.application.routes.draw do
   resources :pages
   resources :tokens
   resources :hooks
-  resources :badges
+  resources :badges do
+    resources 'badge_assignments', only: %i[ index ]
+  end
   resources :badge_types
   resources :events do
     resources :checkins, except: %i[ index ]
