@@ -13,9 +13,9 @@
     </div>
   </div>
   <div class="card-footer">
-    <%= link_to "New event type", new_event_type_path, class: 'btn btn-success' if policy(EventType).new? %>
+    <%= link_to "New Event Type", new_event_type_path, class: 'btn btn-success' if policy(EventType).new? %>
     <%= f.submit 'Search', class: 'btn btn-primary', data: { action: "turbo_search#search" } %>
-    <%= link_to 'Clear search', request.path, data: { action: "turbo_search#clear" }, class: "btn btn-dark" %>
+    <%= link_to 'Clear Search', request.path, data: { action: "turbo_search#clear" }, class: "btn btn-dark" %>
   </div>
 </div>
 <% end %>

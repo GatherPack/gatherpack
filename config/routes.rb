@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :time_clock_periods
+  resources :time_clock_punches, except: :show
   resources :audit_logs, only: %i[ index show destroy ] do
     post 'revert', to: 'audit_logs#revert', on: :member
   end
