@@ -27,17 +27,28 @@ On a machine with Ruby & Node & Yarn installed.
 git clone git@github.com:GatherPack/gatherpack.git
 cd gatherpack
 bin/setup
+docker-compose up
 bin/dev
+```
+
+## Formatting and Linting 
+
+```bash
+rubocop -A
+erb_lint --lint-all -a
 ```
 
 ### Settings
 
 Settings can be added in the `app/models/settings.rb` file in the `initialize` function at the bottom.
 Settings follow the format of
+
 ```ruby
 add_setting(:id, :setting_type, "name", default_value, "group/category", "description")
 ```
-eg.
+
+e.g.
+
 ```ruby
 add_setting(:my_setting, :int, "My Setting", 15, "Very important settings", "Stores an integer")
 ```
