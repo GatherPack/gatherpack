@@ -19,9 +19,11 @@ module ApplicationHelper
     when Relationship
       relationship_as_badge(obj, opt)
     when Person
-      person_as_badge(obj)
+      person_as_badge(obj, opt)
     when Account
       account_as_badge(obj)
+    when TimeClockPeriod
+      time_clock_period_as_badge(obj, opt)
     end.html_safe
   end
 
