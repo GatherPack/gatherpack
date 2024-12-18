@@ -1,5 +1,9 @@
 <div class="card" id="<%= dom_id time_clock_period %>">
   <div class="card-header">
-    <%= link_to time_clock_period.identifier_name, time_clock_period, 'data-turbo': false %>
+    <%= as_badge time_clock_period, true %>
+  </div>
+  <div class="card-body">
+    <strong>Begins: </strong><%= time_clock_period.start_time.strftime('%B %d, %Y') %><br>
+    <strong>Ends: </strong><%= time_clock_period.end_time.strftime('%B %d, %Y') %>
   </div>
 </div>
