@@ -22,9 +22,9 @@
     </div>
   </div>
   <div class="card-footer">
-    <%= link_to "New event", new_event_path, class: 'btn btn-success' if policy(Event).new? %>
+    <%= link_to "New Event", new_event_path, class: 'btn btn-success' if policy(Event).new? %>
     <%= f.submit 'Search', class: 'btn btn-primary', data: { action: "turbo_search#search" } %>
-    <%= link_to 'Clear search', request.path, class: "btn btn-dark", data: { action: "turbo_search#clear" } %>
+    <%= link_to 'Clear Search', request.path, class: "btn btn-dark", data: { action: "turbo_search#clear" } %>
   </div>
 </div>
 <% end %>

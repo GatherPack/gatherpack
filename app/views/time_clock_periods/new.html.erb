@@ -1,0 +1,16 @@
+<% breadcrumb :new, "time clock period" %>
+
+<%= simple_form_for(@time_clock_period) do |f| %>
+<div class="card">
+  <div class="card-header">
+    <h1>New time clock period</h1>
+  </div>
+  <div class="card-body">
+    <%= render "form", f: f %>
+  </div>
+  <div class="card-footer">
+    <%= link_to "Cancel", time_clock_periods_path, class: 'btn btn-warning' %>
+    <%= f.button :submit, class: 'btn btn-primary' %>
+  </div>
+</div>
+<% end %>
