@@ -16,8 +16,9 @@
     </div>
   </div>
   <div class="card-footer">
-    <%= link_to "New hook", new_hook_path, class: 'btn btn-success' if policy(Hook).new? %>
-    <%= f.submit 'Search', class: 'btn btn-primary' %>
+    <%= link_to "New Hook", new_hook_path, class: 'btn btn-success' if policy(Hook).new? %>
+    <%= f.submit 'Search', class: 'btn btn-primary', data: { action: "turbo_search#search" } %>
+    <%= link_to 'Clear Search', request.path, class: "btn btn-dark", data: { action: "turbo_search#clear" } %>
   </div>
 </div>
 <% end %>

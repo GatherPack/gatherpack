@@ -17,9 +17,9 @@
     </div>
   </div>
   <div class="card-footer">
-    <%= link_to "New page", new_page_path, class: 'btn btn-success' if policy(Page).new? %>
+    <%= link_to "New Page", new_page_path, class: 'btn btn-success' if policy(Page).new? %>
     <%= f.submit 'Search', class: 'btn btn-primary', data: { action: "turbo_search#search" } %>
-    <%= link_to 'Clear search', request.path, class: "btn btn-dark", data: { action: "turbo_search#clear" } %>
+    <%= link_to 'Clear Search', request.path, class: "btn btn-dark", data: { action: "turbo_search#clear" } %>
   </div>
 </div>
 <% end %>

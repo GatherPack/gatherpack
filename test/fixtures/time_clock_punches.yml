@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  start_time: 2024-12-14 14:18:56
+  end_time: 2024-12-14 14:18:56
+  person: one
+  time_clock_period: one
+
+two:
+  start_time: 2024-12-14 14:18:56
+  end_time: 2024-12-14 14:18:56
+  person: two
+  time_clock_period: two

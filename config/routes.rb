@@ -2,6 +2,8 @@ Rails.application.routes.draw do
   resources :mailboxes do
     resources :mailbox_messages, except: %i[ index ]
   end
+  resources :time_clock_periods
+  resources :time_clock_punches, except: :show
   resources :audit_logs, only: %i[ index show destroy ] do
     post 'revert', to: 'audit_logs#revert', on: :member
   end
