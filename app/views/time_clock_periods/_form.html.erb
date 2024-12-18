@@ -3,8 +3,8 @@
 
 <div class="form-inputs">
   <%= f.input :name %>
-  <%= f.input :start_time %>
-  <%= f.input :end_time %>
+  <%= f.input :start_time, as: :string, input_html: { type: :date } %>
+  <%= f.input :end_time, as: :string, input_html: { type: :date } %>
   <%= f.input :permission, as: :select, collection: @permissions_keys, label_method: :titleize, include_blank: false %>
   <%= f.association :team, collection: current_user.person.managed_teams, include_blank: admin? %>
 </div>

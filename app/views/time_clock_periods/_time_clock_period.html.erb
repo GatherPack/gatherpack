@@ -3,7 +3,11 @@
     <%= as_badge time_clock_period, true %>
   </div>
   <div class="card-body">
-    <strong>Begins: </strong><%= time_clock_period.start_time.strftime('%B %d, %Y') %><br>
-    <strong>Ends: </strong><%= time_clock_period.end_time.strftime('%B %d, %Y') %>
+    <% if time_clock_period.start_time.present? %>
+      <strong>Begins: </strong><%= nice_date(time_clock_period.start_time) %><br>
+    <% end %>
+    <% if time_clock_period.end_time.present? %>
+      <strong>Ends: </strong><%= nice_date(time_clock_period.end_time) %>
+    <% end %>
   </div>
 </div>
