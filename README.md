@@ -31,7 +31,7 @@ docker-compose up
 bin/dev
 ```
 
-## Formatting and Linting 
+### Formatting and Linting 
 
 ```bash
 rubocop -A
