@@ -23,7 +23,7 @@ const autoHeight = {
     ".cm-scroller": {overflow: "auto"}
 };
 
-console.log(tags)
+// console.log(tags)
 const highlightStyle = HighlightStyle.define([
     {tag: tags.keyword, color: "#cfa757"},
     {tag: tags.comment, color: "#96959d", fontStyle: "italic"},
