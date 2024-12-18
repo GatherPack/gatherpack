@@ -5,7 +5,7 @@
   <%= f.input :start_time %>
   <%= f.input :end_time %>
   <%= f.association :person, label_method: :identifier_name, collection: [ current_user.person, current_user.person.managed_people ].flatten.uniq %>
-  <%#= TODO JS TO CHANGE COLLECTION OF PEOPLE BASED ON ASSOCIATED TIME CLOCK PERIOD OR LACK OF %>
+  <%#= TODO JS TO CHANGE COLLECTION OF PEOPLE BASED ON ASSOCIATED TIME CLOCK PERIOD (PARTICULARLY LACK OF OR PERIOD WITH ADDED_BY_TEAM_MEMBER %>
   <%= f.association :time_clock_period, collection: @time_clock_periods %>
   <%= f.input :note %>
 </div>

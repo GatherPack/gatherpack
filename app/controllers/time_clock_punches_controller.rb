@@ -65,9 +65,9 @@ class TimeClockPunchesController < InternalController
         # remove: periods of teams they are in or generic teams with 'added_by_admin' perms
         @time_clock_periods = @time_clock_periods.reject { |period| period.permission == 'added_by_admin' }
         # periods of teams they are in and don't manage with 'added_by_manager' perms
-        @time_clock_periods = @time_clock_periods.reject { |period| period.permission == 'added_by_manager' && !current_user.person.managed_teams.include?(period.team) }
+        @time_clock_periods = @time_clock_periods.reject { |period| period.permission == 'added_by_manager' && current_user.person.managed_teams.exclude?(period.team) }
         # periods of teams they are not in
-        @time_clock_periods = @time_clock_periods.reject { |period| !current_user.person.teams.include?(period.team) }
+        @time_clock_periods = @time_clock_periods.reject { |period| current_user.person.teams.exclude?(period.team) }
       end
     end
 
