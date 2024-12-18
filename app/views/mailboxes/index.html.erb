@@ -6,9 +6,10 @@
     <h1>Mailboxes</h1>
   </div>
   <div class="card-body">
+    <%= f.input :address_cont, label: 'Address' %>
   </div>
   <div class="card-footer">
-    <%= link_to "New mailbox", new_mailbox_path, class: 'btn btn-success' if policy(Mailbox).new? %>
+    <%= link_to "New Mailbox", new_mailbox_path, class: 'btn btn-success' if policy(Mailbox).new? %>
     <%= f.submit 'Search', class: 'btn btn-primary', data: { action: "turbo_search#search" } %>
     <%= link_to 'Clear search', request.path, class: "btn btn-dark", data: { action: "turbo_search#clear" } %>
   </div>
