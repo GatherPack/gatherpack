@@ -16,6 +16,9 @@ class CheckinsController < InternalController
 
   # GET /checkins/1/edit
   def edit
+    @event.event_type.checkin_fields.each do |field|
+      authorize @checkin.checkin_field_responses.build(checkin_field: field) if @checkin.checkin_field_responses.where(checkin_field: field).empty?
+    end
   end
 
   # POST /checkins
@@ -34,7 +37,7 @@ class CheckinsController < InternalController
   def update
     @checkin.created_by = current_user.person
     if @checkin.update(checkin_params)
-      redirect_to [@event, @checkin], notice: 'Checkin was successfully updated.', status: :see_other
+      redirect_to [ @event, @checkin ], notice: 'Checkin was successfully updated.', status: :see_other
     else
       render :edit, status: :unprocessable_entity
     end
