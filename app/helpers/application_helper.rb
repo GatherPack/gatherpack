@@ -56,7 +56,7 @@ module ApplicationHelper
   end
 
   def nice_datetime t
-    t&.strftime('%-I:%M %p %B %-d, %Y')
+    t&.strftime('%B %-d, %Y at %-I:%M %p')
   end
 
   def nice_time t
@@ -64,10 +64,10 @@ module ApplicationHelper
   end
 
   def nice_datetime_range a, b
-    if (b - a) < 24*60
-      "#{nice_time a} to #{nice_time b}, #{nice_date b}"
+    if a.to_date === b.to_date
+      "on #{nice_date a} from #{nice_time a} to #{nice_time b}"
     else
-      "#{nice_datetime a} to #{nice_datetime b}"
+      "from #{nice_datetime a} to #{nice_datetime b}"
     end
   end
 end

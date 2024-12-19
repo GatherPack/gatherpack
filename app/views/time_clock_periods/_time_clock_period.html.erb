@@ -4,10 +4,10 @@
   </div>
   <div class="card-body">
     <% if time_clock_period.start_time.present? %>
-      <strong>Begins: </strong><%= nice_date(time_clock_period.start_time) %><br>
+      <b>Begins: </b><%= nice_date(time_clock_period.start_time) %><br>
     <% end %>
     <% if time_clock_period.end_time.present? %>
-      <strong>Ends: </strong><%= nice_date(time_clock_period.end_time) %>
+      <b>Ends: </b><%= nice_date(time_clock_period.end_time) %>
     <% end %>
   </div>
 </div>

@@ -9,6 +9,7 @@ class Team < ApplicationRecord
   has_many :people, through: :memberships
   has_many :events
   has_many :pages
+  has_many :time_clock_periods, dependent: :nullify
   enum :join_permission, { added_by_admin: 0, added_by_manager: 1, added_by_current_member: 2, has_account: 3 }
 
   validates :name, presence: true

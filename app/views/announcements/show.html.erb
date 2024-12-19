@@ -11,7 +11,7 @@
   </div>
   <div class="card-body">
     <p>
-      <em>Runs from <%= nice_datetime_range @announcement.start_time, @announcement.end_time %></em>
+      <em>Runs <%= nice_datetime_range @announcement.start_time, @announcement.end_time %></em>
     </p>
     <%= @announcement.content %>
   </div>
