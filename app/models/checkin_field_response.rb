@@ -11,7 +11,7 @@ class CheckinFieldResponse < ApplicationRecord
     when 'added_by_team_member'
       created_by.teams.present?
     when 'added_by_participant'
-      checkin.event.checkins.where(person: created_by).distinct.present?
+      checkin.event.checkins.where(person: created_by).distinct.present? || created_by.user.admin?
     when 'added_by_user'
       true
     end
