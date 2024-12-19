@@ -99,3 +99,5 @@ gem "spicy-proton", "~> 2.1"
 gem "paper_trail", "~> 16.0"
 
 gem "postmark-rails", "~> 0.22.1"
+
+gem "pstore"

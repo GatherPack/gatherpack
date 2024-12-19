@@ -379,6 +379,29 @@ ActiveRecord::Schema[8.0].define(version: 2024_12_17_205009) do
     t.index ["team_type_id"], name: "index_teams_on_team_type_id"
   end
 
+  create_table "time_clock_periods", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.date "start_time"
+    t.date "end_time"
+    t.integer "permission", default: 0, null: false
+    t.uuid "team_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["team_id"], name: "index_time_clock_periods_on_team_id"
+  end
+
+  create_table "time_clock_punches", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.string "note"
+    t.uuid "person_id", null: false
+    t.uuid "time_clock_period_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["person_id"], name: "index_time_clock_punches_on_person_id"
+    t.index ["time_clock_period_id"], name: "index_time_clock_punches_on_time_clock_period_id"
+  end
+
   create_table "tokens", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "value"
     t.string "tokenable_type"
@@ -447,5 +470,8 @@ ActiveRecord::Schema[8.0].define(version: 2024_12_17_205009) do
   add_foreign_key "solid_queue_recurring_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
   add_foreign_key "solid_queue_scheduled_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
   add_foreign_key "teams", "team_types"
+  add_foreign_key "time_clock_periods", "teams"
+  add_foreign_key "time_clock_punches", "people"
+  add_foreign_key "time_clock_punches", "time_clock_periods"
   add_foreign_key "transactions", "accounts"
 end
