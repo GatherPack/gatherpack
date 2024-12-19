@@ -1,3 +1,5 @@
+<% breadcrumb @checkin %>
+
 <div class="card">
   <div class="card-header">
     <h1><%= @checkin.person.display_name %> @ <%= @event.name %></h1>
@@ -9,6 +11,14 @@
       </div>
       <div class="col">
         <%= render "notes", notes: @checkin.notes %>
+      </div>
+      <div class="col">
+        <h5>Field Responses:</h5>
+        <% @checkin.checkin_field_responses.each do |response| %>
+          <div>
+            <strong><%= response.checkin_field.name %></strong>: <%= response.response %>
+          </div>
+        <% end %>
       </div>
     </div>
   </div>

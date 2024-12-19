@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  checkin: one
+  checkin_field: one
+  response: MyString
+
+two:
+  checkin: two
+  checkin_field: two
+  response: MyString
