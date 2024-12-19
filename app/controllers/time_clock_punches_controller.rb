@@ -9,10 +9,13 @@ class TimeClockPunchesController < InternalController
     @time_clock_punches.each do |punch|
       if policy(punch).edit?
         @has_editable_punches = true
-        break
+      end
+      if punch.note.present?
+        @has_notes = true
       end
     end
     @has_editable_punches ||= false
+    @has_notes ||= false
   end
 
   # GET /time_clock_punches/new

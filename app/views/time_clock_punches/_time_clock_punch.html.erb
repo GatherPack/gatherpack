@@ -14,6 +14,9 @@
     <td class="align-middle"><%= ((Time.now - time_clock_punch.start_time) / 3600 * 20).round / 20.0 %></td>
   <% end %>
   <td class="align-middle"><%= as_badge time_clock_punch.time_clock_period, true unless time_clock_punch.time_clock_period.nil? %></td>
+  <% if @has_notes %>
+    <td class="align-middle"><%= time_clock_punch.note[0..60].gsub(/\s\w+\s*$/,'...') if time_clock_punch.note.present? %></td>
+  <% end %>
   <% if @has_editable_punches %>
       <td class="align-middle">
         <%= link_to 'Edit', edit_time_clock_punch_path(time_clock_punch), class: 'btn btn-sm btn-warning', 'data-turbo': false if policy(time_clock_punch).edit? %>
