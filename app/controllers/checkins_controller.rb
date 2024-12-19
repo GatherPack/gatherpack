@@ -21,6 +21,7 @@ class CheckinsController < InternalController
   # POST /checkins
   def create
     @checkin = authorize @event.checkins.build(checkin_params)
+    @checkin.created_by = current_user.person
 
     if @checkin.save
       redirect_to @event, notice: 'Checkin was successfully created.'
@@ -31,6 +32,7 @@ class CheckinsController < InternalController
 
   # PATCH/PUT /checkins/1
   def update
+    @checkin.created_by = current_user.person
     if @checkin.update(checkin_params)
       redirect_to [@event, @checkin], notice: 'Checkin was successfully updated.', status: :see_other
     else

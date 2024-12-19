@@ -6,6 +6,6 @@
   <%= f.input :notes %>
   <%= f.simple_fields_for :checkin_field_responses do |ff| %>
     <%= ff.hidden_field :checkin_field_id %>
-    <%= ff.input :response, label: ff.object.checkin_field.name %>
+    <%= ff.input :response, label: ff.object.checkin_field.name, disabled: !ff.object.permission_check(current_user.person) %>
   <% end %>
 </div>

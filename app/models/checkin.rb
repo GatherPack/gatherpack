@@ -7,12 +7,26 @@ class Checkin < ApplicationRecord
   accepts_nested_attributes_for :checkin_field_responses
 
   validates :person, presence: true
-  
+
+  before_update :check_attributes
+
+  attr_accessor :created_by
+
   def self.ransackable_attributes(auth_object = nil)
     ['person.display_name']
   end
 
   def self.ransackable_associations(auth_object = nil)
     ['person']
+  end
+
+  private
+
+  def check_attributes
+    self.checkin_field_responses.each do |r|
+      if !r.permission_check(self.created_by)
+        r.response = r.response_was
+      end
+    end
   end
 end
