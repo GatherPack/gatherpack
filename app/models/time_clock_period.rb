@@ -4,6 +4,8 @@ class TimeClockPeriod < ApplicationRecord
 
   validate :valid_times, :permissions_make_sense
 
+  validates :name, presence: true
+
   def self.ransackable_attributes(auth_object = nil)
     %w[ name team_id start_time end_time ]
   end
