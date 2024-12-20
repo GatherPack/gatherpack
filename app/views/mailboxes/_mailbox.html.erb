@@ -1,0 +1,8 @@
+<div class="card" id="<%= dom_id mailbox %>">
+  <div class="card-header">
+    <%= link_to mailbox.identifier_name, mailbox, 'data-turbo': false %>
+  </div>
+  <div class="card-body">
+    <%= pluralize mailbox.messages.count, 'message' %>
+  </div>
+</div>

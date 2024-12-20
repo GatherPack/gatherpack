@@ -1,0 +1,29 @@
+<% breadcrumb @mailbox_message %>
+
+<div class="card">
+  <div class="card-header">
+    <h1><%= @mailbox_message.identifier_name %></h1>
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-12 col-md-9 col-lg-8">
+        <%= @mailbox_message.body %>
+      </div>
+      <div class="col-12 col-md-3 col-lg-4">
+        <% if @mailbox_message.attachments.any? %>
+          <h2>Attachments</h2>
+          <ul>
+            <% @mailbox_message.attachments.each do |att| %>
+              <li><%= link_to att.filename, att %></li>
+            <% end %>
+          </ul>
+        <% end %>
+      </div>
+    </div>
+    
+    
+  </div>
+  <div class="card-footer">
+    <%= link_to 'Delete', [@mailbox, @mailbox_message], class: 'btn btn-danger', data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %>
+  </div>
+</div>

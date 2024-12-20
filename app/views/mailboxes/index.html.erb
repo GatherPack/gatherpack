@@ -1,0 +1,29 @@
+<% breadcrumb :mailboxes %>
+
+<%= search_form_for @q, data: {"controller": "turbo_search", "turbo-frame": "results"} do |f| %>
+<div class="card">
+  <div class="card-header">
+    <h1>Mailboxes</h1>
+  </div>
+  <div class="card-body">
+    <%= f.input :address_cont, label: 'Address' %>
+  </div>
+  <div class="card-footer">
+    <%= link_to "New Mailbox", new_mailbox_path, class: 'btn btn-success' if policy(Mailbox).new? %>
+    <%= f.submit 'Search', class: 'btn btn-primary', data: { action: "turbo_search#search" } %>
+    <%= link_to 'Clear search', request.path, class: "btn btn-dark", data: { action: "turbo_search#clear" } %>
+  </div>
+</div>
+<% end %>
+
+<%= turbo_frame_tag "results" do %>
+  <div id="mailboxes" class="row">
+    <% @mailboxes.each do |mailbox| %>
+      <div class="col-md-3">
+        <%= render mailbox %>
+      </div>
+    <% end %>
+  </div>
+
+  <%= paginate @mailboxes %>
+<% end %>

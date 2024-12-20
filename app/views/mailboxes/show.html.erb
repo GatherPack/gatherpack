@@ -1,0 +1,48 @@
+<% breadcrumb @mailbox %>
+
+<%= search_form_for @q, url: @mailbox, data: {"controller": "turbo_search", "turbo-frame": "results"} do |f| %>
+<div class="card">
+  <div class="card-header">
+    <h1><%= @mailbox.identifier_name %></h1>
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md">
+        <%= f.input :from_cont, label: 'From' %>
+      </div>
+      <div class="col-md">
+        <%= f.input :subject_cont, label: 'Subject' %>
+      </div>
+      <div class="col-md">
+        <%= f.input :body_cont, label: 'Body' %>
+      </div>
+      <div class="col-md">
+        <h2>Belongs To</h2>
+        <% @mailbox.targets.each do |target| %>
+          <%= as_badge target %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="card-footer">
+    <%= link_to "New Message", new_mailbox_mailbox_message_path(@mailbox), class: 'btn btn-success' if policy(MailboxMessage).new? %>
+    <%= f.submit 'Search Messages', class: 'btn btn-primary', data: { action: "turbo_search#search" } %>
+    <%= link_to 'Clear search', request.path, class: "btn btn-dark", data: { action: "turbo_search#clear" } %>
+    <%= link_to 'Edit', edit_mailbox_path(@mailbox), class: 'btn btn-warning' if policy(Mailbox).edit? %>
+    <%= link_to 'Delete', @mailbox, class: 'btn btn-danger', data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } if policy(Mailbox).destroy? %>
+  </div>
+</div>
+<% end %>
+
+
+<%= turbo_frame_tag "results" do %>
+  <div id="mailbox_messages" class="row">
+    <% @mailbox.messages.each do |mailbox_message| %>
+      <div class="col-md-3">
+        <%= render mailbox_message %>
+      </div>
+    <% end %>
+  </div>
+
+  <%= paginate @mailbox_messages %>
+<% end %>

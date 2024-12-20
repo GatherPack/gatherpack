@@ -1,0 +1,8 @@
+<div class="card" id="<%= dom_id mailbox_message %>">
+  <div class="card-header">
+    <%= link_to mailbox_message.identifier_name, [mailbox_message.mailbox, mailbox_message], 'data-turbo': false %>
+  </div>
+  <div class="card-body">
+    <%= mailbox_message.body.truncate(120) %>
+  </div>
+</div>
