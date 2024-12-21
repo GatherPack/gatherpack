@@ -5,7 +5,7 @@ class Badge < ApplicationRecord
   belongs_to :team, optional: true
   has_many :badge_assignments, dependent: :destroy
   has_many :people, through: :badge_assignments
-  enum :permission, { added_by_admin: 0, added_by_manager: 1, added_by_current_member: 2, has_account: 3 }
+  enum :permission, { added_by_admin: 0, added_by_manager: 1, added_by_current_member: 2, has_account: 3, added_by_manager_or_self: 4, added_by_admin_or_self: 5 }
 
   validates :name, presence: true
   validates :color, presence: true

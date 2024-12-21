@@ -4,7 +4,6 @@
 <div class="row">
   <div class="col-md-6">
     <%= f.input :name %>
-    <%= f.input :description %>
     <div class="row">
       <div class="col-6">
         <%= f.input :color, as: :fancy_color %>
@@ -13,14 +12,11 @@
         <%= f.input :short, as: :icon %>
       </div>
     </div>
-    <%= f.input :permission, as: :select, collection: Badge.permissions.keys, label_method: :titleize, include_blank: false %>
+    <%= f.input :description %>
   </div>
   <div class="col-md-6">
     <%= f.association :badge_type %>
     <%= f.association :team, collection: current_user.person.managed_teams, include_blank: admin? %>
-
-    <% if policy(@badge.badge_assignments.build).create? %>
-      <%= f.association :people, as: :check_boxes, collection: (@badge.team ? @badge.team.people : Person.all).order(last_name: :asc, first_name: :asc), label_method: :identifier_name %>
-    <% end %>
+    <%= f.input :permission, as: :select, collection: Badge.permissions.keys, label_method: :titleize, include_blank: false %>
   </div>
 </div>
