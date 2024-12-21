@@ -1,0 +1,2 @@
+class CheckinFieldPolicy < AdminPolicy
+end

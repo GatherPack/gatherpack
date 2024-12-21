@@ -1,0 +1,2 @@
+module CheckinFieldResponsesHelper
+end
