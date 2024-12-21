@@ -63,8 +63,8 @@
 
 <div class="row mt-4">
   <div class="col-md">
-    <%= f.simple_fields_for @person.user do |ff| %>
-      <%= ff.input :email %>
+    <%= f.simple_fields_for :user do |ff| %>
+      <%= ff.input :email, disabled: true %>
 
       <% if @person.user.provider %>
         <div class="alert alert-warning">
