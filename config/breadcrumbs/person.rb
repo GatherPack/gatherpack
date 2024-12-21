@@ -11,3 +11,8 @@ crumb :relationship do |person, relationship|
   link 'New Relationship'
   parent :person, person
 end
+
+crumb :user do |person|
+  link 'User Information'
+  parent :person, person
+end

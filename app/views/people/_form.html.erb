@@ -63,7 +63,7 @@
 
 <div class="row mt-4">
   <div class="col-md">
-    <%= f.simple_fields_for :user do |ff| %>
+    <%= f.simple_fields_for @person.user do |ff| %>
       <%= ff.input :email %>
 
       <% if @person.user.provider %>
@@ -71,13 +71,7 @@
           This person signs in with <%= @person.user.provider %>
         </div>
       <% else %>
-        <%= ff.input :password %>
-        <%= ff.input :password_confirmation %>
-      <% end %>
-
-      <% if current_user.admin? && @person.user.present? %>
-          <p><strong>Sitewide Privileges</strong></p>
-          <%= ff.input :admin %>
+        <%= link_to "Edit User Information", if @person.user.id then edit_person_user_path(@person, @person.user) else new_person_user_path(@person.id) end, class: "btn btn-primary" %>
       <% end %>
     <% end %>
   </div>
