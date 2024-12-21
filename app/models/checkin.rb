@@ -20,6 +20,10 @@ class Checkin < ApplicationRecord
     ['person']
   end
 
+  def identifier_name
+    "#{person.identifier_name}'s checkin"
+  end
+
   private
 
   def check_attributes
