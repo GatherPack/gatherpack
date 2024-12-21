@@ -27,11 +27,12 @@ Rails.application.routes.draw do
     post 'update', on: :collection, as: 'update'
   end
   resources :team_types
-  resources :people do
-    resources :relationships, only: %i[ new create destroy ]
-  end
   resources :relationship_types
   devise_for :users, controllers: { omniauth_callbacks: 'omniauth', registrations: 'users/registrations' }
+  resources :people do
+    resources :relationships, only: %i[ new create destroy ]
+    resources :users, only: %i[ new create edit update ]
+  end
 
   get '/setup' => 'welcome#setup', as: :setup
   get 'search' => 'search#index', as: :search

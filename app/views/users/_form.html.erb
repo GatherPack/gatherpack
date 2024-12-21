@@ -1,0 +1,16 @@
+<%= f.hidden_field :person %>
+<%= f.input :email %>
+
+<% if @user.provider %>
+  <div class="alert alert-warning">
+    This person signs in with <%= @user.provider %>
+  </div>
+<% else %>
+  <%= f.input :password %>
+  <%= f.input :password_confirmation %>
+<% end %>
+
+<% if current_user.admin? %>
+  <p><strong>Sitewide Privileges</strong></p>
+  <%= f.input :admin %>
+<% end %>
