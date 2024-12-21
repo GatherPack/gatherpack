@@ -7,7 +7,7 @@ class CheckinFieldResponse < ApplicationRecord
     when 'added_by_admin'
       created_by.user.admin?
     when 'added_by_manager'
-      created_by.managed_teams.present?
+      created_by.managed_teams.present? || created_by.user.admin?
     when 'added_by_team_member'
       created_by.teams.present?
     when 'added_by_participant'

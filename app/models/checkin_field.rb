@@ -9,4 +9,8 @@ class CheckinField < ApplicationRecord
   def self.ransackable_attributes(auth_object = nil)
     [ 'name', 'permission' ]
   end
+
+  def identifier_name
+    "#{event_type.name} / #{name}"
+  end
 end
