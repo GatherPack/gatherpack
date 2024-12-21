@@ -38,7 +38,6 @@ when 'production'
   workers_count = Integer(ENV.fetch('WEB_CONCURRENCY', 1))
   workers workers_count if workers_count > 1
 
-  plugin :litestream if ENV.fetch('LITESTREAM_REPLICA_BUCKET')&.length > 0
   plugin :solid_queue
 
   preload_app!
