@@ -6,6 +6,8 @@ class TimeClockPunch < ApplicationRecord
 
   validates :start_time, presence: true
 
+  after_validation :calculate_duration
+
   attr_accessor :created_by
 
   def self.ransackable_attributes(auth_object = nil)
@@ -14,6 +16,12 @@ class TimeClockPunch < ApplicationRecord
 
   def self.ransackable_associations(auth_object = nil)
     %w[ person time_clock_period ]
+  end
+
+  def calculate_duration
+    if end_time.present? && start_time.present?
+      self.duration = ((end_time - start_time) / 3600 * 20).round / 20.0.to_d
+    end
   end
 
   def identifier_name

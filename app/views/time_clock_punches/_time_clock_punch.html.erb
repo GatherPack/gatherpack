@@ -5,7 +5,7 @@
       <%= time_clock_punch.start_time.strftime('%m/%d/%Y %I:%M%p') %><br>
       <%= time_clock_punch.end_time.strftime('%m/%d/%Y %I:%M%p') %>
     </td>
-    <td class="align-middle"><%= ((time_clock_punch.end_time - time_clock_punch.start_time) / 3600 * 20).round / 20.0 %></td>
+    <td class="align-middle"><%= time_clock_punch.duration %></td>
   <% else %>
     <td class="align-middle">
       <%= time_clock_punch.start_time.strftime('%m/%d/%Y %I:%M%p') %><br>

@@ -4,6 +4,7 @@ class CreateTimeClockPunches < ActiveRecord::Migration[8.0]
       t.datetime :start_time
       t.datetime :end_time
       t.string :note
+      t.decimal :duration
       t.references :person, null: false, foreign_key: true, type: :uuid
       t.references :time_clock_period, null: true, foreign_key: true, type: :uuid
 

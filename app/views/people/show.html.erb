@@ -19,6 +19,10 @@
         <p><b>Gender: </b><%= @person.gender %></p><br>
         <h3>Time Clock:</h3>
         <p><b>Last Punched In: </b><%= @time_clock_punches.present? ? nice_datetime(@time_clock_punches.first.start_time) : 'No punch-ins yet' %></p>
+        <% cumulative_hours = calculate_cumulative_hours(@time_clock_periods, @person) %>
+        <% cumulative_hours.take(2).each do |period| %>
+          <p><b><%= period[0] %>: </b><%= period[1] %> hours</p>
+        <% end %>
       </div>
       <div class="col-12 col-sm-6 col-lg-4">
         <% if @teams.any? %>
