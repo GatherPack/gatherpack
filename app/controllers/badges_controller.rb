@@ -49,11 +49,15 @@ class BadgesController < InternalController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_badge
-      @badge = policy_scope(Badge).find(params[:id])
+      @badge = authorize policy_scope(Badge).find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
     def badge_params
-      params.require(:badge).permit(:name, :description, :color, :short, :badge_type_id, :team_id, person_ids: [])
+      if policy(Badge).new? || policy(@badge).update?
+        params.require(:badge).permit(:name, :description, :color, :short, :badge_type_id, :team_id, :permission, person_ids: [])
+      else
+        params.require(:badge).permit(person_ids: [])
+      end
     end
 end

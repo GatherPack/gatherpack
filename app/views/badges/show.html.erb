@@ -9,6 +9,7 @@
   </div>
   <div class="card-footer">
     <%= link_to 'Edit', edit_badge_path(@badge), class: 'btn btn-warning' if policy(@badge).edit? %>
+    <%= link_to 'Assign People', badge_badge_assignments_path(@badge), class: 'btn btn-info' if policy(@badge.badge_assignments.build).create? %>
     <%= link_to 'Delete', @badge, class: 'btn btn-danger', data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } if policy(@badge).destroy? %>
   </div>
 </div>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_12_14_191736) do
+ActiveRecord::Schema[8.0].define(version: 2024_12_18_030022) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -30,6 +30,15 @@ ActiveRecord::Schema[8.0].define(version: 2024_12_14_191736) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["team_id"], name: "index_accounts_on_team_id"
+  end
+
+  create_table "action_mailbox_inbound_emails", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.integer "status", default: 0, null: false
+    t.string "message_id", null: false
+    t.string "message_checksum", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["message_id", "message_checksum"], name: "index_action_mailbox_inbound_emails_uniqueness", unique: true
   end
 
   create_table "action_text_rich_texts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -105,6 +114,7 @@ ActiveRecord::Schema[8.0].define(version: 2024_12_14_191736) do
     t.uuid "team_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "permission", default: 0
     t.index ["badge_type_id"], name: "index_badges_on_badge_type_id"
     t.index ["team_id"], name: "index_badges_on_team_id"
   end
@@ -144,6 +154,32 @@ ActiveRecord::Schema[8.0].define(version: 2024_12_14_191736) do
     t.string "name"
     t.string "event"
     t.text "code"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "mailbox_assignments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "mailbox_id", null: false
+    t.string "target_type", null: false
+    t.uuid "target_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["mailbox_id"], name: "index_mailbox_assignments_on_mailbox_id"
+    t.index ["target_type", "target_id"], name: "index_mailbox_assignments_on_target"
+  end
+
+  create_table "mailbox_messages", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "from"
+    t.string "subject"
+    t.string "body"
+    t.uuid "mailbox_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["mailbox_id"], name: "index_mailbox_messages_on_mailbox_id"
+  end
+
+  create_table "mailboxes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "address"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -362,8 +398,13 @@ ActiveRecord::Schema[8.0].define(version: 2024_12_14_191736) do
 
   create_table "time_clock_periods", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
+<<<<<<< HEAD
+    t.datetime "start_time"
+    t.datetime "end_time"
+=======
     t.date "start_time"
     t.date "end_time"
+>>>>>>> main
     t.integer "permission", default: 0, null: false
     t.uuid "team_id"
     t.datetime "created_at", null: false
@@ -436,6 +477,8 @@ ActiveRecord::Schema[8.0].define(version: 2024_12_14_191736) do
   add_foreign_key "checkins", "events"
   add_foreign_key "checkins", "people"
   add_foreign_key "events", "event_types"
+  add_foreign_key "mailbox_assignments", "mailboxes"
+  add_foreign_key "mailbox_messages", "mailboxes"
   add_foreign_key "memberships", "people"
   add_foreign_key "memberships", "teams"
   add_foreign_key "relationships", "people", column: "child_id"
