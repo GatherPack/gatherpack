@@ -71,7 +71,7 @@
           This person signs in with <%= @person.user.provider %>
         </div>
       <% else %>
-        <%= link_to "Edit User Information", if @person.user.id then edit_person_user_path(@person, @person.user) else new_person_user_path(@person.id) end, class: "btn btn-primary" %>
+        <%= link_to "Edit User Information", if @person.user.id then edit_person_user_path(@person) else new_person_user_path(@person) end, class: "btn btn-primary" %>
       <% end %>
     <% end %>
   </div>

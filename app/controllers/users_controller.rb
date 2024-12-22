@@ -34,7 +34,7 @@ class UsersController < InternalController
     end
 
     def set_user
-      @user = authorize policy_scope(User).find(params[:id])
+      @user = authorize @person.user
     end
 
     def user_params
