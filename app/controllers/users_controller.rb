@@ -3,11 +3,11 @@ class UsersController < InternalController
   before_action :set_user, only: %i[ edit update ]
 
   def new
-    @user = User.new(person: @person)
+    @user = authorize User.new(person: @person)
   end
 
   def create
-    @user = User.new(user_params)
+    @user = authorize User.new(user_params)
     @person.user = @user
 
     if @user.save
@@ -30,11 +30,11 @@ class UsersController < InternalController
 
   private
     def set_person
-      @person = policy_scope(Person).find(params[:person_id])
+      @person = authorize policy_scope(Person).find(params[:person_id])
     end
 
     def set_user
-      @user = User.find(params[:id])
+      @user = authorize policy_scope(User).find(params[:id])
     end
 
     def user_params
