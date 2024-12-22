@@ -31,7 +31,7 @@ Rails.application.routes.draw do
   devise_for :users, controllers: { omniauth_callbacks: 'omniauth', registrations: 'users/registrations' }
   resources :people do
     resources :relationships, only: %i[ new create destroy ]
-    resources :users, only: %i[ new create edit update ]
+    resource :user, only: %i[ new create edit update ]
   end
 
   get '/setup' => 'welcome#setup', as: :setup

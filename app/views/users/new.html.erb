@@ -1,6 +1,6 @@
 <% breadcrumb :user, @person %>
 
-<%= simple_form_for([@person, @user]) do |f| %>
+<%= simple_form_for([@person, @user], url: person_user_path) do |f| %>
   <div class="card">
     <div class="card-header">
       <h1>Editing user information</h1>
