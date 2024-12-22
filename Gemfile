@@ -102,3 +102,9 @@ gem "paper_trail", "~> 16.0"
 gem "postmark-rails", "~> 0.22.1"
 
 gem "pstore"
+
+gem "omniauth-google-oauth2", "~> 1.2"
+
+gem "omniauth-discord", "~> 1.2"
+
+gem "omniauth-github", "~> 2.0"
