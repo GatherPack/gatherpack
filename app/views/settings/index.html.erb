@@ -9,11 +9,20 @@
         <div class="card-body">  
           <% Settings.settings(group).each do |setting| %>
             <div class="row align-items-end">
-              <%= f.input setting.setting_key, as: setting.setting_type, 
-                                              label: setting.name, 
-                                              placeholder: setting.default_value,
-                                              input_html: { value: setting.value }, 
-                                              wrapper_html: { class: 'col' } %>
+              <% if setting.setting_type == :boolean %>
+                <%= f.input setting.setting_key, as: "select", 
+                                                label: setting.name, 
+                                                placeholder: setting.default_value,
+                                                collection: {"True": true, "False": false},
+                                                input_html: { value: setting.value }, 
+                                                wrapper_html: { class: 'col' } %>
+              <% else %>
+                <%= f.input setting.setting_key, as: setting.setting_type, 
+                                                label: setting.name, 
+                                                placeholder: setting.default_value,
+                                                input_html: { value: setting.value }, 
+                                                wrapper_html: { class: 'col' } %>
+                <% end %>
               <div class="col mb-3">
                 <%= setting.description %>
                 <br>
