@@ -23,6 +23,9 @@ class UsersController < InternalController
   def update
     if @user.update(user_params)
       redirect_to @person, notice: 'User information was successfully updated.', status: :see_other
+      if current_user == @user
+        bypass_sign_in @user
+      end
     else
       render :edit, status: :unprocessable_entity
     end
