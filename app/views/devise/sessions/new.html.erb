@@ -44,31 +44,5 @@
     </div>
   <% end %>
 
-  <%- if devise_mapping.omniauthable? && Devise.omniauth_configs.keys.any? %>
-    <div class="col-md-6 m-auto">
-      <div class="card">
-        <div class="card-header">
-          <h2>Sign In or Sign Up With Another Account</h2>
-        </div>
-        <div class="card-body">
-          <%= button_to omniauth_authorize_path(resource_name, :developer), data: { turbo: false }, class: 'btn btn-lg btn-secondary d-block w-100 text-center my-2' do
-            icon_text('code', 'Developer Log In')
-          end if Devise.omniauth_configs.keys.include?(:developer) %>
-
-          <%= button_to omniauth_authorize_path(resource_name, :discord), data: { turbo: false }, class: 'btn btn-lg btn-secondary d-block w-100 text-center my-2' do
-            icon_text('discord', 'Log In with Discord', family: 'brands')
-          end if Devise.omniauth_configs.keys.include?(:discord) %>
-
-          <%= button_to omniauth_authorize_path(resource_name, :github), data: { turbo: false }, class: 'btn btn-lg btn-secondary d-block w-100 text-center my-2' do
-            icon_text('github', 'Log In with Github', family: 'brands')
-          end if Devise.omniauth_configs.keys.include?(:github) %>
-
-          <%= button_to omniauth_authorize_path(resource_name, :google_oauth2), data: { turbo: false }, class: 'btn btn-lg btn-secondary d-block w-100 text-center my-2' do
-            icon_text('google', 'Log In with Google', family: 'brands')
-          end if Devise.omniauth_configs.keys.include?(:google_oauth2) %>
-
-        </div>
-      </div>
-    </div>
-  <% end %>
+  <%= render partial: 'devise/shared/omniauth' %>
 </div>
