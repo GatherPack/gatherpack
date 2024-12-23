@@ -4,13 +4,13 @@ class Checkin < ApplicationRecord
   belongs_to :person
   belongs_to :event
 
-  validates :person, presence: true
-  
+  validates :person, presence: true, uniqueness: { scope: :event, message: "has already been checked in" }
+
   def self.ransackable_attributes(auth_object = nil)
-    ['person.display_name']
+    [ "person.display_name" ]
   end
 
   def self.ransackable_associations(auth_object = nil)
-    ['person']
+    [ "person" ]
   end
 end
