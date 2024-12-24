@@ -6,18 +6,18 @@ class Checkin < ApplicationRecord
   has_many :checkin_field_responses, dependent: :destroy
   accepts_nested_attributes_for :checkin_field_responses
 
-  validates :person, presence: true
+  validates :person, presence: true, uniqueness: { scope: :event, message: "has already been checked in" }
 
   before_update :check_attributes
 
   attr_accessor :created_by
 
   def self.ransackable_attributes(auth_object = nil)
-    ['person.display_name']
+    [ "person.display_name" ]
   end
 
   def self.ransackable_associations(auth_object = nil)
-    ['person']
+    [ "person" ]
   end
 
   def identifier_name
