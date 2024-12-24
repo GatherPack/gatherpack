@@ -7,7 +7,11 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable, :omniauthable, omniauth_providers: [ :developer ]
 
+  validate :check_old_password, on: :update
+
   after_create :adminify_first_user
+
+  attr_accessor :old_password
 
   def self.create_from_provider_data(provider_data)
     where(provider: provider_data.provider, uid: provider_data.uid).first_or_create  do |user|
@@ -24,6 +28,12 @@ class User < ApplicationRecord
   def adminify_first_user
     if User.count == 1
       User.first.update(admin: true)
+    end
+  end
+
+  def check_old_password
+    unless self.persisted? && Devise::Encryptor.compare(User, encrypted_password_was, old_password)
+      errors.add(:old_password, "must be the same as the old password.")
     end
   end
 end

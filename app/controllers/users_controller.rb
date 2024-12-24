@@ -41,6 +41,6 @@ class UsersController < InternalController
     end
 
     def user_params
-      params.require(:user).permit(:id, :email, :password, :password_confirmation, :admin, :person_id)
+      params.require(:user).permit(:id, :email, :password, :password_confirmation, :admin, :person_id, :old_password)
     end
 end
