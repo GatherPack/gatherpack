@@ -34,7 +34,6 @@ Rails.application.routes.draw do
   end
   resources :team_types
   resources :relationship_types
-  devise_for :users, controllers: { omniauth_callbacks: "omniauth", registrations: "users/registrations" }
   resources :people do
     resources :relationships, only: %i[ new create destroy ]
     resource :user, only: %i[ new create edit update ]
