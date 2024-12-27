@@ -33,10 +33,12 @@ Rails.application.routes.draw do
     post "update", on: :collection, as: "update"
   end
   resources :team_types
+  resources :relationship_types
+  devise_for :users, controllers: { omniauth_callbacks: "omniauth", registrations: "users/registrations" }
   resources :people do
     resources :relationships, only: %i[ new create destroy ]
+    resource :user, only: %i[ new create edit update ]
   end
-  resources :relationship_types
 
   if Settings[:local_signup]
     devise_for :users, controllers: { omniauth_callbacks: "omniauth", registrations: "users/registrations" }

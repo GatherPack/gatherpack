@@ -68,6 +68,6 @@ class PeopleController < InternalController
 
     # Only allow a list of trusted parameters through.
     def person_params
-      params.require(:person).permit(:first_name, :last_name, :display_name, :gender, :shirt_size, :phone_number, :address, :birthday, :dietary_restrictions, :user_id, :avatar, :email, user_attributes: [ :id, :email, :password, :password_confirmation ], team_ids: [], badge_ids: [])
+      params.require(:person).permit(:first_name, :last_name, :display_name, :gender, :shirt_size, :phone_number, :address, :birthday, :dietary_restrictions, :user_id, :avatar, :email, team_ids: [], badge_ids: [])
     end
 end
