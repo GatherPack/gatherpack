@@ -114,13 +114,28 @@ ActiveRecord::Schema[8.0].define(version: 2024_12_18_030022) do
     t.uuid "team_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-<<<<<<< HEAD
-    t.integer "permission"
-=======
     t.integer "permission", default: 0
->>>>>>> main
     t.index ["badge_type_id"], name: "index_badges_on_badge_type_id"
     t.index ["team_id"], name: "index_badges_on_team_id"
+  end
+
+  create_table "checkin_field_responses", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "checkin_id", null: false
+    t.uuid "checkin_field_id", null: false
+    t.string "response"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["checkin_field_id"], name: "index_checkin_field_responses_on_checkin_field_id"
+    t.index ["checkin_id"], name: "index_checkin_field_responses_on_checkin_id"
+  end
+
+  create_table "checkin_fields", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "event_type_id", null: false
+    t.string "name"
+    t.integer "permission", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["event_type_id"], name: "index_checkin_fields_on_event_type_id"
   end
 
   create_table "checkins", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -473,6 +488,9 @@ ActiveRecord::Schema[8.0].define(version: 2024_12_18_030022) do
   add_foreign_key "badge_assignments", "badges"
   add_foreign_key "badge_assignments", "people"
   add_foreign_key "badges", "badge_types"
+  add_foreign_key "checkin_field_responses", "checkin_fields"
+  add_foreign_key "checkin_field_responses", "checkins"
+  add_foreign_key "checkin_fields", "event_types"
   add_foreign_key "checkins", "events"
   add_foreign_key "checkins", "people"
   add_foreign_key "events", "event_types"
