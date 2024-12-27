@@ -114,7 +114,7 @@ ActiveRecord::Schema[8.0].define(version: 2024_12_18_030022) do
     t.uuid "team_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "permission", default: 0
+    t.integer "permission"
     t.index ["badge_type_id"], name: "index_badges_on_badge_type_id"
     t.index ["team_id"], name: "index_badges_on_team_id"
   end
