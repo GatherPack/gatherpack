@@ -1,0 +1,13 @@
+<% breadcrumb @checkin_field %>
+
+<div class="card">
+  <div class="card-header">
+    <h1><%= @checkin_field.identifier_name %></h1>
+  </div>
+  <div class="card-body">
+  </div>
+  <div class="card-footer">
+    <%= link_to 'Edit', edit_checkin_field_path(@checkin_field), class: 'btn btn-warning' %>
+    <%= link_to 'Delete', @checkin_field, class: 'btn btn-danger', data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %>
+  </div>
+</div>
