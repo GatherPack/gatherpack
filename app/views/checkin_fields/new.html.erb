@@ -1,15 +1,15 @@
-<% breadcrumb :new, "checkin" %>
+<% breadcrumb :new, "checkin field" %>
 
-<%= simple_form_for @checkin, url: event_checkins_path do |f| %>
+<%= simple_form_for(@checkin_field) do |f| %>
 <div class="card">
   <div class="card-header">
-    <h1>New checkin</h1>
+    <h1>New checkin field</h1>
   </div>
   <div class="card-body">
     <%= render "form", f: f %>
   </div>
   <div class="card-footer">
-    <%= link_to "Cancel", @event, class: 'btn btn-warning' %>
+    <%= link_to "Cancel", checkin_fields_path, class: 'btn btn-warning' %>
     <%= f.button :submit, class: 'btn btn-primary' %>
   </div>
 </div>
