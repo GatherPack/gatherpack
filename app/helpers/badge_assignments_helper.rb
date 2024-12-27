@@ -1,0 +1,2 @@
+module BadgeAssignmentsHelper
+end
