@@ -7,7 +7,7 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable, :omniauthable, omniauth_providers: [ :developer, :google_oauth2, :discord, :github ]
 
-  validate :check_old_password, on: :update
+  # validate :check_old_password, on: :update
 
   after_create :adminify_first_user
 
