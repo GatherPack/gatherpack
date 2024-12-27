@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  mailbox: one
+  target: one
+  target_type: Target
+
+two:
+  mailbox: two
+  target: two
+  target_type: Target
