@@ -36,7 +36,7 @@ Devise.setup do |config|
   # Load and configure the ORM. Supports :active_record (default) and
   # :mongoid (bson_ext recommended) by default. Other ORMs may be
   # available as additional gems.
-  require 'devise/orm/active_record'
+  require "devise/orm/active_record"
 
   # ==> Configuration for any authentication mechanism
   # Configure which keys are used when authenticating a user. The default is
@@ -273,6 +273,9 @@ Devise.setup do |config|
   # up on your models and hooks.
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
   config.omniauth :developer, fields: [ :email, :first_name, :last_name ] if Rails.env.development?
+  config.omniauth :google_oauth2, Settings[:google_oauth_client_id], Settings[:google_oauth_client_secret] if Settings[:google_oauth_client_id].present? && Settings[:google_oauth_client_secret].present?
+  config.omniauth :discord, Settings[:discord_oauth_client_id], Settings[:discord_oauth_client_secret], scope: "email identify" if Settings[:discord_oauth_client_id].present? && Settings[:discord_oauth_client_secret].present?
+  config.omniauth :github, Settings[:github_oauth_client_id], Settings[:github_oauth_client_secret], scope: "user" if Settings[:github_oauth_client_id].present? && Settings[:github_oauth_client_secret].present?
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or

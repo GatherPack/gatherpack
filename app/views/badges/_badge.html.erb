@@ -1,8 +1,7 @@
 <div class="card" id="<%= dom_id badge %>">
-  <div class="card-header">
-    <%= link_to badge, class: 'badge-container', "data-turbo": "false" do %>
-      <%= as_badge badge %>&nbsp;<%= badge.identifier_name %>
-    <% end %>
+  <div class="card-header" data-turbo="false">
+    <%= as_badge badge %>&nbsp;
+    <%= link_to badge.identifier_name, badge %>
   </div>
   <div class="card-body">
     <%= pluralize policy_scope(badge.people).count, 'person' %>
