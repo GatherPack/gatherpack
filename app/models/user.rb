@@ -7,7 +7,7 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable, :omniauthable, omniauth_providers: [ :developer, :google_oauth2, :discord, :github ]
 
-  # validate :check_old_password, on: :update
+  validate :password_change, on: :update
 
   after_create :adminify_first_user
 
@@ -35,9 +35,15 @@ class User < ApplicationRecord
     end
   end
 
-  def check_old_password
-    unless self.persisted? && Devise::Encryptor.compare(User, encrypted_password_was, old_password)
-      errors.add(:old_password, "must be the same as the old password.")
+  def password_change
+    if self.persisted? && self.password.present?
+      unless Devise::Encryptor.compare(User, encrypted_password_was, old_password)
+        errors.add(:old_password, "must be the same as the old password.")
+      end
     end
+  end
+
+  def password_required?
+    self.new_record? || self.password.present?
   end
 end
