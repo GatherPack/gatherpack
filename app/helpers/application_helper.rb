@@ -2,9 +2,9 @@ module ApplicationHelper
   def contrasting_color(color)
     base = Color::RGB.by_hex(color)
     if base.brightness > 0.5
-      '#000'
+      "#000"
     else
-      '#fff'
+      "#fff"
     end
   end
 
@@ -29,38 +29,38 @@ module ApplicationHelper
 
   def flash_to_class(type)
     case type
-    when 'notice'
-      bootstrap_type = 'info'
+    when "notice"
+      bootstrap_type = "info"
     else
       bootstrap_type = type
     end
 
-    'alert-' + bootstrap_type
+    "alert-" + bootstrap_type
   end
 
   def flash_to_icon(type)
     case type
-    when 'success'
-      bootstrap_icon = 'circle-check'
-    when 'warning', 'danger'
-      bootstrap_icon = 'triangle-exclamation'
+    when "success"
+      bootstrap_icon = "circle-check"
+    when "warning", "danger"
+      bootstrap_icon = "triangle-exclamation"
     else
-      bootstrap_icon = 'circle-info'
+      bootstrap_icon = "circle-info"
     end
 
-    'fa-' + bootstrap_icon
+    "fa-" + bootstrap_icon
   end
 
   def nice_date(t)
-    t&.strftime('%B %-d, %Y')
+    t&.strftime("%B %-d, %Y")
   end
 
-  def nice_datetime t
-    t&.strftime('%B %-d, %Y at %-I:%M %p')
+  def nice_datetime(t)
+    t&.strftime("%B %-d, %Y at %-I:%M %p")
   end
 
   def nice_time(t)
-    t&.strftime('%-I:%M %p')
+    t&.strftime("%-I:%M %p")
   end
 
   def nice_datetime_range(a, b)
