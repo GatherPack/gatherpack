@@ -2,55 +2,47 @@
   <div class="col-12">
     <div class="logoline">Get Together with <%= image_tag( 'logo.svg', alt: 'GatherPack', class: 'logo') %> GatherPack</a></div>
   </div>
-  <div class="col-md-6">
-    <div class="card">
-      <div class="card-header">
-        <h2>Sign In with Email &amp; Password</h2>
-      </div>
-      <div class="card-body">
-        <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-          <%= f.input :email %>
-
-          <%= f.input :password %>
-
-          <% if devise_mapping.rememberable? %>
-            <%= f.input :remember_me, as: :boolean %>
-          <% end %>
-
-          <%- if devise_mapping.recoverable? %>
-            <div class="mb-3">
-              <%= link_to "Forgot your password?", new_password_path(resource_name) %>
-            </div>
-          <% end %>
-
-          <div class="actions">
-            <%= f.submit "Sign in", class: 'btn btn-primary' %>
-          </div>
-        <% end %>
-      </div>
-    </div>
-    
-    <div class="card">
-      <div class="card-header">
-        <h2>Create an Account with Email &amp; Password</h2>
-      </div>
-      <div class="card-body">
-        <%= link_to 'Sign Up', new_registration_path(resource_name), class: 'btn btn-primary' %>
-      </div>
-    </div>
-  </div>
-  <%- if devise_mapping.omniauthable? && resource_class.omniauth_providers.any? %>
-    <div class="col-md-6">
+  <%- if Settings[:local_auth] %>
+    <div class="col-md-6 m-auto">
       <div class="card">
         <div class="card-header">
-          <h2>Sign In or Sign Up With Another Account</h2>
+          <h2>Sign In with Email &amp; Password</h2>
         </div>
         <div class="card-body">
-          <%- resource_class.omniauth_providers.each do |provider| %>
-            <p><%= button_to "Sign in with #{OmniAuth::Utils.camelize(provider)}", omniauth_authorize_path(resource_name, provider), data: { turbo: false }, class: 'btn btn-secondary' %></p>
+          <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+            <%= f.input :email %>
+
+            <%= f.input :password %>
+
+            <% if devise_mapping.rememberable? %>
+              <%= f.input :remember_me, as: :boolean %>
+            <% end %>
+
+            <%- if devise_mapping.recoverable? %>
+              <div class="mb-3">
+                <%= link_to "Forgot your password?", new_password_path(resource_name) %>
+              </div>
+            <% end %>
+
+            <div class="actions">
+              <%= f.submit "Sign in", class: 'btn btn-primary' %>
+            </div>
           <% end %>
         </div>
       </div>
+
+      <%- if Settings[:local_signup] %>
+        <div class="card">
+          <div class="card-header">
+            <h2>Create an Account with Email &amp; Password</h2>
+          </div>
+          <div class="card-body">
+            <%= link_to 'Sign Up', new_registration_path(resource_name), class: 'btn btn-primary' %>
+          </div>
+        </div>
+      <% end %>
     </div>
   <% end %>
+
+  <%= render partial: 'devise/shared/omniauth' %>
 </div>

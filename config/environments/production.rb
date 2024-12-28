@@ -1,6 +1,9 @@
 require 'active_support/core_ext/integer/time'
 
 Rails.application.configure do
+  # Prepare the ingress controller used to receive mail
+  # config.action_mailbox.ingress = :relay
+
   # Settings specified here will take precedence over those in config/application.rb.
 
   # Code is not reloaded between requests.
@@ -66,7 +69,7 @@ Rails.application.configure do
 
   # Use a real queuing backend for Active Job (and separate queues per environment).
   config.active_job.queue_adapter = :solid_queue
-  config.solid_queue.connects_to = { database: { writing: :queue } }
+  # config.solid_queue.connects_to = { database: { writing: :queue } }
 
   # config.active_job.queue_name_prefix = "gatherpack_production"
 

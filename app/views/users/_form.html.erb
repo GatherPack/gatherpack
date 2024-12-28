@@ -1,0 +1,18 @@
+<%= f.input :email %>
+
+<% if @user.provider %>
+  <div class="alert alert-warning">
+    This person signs in with <%= @user.provider %>
+  </div>
+<% else %>
+  <%= f.input :password %>
+  <%= f.input :password_confirmation %>
+  <% unless @user.new_record? %>
+    <%= f.input :old_password %>
+  <% end %>
+<% end %>
+
+<% if current_user.admin? %>
+  <p><strong>Sitewide Privileges</strong></p>
+  <%= f.input :admin %>
+<% end %>

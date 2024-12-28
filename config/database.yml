@@ -1,9 +1,3 @@
-# SQLite. Versions 3.8.0 and up are supported.
-#   gem install sqlite3
-#
-#   Ensure the SQLite 3 gem is defined in your Gemfile
-#   gem "sqlite3"
-#
 # DEFAULT CONNECTION CONFIGURATION
 default: &default
   adapter: postgresql
@@ -11,19 +5,17 @@ default: &default
   # For details on connection pooling, see Rails configuration guide
   # https://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  username: <%= ENV.fetch("DATABASE_USERNAME") { 'postgres' } %>
+  password: <%= ENV.fetch("DATABASE_PASSWORD") { 'password' } %>
 
 development:
   primary:
     <<: *default
     database: gatherpack_development
-    username: postgres
-    password: password
     host: localhost
   versions:
     <<: *default
     database: gatherpack_development_versions
-    username: postgres
-    password: password
     host: localhost
     migrations_paths: db/versions_migrate
 
@@ -31,14 +23,10 @@ test:
   primary:
     <<: *default
     database: gatherpack_test
-    username: postgres
-    password: password
     host: localhost
   versions:
     <<: *default
     database: gatherpack_development_versions
-    username: postgres
-    password: password
     host: localhost
     migrations_paths: db/versions_migrate
 
@@ -46,13 +34,9 @@ production:
   primary:
     <<: *default
     host: localhost
-    username: postgres
-    password: password
     database: gatherpack_production
   versions:
     <<: *default
     database: gatherpack_development_versions
-    username: postgres
-    password: password
     host: localhost
     migrations_paths: db/versions_migrate

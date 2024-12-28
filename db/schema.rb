@@ -32,6 +32,15 @@ ActiveRecord::Schema[8.0].define(version: 2024_12_18_030022) do
     t.index ["team_id"], name: "index_accounts_on_team_id"
   end
 
+  create_table "action_mailbox_inbound_emails", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.integer "status", default: 0, null: false
+    t.string "message_id", null: false
+    t.string "message_checksum", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["message_id", "message_checksum"], name: "index_action_mailbox_inbound_emails_uniqueness", unique: true
+  end
+
   create_table "action_text_rich_texts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", null: false
     t.text "body"
@@ -110,6 +119,25 @@ ActiveRecord::Schema[8.0].define(version: 2024_12_18_030022) do
     t.index ["team_id"], name: "index_badges_on_team_id"
   end
 
+  create_table "checkin_field_responses", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "checkin_id", null: false
+    t.uuid "checkin_field_id", null: false
+    t.string "response"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["checkin_field_id"], name: "index_checkin_field_responses_on_checkin_field_id"
+    t.index ["checkin_id"], name: "index_checkin_field_responses_on_checkin_id"
+  end
+
+  create_table "checkin_fields", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "event_type_id", null: false
+    t.string "name"
+    t.integer "permission", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["event_type_id"], name: "index_checkin_fields_on_event_type_id"
+  end
+
   create_table "checkins", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "notes"
     t.uuid "person_id", null: false
@@ -145,6 +173,32 @@ ActiveRecord::Schema[8.0].define(version: 2024_12_18_030022) do
     t.string "name"
     t.string "event"
     t.text "code"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "mailbox_assignments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "mailbox_id", null: false
+    t.string "target_type", null: false
+    t.uuid "target_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["mailbox_id"], name: "index_mailbox_assignments_on_mailbox_id"
+    t.index ["target_type", "target_id"], name: "index_mailbox_assignments_on_target"
+  end
+
+  create_table "mailbox_messages", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "from"
+    t.string "subject"
+    t.string "body"
+    t.uuid "mailbox_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["mailbox_id"], name: "index_mailbox_messages_on_mailbox_id"
+  end
+
+  create_table "mailboxes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "address"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -435,9 +489,14 @@ ActiveRecord::Schema[8.0].define(version: 2024_12_18_030022) do
   add_foreign_key "badge_assignments", "badges"
   add_foreign_key "badge_assignments", "people"
   add_foreign_key "badges", "badge_types"
+  add_foreign_key "checkin_field_responses", "checkin_fields"
+  add_foreign_key "checkin_field_responses", "checkins"
+  add_foreign_key "checkin_fields", "event_types"
   add_foreign_key "checkins", "events"
   add_foreign_key "checkins", "people"
   add_foreign_key "events", "event_types"
+  add_foreign_key "mailbox_assignments", "mailboxes"
+  add_foreign_key "mailbox_messages", "mailboxes"
   add_foreign_key "memberships", "people"
   add_foreign_key "memberships", "teams"
   add_foreign_key "relationships", "people", column: "child_id"

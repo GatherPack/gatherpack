@@ -51,7 +51,7 @@ module ApplicationHelper
     'fa-' + bootstrap_icon
   end
 
-  def nice_date t
+  def nice_date(t)
     t&.strftime('%B %-d, %Y')
   end
 
@@ -59,11 +59,11 @@ module ApplicationHelper
     t&.strftime('%B %-d, %Y at %-I:%M %p')
   end
 
-  def nice_time t
+  def nice_time(t)
     t&.strftime('%-I:%M %p')
   end
 
-  def nice_datetime_range a, b
+  def nice_datetime_range(a, b)
     if a.to_date === b.to_date
       "on #{nice_date a} from #{nice_time a} to #{nice_time b}"
     else

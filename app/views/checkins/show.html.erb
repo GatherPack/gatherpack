@@ -1,3 +1,5 @@
+<% breadcrumb @checkin %>
+
 <div class="card">
   <div class="card-header">
     <h1><%= @checkin.person.display_name %> @ <%= @event.name %></h1>
@@ -10,12 +12,20 @@
       <div class="col">
         <%= render "notes", notes: @checkin.notes %>
       </div>
+      <div class="col">
+        <h5>Field Responses:</h5>
+        <% @checkin.checkin_field_responses.each do |response| %>
+          <div>
+            <strong><%= response.checkin_field.name %></strong>: <%= response.response %>
+          </div>
+        <% end %>
+      </div>
     </div>
   </div>
-  <% if policy(@checkin).update? || policy(@checkin).destroy? %>
-    <div class="card-footer">
+  <div class="card-footer">
+    <% if policy(@checkin).update? || policy(@checkin).destroy? %>
       <%= link_to 'Edit', edit_event_checkin_path(@event, @checkin), class: 'btn btn-warning' if policy(@checkin).update? %>
       <%= link_to 'Checkout', [@event, @checkin], class: 'btn btn-danger', data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } if policy(@checkin).destroy? %>
-    </div>
-  <% end %>
+    <% end %>
+  </div>
 </div>
