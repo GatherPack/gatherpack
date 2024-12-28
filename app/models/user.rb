@@ -36,7 +36,7 @@ class User < ApplicationRecord
   end
 
   def password_change
-    if self.persisted? && self.password.present?
+    if self.persisted? && self.password.present? && self.old_password.present?
       unless Devise::Encryptor.compare(User, encrypted_password_was, old_password)
         errors.add(:old_password, "must be the same as the old password.")
       end
