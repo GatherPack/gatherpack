@@ -44,6 +44,10 @@ class Person < ApplicationRecord
     Relationship.where(parent_id: id).or(Relationship.where(child_id: id))
   end
 
+  def identifier_name
+    display_name.presence || id
+  end
+
   private
 
   def check_display_name

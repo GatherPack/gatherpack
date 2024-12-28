@@ -108,3 +108,7 @@ gem "omniauth-google-oauth2", "~> 1.2"
 gem "omniauth-discord", "~> 1.2"
 
 gem "omniauth-github", "~> 2.0"
+
+gem "http", "~> 5.2"
+
+gem "pmap", "~> 1.1"
