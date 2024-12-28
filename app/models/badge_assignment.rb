@@ -8,6 +8,6 @@ class BadgeAssignment < ApplicationRecord
   private
 
   def team_membership
-    errors.add(:person, " must be a member of the badge's team") if !badge.team || !person.teams.include?(badge.team)
+    errors.add(:person, " must be a member of the badge's team") if badge.team.present? && !person.teams.include?(badge.team)
   end
 end
