@@ -27,7 +27,10 @@
 <% end %>
 
 <%= turbo_frame_tag "results" do %>
-  <%= render "time_clock_punches/time_clock_punches" %>
-
+  <div class="row">
+    <div class="col">
+      <%= render "time_clock_punches/time_clock_punches" %>
+    </div>
+  </div>
   <%= paginate @time_clock_punches %>
 <% end %>
