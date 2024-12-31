@@ -14,11 +14,11 @@ class PeopleController < InternalController
     @tokens = policy_scope(@person.tokens).order(value: :asc)
     @accounts = policy_scope(@person.accounts).order(name: :asc)
     @relationships = policy_scope(@person.relationships).includes(:relationship_type).order('relationship_type.parent_label': :asc, 'relationship_type.child_label': :asc, created_at: :asc)
-    @time_clocks = policy_scope(@person.time_clock_punches).map do |punch|
+    @time_clocks = policy_scope(@person.time_clock_punches).order(time_clock_period_id: :asc).map do |punch|
       Hash[TimeClockPeriod.find_by_id(punch.time_clock_period_id), punch.get_hours]
     end.reduce do |a, b|
       a.merge(b) { |_, c, d| c + d }
-    end.sort_by { |key, value| key&.name || "" }.to_h
+    end
   end
 
   # GET /people/new
