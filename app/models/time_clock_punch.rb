@@ -24,6 +24,10 @@ class TimeClockPunch < ApplicationRecord
     end
   end
 
+  def get_hours
+    (((self.end_time ? self.end_time : Time.now) - self.start_time) / 3600 * 20).round / 20.0
+  end
+
   private
 
   def permission_check
