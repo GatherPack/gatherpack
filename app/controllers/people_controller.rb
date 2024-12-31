@@ -14,6 +14,8 @@ class PeopleController < InternalController
     @tokens = policy_scope(@person.tokens).order(value: :asc)
     @accounts = policy_scope(@person.accounts).order(name: :asc)
     @relationships = policy_scope(@person.relationships).includes(:relationship_type).order('relationship_type.parent_label': :asc, 'relationship_type.child_label': :asc, created_at: :asc)
+    @time_clock_periods = policy_scope(TimeClockPeriod).where(id: (policy_scope(@person.time_clock_punches).map(&:time_clock_period_id).flatten)).distinct
+    @time_clock_punches = policy_scope(@person.time_clock_punches).where(time_clock_period_id: nil)
   end
 
   # GET /people/new

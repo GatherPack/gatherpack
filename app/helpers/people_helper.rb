@@ -27,4 +27,11 @@ module PeopleHelper
       end
     end
   end
+
+  def person_time_clock_as_badge(hours, time_clock_period = nil)
+    content = pluralize(hours, "hour") + " " + i("hourglass-half") + " " + (time_clock_period ? time_clock_period.identifier_name : "No period")
+    link_to time_clock_period, class: "undecorated", "data-turbo": false do
+      tag.span content.html_safe, class: "badge text-bg-primary"
+    end
+  end
 end
