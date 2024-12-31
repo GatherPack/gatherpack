@@ -1,24 +1,16 @@
 <tr id="<%= dom_id time_clock_punch %>">
   <td class="align-middle"><%= as_badge time_clock_punch.person, true %></td>
-  <% if time_clock_punch.end_time.present? %>
-    <td class="align-middle">
-      <%= time_clock_punch.start_time.strftime('%m/%d/%Y %I:%M%p') %><br>
-      <%= time_clock_punch.end_time.strftime('%m/%d/%Y %I:%M%p') %>
+  <td class="align-middle">
+    <%= time_clock_punch.start_time.strftime('%m/%d/%Y %I:%M%p') %><br>
+    <%= if time_clock_punch.end_time then time_clock_punch.end_time.strftime('%m/%d/%Y %I:%M%p') else "Still Clocked In" end %>
     </td>
-    <td class="align-middle"><%= ((time_clock_punch.end_time - time_clock_punch.start_time) / 3600 * 20).round / 20.0 %></td>
-  <% else %>
-    <td class="align-middle">
-      <%= time_clock_punch.start_time.strftime('%m/%d/%Y %I:%M%p') %><br>
-      Still Clocked In
-    </td>
-    <td class="align-middle"><%= ((Time.now - time_clock_punch.start_time) / 3600 * 20).round / 20.0 %></td>
-  <% end %>
-  <td class="align-middle"><%= as_badge time_clock_punch.time_clock_period, true unless time_clock_punch.time_clock_period.nil? %></td>
-  <% if @has_editable_punches %>
+    <td class="align-middle"><%= time_clock_punch.get_hours %></td>
+    <td class="align-middle"><%= as_badge time_clock_punch.time_clock_period, true unless time_clock_punch.time_clock_period.nil? %></td>
+    <% if @has_editable_punches %>
       <td class="align-middle">
         <%= link_to 'Edit', edit_time_clock_punch_path(time_clock_punch), class: 'btn btn-sm btn-warning', 'data-turbo': false if policy(time_clock_punch).edit? %>
         <%= link_to 'Delete', time_clock_punch, class: 'btn btn-sm btn-danger', data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } if policy(time_clock_punch).destroy? %>
         <%#= TODO DUPLICATE A PUNCH %>
       </td>
-  <% end %>
+    <% end %>
 </tr>
