@@ -85,11 +85,9 @@
         <% if @person.time_clock_punches.any? %>
           <div class="mb-3">
             <h3>Time Clock Punches</h3>
-            <%#= TODO: find a way to actually calculate the hours %>
-            <% @time_clock_periods.each do |period| %>
-              <%= person_time_clock_as_badge 15, period %>
+            <% @time_clocks.each do |period, hours| %>
+              <%= person_time_clock_as_badge hours, period %>
             <% end %>
-            <%= person_time_clock_as_badge 10 %>
           </div>
         <% end %>
       </div>
