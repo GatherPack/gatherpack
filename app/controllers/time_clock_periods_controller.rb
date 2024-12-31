@@ -11,7 +11,7 @@ class TimeClockPeriodsController < InternalController
   # GET /time_clock_periods/1
   def show
     @q = policy_scope(TimeClockPunch).where(time_clock_period: @time_clock_period).ransack(params[:q])
-    @time_clock_punches = @q.result(distinct: true).includes(:person).order(start_time: :desc, end_time: :desc, 'person.first_name': :asc, 'person.last_name': :asc).page(params[:page])
+    @time_clock_punches = @q.result(distinct: true).includes(:person).order(start_time: :desc, end_time: :desc).page(params[:page])
     @time_clock_punches.each do |punch|
       if policy(punch).edit?
         @has_editable_punches = true
