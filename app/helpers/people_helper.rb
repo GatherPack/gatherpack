@@ -31,11 +31,11 @@ module PeopleHelper
   def person_time_clock_as_badge(person, hours, time_clock_period = nil)
     content = pluralize(hours, "hour") + " " + i("hourglass-half") + " " + (time_clock_period ? time_clock_period.identifier_name : "No period")
     if time_clock_period
-      link_to time_clock_period_path(time_clock_period, q: { person_display_name_cont: person.display_name }), class: "undecorated", "data-turbo": false do
+      link_to time_clock_period_path(time_clock_period, q: { person_id_eq: person.id }), class: "undecorated", "data-turbo": false do
         tag.span content.html_safe, class: "badge text-bg-primary"
       end
     else
-      link_to time_clock_punches_path(q: { person_display_name_cont: person.display_name, time_clock_period_id_eq: "" }), class: "undecorated", "data-turbo": false do
+      link_to time_clock_punches_path(q: { person_id_eq: person.id }), class: "undecorated", "data-turbo": false do
         tag.span content.html_safe, class: "badge text-bg-primary"
       end
     end
