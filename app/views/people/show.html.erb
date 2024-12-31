@@ -86,7 +86,7 @@
           <div class="mb-3">
             <h3>Time Clock Punches</h3>
             <% @time_clocks.each do |period, hours| %>
-              <%= person_time_clock_as_badge hours, period %>
+              <%= person_time_clock_as_badge @person, hours, period %>
             <% end %>
           </div>
         <% end %>
