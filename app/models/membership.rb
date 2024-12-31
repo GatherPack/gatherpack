@@ -4,7 +4,7 @@ class Membership < ApplicationRecord
   belongs_to :team
 
   def self.ransackable_attributes(auth_object = nil)
-    [ 'manager' ]
+    [ 'manager', 'person.display_name' ]
   end
 
   def self.ransackable_associations(auth_object = nil)
