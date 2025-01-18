@@ -1,16 +1,18 @@
 <% breadcrumb :new, "time kiosk" %>
 
-<%= simple_form_for :time_kiosk, data: { "controller": "time-kiosk", "turbo_frame": "results" } do |f| %>
-  <div class="card">
-    <div class="card-header">
-      <h1>New time kiosk</h1>
+<%= turbo_frame_tag "kiosk" do %>
+  <%= simple_form_for :time_kiosk do |f| %>
+    <div class="card">
+      <div class="card-header">
+        <h1>New time kiosk</h1>
+      </div>
+      <div class="card-body">
+        <%= f.input :token_id, autofocus: true %>
+      </div>
     </div>
-    <div class="card-body">
-      <%= f.input :token_id %>
-    </div>
-  </div>
-<% end %>
+  <% end %>
 
-<%= turbo_frame_tag "results" do %>
-
+  <% if @token %>
+    <%= render @token %>
+  <% end %>
 <% end %>
