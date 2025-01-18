@@ -18,7 +18,7 @@
     </div>
   <% end %>
 
-  <% if @token&.tokenable_type == "Person" %>
-    <%= render @token %>
+  <% if @time_clock_periods %>
+    <%= render partial: "period_select_form" %>
   <% end %>
 <% end %>

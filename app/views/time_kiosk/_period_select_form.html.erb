@@ -1,0 +1,18 @@
+  <div class="card">
+    <div class="card-header">
+      <h1>Select a Time Punch Period</h1>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <% @time_clock_periods.each do |period| %>
+          <div class="col d-flex justify-content-center">
+            <%= simple_form_for :time_clock_periods do |f| %>
+              <%= f.hidden_field :person_id, value: @person.id %>
+              <%= f.hidden_field :time_clock_period_id, value: period.id %>
+              <%= f.submit period.name, class: "btn btn-primary" %>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
