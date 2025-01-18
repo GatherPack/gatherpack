@@ -1,13 +1,28 @@
 class TimeKioskController < ApplicationController
   def index
+    @accept_input = true
   end
 
   def create
     @token = policy_scope(Token).find_by_rfid(time_kiosk_params[:token_id])
+    @accept_input = true
 
-    if @token&.tokenable_type == "Hook"
+    case @token&.tokenable_type
+    when "Hook"
       @hook = policy_scope(Hook).find_by_id(@token.tokenable_id)
-      @hook_msg = @hook.run(@hook.code)
+      @message = @hook.run(@hook.code)
+    when "Person"
+      @person = policy_scope(Person).find_by_id(@token.tokenable_id)
+
+      current_punches = policy_scope(TimeClockPunch).all.where(person: @person, end_time: nil)
+      current_punches.each do |punch|
+        punch.update!(end_time: Time.now)
+        @message = "Clocked out #{@person.identifier_name}"
+      end
+
+      if current_punches.empty?
+        @accept_input = false
+      end
     end
 
     render :index
