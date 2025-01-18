@@ -5,7 +5,14 @@ class TimeKioskController < ApplicationController
   def create
     @token = policy_scope(Token).find_by_rfid(time_kiosk_params[:token_id])
 
-    puts @token.value
+    if @token&.tokenable_type == "Hook"
+      @hook = policy_scope(Hook).find_by_id(@token.tokenable_id)
+      @hook.run(@hook.code)
+      puts "Ran Hook \"#{@hook.identifier_name}\""
+    end
+
+    puts @token&.value
+    render :index
   end
 
   private
