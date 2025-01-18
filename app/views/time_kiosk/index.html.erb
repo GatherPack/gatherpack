@@ -12,13 +12,13 @@
     </div>
   <% end %>
 
-  <% if @message %>
-    <div class="alert alert-info" role="alert">
-      <%= @message %>
+  <% @message.each do |type, msg| %>
+    <div class="alert alert-<%= type %>" role="alert">
+      <%= msg %>
     </div>
   <% end %>
 
-  <% if @token %>
+  <% if @token&.tokenable_type == "Person" %>
     <%= render @token %>
   <% end %>
 <% end %>
