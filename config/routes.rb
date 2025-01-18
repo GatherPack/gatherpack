@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get "time_kiosk", to: "time_kiosk#index"
+  post "time_kiosk", to: "time_kiosk#create"
   resources :checkin_fields
   resources :mailboxes do
     resources :mailbox_messages, except: %i[ index ]

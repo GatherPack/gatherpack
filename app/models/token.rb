@@ -4,6 +4,8 @@ class Token < ApplicationRecord
   belongs_to :tokenable, polymorphic: true, optional: true
   validates :value, uniqueness: true
 
+  before_save :rfidify_value
+
   class << self
     # we have 2 different kinds of RFID readers that return the information on the cards in different formats...
     def rfidify(rfid)
@@ -33,5 +35,11 @@ class Token < ApplicationRecord
 
   def self.ransackable_associations(auth_object = nil)
     [ 'tokenable' ]
+  end
+
+  private
+
+  def rfidify_value
+    self.value = Token.rfidify(value)
   end
 end
