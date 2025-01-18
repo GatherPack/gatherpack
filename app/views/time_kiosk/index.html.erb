@@ -13,6 +13,12 @@
   <% end %>
 
   <% if @token %>
-    <%= render @token %>
+    <% if @token.tokenable_type == "Hook" %>
+      <div class="alert alert-info" role="alert">
+        <%= @hook_msg %>
+      </div>
+    <% else %>
+      <%= render @token %>
+    <% end %>
   <% end %>
 <% end %>

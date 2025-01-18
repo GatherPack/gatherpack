@@ -7,11 +7,9 @@ class TimeKioskController < ApplicationController
 
     if @token&.tokenable_type == "Hook"
       @hook = policy_scope(Hook).find_by_id(@token.tokenable_id)
-      @hook.run(@hook.code)
-      puts "Ran Hook \"#{@hook.identifier_name}\""
+      @hook_msg = @hook.run(@hook.code)
     end
 
-    puts @token&.value
     render :index
   end
 
