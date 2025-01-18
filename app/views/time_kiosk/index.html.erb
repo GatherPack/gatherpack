@@ -7,18 +7,18 @@
         <h1>New time kiosk</h1>
       </div>
       <div class="card-body">
-        <%= f.input :token_id, autofocus: true %>
+        <%= f.input :token_id, autofocus: true, disabled: !@accept_input %>
       </div>
     </div>
   <% end %>
 
+  <% if @message %>
+    <div class="alert alert-info" role="alert">
+      <%= @message %>
+    </div>
+  <% end %>
+
   <% if @token %>
-    <% if @token.tokenable_type == "Hook" %>
-      <div class="alert alert-info" role="alert">
-        <%= @hook_msg %>
-      </div>
-    <% else %>
-      <%= render @token %>
-    <% end %>
+    <%= render @token %>
   <% end %>
 <% end %>
