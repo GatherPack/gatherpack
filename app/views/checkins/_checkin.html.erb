@@ -3,7 +3,7 @@
     <%= link_to checkin.person.identifier_name, [checkin.event, checkin], "data-turbo": "false" %>
   </div>
   <div class="card-body">
-    <img src="<%= get_avatar_url(checkin.person.avatar) %>">
+    <%= image_tag get_avatar_url(checkin.person.avatar), class: 'person-img' %>
     <div class="mt-2">
       <%= render "checkins/notes", notes: checkin.notes %>
     </div>
