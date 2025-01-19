@@ -46,42 +46,38 @@ export default class extends Controller {
         span.append(icon)
 
         info.el.querySelector(query).prepend(span)
+      },
+
+      datesSet: async (info) => {
+        await fetch("/events/get_events.json", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRF-Token": document.querySelector("meta[name='csrf-token']").content
+          },
+          body: JSON.stringify({ "start_time": info.startStr, "end_time": info.endStr })
+        }).then((response) => response.json())
+          .then((data) => {
+            data = data.map(element => {
+              let background_color = element.team == null ? "#3788d8" : element.team.color
+              info.view.calendar.addEvent({
+                id: element.id,
+                title: element.name,
+                start: new Date(element.start_time),
+                end: new Date(element.end_time),
+                url: "events/" + element.id,
+                backgroundColor: background_color,
+                textColor: chroma(background_color).luminance() > 0.5 ? "#6d6753" : "#fffdf6",
+                extendedProps: {
+                  icon: `fa-${element.team == null ? "star" : element.team.team_type.icon}`
+                }
+              })
+            }
+          )
+        })
       }
     })
 
-    this.fetch_events()
     this.calendar.render()
-  }
-
-  async fetch_events() {
-    let view = this.calendar.getCurrentData().viewApi.calendar.view
-    await fetch("/events/get_events.json", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "X-CSRF-Token": document.querySelector("meta[name='csrf-token']").content
-      },
-      body: JSON.stringify({ "start_time": view.activeStart.toISOString(), "end_time": view.activeEnd.toISOString() })
-    }).then((response) => response.json())
-      .then((data) => {
-        console.log(data)
-        data = data.map(element => {
-          let background_color = element.team == null ? "#3788d8" : element.team.color
-          return {
-            id: element.id,
-            title: element.name,
-            start: new Date(element.start_time),
-            end: new Date(element.end_time),
-            url: "events/" + element.id,
-            backgroundColor: background_color,
-            textColor: chroma(background_color).luminance() > 0.5 ? "#6d6753" : "#fffdf6",
-            extendedProps: {
-              icon: `fa-${element.team == null ? "star" : element.team.team_type.icon}`
-            }
-          }
-        }
-      )
-      return data
-    })
   }
 }
