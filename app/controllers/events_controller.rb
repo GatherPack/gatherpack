@@ -75,7 +75,7 @@ class EventsController < InternalController
             json.textColor Color::RGB.by_hex(background_color).brightness > 0.5 ? "#6d6753" : "#fffdf6"
 
             json.extendedProps do
-              json.icon "fa-" + (event.team&.team_type.icon || "star")
+              json.icon "fa-" + (event.team&.team_type&.icon || "star")
             end
           end
 

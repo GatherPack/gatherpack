@@ -42,22 +42,18 @@ export default class extends Controller {
         info.el.querySelector(query).prepend(span)
       },
 
-      datesSet: async (info) => {
+      events: async (info, successfulCallback, failureCallback) => {
         await fetch("/events/get_events.json", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
             "X-CSRF-Token": document.querySelector("meta[name='csrf-token']").content
           },
-          body: JSON.stringify({ "start_time": info.startStr, "end_time": info.endStr })
+          body: JSON.stringify({ "start_time": info.start.toISOString(), "end_time": info.end.toISOString()})
         }).then((response) => response.json())
           .then((data) => {
-            info.view.calendar.removeAllEvents()
-
-            data.map(event => {
-              info.view.calendar.addEvent(event)
-            }
-          )
+            console.log(data)
+            successfulCallback(data)
         })
       }
     })
