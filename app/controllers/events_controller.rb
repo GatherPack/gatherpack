@@ -57,7 +57,22 @@ class EventsController < InternalController
         end_time = DateTime.parse(params[:end_time])
         events = policy_scope(Event).where("start_time >= ? AND start_time <= ?", start_time, end_time).or(policy_scope(Event).where("end_time >= ? AND end_time <= ?", start_time, end_time))
 
-        render json: Jbuilder.new { |json| json.array! events, :id, :name, :start_time, :end_time, :team }.target!
+        render json: Jbuilder.new { |json|
+          json.array! events do |event|
+            json.id event.id
+            json.name event.name
+            json.start_time event.start_time
+            json.end_time event.end_time
+
+            json.team do |team|
+              team.name event.team.name
+              team.color event.team.color
+              team.team_type do |team_type|
+                team_type.icon event.team.team_type.icon
+              end
+            end
+          end
+        }.target!
       end
     end
   end

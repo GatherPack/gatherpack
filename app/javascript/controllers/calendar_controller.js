@@ -33,22 +33,6 @@ export default class extends Controller {
         list: "List"
       },
 
-      events: this.eventsValue.map(element => {
-        let background_color = element.team == null ? "#3788d8" : element.team.color
-        return {
-          id: element.id,
-          title: element.name,
-          start: new Date(element.start_time),
-          end: new Date(element.end_time),
-          url: "events/" + element.id,
-          backgroundColor: background_color,
-          textColor: chroma(background_color).luminance() > 0.5 ? "#6d6753" : "#fffdf6",
-          extendedProps: {
-            icon: `fa-${element.team == null ? "star" : element.team.team_type.icon}`
-          }
-        }
-      }),
-
       eventDidMount: (info) => {
         const query = this.calendar.view.type === "listMonth" ? ".fc-list-event-title" : ".fc-event-title"
 
@@ -78,6 +62,26 @@ export default class extends Controller {
         "X-CSRF-Token": document.querySelector("meta[name='csrf-token']").content
       },
       body: JSON.stringify({ "start_time": view.activeStart.toISOString(), "end_time": view.activeEnd.toISOString() })
-    }).then((response) => response.json()).then((data) => console.log(data))
+    }).then((response) => response.json())
+      .then((data) => {
+        console.log(data)
+        data = data.map(element => {
+          let background_color = element.team == null ? "#3788d8" : element.team.color
+          return {
+            id: element.id,
+            title: element.name,
+            start: new Date(element.start_time),
+            end: new Date(element.end_time),
+            url: "events/" + element.id,
+            backgroundColor: background_color,
+            textColor: chroma(background_color).luminance() > 0.5 ? "#6d6753" : "#fffdf6",
+            extendedProps: {
+              icon: `fa-${element.team == null ? "star" : element.team.team_type.icon}`
+            }
+          }
+        }
+      )
+      return data
+    })
   }
 }
