@@ -64,12 +64,16 @@ class EventsController < InternalController
             json.start_time event.start_time
             json.end_time event.end_time
 
-            json.team do |team|
-              team.name event.team.name
-              team.color event.team.color
-              team.team_type do |team_type|
-                team_type.icon event.team.team_type.icon
+            if event.team
+              json.team do |team|
+                team.name event.team.name
+                team.color event.team.color
+                team.team_type do |team_type|
+                  team_type.icon event.team.team_type.icon
+                end
               end
+            else
+              json.team nil
             end
           end
         }.target!

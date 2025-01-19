@@ -58,6 +58,7 @@ export default class extends Controller {
           body: JSON.stringify({ "start_time": info.startStr, "end_time": info.endStr })
         }).then((response) => response.json())
           .then((data) => {
+            info.view.calendar.removeAllEvents()
             data = data.map(element => {
               let background_color = element.team == null ? "#3788d8" : element.team.color
               info.view.calendar.addEvent({
