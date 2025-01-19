@@ -31,10 +31,12 @@
             </div>
           <% end %>
         </div>
-        <div class="card-footer">
-          <%= f.submit 'Save', class: 'btn btn-lg btn-success' %>
-          <%= link_to 'Cancel', :back, class: 'btn btn-lg btn-primary' %>
-        </div>
       </div>
     <% end %>
+    <div class="card">
+      <div class="card-footer">
+        <%= f.submit 'Save', class: 'btn btn-lg btn-success' %>
+        <%= link_to 'Cancel', :back, class: 'btn btn-lg btn-primary' %>
+      </div>
+    </div>
   <% end %>
