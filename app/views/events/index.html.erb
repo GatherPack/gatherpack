@@ -32,7 +32,7 @@
 <%= turbo_frame_tag "results" do %>
   <div class="card">
     <div class="card-body">
-      <div data-controller="calendar">
+      <div data-controller="calendar" data-calendar-timezone-value="<%= Settings[:time_zone].presence || 'UTC' %>">
         <div id="calendar" data-turbo="false">
         </div>
       </div>

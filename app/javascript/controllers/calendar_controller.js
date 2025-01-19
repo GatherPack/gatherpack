@@ -3,6 +3,10 @@ import FullCalendar from "fullcalendar"
 
 // Connects to data-controller="calendar"
 export default class extends Controller {
+  static values = {
+    timezone: String
+  }
+
   connect() {
     const calendarEl = document.getElementById("calendar")
     const calendar = new FullCalendar.Calendar(calendarEl, {
@@ -11,7 +15,7 @@ export default class extends Controller {
       fixedWeekCount: false,
       weekNumbers: true,
       dayMaxEventRows: true,
-      timeZone: "UTC",
+      timeZone: this.timezoneValue,
 
       headerToolbar: {
         left: "prev,next " + "today",
