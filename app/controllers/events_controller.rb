@@ -55,18 +55,23 @@ class EventsController < InternalController
       format.json do
         start_time = params[:start_time]
         end_time = params[:end_time]
+        start_time_doy = Date.parse(start_time).yday
+        end_time_doy = Date.parse(end_time).yday
         events = policy_scope(Event).where("start_time >= ? AND start_time <= ?", start_time, end_time).or(policy_scope(Event).where("end_time >= ? AND end_time <= ?", start_time, end_time))
+        birthdays = policy_scope(Person).where("DATE_PART('doy', birthday) >= ? AND DATE_PART('doy', birthday) <= ?", start_time_doy >= end_time_doy ? 0 : start_time_doy, end_time_doy)
+          .or(policy_scope(Person).where("DATE_PART('doy', birthday) >= ? AND DATE_PART('doy', birthday) <= ?", start_time_doy >= end_time_doy ? start_time_doy : 367, 366))
 
         render json: Jbuilder.new { |json|
           json.array! events do |event|
             json.id event.id
             json.name event.name
+            json.all_day false
             json.start_time event.start_time
             json.end_time event.end_time
+            json.url event_url(event)
 
             if event.team
               json.team do |team|
-                team.name event.team.name
                 team.color event.team.color
                 team.team_type do |team_type|
                   team_type.icon event.team.team_type.icon
@@ -74,6 +79,22 @@ class EventsController < InternalController
               end
             else
               json.team nil
+            end
+          end
+
+          json.array! birthdays do |person|
+            json.id person.id
+            json.name "#{person.identifier_name}'s Birthday"
+            json.all_day true
+            json.start_time person.birthday.change(year: (person.birthday.yday - start_time_doy <= 0 ? Date.parse(end_time).year : Date.parse(start_time).year))
+            json.end_time nil
+            json.url person_url(person)
+
+            json.team do |team|
+              team.color "#3788d8"
+              team.team_type do |team_type|
+                team_type.icon "cake-candles"
+              end
             end
           end
         }.target!
