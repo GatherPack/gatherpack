@@ -1,6 +1,5 @@
 import { Controller } from "@hotwired/stimulus"
 import FullCalendar from "fullcalendar"
-import chroma from "chroma-js"
 
 // Connects to data-controller="calendar"
 export default class extends Controller {
@@ -55,22 +54,8 @@ export default class extends Controller {
           .then((data) => {
             info.view.calendar.removeAllEvents()
 
-            // TODO: do this directly with the JSON, i just need to find an up to date color library
-            data = data.map(element => {
-              let background_color = element.team == null ? "#3788d8" : element.team.color
-              info.view.calendar.addEvent({
-                id: element.id,
-                title: element.name,
-                allDay: element.all_day,
-                start: new Date(element.start_time),
-                end: new Date(element.end_time),
-                url: element.url,
-                backgroundColor: background_color,
-                textColor: chroma(background_color).luminance() > 0.5 ? "#6d6753" : "#fffdf6",
-                extendedProps: {
-                  icon: `fa-${element.team == null ? "star" : element.team.team_type.icon}`
-                }
-              })
+            data.map(event => {
+              info.view.calendar.addEvent(event)
             }
           )
         })
