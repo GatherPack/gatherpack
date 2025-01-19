@@ -112,3 +112,5 @@ gem "omniauth-github", "~> 2.0"
 gem "http", "~> 5.2"
 
 gem "pmap", "~> 1.1"
+
+gem "jbuilder", "~> 2.13"
