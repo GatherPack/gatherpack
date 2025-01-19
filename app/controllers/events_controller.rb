@@ -49,6 +49,19 @@ class EventsController < InternalController
     redirect_to events_url, notice: "Event was successfully destroyed.", status: :see_other
   end
 
+  def get_events
+    respond_to do |format|
+      format.html { redirect_to events_url }
+      format.json do
+        start_time = DateTime.parse(params[:start_time])
+        end_time = DateTime.parse(params[:end_time])
+        events = policy_scope(Event).where("start_time >= ? AND start_time <= ?", start_time, end_time).or(policy_scope(Event).where("end_time >= ? AND end_time <= ?", start_time, end_time))
+
+        render json: Jbuilder.new { |json| json.array! events, :id, :name, :start_time, :end_time, :team }.target!
+      end
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_event

@@ -8,9 +8,10 @@ export default class extends Controller {
     events: Array
   }
 
+ 
   connect() {
     const calendarEl = document.getElementById("calendar")
-    const calendar = new FullCalendar.Calendar(calendarEl, {
+    this.calendar = new FullCalendar.Calendar(calendarEl, {
       initialView: "dayGridMonth",
       editable: false,
       fixedWeekCount: false,
@@ -49,7 +50,7 @@ export default class extends Controller {
       }),
 
       eventDidMount: (info) => {
-        const query = calendar.view.type === "listMonth" ? ".fc-list-event-title" : ".fc-event-title"
+        const query = this.calendar.view.type === "listMonth" ? ".fc-list-event-title" : ".fc-event-title"
 
         let span = document.createElement("span")
         span.classList.add("d-inline-block", "badge", "rounded-pill", "me-1", "border")
@@ -64,6 +65,19 @@ export default class extends Controller {
       }
     })
 
-    calendar.render()
+    this.fetch_events()
+    this.calendar.render()
+  }
+
+  async fetch_events() {
+    let view = this.calendar.getCurrentData().viewApi.calendar.view
+    await fetch("/events/get_events.json", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRF-Token": document.querySelector("meta[name='csrf-token']").content
+      },
+      body: JSON.stringify({ "start_time": view.activeStart.toISOString(), "end_time": view.activeEnd.toISOString() })
+    }).then((response) => response.json()).then((data) => console.log(data))
   }
 }
