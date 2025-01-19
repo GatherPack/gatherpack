@@ -4,14 +4,9 @@ import chroma from "chroma-js"
 
 // Connects to data-controller="calendar"
 export default class extends Controller {
-  static values = {
-    events: Array
-  }
-
- 
   connect() {
     const calendarEl = document.getElementById("calendar")
-    this.calendar = new FullCalendar.Calendar(calendarEl, {
+    const calendar = new FullCalendar.Calendar(calendarEl, {
       initialView: "dayGridMonth",
       editable: false,
       fixedWeekCount: false,
@@ -34,7 +29,7 @@ export default class extends Controller {
       },
 
       eventDidMount: (info) => {
-        const query = this.calendar.view.type === "listMonth" ? ".fc-list-event-title" : ".fc-event-title"
+        const query = calendar.view.type === "listMonth" ? ".fc-list-event-title" : ".fc-event-title"
 
         let span = document.createElement("span")
         span.classList.add("d-inline-block", "badge", "rounded-pill", "me-1", "border")
@@ -59,14 +54,17 @@ export default class extends Controller {
         }).then((response) => response.json())
           .then((data) => {
             info.view.calendar.removeAllEvents()
+
+            // TODO: do this directly with the JSON, i just need to find an up to date color library
             data = data.map(element => {
               let background_color = element.team == null ? "#3788d8" : element.team.color
               info.view.calendar.addEvent({
                 id: element.id,
                 title: element.name,
+                allDay: element.all_day,
                 start: new Date(element.start_time),
                 end: new Date(element.end_time),
-                url: "events/" + element.id,
+                url: element.url,
                 backgroundColor: background_color,
                 textColor: chroma(background_color).luminance() > 0.5 ? "#6d6753" : "#fffdf6",
                 extendedProps: {
@@ -79,6 +77,6 @@ export default class extends Controller {
       }
     })
 
-    this.calendar.render()
+    calendar.render()
   }
 }
