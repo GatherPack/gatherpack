@@ -57,10 +57,12 @@ class EventsController < InternalController
         end_time = params[:end_time]
         start_time_doy = Date.parse(start_time).yday
         end_time_doy = Date.parse(end_time).yday
+        start_time_year = Date.parse(start_time).year
+        end_time_year = Date.parse(end_time).year
 
         events = policy_scope(Event).where("start_time >= ? AND start_time <= ?", start_time, end_time).or(policy_scope(Event).where("end_time >= ? AND end_time <= ?", start_time, end_time))
-        birthdays = policy_scope(Person).where("DATE_PART('doy', birthday) >= ? AND DATE_PART('doy', birthday) <= ?", start_time_doy >= end_time_doy ? 0 : start_time_doy, end_time_doy)
-          .or(policy_scope(Person).where("DATE_PART('doy', birthday) >= ? AND DATE_PART('doy', birthday) <= ?", start_time_doy >= end_time_doy ? start_time_doy : 367, 366))
+        birthdays = policy_scope(Person).where("DATE_PART('doy', birthday) >= ? AND DATE_PART('doy', birthday) <= ? AND DATE_PART('year', birthday) <= ?", start_time_doy >= end_time_doy ? 0 : start_time_doy, end_time_doy, start_time_year)
+          .or(policy_scope(Person).where("DATE_PART('doy', birthday) >= ? AND DATE_PART('doy', birthday) <= ? AND DATE_PART('year', birthday) <= ?", start_time_doy >= end_time_doy ? start_time_doy : 367, 366, start_time_year))
 
         render json: Jbuilder.new { |json|
           json.array! events do |event|
@@ -83,7 +85,7 @@ class EventsController < InternalController
             json.id person.id
             json.title "#{person.identifier_name}'s Birthday"
             json.allDay true
-            json.start person.birthday.change(year: (person.birthday.yday - start_time_doy <= 0 ? Date.parse(end_time).year : Date.parse(start_time).year))
+            json.start person.birthday.change(year: (person.birthday.yday - start_time_doy <= 0 ? end_time_year : start_time_year))
             json.end nil
             json.url person_url(person)
             json.backgroundColor "#3788d8"
