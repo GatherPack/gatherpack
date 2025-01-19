@@ -52,7 +52,6 @@ export default class extends Controller {
           body: JSON.stringify({ "start_time": info.start.toISOString(), "end_time": info.end.toISOString()})
         }).then((response) => response.json())
           .then((data) => {
-            console.log(data)
             successfulCallback(data)
         })
       }
