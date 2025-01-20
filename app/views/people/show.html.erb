@@ -82,7 +82,7 @@
           </div>
         <% end %>
 
-        <% if @person.time_clock_punches.any? %>
+        <% if @time_clocks %>
           <div class="mb-3">
             <h3>Time Clock Punches</h3>
             <% @time_clocks.each do |period, hours| %>
