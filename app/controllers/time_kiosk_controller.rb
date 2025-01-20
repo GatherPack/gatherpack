@@ -33,7 +33,12 @@ class TimeKioskController < ApplicationController
 
       current_punches = TimeClockPunch.all.where(person: @person, end_time: nil)
       current_punches.each do |punch|
-        punch.update(end_time: Time.now)
+        # punch out people even if the TimeClockPeriod ended
+        current_time = Time.now
+        max_time = punch.time_clock_period&.end_time || current_time
+        end_time = current_time > max_time ? max_time: current_time
+
+        punch.update(end_time: end_time)
         @message[:info] = "Punched out #{@person.identifier_name}."
       end
 
