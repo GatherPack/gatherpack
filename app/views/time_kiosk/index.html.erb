@@ -18,7 +18,7 @@
     </div>
   <% end %>
 
-  <% if @time_clock_periods %>
+  <% if @time_clock_periods && @time_clock_periods.length > 1 %>
     <%= render partial: "period_select_form" %>
   <% end %>
 <% end %>
