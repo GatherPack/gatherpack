@@ -16,21 +16,21 @@
 <% end %>
 
 <%= turbo_frame_tag "results" do %>
-  <div id="memberships">
-    <div class="row bg-primary-subtle align-items-center py-1 mb-1">
-      <div class="col-md">
-        Person
-      </div>
-      <div class="col-md">
-        Manager?
-      </div>
-      <div class="col-md">
-        &nbsp;
-      </div>
+  <div class="card" id="memberships">
+    <div class="card-body">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col"><h3>Person</h3></th>
+            <th scope="col"><h3>Manager?</h3></th>
+            <th scope="col"><h3>Actions</h3></th>
+          </tr>
+        </thead>
+        <% @memberships.each do |membership| %>
+          <%= render membership %>
+        <% end %>
+      </table>
     </div>
-    <% @memberships.each do |membership| %>
-      <%= render membership %>
-    <% end %>
   </div>
 <% end %>
 
