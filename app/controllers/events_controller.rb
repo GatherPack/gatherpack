@@ -85,7 +85,7 @@ class EventsController < InternalController
             json.id person.id
             json.title "#{person.identifier_name}'s Birthday"
             json.allDay true
-            json.start person.birthday.change(year: (person.birthday.yday - start_time_doy <= 0 ? end_time_year : start_time_year))
+            json.start person.birthday.change(year: (person.birthday.yday - start_time_doy < 0 ? end_time_year : start_time_year))
             json.end nil
             json.url person_url(person)
             json.backgroundColor "#3788d8"
