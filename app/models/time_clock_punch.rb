@@ -27,7 +27,7 @@ class TimeClockPunch < ApplicationRecord
   private
 
   def permission_check
-    if time_clock_period.nil?
+    if time_clock_period.nil? || created_by == "kiosk"
       true
     else
       if time_clock_period.team.present?
