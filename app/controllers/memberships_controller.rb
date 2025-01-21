@@ -42,7 +42,7 @@ class MembershipsController < InternalController
     end
 
     def set_membership
-      @membership = @team.memberships.find(params[:id])
+      @membership = authorize @team.memberships.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.

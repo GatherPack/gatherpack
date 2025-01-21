@@ -13,7 +13,7 @@ class TimeClockPunchPolicy < ApplicationPolicy
 
   def update?
     # can update punches if admin or punch is not part of any period, i.e. added by self
-    if user.admin || (person == record.person && record.time_clock_period.nil?)
+    if user.admin || person == record.person || record.time_clock_period.nil?
       true
     # can update punches if part of a generic period with 'added_by_user' perms
     elsif record.time_clock_period.team.nil?
