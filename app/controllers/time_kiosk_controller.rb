@@ -38,19 +38,22 @@ class TimeKioskController < ApplicationController
         max_time = punch.time_clock_period&.end_time || current_time
         end_time = current_time > max_time ? max_time: current_time
 
+        punch.created_by = "kiosk"
         punch.update(end_time: end_time)
         @message[:info] = "Punched out #{@person.identifier_name}."
       end
 
       if current_punches.empty?
-        @time_clock_periods = TimeClockPeriod.where(team: @person.teams).or(TimeClockPeriod.where(team: nil)).where("start_time <= ? AND end_time >= ?", Time.now, Time.now).where(permission: 3)
+        @time_clock_periods = TimeClockPeriod.where(team: @person.teams).or(TimeClockPeriod.where(team: nil)).where("start_time <= ? AND end_time >= ?", Time.now, Time.now)
 
         if @time_clock_periods.empty?
           TimeClockPunch.create(person: @person, start_time: Time.now, time_clock_period: nil)
           @message[:info] = "Punched in #{@person.identifier_name}."
         elsif @time_clock_periods.one?
           period = @time_clock_periods.first
-          TimeClockPunch.create(person: @person, start_time: Time.now, time_clock_period: period)
+          punch = TimeClockPunch.new(person: @person, start_time: Time.now, time_clock_period: period)
+          punch.created_by = "kiosk"
+          punch.save
           @message[:info] = "Punched in #{@person.identifier_name} for #{period.name}."
         else
           @accept_input = false
@@ -64,7 +67,9 @@ class TimeKioskController < ApplicationController
     period = TimeClockPeriod.find(time_clock_period_params[:time_clock_period_id])
     @message = {}
 
-    TimeClockPunch.create(person: person, start_time: Time.now, time_clock_period: period)
+    punch = TimeClockPunch.new(person: person, start_time: Time.now, time_clock_period: period)
+    punch.created_by = "kiosk"
+    punch.save
     @accept_input = true
     @message[:info] = "Punched in #{person.identifier_name} for #{period.name}."
   end
