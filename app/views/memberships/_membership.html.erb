@@ -1,4 +1,4 @@
-<%= form_for([@team, membership], id: dom_id(membership), html: { data: { turbo: false }}) do |f| %>
+<%= simple_form_for([@team, membership], id: dom_id(membership)) do |f| %>
   <tr>
     <td class="align-middle">
       <%= as_badge membership.person %>
@@ -9,7 +9,7 @@
       </span>
     </td>
     <td class="align-middle">
-      <%= f.button 'Save', class: 'btn btn-primary' %>
+      <%= f.submit 'Save', class: 'btn btn-primary' %>
       <%= link_to 'Delete', [@team, membership], class: 'btn btn-danger', data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %>
     </td>
   </tr>

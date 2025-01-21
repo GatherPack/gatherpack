@@ -15,7 +15,7 @@
 </div>
 <% end %>
 
-<%= turbo_frame_tag "results" do %>
+<%= turbo_frame_tag "results", target: "_top" do %>
   <div class="card" id="memberships">
     <div class="card-body">
       <table class="table">
@@ -32,6 +32,6 @@
       </table>
     </div>
   </div>
-<% end %>
 
-<%= paginate @memberships %>
+  <%= paginate @memberships %>
+<% end %>
