@@ -37,4 +37,3 @@ pin '@lezer/markdown', to: '@lezer--markdown.js' # @1.3.0
 pin '@codemirror/lang-json', to: '@codemirror--lang-json.js' # @6.0.1
 pin '@lezer/json', to: '@lezer--json.js' # @1.0.2
 pin 'fullcalendar'
-pin 'chroma-js' # @2.4.2

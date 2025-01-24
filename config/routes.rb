@@ -21,6 +21,10 @@ Rails.application.routes.draw do
   resources :badge_types
   resources :events do
     resources :checkins, except: %i[ index ]
+    collection do
+      post "calendar", to: "events#calendar"
+      get "calendar", to: "events#calendar"
+    end
   end
   resources :event_types
   resources :announcements

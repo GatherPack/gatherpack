@@ -24,6 +24,14 @@ class TimeClockPunch < ApplicationRecord
     end
   end
 
+  def complete?
+    start_time.present? && end_time.present?
+  end
+
+  def hours
+    complete? ? ((self.end_time - self.start_time) / 3600 * 20).round / 20.0 : 0.0
+  end
+
   private
 
   def permission_check
@@ -31,28 +39,29 @@ class TimeClockPunch < ApplicationRecord
       true
     else
       if time_clock_period.team.present?
-        errors.add(:person, 'is not a member of the team that the selected period is part of') unless person.teams.include? time_clock_period.team
+        errors.add(:person, "is not a member of the team that the selected period is part of") unless person.teams.include? time_clock_period.team
       end
-      errors.add(:time_clock_period, 'does not meet permission requirements') unless case time_clock_period.permission
-        when 'added_by_admin'
+      valid = case time_clock_period.permission
+      when "added_by_admin"
           created_by.user.admin?
-        when 'added_by_manager'
+      when "added_by_manager"
           created_by.managed_teams.include? time_clock_period.team
-        when 'added_by_team_member'
+      when "added_by_team_member"
           created_by.teams.include? time_clock_period.team
-        when 'added_by_user'
+      when "added_by_user"
           true
-        end
+      end
+      errors.add(:time_clock_period, "does not meet permission requirements") unless valid
     end
   end
 
   def valid_times
-    errors.add(:start_time, 'cannot start before period start time') if time_clock_period.present? && start_time.before?(time_clock_period.start_time)
+    errors.add(:start_time, "cannot start before period start time") if time_clock_period.present? && start_time.before?(time_clock_period.start_time)
     if end_time.present?
       if end_time.before? start_time
-        errors.add(:end_time, 'cannot end before start time')
+        errors.add(:end_time, "cannot end before start time")
       elsif time_clock_period.present? && end_time.after?(time_clock_period.end_time)
-        errors.add(:end_time, 'cannot end after period end time')
+        errors.add(:end_time, "cannot end after period end time")
       end
     end
   end
