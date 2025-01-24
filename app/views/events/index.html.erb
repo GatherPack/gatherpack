@@ -30,14 +30,10 @@
 <% end %>
 
 <%= turbo_frame_tag "results" do %>
-  <div class="row">
-    <div class="col">
-      <div class="card">
-        <div class="card-body">
-          <div data-controller="calendar" data-calendar-events-value="<%= @events.as_json(include: { team: { only: %i[ name color ], include: { team_type: { only: :icon } } } }).to_json %>">
-            <div id="calendar" data-turbo="false">
-            </div>
-          </div>
+  <div class="card">
+    <div class="card-body">
+      <div data-controller="calendar" data-calendar-timezone-value="<%= Settings[:time_zone].presence || 'UTC' %>">
+        <div id="calendar" data-turbo="false">
         </div>
       </div>
     </div>
