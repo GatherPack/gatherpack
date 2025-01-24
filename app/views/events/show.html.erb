@@ -7,6 +7,8 @@
   <div class="card-body">
     When: <%= format_event_time_date(@event, :long_ordinal, false) %><br>
     <%= @event.location != "" ? "Where: " + @event.location : "" %>
+
+    <%= @event.description %>
   </div>
   <% if policy(@event).update? || policy(@event).destroy? %>
     <div class="card-footer">
