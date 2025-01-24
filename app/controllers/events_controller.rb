@@ -49,7 +49,7 @@ class EventsController < InternalController
     redirect_to events_url, notice: "Event was successfully destroyed.", status: :see_other
   end
 
-  def get_events
+  def calendar
     respond_to do |format|
       format.html { redirect_to events_url }
       format.json do
@@ -60,7 +60,8 @@ class EventsController < InternalController
         start_time_year = Date.parse(start_time).year
         end_time_year = Date.parse(end_time).year
 
-        events = policy_scope(Event).where("start_time >= ? AND start_time <= ?", start_time, end_time).or(policy_scope(Event).where("start_time <= ? AND end_time >= ?", start_time, start_time))
+        events = policy_scope(Event).where("start_time >= ? AND start_time <= ?", start_time, end_time)
+          .or(policy_scope(Event).where("start_time <= ? AND end_time >= ?", start_time, start_time))
         birthdays = policy_scope(Person).where("DATE_PART('doy', birthday) >= ? AND DATE_PART('doy', birthday) <= ? AND DATE_PART('year', birthday) <= ?", start_time_doy >= end_time_doy ? 0 : start_time_doy, end_time_doy, start_time_year)
           .or(policy_scope(Person).where("DATE_PART('doy', birthday) >= ? AND DATE_PART('doy', birthday) <= ? AND DATE_PART('year', birthday) <= ?", start_time_doy >= end_time_doy ? start_time_doy : 367, 366, start_time_year))
 

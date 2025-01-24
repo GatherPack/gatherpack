@@ -47,7 +47,7 @@ export default class extends Controller {
       },
 
       events: async (info, successfulCallback, failureCallback) => {
-        await fetch("/events/get_events.json", {
+        await fetch("/events/calendar.json", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
