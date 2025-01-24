@@ -1,16 +1,5 @@
-.person-img-container {
-    position: relative;
-}
-
-.person-img-container::after {
-    content: "";
-    display: block;
-    padding-bottom: 100%;
-}
-
 .person-img {
-    position: absolute;
-    width: calc(100% - 2rem);
-    height: calc(100% - 2rem);
+    aspect-ratio: 1;
+    object-position: center;
     object-fit: cover;
 }
