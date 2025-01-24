@@ -8,7 +8,11 @@
   <div class="card-body">
     <div class="row">
       <div class="col">
-        <%= f.input :person_display_name_cont, label: 'Person' %>
+        <% if params['q']['person_id_eq'] %>
+          <%= f.input :person_id_eq, label: 'Person', as: :select, collection: policy_scope(Person), label_method: :identifier_name %>
+        <% else %>
+          <%= f.input :person_display_name_cont, label: 'Person' %>
+        <% end %>
       </div>
       <div class="col">
         <%= f.input :start_time_gteq, label: 'Starting After', input_html: { type: "datetime-local" } %>
@@ -31,7 +35,11 @@
 <% end %>
 
 <%= turbo_frame_tag "results" do %>
-  <%= render "time_clock_punches" %>
-
+  <div class="row">
+    <div class="col">
+      <%= render "time_clock_punches" %>
+    </div>
+  </div>
   <%= paginate @time_clock_punches %>
 <% end %>
+
