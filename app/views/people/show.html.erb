@@ -35,21 +35,13 @@
             <h3>Badges</h3>
             <div class="row">
               <% if @person.user&.admin? %>
-<<<<<<< HEAD
                 <div class="col-4 col-xl-2 mb-3 fs-3 justify-content-center">
-=======
-                <div class="col-4 col-xl-2 fs-3">
->>>>>>> main
                   <span class="badge" title="Site Admin" style="background-color: black; color: #dd2; border: thick solid #bb1;"><%= i 'crown' %></span>
                 </div>
               <% end %>
 
               <% @badges.each do |badge| %>
-<<<<<<< HEAD
                 <div class="col-4 col-xl-2 mb-3 fs-3 justify-content-center">
-=======
-                <div class="col-4 col-xl-2 fs-3">
->>>>>>> main
                   <%= link_to badge, class: 'undecorated' do %>
                     <%= as_badge badge %>
                   <% end %>
