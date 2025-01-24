@@ -1,7 +1,7 @@
-<%= form_for([@team, membership], id: dom_id(membership)) do |f| %>
+<%= simple_form_for([@team, membership], id: dom_id(membership), html: { data: { turbo: false }}) do |f| %>
 <div class="row bg-light align-items-center py-1 mb-1">
   <div class="col-md">
-    <%= link_to membership.person.identifier_name, membership.person, "data-turbo": "false" %>
+    <%= link_to membership.person.identifier_name, membership.person %>
   </div>
   <div class="col-md">
     <span class="form-check">
@@ -9,7 +9,7 @@
     </span>
   </div>
   <div class="col-md">
-    <%= f.button 'Save', class: 'btn btn-primary' %>
+    <%= f.submit 'Save', class: 'btn btn-primary' %>
     <%= link_to 'Delete', [@team, membership], class: 'btn btn-danger', data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %>
   </div>
 </div>

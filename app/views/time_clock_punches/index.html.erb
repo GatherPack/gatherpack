@@ -8,7 +8,7 @@
   <div class="card-body">
     <div class="row">
       <div class="col">
-        <% if params['q']['person_id_eq'] %>
+        <% if params['q']&.fetch('person_id_eq') %>
           <%= f.input :person_id_eq, label: 'Person', as: :select, collection: policy_scope(Person), label_method: :identifier_name %>
         <% else %>
           <%= f.input :person_display_name_cont, label: 'Person' %>
