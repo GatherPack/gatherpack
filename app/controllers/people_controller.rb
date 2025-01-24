@@ -15,7 +15,7 @@ class PeopleController < InternalController
     @accounts = policy_scope(@person.accounts).order(name: :asc)
     @relationships = policy_scope(@person.relationships).includes(:relationship_type).order('relationship_type.parent_label': :asc, 'relationship_type.child_label': :asc, created_at: :asc)
     @time_clocks = policy_scope(@person.time_clock_punches).order(time_clock_period_id: :asc).map do |punch|
-      Hash[TimeClockPeriod.find_by_id(punch.time_clock_period_id), punch.get_hours]
+      Hash[TimeClockPeriod.find_by_id(punch.time_clock_period_id), punch.hours]
     end.reduce do |a, b|
       a.merge(b) { |_, c, d| c + d }
     end
@@ -44,7 +44,7 @@ class PeopleController < InternalController
         User.create(email: @person.email, person: @person, password: pw)
         flash[:info] = "User was successfully created, password set to #{pw}"
       end
-      redirect_to @person, notice: 'Person was successfully created.'
+      redirect_to @person, notice: "Person was successfully created."
     else
       render :new, status: :unprocessable_entity
     end
@@ -53,7 +53,7 @@ class PeopleController < InternalController
   # PATCH/PUT /people/1
   def update
     if @person.update(person_params)
-      redirect_to @person, notice: 'Person was successfully updated.', status: :see_other
+      redirect_to @person, notice: "Person was successfully updated.", status: :see_other
     else
       render :edit, status: :unprocessable_entity
     end
@@ -62,7 +62,7 @@ class PeopleController < InternalController
   # DELETE /people/1
   def destroy
     @person.destroy!
-    redirect_to people_url, notice: 'Person was successfully destroyed.', status: :see_other
+    redirect_to people_url, notice: "Person was successfully destroyed.", status: :see_other
   end
 
   private
