@@ -11,6 +11,7 @@ class Person < ApplicationRecord
   has_many :tokens, as: :tokenable
   has_many :account_relationships, as: :holder, dependent: :destroy
   has_many :accounts, through: :account_relationships
+  has_many :time_clock_punches, dependent: :destroy
   before_save :check_display_name
   accepts_nested_attributes_for :user
   has_one_attached :avatar

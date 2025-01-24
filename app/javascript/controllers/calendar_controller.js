@@ -1,11 +1,10 @@
 import { Controller } from "@hotwired/stimulus"
 import FullCalendar from "fullcalendar"
-import chroma from "chroma-js"
 
 // Connects to data-controller="calendar"
 export default class extends Controller {
   static values = {
-    events: Array
+    timezone: String
   }
 
   connect() {
@@ -16,7 +15,7 @@ export default class extends Controller {
       fixedWeekCount: false,
       weekNumbers: true,
       dayMaxEventRows: true,
-      timeZone: "UTC",
+      timeZone: this.timezoneValue,
 
       headerToolbar: {
         left: "prev,next " + "today",
@@ -32,22 +31,6 @@ export default class extends Controller {
         list: "List"
       },
 
-      events: this.eventsValue.map(element => {
-        let background_color = element.team == null ? "#3788d8" : element.team.color
-        return {
-          id: element.id,
-          title: element.name,
-          start: new Date(element.start_time),
-          end: new Date(element.end_time),
-          url: "events/" + element.id,
-          backgroundColor: background_color,
-          textColor: chroma(background_color).luminance() > 0.5 ? "#6d6753" : "#fffdf6",
-          extendedProps: {
-            icon: `fa-${element.team == null ? "star" : element.team.team_type.icon}`
-          }
-        }
-      }),
-
       eventDidMount: (info) => {
         const query = calendar.view.type === "listMonth" ? ".fc-list-event-title" : ".fc-event-title"
 
@@ -61,6 +44,20 @@ export default class extends Controller {
         span.append(icon)
 
         info.el.querySelector(query).prepend(span)
+      },
+
+      events: async (info, successfulCallback, failureCallback) => {
+        await fetch("/events/calendar.json", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRF-Token": document.querySelector("meta[name='csrf-token']").content
+          },
+          body: JSON.stringify({ "start_time": info.start.toISOString(), "end_time": info.end.toISOString()})
+        }).then((response) => response.json())
+          .then((data) => {
+            successfulCallback(data)
+        })
       }
     })
 
