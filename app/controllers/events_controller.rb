@@ -54,7 +54,10 @@ class EventsController < InternalController
       format.html { redirect_to events_url }
       format.json do
         ransacked_events = policy_scope(Event).ransack(params[:q]).result(distinct: true)
-        ransacked_people = policy_scope(Team).find_by_id(params[:q][:team_id_eq])&.people || policy_scope(Person)
+        ransacked_people = policy_scope(Person).ransack(
+          display_name_i_cont: params[:q][:name_i_cont]
+        ).result(distinct: true)
+        ransacked_people = ransacked_people.joins(:memberships).where(memberships: { team_id: params[:q][:team_id_eq] }) if params[:q][:team_id_eq].present?
 
         start_time = params[:start_time]
         end_time = params[:end_time]
