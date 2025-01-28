@@ -53,7 +53,7 @@ export default class extends Controller {
             "Content-Type": "application/json",
             "X-CSRF-Token": document.querySelector("meta[name='csrf-token']").content
           },
-          body: JSON.stringify({ "start_time": info.start.toISOString(), "end_time": info.end.toISOString(), "q": this.parse_params(document.getElementsByTagName("turbo-frame")[0].src)})
+          body: JSON.stringify({ "start_time": info.start.toISOString(), "end_time": info.end.toISOString(), "q": this.parse_params(document.getElementsByTagName("turbo-frame")[0])})
         }).then((response) => response.json())
           .then((data) => {
             successfulCallback(data)
@@ -64,8 +64,12 @@ export default class extends Controller {
     calendar.render()
   }
 
-  parse_params(url) {
-    const params = new URLSearchParams(url)
+  parse_params(el) {
+    if (!el) {
+      return {}
+    }
+
+    const params = new URLSearchParams(el.src)
     let search_params = {}
     params.forEach((value, key, parent) => {
       let parsed_key = key.match(/\[(.*?)\]/)
