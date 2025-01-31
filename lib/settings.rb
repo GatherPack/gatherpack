@@ -17,6 +17,10 @@ class Settings
       @default_value = default_value
       @group = group || "Site Settings"
       @description = description || ""
+
+      store.transaction do
+        store[@setting_key] = default_value
+      end
     end
 
     def value=(val)
@@ -68,12 +72,13 @@ class Settings
   end
 
   private
+
   def add_setting(setting_key, *args)
     @settings[setting_key] = Setting.new(@store, setting_key, *args)
   end
 
   def initialize
-    @store = PStore.new("storage/settings.pstore") # NOTE: We may want to switch to using ActiveStorage
+    @store = PStore.new("storage/settings.pstore")
 
     @settings = Hash.new
     add_setting(:title, :string, "Site Name", "GatherPack", nil, "The name of the site")
