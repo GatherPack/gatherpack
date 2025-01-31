@@ -82,7 +82,7 @@ class Settings
 
     @settings = Hash.new
     add_setting(:title, :string, "Site Name", "GatherPack", nil, "The name of the site")
-    add_setting(:time_zone, :time_zone, "Time Zone", "", nil, "The default time zone")
+    add_setting(:time_zone, :time_zone, "Time Zone", "Etc/UTC", nil, "The default time zone")
 
     add_setting(:from_email, :string, "From Email", "noreply@gatherpack.com", "Email", "Email address that system emails come from")
     add_setting(:postmark_key, :string, "Postmark API Key", nil, "Email", "API Key for sending email through PostMark")
