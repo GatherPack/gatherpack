@@ -17,6 +17,10 @@ class Settings
       @default_value = default_value
       @group = group || "Site Settings"
       @description = description || ""
+
+      store.transaction do
+        store[@setting_key] = default_value
+      end
     end
 
     def value=(val)
@@ -68,16 +72,17 @@ class Settings
   end
 
   private
+
   def add_setting(setting_key, *args)
     @settings[setting_key] = Setting.new(@store, setting_key, *args)
   end
 
   def initialize
-    @store = PStore.new("storage/settings.pstore") # NOTE: We may want to switch to using ActiveStorage
+    @store = PStore.new("storage/settings.pstore")
 
     @settings = Hash.new
     add_setting(:title, :string, "Site Name", "GatherPack", nil, "The name of the site")
-    add_setting(:time_zone, :time_zone, "Time Zone", "", nil, "The default time zone")
+    add_setting(:time_zone, :time_zone, "Time Zone", "Etc/UTC", nil, "The default time zone")
 
     add_setting(:from_email, :string, "From Email", "noreply@gatherpack.com", "Email", "Email address that system emails come from")
     add_setting(:postmark_key, :string, "Postmark API Key", nil, "Email", "API Key for sending email through PostMark")

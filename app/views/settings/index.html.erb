@@ -9,12 +9,19 @@
         <div class="card-body">  
           <% Settings.settings(group).each do |setting| %>
             <div class="row align-items-end">
-              <% if setting.setting_type == :boolean %>
+              <% case setting.setting_type %>
+              <% when :boolean %>
                 <%= f.input setting.setting_key, as: "select", 
                                                 label: setting.name, 
                                                 placeholder: setting.default_value,
-                                                collection: {"True": true, "False": false},
-                                                input_html: { value: setting.value }, 
+                                                collection: { "true": true, "false": false },
+                                                selected: setting.value,
+                                                wrapper_html: { class: 'col' } %>
+              <% when :time_zone %>
+                <%= f.input setting.setting_key, as: "select", 
+                                                label: setting.name, 
+                                                collection: ActiveSupport::TimeZone.all.map { |zone| [zone.to_s, zone.tzinfo.name] },
+                                                selected: setting.value,
                                                 wrapper_html: { class: 'col' } %>
               <% else %>
                 <%= f.input setting.setting_key, as: setting.setting_type, 
@@ -22,7 +29,7 @@
                                                 placeholder: setting.default_value,
                                                 input_html: { value: setting.value }, 
                                                 wrapper_html: { class: 'col' } %>
-                <% end %>
+              <% end %>
               <div class="col mb-3">
                 <%= setting.description %>
                 <br>
