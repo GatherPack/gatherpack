@@ -53,6 +53,12 @@ class EventsController < InternalController
     respond_to do |format|
       format.html { redirect_to events_url }
       format.json do
+        ransacked_events = policy_scope(Event).ransack(params[:q]).result(distinct: true)
+        ransacked_people = policy_scope(Person).ransack(
+          display_name_i_cont: params[:q][:name_i_cont]
+        ).result(distinct: true)
+        ransacked_people = ransacked_people.joins(:memberships).where(memberships: { team_id: params[:q][:team_id_eq] }) if params[:q][:team_id_eq].present?
+
         start_time = params[:start_time]
         end_time = params[:end_time]
         start_time_doy = Date.parse(start_time).yday
@@ -60,10 +66,10 @@ class EventsController < InternalController
         start_time_year = Date.parse(start_time).year
         end_time_year = Date.parse(end_time).year
 
-        events = policy_scope(Event).where("start_time >= ? AND start_time <= ?", start_time, end_time)
-          .or(policy_scope(Event).where("start_time <= ? AND end_time >= ?", start_time, start_time))
-        birthdays = policy_scope(Person).where("DATE_PART('doy', birthday) >= ? AND DATE_PART('doy', birthday) <= ? AND DATE_PART('year', birthday) <= ?", start_time_doy >= end_time_doy ? 0 : start_time_doy, end_time_doy, start_time_year)
-          .or(policy_scope(Person).where("DATE_PART('doy', birthday) >= ? AND DATE_PART('doy', birthday) <= ? AND DATE_PART('year', birthday) <= ?", start_time_doy >= end_time_doy ? start_time_doy : 367, 366, start_time_year))
+        events = ransacked_events.where("start_time >= ? AND start_time <= ?", start_time, end_time)
+          .or(ransacked_events.where("start_time <= ? AND end_time >= ?", start_time, start_time))
+        birthdays = ransacked_people.where("DATE_PART('doy', birthday) >= ? AND DATE_PART('doy', birthday) <= ? AND DATE_PART('year', birthday) <= ?", start_time_doy >= end_time_doy ? 0 : start_time_doy, end_time_doy, start_time_year)
+          .or(ransacked_people.where("DATE_PART('doy', birthday) >= ? AND DATE_PART('doy', birthday) <= ? AND DATE_PART('year', birthday) <= ?", start_time_doy >= end_time_doy ? start_time_doy : 367, 366, start_time_year))
 
         render json: Jbuilder.new { |json|
           json.array! events do |event|
