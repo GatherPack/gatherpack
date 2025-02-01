@@ -9,6 +9,7 @@ class TeamsController < InternalController
 
   # GET /teams/1
   def show
+    @people = @team.people.order(last_name: :asc, first_name: :asc).page(params[:page])
   end
 
   # GET /teams/new
