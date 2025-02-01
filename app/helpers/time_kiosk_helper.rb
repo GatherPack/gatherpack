@@ -1,0 +1,2 @@
+module TimeKioskHelper
+end

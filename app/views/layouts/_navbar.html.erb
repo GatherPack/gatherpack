@@ -10,10 +10,12 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0 d-flex align-items-center">
       </ul>
-      <form class="d-flex" role="search" action="<%= search_path %>">
-        <input class="form-control me-2" type="search" name="q" placeholder="Search for anything..." aria-label="Search">
-        <button class="btn btn-success" type="submit">Search</button>
-      </form>
+      <% unless current_page?(time_kiosk_path) %>
+        <form class="d-flex" role="search" action="<%= search_path %>">
+          <input class="form-control me-2" type="search" name="q" placeholder="Search for anything..." aria-label="Search">
+          <button class="btn btn-success" type="submit">Search</button>
+        </form>
+      <% end %>
     </div>
   </div>
 </header>
