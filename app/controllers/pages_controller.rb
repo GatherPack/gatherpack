@@ -4,6 +4,7 @@ class PagesController < InternalController
   # GET /pages
   def index
     @q = policy_scope(Page).ransack(params[:q])
+    @q.sorts = "title asc" if @q.sorts.empty?
     @pages = @q.result(distinct: true).order(title: :asc).page(params[:page])
   end
 
