@@ -4,6 +4,7 @@ class VariablesController < InternalController
   # GET /variables
   def index
     @q = Variable.ransack(params[:q])
+    @q.sorts = "name asc" if @q.sorts.empty?
     @variables = authorize @q.result(distinct: true).order(name: :asc).page(params[:page])
   end
 

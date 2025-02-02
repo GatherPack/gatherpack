@@ -12,6 +12,8 @@ import "photo_capture"
 import "font_awesome"
 import "code_editor"
 
+window.process = { env: { NODE_ENV: 'production' } };
+
 document.addEventListener("turbo:load", ev => {
     document.querySelectorAll('.fancy-color-container input[type="color"]').forEach(elem => {
         elem.addEventListener("input", ev => {

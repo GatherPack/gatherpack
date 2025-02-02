@@ -13,7 +13,7 @@ class Page < ApplicationRecord
   validate :permissions_make_sense
 
   def self.ransackable_attributes(auth_object = nil)
-    [ 'content', 'title', 'team_id' ]
+    [ 'content', 'title', 'team_id', 'updated_at' ]
   end
 
   def self.ransackable_associations(auth_object = nil)

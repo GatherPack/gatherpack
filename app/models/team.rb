@@ -15,7 +15,7 @@ class Team < ApplicationRecord
   validates :join_permission, inclusion: { in: join_permissions.keys }
 
   def self.ransackable_attributes(auth_object = nil)
-    [ 'name', 'team_type_id' ]
+    [ 'name', 'team_type_id', 'updated_at' ]
   end
 
   def self.ransackable_associations(auth_object = nil)
