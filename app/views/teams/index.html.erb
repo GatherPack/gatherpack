@@ -30,8 +30,7 @@
     </button>
     <ul class="dropdown-menu">
       <li><%= sort_link @q, :name, "Name", class: "dropdown-item" %></li>
-      <%# TODO: fix membership count %>
-      <li><%= sort_link @q, :memberships_count, "Member Count", class: "dropdown-item" %></li>
+      <li><%= sort_link @q, :people_count, "Member Count", class: "dropdown-item" %></li>
       <li><%= sort_link @q, :updated_at, "Last Updated", class: "dropdown-item" %></li>
     </ul>
   </div>

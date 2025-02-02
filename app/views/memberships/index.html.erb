@@ -22,9 +22,10 @@
     </button>
     <ul class="dropdown-menu">
       <%# TODO: fix person display_name and person_birthday %>
-      <li><%= sort_link @q, "people.last_name", "Name", class: "dropdown-item" %></li>
+      <li><%= sort_link @q, "people.last_name", "Last Name", class: "dropdown-item" %></li>
+      <li><%= sort_link @q, "people.first_name", "First Name", class: "dropdown-item" %></li>
       <li><%= sort_link @q, "people.birthday", "Age", class: "dropdown-item" %></li>
-      <li><%= sort_link @q, :manager, "Manager Status", class: "dropdown-item" %></li>
+      <li><%= sort_link @q, :manager, "Manager Status", class: "dropdown-item", default_order: :desc %></li>
       <li><%= sort_link @q, :updated_at, "Last Updated", class: "dropdown-item" %></li>
     </ul>
   </div>

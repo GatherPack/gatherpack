@@ -4,6 +4,7 @@ class BadgeTypesController < InternalController
   # GET /badge_types
   def index
     @q = policy_scope(BadgeType).ransack(params[:q])
+    @q.sorts = "name asc" if @q.sorts.empty?
     @badge_types = @q.result(distinct: true).order(name: :asc).page(params[:page])
   end
 
