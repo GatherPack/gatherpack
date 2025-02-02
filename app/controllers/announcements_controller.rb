@@ -4,7 +4,7 @@ class AnnouncementsController < InternalController
   # GET /announcements
   def index
     @q = policy_scope(Announcement).ransack(params[:q])
-    @q.sorts = "start_time asc, end_time asc" if @q.sorts.empty?
+    @q.sorts = "start_time asc" if @q.sorts.empty?
     @announcements = @q.result(distinct: true).order(end_time: :asc, start_time: :asc).page(params[:page])
   end
 
