@@ -40,8 +40,6 @@
       Sort By
     </button>
     <ul class="dropdown-menu">
-      <%# TODO: fix people display_name %>
-      <li><%= sort_link @q, "people.display_name", "Person Name", class: "dropdown-item" %></li>
       <li><%= sort_link @q, :start_time, "Start Time", class: "dropdown-item" %></li>
       <li><%= sort_link @q, :end_time, "End Time", class: "dropdown-item" %></li>
       <li><%= sort_link @q, :updated_at, "Last Updated", class: "dropdown-item" %></li>
