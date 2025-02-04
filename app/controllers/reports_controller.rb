@@ -4,6 +4,7 @@ class ReportsController < InternalController
   # GET /reports
   def index
     @q = Report.ransack(params[:q])
+    @q.sorts = "name asc" if @q.sorts.empty?
     @reports = @q.result(distinct: true).order(name: :asc).page(params[:page])
   end
 

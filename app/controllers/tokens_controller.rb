@@ -4,6 +4,7 @@ class TokensController < InternalController
   # GET /tokens
   def index
     @q = policy_scope(Token).ransack(params[:q])
+    @q.sorts = "value asc" if @q.sorts.empty?
     @tokens = @q.result(distinct: true).order(value: :asc).page(params[:page])
   end
 

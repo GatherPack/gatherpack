@@ -6,7 +6,7 @@ class Account < ApplicationRecord
   has_many :account_relationships
 
   def self.ransackable_attributes(auth_object = nil)
-    %w[ name team_id ]
+    %w[ name team_id updated_at ]
   end
 
   def self.ransackable_associations(auth_object = nil)

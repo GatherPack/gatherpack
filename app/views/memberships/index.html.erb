@@ -16,6 +16,16 @@
 <% end %>
 
 <%= turbo_frame_tag "results" do %>
+  <div class="dropdown mb-2">
+    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+      Sort By
+    </button>
+    <ul class="dropdown-menu">
+      <li><%= sort_link @q, :manager, "Manager Status", class: "dropdown-item", default_order: :desc %></li>
+      <li><%= sort_link @q, :updated_at, "Last Updated", class: "dropdown-item" %></li>
+    </ul>
+  </div>
+
   <div id="memberships">
     <div class="row bg-primary-subtle align-items-center py-1 mb-1">
       <div class="col-md">

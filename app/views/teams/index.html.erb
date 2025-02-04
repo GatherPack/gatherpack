@@ -24,6 +24,16 @@
 <% end %>
 
 <%= turbo_frame_tag "results" do %>
+  <div class="dropdown">
+    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+      Sort By
+    </button>
+    <ul class="dropdown-menu">
+      <li><%= sort_link @q, :name, "Name", class: "dropdown-item" %></li>
+      <li><%= sort_link @q, :updated_at, "Last Updated", class: "dropdown-item" %></li>
+    </ul>
+  </div>
+
   <div id="teams" class="row">
     <% @teams.each do |team| %>
       <div class="col-md-3">

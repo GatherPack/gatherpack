@@ -5,6 +5,7 @@ class TimeClockPeriodsController < InternalController
   # GET /time_clock_periods
   def index
     @q = policy_scope(TimeClockPeriod).ransack(params[:q])
+    @q.sorts = "start_time desc" if @q.sorts.empty?
     @time_clock_periods = @q.result(distinct: true).order(start_time: :desc, end_time: :desc, name: :asc).page(params[:page])
   end
 

@@ -5,6 +5,7 @@ class EventTypesController < InternalController
   # GET /event_types
   def index
     @q = EventType.ransack(params[:q])
+    @q.sorts = "name asc" if @q.sorts.empty?
     @event_types = @q.result(distinct: true).order(name: :asc).page(params[:page]).includes(:events)
   end
 

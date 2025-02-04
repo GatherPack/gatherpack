@@ -5,6 +5,6 @@ class TeamType < ApplicationRecord
   validates :icon, presence: true
 
   def self.ransackable_attributes(auth_object = nil)
-    ['icon', 'name']
+    ['icon', 'name', 'updated_at']
   end
 end

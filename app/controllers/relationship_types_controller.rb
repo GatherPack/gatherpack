@@ -4,7 +4,8 @@ class RelationshipTypesController < InternalController
   # GET /relationship_types
   def index
     @q = policy_scope(RelationshipType).ransack(params[:q])
-    @relationship_types = @q.result(distinct: true).page(params[:page])
+    @q.sorts = "parent_label asc" if @q.sorts.empty?
+    @relationship_types = @q.result(distinct: true).order(parent_label: :asc, child_label: :asc).page(params[:page])
   end
 
   # GET /relationship_types/1

@@ -4,7 +4,8 @@ class MailboxesController < InternalController
   # GET /mailboxes
   def index
     @q = policy_scope(Mailbox).ransack(params[:q])
-    @mailboxes = @q.result(distinct: true).page(params[:page])
+    @q.sorts = "address asc" if @q.sorts.empty?
+    @mailboxes = @q.result(distinct: true).order(address: :asc).page(params[:page])
   end
 
   # GET /mailboxes/1

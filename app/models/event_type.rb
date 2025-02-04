@@ -6,6 +6,6 @@ class EventType < ApplicationRecord
   validates :name, presence: true
 
   def self.ransackable_attributes(auth_object = nil)
-    ['name']
+    ['name', 'updated_at']
   end
 end

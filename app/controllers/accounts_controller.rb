@@ -4,6 +4,7 @@ class AccountsController < InternalController
   # GET /accounts
   def index
     @q = policy_scope(Account).ransack(params[:q])
+    @q.sorts = "name asc" if @q.sorts.empty?
     @accounts = @q.result(distinct: true).order(name: :asc).page(params[:page])
   end
 
