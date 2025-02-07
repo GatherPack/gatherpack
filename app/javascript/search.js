@@ -1,3 +1,4 @@
+
 function search(items, query, limit=15) {
     let queryTerms = query.split(/-|_| /);
 
@@ -7,7 +8,7 @@ function search(items, query, limit=15) {
     }
     let matchedResults = 0;
     items.forEach(icon => {
-        var iconMatch = queryTerms.length * 2;
+        let iconMatch = queryTerms.length * 2;
         queryTerms.forEach(term => {
             term = term.toLowerCase();
             if (icon == term) iconMatch -= 1;

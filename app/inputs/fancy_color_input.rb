@@ -4,9 +4,9 @@ class FancyColorInput < SimpleForm::Inputs::ColorInput
 
     "<div class='form-control fancy-color-container row'><div class='col fancy-color-picker-col'>" +
       @builder.color_field(attribute_name, merged_input_options) +
-      "</div><div class='col'>" + 
+      "</div><div class='col'>" +
       @builder.input_field(attribute_name, merged_input_options) +
-      "</div>" + 
+      "</div>" +
     "</div>".html_safe
   end
 end
