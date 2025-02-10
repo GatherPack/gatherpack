@@ -5,6 +5,7 @@ class HooksController < InternalController
   # GET /hooks
   def index
     @q = Hook.ransack(params[:q])
+    @q.sorts = "event asc, name asc" if @q.sorts.empty?
     @hooks = @q.result(distinct: true).order(event: :asc, name: :asc).page(params[:page])
   end
 

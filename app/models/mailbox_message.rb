@@ -3,7 +3,7 @@ class MailboxMessage < ApplicationRecord
   has_many_attached :attachments
 
   def self.ransackable_attributes(auth_object = nil)
-    [ 'subject', 'body', 'from' ]
+    [ 'subject', 'body', 'from', 'updated_at' ]
   end
 
   def identifier_name

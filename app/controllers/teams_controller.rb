@@ -4,11 +4,13 @@ class TeamsController < InternalController
   # GET /teams
   def index
     @q = policy_scope(Team).ransack(params[:q])
+    @q.sorts = "team_types.name asc" if @q.sorts.empty?
     @teams = @q.result(distinct: true).includes(:team_type).order('team_type.name': :asc, name: :asc).page(params[:page]).includes(:team_type, :people)
   end
 
   # GET /teams/1
   def show
+    @people = @team.people.order(last_name: :asc, first_name: :asc).page(params[:page])
   end
 
   # GET /teams/new

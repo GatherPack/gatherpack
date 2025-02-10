@@ -14,7 +14,7 @@ class Badge < ApplicationRecord
   validate :permissions_make_sense
 
   def self.ransackable_attributes(auth_object = nil)
-    [ 'badge_type_id', 'description', 'name', 'short', 'team_id' ]
+    [ 'badge_type_id', 'description', 'name', 'short', 'team_id', 'updated_at' ]
   end
 
   def self.ransackable_associations(auth_object = nil)

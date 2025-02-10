@@ -4,6 +4,7 @@ class AuditLogsController < ApplicationController
 
   def index
     @q = AuditLog.ransack(params[:q])
+    @q.sorts = "created_at desc" if @q.sorts.empty?
     @logs = authorize @q.result(distinct: true).order(created_at: :desc).page(params[:page])
   end
 

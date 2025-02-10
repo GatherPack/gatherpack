@@ -7,7 +7,7 @@ class Variable < ApplicationRecord
   validates :klass, presence: true, inclusion: { in: TYPES, message: 'is not valid' }
 
   def self.ransackable_attributes(auth_object = nil)
-    [ 'klass', 'name', 'raw_value' ]
+    [ 'klass', 'name', 'raw_value', 'updated_at'  ]
   end
 
   def value

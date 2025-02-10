@@ -11,7 +11,7 @@ class Announcement < ApplicationRecord
   scope :visible, -> { where('start_time < ? AND end_time > ?', DateTime.now, DateTime.now) }
 
   def self.ransackable_attributes(auth_object = nil)
-    ['title', 'content', 'start_time', 'end_time', 'team_id']
+    ['title', 'content', 'start_time', 'end_time', 'team_id', 'updated_at']
   end
 
   def self.ransackable_associations(auth_objects = nil)
