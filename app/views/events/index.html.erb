@@ -19,6 +19,9 @@
       <div class="col">
         <%= f.input :team_id_eq, label: 'Teams', as: :select, collection: policy_scope(Team) %>
       </div>
+      <div class="col">
+        <%= f.input :time_clock_period_id_eq, label: 'Time Clock Period', as: :select, collection: policy_scope(TimeClockPeriod) %>
+      </div>
     </div>
   </div>
   <div class="card-footer">

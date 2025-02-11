@@ -1,6 +1,7 @@
 class TimeClockPeriod < ApplicationRecord
   belongs_to :team, optional: true
   has_many :time_clock_punches, dependent: :destroy
+  has_many :events, dependent: :nullify
   enum :permission, added_by_admin: 0, added_by_manager: 1, added_by_team_member: 2, added_by_user: 3
 
   validate :valid_times, :permissions_make_sense
@@ -11,6 +12,10 @@ class TimeClockPeriod < ApplicationRecord
 
   def self.ransackable_associations(auth_object = nil)
     %w[ team ]
+  end
+
+  def available_hours
+    self.events.map(&:hours).sum
   end
 
   private

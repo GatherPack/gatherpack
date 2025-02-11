@@ -29,7 +29,12 @@ module PeopleHelper
   end
 
   def person_time_clock_as_badge(person, hours, time_clock_period = nil)
-    content = pluralize(hours, "hour") + " " + i("hourglass-half") + " " + (time_clock_period ? time_clock_period.identifier_name : "No period")
+    content = pluralize(hours, "hour") +
+      ((time_clock_period && time_clock_period.available_hours > 0) ? " / #{pluralize(time_clock_period&.available_hours, "hour")} " : " ") +
+      i("hourglass-half") +
+      " " +
+      (time_clock_period ? time_clock_period.identifier_name : "No period")
+
     if time_clock_period
       link_to time_clock_period_path(time_clock_period, q: { person_id_eq: person.id }), class: "undecorated", "data-turbo": false do
         tag.span content.html_safe, class: "badge text-bg-primary"
