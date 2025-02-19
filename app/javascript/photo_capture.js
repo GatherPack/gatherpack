@@ -2,7 +2,7 @@ document.addEventListener("turbo:load", ev => {
     let imgElem = document.getElementById("avatar-img");
     if (imgElem) {
         document.getElementById('person_avatar').addEventListener("change", ev => {
-            var reader = new FileReader();
+            let reader = new FileReader();
             
             reader.addEventListener("load", ev => {
                 imgElem.src = ev.target.result;
