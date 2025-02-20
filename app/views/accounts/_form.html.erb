@@ -5,8 +5,6 @@
   <%= f.input :name %>
   <%= f.association :team, collection: policy_scope(Team) %>
 
-  <div class="select optional account_holders">
-    <%= f.label :holder_gids, "Account Holders", class: "form-label select optional" %><br>
-    <%= f.select :holder_gids, holder_collection(:account), {}, multiple: true %>
-  </div>
+  <%= f.label :holder_gids, "Account Holders", class: "form-label select optional" %>
+  <%= f.select :holder_gids, holder_collection(:account), { include_blank: false }, { multiple: true, data: { controller: "slim" } } %>
 </div>

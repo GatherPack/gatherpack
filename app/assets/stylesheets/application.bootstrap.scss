@@ -62,8 +62,10 @@ $form-feedback-valid-color: inherit;
 
 // Utilities
 @import "bootstrap/scss/utilities/api";
-// scss-docs-end import-stack
 
+@import url("https://unpkg.com/slim-select@2.10.0/dist/slimselect.css");
+
+// scss-docs-end import-stack
 @import 'dashboard';
 @import 'forms';
 @import 'cards';
