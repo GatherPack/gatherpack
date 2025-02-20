@@ -4,4 +4,9 @@
 <div class="form-inputs">
   <%= f.input :name %>
   <%= f.association :team, collection: policy_scope(Team) %>
+
+  <div class="select optional account_holders">
+    <%= f.label :holder_gids, "Account Holders", class: "form-label select optional" %><br>
+    <%= f.select :holder_gids, holder_collection(:account), {}, multiple: true %>
+  </div>
 </div>

@@ -24,6 +24,8 @@ module ApplicationHelper
       account_as_badge(obj)
     when TimeClockPeriod
       time_clock_period_as_badge(obj, opt)
+    when Event
+      event_as_badge(obj)
     end.html_safe
   end
 

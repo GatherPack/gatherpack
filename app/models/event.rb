@@ -3,7 +3,8 @@ class Event < ApplicationRecord
   has_paper_trail versions: { class_name: "AuditLog" }
   belongs_to :event_type
   belongs_to :team, optional: true
-  
+  has_many :account_relationships, as: :holder, dependent: :destroy
+
   has_many :checkins
 
   validates :name, presence: true

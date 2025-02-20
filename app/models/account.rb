@@ -10,7 +10,7 @@ class Account < ApplicationRecord
   end
 
   def self.ransackable_associations(auth_object = nil)
-    [ 'team' ]
+    [ 'team', 'person' ]
   end
 
   def balance
@@ -19,5 +19,23 @@ class Account < ApplicationRecord
 
   def holders
     account_relationships.map(&:holder)
+  end
+
+  def holder_gids=(ids)
+    account_holders = GlobalID::Locator.locate_many ids, only: [ Person, Event ]
+    new_account_holders = account_holders - holders
+    destroyed_account_holders = holders - account_holders
+
+    account_relationships.where(holder: destroyed_account_holders).each do |h|
+      h.destroy!
+    end
+
+    new_account_holders.each do |h|
+      self.account_relationships.build(holder: h)
+    end
+  end
+
+  def holder_gids
+    holders.map { |h| h.to_global_id.to_s }
   end
 end

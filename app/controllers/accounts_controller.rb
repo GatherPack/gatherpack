@@ -56,6 +56,6 @@ class AccountsController < InternalController
 
     # Only allow a list of trusted parameters through.
     def account_params
-      params.require(:account).permit(:name, :team_id)
+      params.require(:account).permit(:name, :team_id, holder_gids: [])
     end
 end
