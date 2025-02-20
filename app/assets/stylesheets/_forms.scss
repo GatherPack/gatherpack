@@ -1,4 +1,24 @@
-.form-check-input, input.form-control, .form-select, select.form-control, textarea.form-control {
+:root {
+	--ss-primary-color: #{$greige-dark};
+	--ss-bg-color: #{$greige-lightest};
+	--ss-font-color: #4d4d4d;
+	--ss-font-placeholder-color: #8d8d8d;
+	--ss-disabled-color: #{$greige-light};
+	--ss-border-color: #{$greige-darkest};
+	--ss-highlight-color: #{$greige-light};
+	--ss-success-color: #00b755;
+	--ss-error-color: #dc3545;
+	--ss-focus-color: #8f96a3;
+	--ss-main-height: 1.5rem;
+	--ss-content-height: 300px;
+	--ss-spacing-l: 7px;
+	--ss-spacing-m: 5px;
+	--ss-spacing-s: 3px;
+	--ss-animation-timing: 0s;
+	--ss-border-radius: 0.375em;
+}
+
+.form-check-input, input.form-control, .form-select, select.form-control, textarea.form-control, .ss-main {
   border-color: $greige-darkest;
   background-color: $greige-lightest;
 
@@ -125,4 +145,11 @@ input.datetime {
 
 .cm-editor.cm-focused .cm-selectionBackground {
   background-color: scale-color($greige-dark, $alpha: -50%) !important;
+}
+
+.ss-values {
+  padding-top: 0.375rem;
+  padding-right: 2.25rem;
+  padding-bottom: 0.375rem;
+  padding-left: 0.75rem
 }
