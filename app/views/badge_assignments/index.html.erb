@@ -6,7 +6,8 @@
     <h1>Editing <%= @badge.identifier_name %></h1>
   </div>
   <div class="card-body">
-    <%= f.association :people, as: :check_boxes, collection: @people, label_method: :identifier_name %>
+    <%= f.label :person_ids, "People" %>
+    <%= f.select :person_ids, @people.map { |p| [ p.identifier_name, p.id ] }, { allow_blank: true }, { multiple: true, data: { controller: "slim" } } %>
   </div>
   <div class="card-footer">
     <%= link_to "Cancel", @badge, class: 'btn btn-warning' %>

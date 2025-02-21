@@ -12,10 +12,10 @@ class Relationship < ApplicationRecord
 
   def reify
     raise ArgumentError unless start_node.present? && node_occupant.present?
-    
+
     type_id, side = start_node.split(':')
     self.relationship_type = RelationshipType.find(type_id)
-    
+
     if side == 'p'
       self.parent = node_occupant
     elsif side == 'c'
@@ -29,15 +29,15 @@ class Relationship < ApplicationRecord
 
   def no_self_relationships
     if parent != nil && parent == child
-      errors.add(:parent, "cannot be the same person as the child") 
-      errors.add(:child, "cannot be the same person as the parent") 
+      errors.add(:parent_id, "cannot be the same person as the child")
+      errors.add(:child_id, "cannot be the same person as the parent")
     end
   end
 
   def permission_check
     errors.tap do |t|
-       t.add(:parent, 'does not meet relationship requirements')
-       t.add(:child, 'does not meet relationship requirements')
+       t.add(:parent_id, 'does not meet relationship requirements')
+       t.add(:child_id, 'does not meet relationship requirements')
     end unless case relationship_type.permission
     when 'added_by_admin'
       created_by.user.admin?

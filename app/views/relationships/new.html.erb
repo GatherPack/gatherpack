@@ -6,15 +6,18 @@
     <h1>New Relationship</h1>
   </div>
   <div class="card-body">
-    <%= f.input :start_node, as: :select, label: "Who is #{@person.identifier_name} in relation to the other person?", collection: policy_scope(RelationshipNode), label_method: :to_s, value_method: :to_id %>
+    <%= f.label :start_node, "Who is #{@person.identifier_name} in relation to the other person?" %>
+    <%= f.select :start_node, policy_scope(RelationshipNode).map { |n| [ n.to_s, n.to_id ] }, { include_blank: true }, { data: { controller: "slim" } } %>
 
     <% if @relationship.relationship_type %>
-      <div class="row">
-        <div class="col-12 col-md-6">
-          <%= f.association :parent, label: @relationship.relationship_type.parent_label, label_method: :identifier_name, disabled: @relationship.node_occupant == @relationship.parent, collection: policy_scope(Person) %>
+      <div class="row mt-2">
+        <div class="col-12 col-md-6 parent_id">
+          <%= f.label :parent_id, @relationship.relationship_type.parent_label %>
+          <%= f.select :parent_id, policy_scope(Person).map { |p| [ p.identifier_name, p.id ] }, { include_blank: true }, { disabled: @relationship.node_occupant == @relationship.parent, data: { controller: "slim" } } %>
         </div>
         <div class="col-12 col-md-6">
-          <%= f.association :child, label: @relationship.relationship_type.child_label, label_method: :identifier_name, disabled: @relationship.node_occupant == @relationship.child, collection: policy_scope(Person) %>
+          <%= f.label :child_id, @relationship.relationship_type.child_label %>
+          <%= f.select :child_id, policy_scope(Person).map { |p| [ p.identifier_name, p.id ] }, { include_blank: true }, { disabled: @relationship.node_occupant == @relationship.child, data: { controller: "slim" } } %> <%# TODO: fix validations %>
         </div>
       </div>
     <% end %>

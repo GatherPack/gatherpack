@@ -76,9 +76,11 @@
     <% end %>
   </div>
   <div class="col-md">
-    <%= f.association :teams, as: :check_boxes, label_method: :name, collection: get_joinable_teams(@person, current_user) %>
+    <%= f.label :team_ids, "Teams" %>
+    <%= f.select :team_ids, get_joinable_teams(@person, current_user).map { |t| [ t.identifier_name, t.id ] }, { allow_blank: true }, { multiple: true, data: { controller: "slim" } } %>
   </div>
   <div class="col-md">
-    <%= f.association :badges, as: :check_boxes, label_method: :name, collection: Pundit.policy_scope(@person.user, Badge).order(name: :asc) %>
+    <%= f.label :badge_ids, "Badges" %>
+    <%= f.select :badge_ids, Pundit.policy_scope(@person.user, Badge).order(name: :asc).map { |b| [ b.identifier_name, b.id ] }, { allow_blank: true }, { multiple: true, data: { controller: "slim" } } %>
   </div>
 </div>
