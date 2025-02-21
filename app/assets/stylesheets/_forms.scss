@@ -149,6 +149,7 @@ input.datetime {
 
 .ss-main {
   @extend .mt-2;
+  min-height: 2.35em;
 }
 
 .ss-main .ss-values:not(:has(.ss-single)) {
