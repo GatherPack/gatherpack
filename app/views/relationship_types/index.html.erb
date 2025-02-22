@@ -3,9 +3,17 @@
 <%= search_form_for @q, data: {"controller": "turbo_search", "turbo-frame": "results"} do |f| %>
 <div class="card">
   <div class="card-header">
-    <h1>Relationship types</h1>
+    <h1>Relationship Types</h1>
   </div>
   <div class="card-body">
+    <div class="row">
+      <div class="col">
+        <%= f.input :parent_label_cont, label: "Parent" %>
+      </div>
+      <div class="col">
+        <%= f.input :child_label_cont, label: "Child" %>
+      </div>
+    </div>
   </div>
   <div class="card-footer">
     <%= link_to "New Relationship Type", new_relationship_type_path, class: 'btn btn-success' %>

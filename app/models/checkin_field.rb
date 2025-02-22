@@ -7,7 +7,11 @@ class CheckinField < ApplicationRecord
   validates :name, presence: true
 
   def self.ransackable_attributes(auth_object = nil)
-    [ 'name', 'permission', 'updated_at' ]
+    [ 'name', 'permission', 'updated_at', 'event_type_id' ]
+  end
+
+  def self.ransackable_associations(auth_object = nil)
+    [ 'event_type' ]
   end
 
   def identifier_name
