@@ -11,7 +11,7 @@
 
     <% if @relationship.relationship_type %>
       <div class="row mt-2">
-        <div class="col-12 col-md-6 parent_id">
+        <div class="col-12 col-md-6">
           <%= f.label :parent_id, @relationship.relationship_type.parent_label %>
           <%= f.select :parent_id, policy_scope(Person).map { |p| [ p.identifier_name, p.id ] }, { include_blank: true }, { disabled: @relationship.node_occupant == @relationship.parent, data: { controller: "slim" } } %>
         </div>

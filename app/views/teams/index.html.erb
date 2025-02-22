@@ -11,7 +11,8 @@
         <%= f.input :name_cont, label: 'Name' %>
       </div>
       <div class="col">
-        <%= f.input :team_type_id_eq, label: 'Team Type', as: :select, collection: TeamType.all  %>
+        <%= f.label :team_type_id_eq, "Team Type" %>
+        <%= f.select :team_type_id_eq, TeamType.all.map { |tt| [ tt.identifier_name, tt.id ] }, { include_blank: true }, { data: { controller: "slim" } } %>
       </div>
     </div>
   </div>

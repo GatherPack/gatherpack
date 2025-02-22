@@ -11,10 +11,12 @@
         <%= f.input :name_or_description_or_short_cont, label: 'Name' %>
       </div>
       <div class="col">
-        <%= f.input :badge_type_id_eq, label: 'Badge Type', as: :select, collection: BadgeType.all  %>
+        <%= f.label :badge_type_id_eq, "Badge Type" %>
+        <%= f.select :badge_type_id_eq, BadgeType.all.map { |bt| [ bt.identifier_name, bt.id ] }, { include_blank: true }, { data: { controller: "slim" } } %>
       </div>
       <div class="col">
-        <%= f.input :team_id_eq, label: 'Team', as: :select, collection: Team.all  %>
+        <%= f.label :team_id_eq, "Team" %>
+        <%= f.select :team_id_eq, policy_scope(Team).map { |t| [ t.identifier_name, t.id ] }, { include_blank: true }, { data: { controller: "slim" } } %>
       </div>
     </div>
   </div>
