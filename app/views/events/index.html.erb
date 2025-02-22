@@ -14,10 +14,12 @@
         <%= f.input :location_i_cont, label: 'Location' %>
       </div>
       <div class="col">
-        <%= f.input :event_type_id_eq, label: 'Event Type', as: :select, collection: EventType.all %>
+        <%= f.label :event_type_id_eq, 'Event Type' %>
+        <%= f.select :event_type_id_eq, EventType.all.map { |et| [ et.identifier_name, et.id ] }, { include_blank: true }, { data: { controller: "slim" } } %>
       </div>
       <div class="col">
-        <%= f.input :team_id_eq, label: 'Teams', as: :select, collection: policy_scope(Team) %>
+        <%= f.label :team_id_eq, 'Teams' %>
+        <%= f.select :team_id_eq, Team.all.map { |t| [ t.identifier_name, t.id ] }, { include_blank: true }, { data: { controller: "slim" } } %>
       </div>
     </div>
   </div>
