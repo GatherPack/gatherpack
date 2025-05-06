@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_12_18_030022) do
+ActiveRecord::Schema[8.0].define(version: 2025_02_11_220714) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -165,8 +165,10 @@ ActiveRecord::Schema[8.0].define(version: 2024_12_18_030022) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "locked"
+    t.uuid "time_clock_period_id"
     t.index ["event_type_id"], name: "index_events_on_event_type_id"
     t.index ["team_id"], name: "index_events_on_team_id"
+    t.index ["time_clock_period_id"], name: "index_events_on_time_clock_period_id"
   end
 
   create_table "hooks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -494,6 +496,7 @@ ActiveRecord::Schema[8.0].define(version: 2024_12_18_030022) do
   add_foreign_key "checkins", "events"
   add_foreign_key "checkins", "people"
   add_foreign_key "events", "event_types"
+  add_foreign_key "events", "time_clock_periods"
   add_foreign_key "mailbox_assignments", "mailboxes"
   add_foreign_key "mailbox_messages", "mailboxes"
   add_foreign_key "memberships", "people"
