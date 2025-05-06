@@ -3,7 +3,7 @@ class Mailbox < ApplicationRecord
   has_many :mailbox_assignments
 
   def self.ransackable_attributes(auth_object = nil)
-    [ 'address', 'updated_at' ]
+    [ "address", "updated_at" ]
   end
 
   def identifier_name
@@ -16,5 +16,9 @@ class Mailbox < ApplicationRecord
 
   def targets
     mailbox_assignments.map(&:target)
+  end
+
+  def identifier_icon
+    "inbox"
   end
 end

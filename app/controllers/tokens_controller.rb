@@ -26,7 +26,7 @@ class TokensController < InternalController
     @token = authorize Token.new(token_params)
 
     if @token.save
-      redirect_to @token, notice: 'Token was successfully created.'
+      redirect_to @token, notice: "Token was successfully created."
     else
       render :new, status: :unprocessable_entity
     end
@@ -35,7 +35,7 @@ class TokensController < InternalController
   # PATCH/PUT /tokens/1
   def update
     if @token.update(token_params)
-      redirect_to @token, notice: 'Token was successfully updated.', status: :see_other
+      redirect_to @token, notice: "Token was successfully updated.", status: :see_other
     else
       render :edit, status: :unprocessable_entity
     end
@@ -44,7 +44,7 @@ class TokensController < InternalController
   # DELETE /tokens/1
   def destroy
     @token.destroy!
-    redirect_to tokens_url, notice: 'Token was successfully destroyed.', status: :see_other
+    redirect_to tokens_url, notice: "Token was successfully destroyed.", status: :see_other
   end
 
   private
@@ -55,6 +55,6 @@ class TokensController < InternalController
 
     # Only allow a list of trusted parameters through.
     def token_params
-      params.require(:token).permit(:value, :tokenable_id, :tokenable_type)
+      params.require(:token).permit(:value, :tokenable_gid)
     end
 end

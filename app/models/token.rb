@@ -29,12 +29,16 @@ class Token < ApplicationRecord
     "#{tokenable&.identifier_name || '***'} - #{pretty_value}"
   end
 
+  def identifier_icon
+    "id-badge"
+  end
+
   def self.ransackable_attributes(auth_object = nil)
-    [ 'created_at', 'id', 'tokenable_id', 'tokenable_type', 'updated_at', 'value' ]
+    [ "created_at", "id", "tokenable_id", "tokenable_type", "updated_at", "value" ]
   end
 
   def self.ransackable_associations(auth_object = nil)
-    [ 'tokenable' ]
+    [ "tokenable" ]
   end
 
   private

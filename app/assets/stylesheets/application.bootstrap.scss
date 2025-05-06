@@ -71,6 +71,7 @@ $form-feedback-valid-color: inherit;
 @import 'breadcrumbs';
 @import 'currency';
 @import 'people';
+@import 'combobox';
 
 .fullscreen {
   height: 100vh;
@@ -118,4 +119,13 @@ code pre {
 
 a.undecorated {
   text-decoration: none;
+}
+
+.hw-combobox {
+  @extend .form-control;
+  border-color: $greige-darkest;
+
+  .hw-combobox__main__wrapper {
+    @extend .w-100;
+  }
 }

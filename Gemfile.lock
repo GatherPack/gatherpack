@@ -1,4 +1,14 @@
 GIT
+  remote: https://github.com/braddoeswebdev/hotwire_combobox.git
+  revision: 24c8e9f52ce8118c3c5049b0d3704faa3d1f03f8
+  specs:
+    hotwire_combobox (0.4.0)
+      platform_agent (>= 1.0.1)
+      rails (>= 7.0.7.2)
+      stimulus-rails (>= 1.2)
+      turbo-rails (>= 1.2)
+
+GIT
   remote: https://github.com/wobschalli/gretel.git
   revision: 8ef080db4f38db9c0728133160610709b53b1427
   specs:
@@ -339,6 +349,9 @@ GEM
       racc
     pg (1.5.9)
     pg (1.5.9-x64-mingw-ucrt)
+    platform_agent (1.0.1)
+      activesupport (>= 5.2.0)
+      useragent (~> 0.16.3)
     pmap (1.1.1)
     postmark (1.25.1)
       json
@@ -572,6 +585,7 @@ DEPENDENCIES
   devise (~> 4.9)
   erb_lint
   gretel!
+  hotwire_combobox (~> 0.4.0)!
   http (~> 5.2)
   image_processing (~> 1.2)
   importmap-rails

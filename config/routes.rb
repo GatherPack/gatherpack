@@ -53,6 +53,7 @@ Rails.application.routes.draw do
 
   get "/setup" => "welcome#setup", as: :setup
   get "search" => "search#index", as: :search
+  get "search/combo" => "search#combo", as: :combo_search
 
   mount MissionControl::Jobs::Engine, at: "/jobs"
 
