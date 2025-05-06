@@ -5,8 +5,19 @@
     <h1><%= @event.identifier_name %></h1>
   </div>
   <div class="card-body">
-    When: <%= format_event_time_date(@event, :long_ordinal, false) %><br>
-    <%= @event.location != "" ? "Where: " + @event.location : "" %>
+    <p>
+      <%= format_event_time_date(@event, :long_ordinal, false) %>
+    </p>
+    <% if @event.location.present? %>
+      <p>
+        Where: <%= @event.location %>
+      </p>
+    <% end %>
+    <% if @event.time_clock_period.present? %>
+      <p>
+        <%= as_badge @event.time_clock_period %>
+      </p>
+    <% end %>
 
     <%= @event.description %>
   </div>

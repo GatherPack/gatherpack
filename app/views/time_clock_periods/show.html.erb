@@ -1,35 +1,50 @@
 <% breadcrumb @time_clock_period %>
 
-<%= search_form_for @q, url: @time_clock_period, data: {"controller": "turbo_search", "turbo-frame": "results"} do |f| %>
 <div class="card">
   <div class="card-header">
     <h1><%= @time_clock_period.identifier_name %></h1>
   </div>
   <div class="card-body">
-    <div class="row">
-      <div class="col">
-        <% if params['q']&.has_key?('person_id_eq') %>
-          <%= f.input :person_id_eq, label: 'Person', as: :select, collection: policy_scope(Person), label_method: :identifier_name %>
-        <% else %>
-          <%= f.input :person_display_name_cont, label: 'Person' %>
-        <% end %>
-      </div>
-      <div class="col">
-        <%= f.input :start_time_gteq, label: 'Starting After', input_html: { type: "datetime-local" } %>
-      </div>
-      <div class="col">
-        <%= f.input :end_time_lteq, label: 'Ending Before', input_html: { type: "datetime-local" } %>
-      </div>
-    </div>
+    <% if @time_clock_period.available_hours > 0 %>
+      <p>
+        <%= pluralize(@time_clock_period.available_hours, "hour") %> available from <%= pluralize(@time_clock_period.events.count, "event") %>.
+      </p>
+    <% end %>
   </div>
   <div class="card-footer">
     <%= link_to 'Back to Time Clock', time_clock_punches_path, class: 'btn btn-success' %>
     <%= link_to 'Edit', edit_time_clock_period_path(@time_clock_period), class: 'btn btn-warning' if policy(@time_clock_period).edit? %>
-    <%= f.submit 'Search', class: 'btn btn-primary', data: { action: "turbo_search#search" } %>
-    <%= link_to 'Clear search', request.path, class: "btn btn-dark", data: { action: "turbo_search#clear" } %>
     <%= link_to 'Delete', @time_clock_period, class: 'btn btn-danger', data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } if policy(@time_clock_period).destroy? %>
   </div>
 </div>
+
+<%= search_form_for @q, url: @time_clock_period, data: {"controller": "turbo_search", "turbo-frame": "results"} do |f| %>
+  <div class="card">
+    <div class="card-header">
+      <h1><%= @time_clock_period.identifier_name %> Punches</h1>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col">
+          <% if params['q']&.has_key?('person_id_eq') %>
+            <%= f.input :person_id_eq, label: 'Person', as: :select, collection: policy_scope(Person), label_method: :identifier_name %>
+          <% else %>
+            <%= f.input :person_display_name_cont, label: 'Person' %>
+          <% end %>
+        </div>
+        <div class="col">
+          <%= f.input :start_time_gteq, label: 'Starting After', input_html: { type: "datetime-local" } %>
+        </div>
+        <div class="col">
+          <%= f.input :end_time_lteq, label: 'Ending Before', input_html: { type: "datetime-local" } %>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer">
+      <%= f.submit 'Search', class: 'btn btn-primary', data: { action: "turbo_search#search" } %>
+      <%= link_to 'Clear search', request.path, class: "btn btn-dark", data: { action: "turbo_search#clear" } %>
+    </div>
+  </div>
 <% end %>
 
 <%= turbo_frame_tag "results" do %>
