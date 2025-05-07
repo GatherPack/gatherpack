@@ -12,13 +12,13 @@ class Relationship < ApplicationRecord
 
   def reify
     raise ArgumentError unless start_node.present? && node_occupant.present?
-    
-    type_id, side = start_node.split(':')
+
+    type_id, side = start_node.split(":")
     self.relationship_type = RelationshipType.find(type_id)
-    
-    if side == 'p'
+
+    if side == "p"
       self.parent = node_occupant
-    elsif side == 'c'
+    elsif side == "c"
       self.child = node_occupant
     else
       raise ArgumentError
@@ -29,28 +29,28 @@ class Relationship < ApplicationRecord
 
   def no_self_relationships
     if parent != nil && parent == child
-      errors.add(:parent, "cannot be the same person as the child") 
-      errors.add(:child, "cannot be the same person as the parent") 
+      errors.add(:parent, "cannot be the same person as the child")
+      errors.add(:child, "cannot be the same person as the parent")
     end
   end
 
   def permission_check
     errors.tap do |t|
-       t.add(:parent, 'does not meet relationship requirements')
-       t.add(:child, 'does not meet relationship requirements')
+       t.add(:parent, "does not meet relationship requirements")
+       t.add(:child, "does not meet relationship requirements")
     end unless case relationship_type.permission
-    when 'added_by_admin'
+               when "added_by_admin"
       created_by.user.admin?
-    when 'added_by_manager'
-      (created_by.managed_teams & parent.teams).present? &&
-        (created_by.managed_teams & child.teams).present?
-    when 'added_by_team_member'
+               when "added_by_manager"
+      (created_by.all_managed_teams & parent.teams).present? &&
+        (created_by.all_managed_teams & child.teams).present?
+               when "added_by_team_member"
       (created_by.teams & parent.teams).present? &&
         (created_by.teams & child.teams).present?
-    when 'added_by_participant'
+               when "added_by_participant"
       created_by == parent || created_by == child
-    when 'added_by_user'
+               when "added_by_user"
       true
-    end
+               end
   end
 end

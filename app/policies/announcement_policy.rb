@@ -4,7 +4,7 @@ class AnnouncementPolicy < ApplicationPolicy
       if user.admin
         scope.all
       else
-        scope.where(team_id: person.teams.map(&:id)).or(scope.where(team_id: ""))
+        scope.where(team_id: person.all_teams.map(&:id)).or(scope.where(team_id: ""))
       end
     end
   end
@@ -14,6 +14,6 @@ class AnnouncementPolicy < ApplicationPolicy
   end
 
   def update?
-    user.admin || (record.team && person.managed_teams.include?(record.team))
+    user.admin || (record.team && person.all_managed_teams.include?(record.team))
   end
 end

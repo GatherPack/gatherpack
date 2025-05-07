@@ -4,20 +4,20 @@ class EventPolicy < ApplicationPolicy
       if user.admin
         scope.all
       else
-        scope.where(team_id: person.teams.map(&:id)).or(scope.where(team_id: ""))
+        scope.where(team_id: person.all_teams.map(&:id)).or(scope.where(team_id: ""))
       end
     end
   end
 
   def new?
-    person.managed_teams.present? || user.admin
+    person.all_managed_teams.present? || user.admin
   end
 
   def create?
-    person.managed_teams.include?(record.team) || user.admin
+    person.all_managed_teams.include?(record.team) || user.admin
   end
 
   def update?
-    person.managed_teams.include?(record.team) || user.admin
+    person.all_managed_teams.include?(record.team) || user.admin
   end
 end
