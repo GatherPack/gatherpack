@@ -4,7 +4,7 @@ class PagePolicy < ApplicationPolicy
       if user.admin
         scope.all
       else
-        scope.where(team: person.teams).or(scope.where(team_id: "")).or(scope.where(viewer: "public"))
+        scope.where(team: person.all_teams).or(scope.where(team_id: "")).or(scope.where(viewer: "public"))
       end
     end
   end
@@ -12,15 +12,15 @@ class PagePolicy < ApplicationPolicy
   def show?
     return true if user.admin
     case record.viewer
-    when 'public'
+    when "public"
       true
-    when 'user'
+    when "user"
       user.present?
-    when 'team'
-      record.team ? person.teams.include?(record.team) : user.admin
-    when 'manager'
-      record.team ? record.team.managers.include?(person) : user.admin
-    when 'admin'
+    when "team"
+      record.team ? person.all_teams.include?(record.team) : user.admin
+    when "manager"
+      record.team ? record.team.manager?(person) : user.admin
+    when "admin"
       user.admin
     else
       user.admin
@@ -28,21 +28,21 @@ class PagePolicy < ApplicationPolicy
   end
 
   def new?
-    user.admin? || person.manager? || person.teams.present?
+    user.admin? || person.manager? || person.all_teams.present?
   end
 
   def update?
     return true if user.admin
     case record.editor
-    when 'public'
+    when "public"
       true
-    when 'user'
+    when "user"
       user.present?
-    when 'team'
-      record.team ? person.teams.include?(record.team) : user.admin
-    when 'manager'
-      record.team ? record.team.managers.include?(person) : user.admin
-    when 'admin'
+    when "team"
+      record.team ? person.all_teams.include?(record.team) : user.admin
+    when "manager"
+      record.team ? record.team.manager?(person) : user.admin
+    when "admin"
       user.admin
     else
       user.admin

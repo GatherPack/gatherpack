@@ -21,7 +21,7 @@ class TeamPolicy < ApplicationPolicy
     if user.admin?
       [ :name, :color, :team_type_id, :join_permission, person_ids: [] ]
     else
-      if record.join_permission == 'added_by_admin'
+      if record.join_permission == "added_by_admin"
         [ :name, :color, :team_type_id ]
       else
         [ :name, :color, :team_type_id, person_ids: [] ]

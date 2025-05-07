@@ -4,32 +4,32 @@ class BadgePolicy < ApplicationPolicy
       if user.admin
         scope.all
       else
-        scope.where(team: person.teams).or(scope.where(team_id: nil))
+        scope.where(team: person.all_teams).or(scope.where(team_id: nil))
       end
     end
   end
 
   def new?
-    person.managed_teams.present? || user.admin
+    person.all_managed_teams.present? || user.admin
   end
 
   def create?
-    person.managed_teams.include?(record.team) || user.admin
+    person.all_managed_teams.include?(record.team) || user.admin
   end
 
   def update?
     case record.permission
-    when 'added_by_admin'
+    when "added_by_admin"
       user.admin
-    when 'added_by_admin_or_self'
+    when "added_by_admin_or_self"
       true
-    when 'added_by_manager'
-      (person.managed_teams.include?(record.team)) || user.admin
-    when 'added_by_current_member'
-      (person.teams.include?(record.team)) || user.admin
-    when 'added_by_manager_or_self'
+    when "added_by_manager"
+      (person.all_managed_teams.include?(record.team)) || user.admin
+    when "added_by_current_member"
+      (person.all_teams.include?(record.team)) || user.admin
+    when "added_by_manager_or_self"
       true
-    when 'has_account'
+    when "has_account"
       true
     else
       user.admin
@@ -37,7 +37,7 @@ class BadgePolicy < ApplicationPolicy
   end
 
   def edit?
-    (person.managed_teams.include?(record.team) && !record.permission == 'added_by_admin') || user.admin
+    (person.all_managed_teams.include?(record.team) && !record.permission == "added_by_admin") || user.admin
   end
 
   def destroy?
