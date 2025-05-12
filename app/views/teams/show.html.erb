@@ -55,8 +55,8 @@
         <% if @team.parent.present? %>
           <p><%= i 'turn-up' %><%= link_to @team.parent.name, @team.parent %></p>
         <% end %>
-        <% if @team.children.present? %>
-          <% @team.children.each do |t| %>
+        <% if policy_scope(@team.children).present? %>
+          <% policy_scope(@team.children).each do |t| %>
             <p><%= i 'turn-down' %><%= link_to t.name, t %></p>
           <% end %>
         <% end %>
@@ -64,9 +64,9 @@
     </div>
   </div>
   <div class="card-footer">
-    <%= link_to 'Memberships', team_memberships_path(@team), class: 'btn btn-info' if @team.manager?(current_user.person) %>
-    <%= link_to 'Edit', edit_team_path(@team), class: 'btn btn-warning' %>
-    <%= link_to 'Delete', @team, class: 'btn btn-danger', data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %>
+    <%= link_to 'Memberships', team_memberships_path(@team), class: 'btn btn-info' if policy(@team).edit? %>
+    <%= link_to 'Edit', edit_team_path(@team), class: 'btn btn-warning' if policy(@team).edit? %>
+    <%= link_to 'Delete', @team, class: 'btn btn-danger', data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } if policy(@team).destroy? %>
   </div>
 </div>
 
