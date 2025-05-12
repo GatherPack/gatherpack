@@ -70,6 +70,10 @@ class Person < ApplicationRecord
     display_name.presence || id
   end
 
+  def identifier_icon
+    "user"
+  end
+
   private
 
   def check_display_name

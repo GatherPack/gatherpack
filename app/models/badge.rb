@@ -1,6 +1,6 @@
 class Badge < ApplicationRecord
   include CanBeHooked
-  has_paper_trail versions: { class_name: 'AuditLog' }
+  has_paper_trail versions: { class_name: "AuditLog" }
   belongs_to :badge_type
   belongs_to :team, optional: true
   has_many :badge_assignments, dependent: :destroy
@@ -14,15 +14,19 @@ class Badge < ApplicationRecord
   validate :permissions_make_sense
 
   def self.ransackable_attributes(auth_object = nil)
-    [ 'badge_type_id', 'description', 'name', 'short', 'team_id', 'updated_at' ]
+    [ "badge_type_id", "description", "name", "short", "team_id", "updated_at" ]
   end
 
   def self.ransackable_associations(auth_object = nil)
-    [ 'badge_type', 'team' ]
+    [ "badge_type", "team" ]
   end
 
   def permissions_make_sense
-    errors.add(:permission, "can't be 'Added by Manager' if there's no team") if permission == 'added_by_manager' && team.nil?
-    errors.add(:permission, "can't be 'Added by Current Member' if there's no team") if permission == 'added_by_current_member' && team.nil?
+    errors.add(:permission, "can't be 'Added by Manager' if there's no team") if permission == "added_by_manager" && team.nil?
+    errors.add(:permission, "can't be 'Added by Current Member' if there's no team") if permission == "added_by_current_member" && team.nil?
+  end
+
+  def identifier_icon
+    "certificate"
   end
 end

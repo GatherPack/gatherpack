@@ -60,4 +60,8 @@ class Team < ApplicationRecord
   def manager?(person)
     all_managers.include?(person)
   end
+
+  def identifier_icon
+    "people-group"
+  end
 end
