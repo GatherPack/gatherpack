@@ -22,7 +22,7 @@
         <% if @teams.any? %>
           <div class="mb-3">
             <h3>Teams</h3>
-            <% @teams.each do |team| %>
+            <% @person.all_teams.each do |team| %>
               <%= link_to team, class: 'undecorated' do %>
                 <%= as_badge team %>
               <% end %>

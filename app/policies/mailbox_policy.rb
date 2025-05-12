@@ -4,7 +4,7 @@ class MailboxPolicy < ApplicationPolicy
       if user.admin
         scope.all
       else
-        scope.where(id: MailboxAssignment.where(target: person).or(MailboxAssignment.where(target: person.teams)).map(&:mailbox_id))
+        scope.where(id: MailboxAssignment.where(target: person).or(MailboxAssignment.where(target: person.all_teams)).map(&:mailbox_id))
       end
     end
   end

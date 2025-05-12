@@ -11,7 +11,7 @@ module PeopleHelper
     (
       Team.where(join_permission: Team.join_permissions[:has_account]).includes(:team_type).to_a +
       person.teams.includes(:team_type).to_a +
-      current_user.person.managed_teams.includes(:team_type).to_a
+      current_user.person.all_managed_teams.includes(:team_type).to_a
     ).uniq.sort_by { |t| [ t.team_type.name, t.name ] }
   end
 

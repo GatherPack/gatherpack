@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_02_11_220714) do
+ActiveRecord::Schema[8.0].define(version: 2025_05_06_230927) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -414,6 +414,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_11_220714) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "join_permission", default: 0
+    t.uuid "parent_id"
+    t.index ["parent_id"], name: "index_teams_on_parent_id"
     t.index ["team_type_id"], name: "index_teams_on_team_type_id"
   end
 
@@ -511,6 +513,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_11_220714) do
   add_foreign_key "solid_queue_recurring_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
   add_foreign_key "solid_queue_scheduled_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
   add_foreign_key "teams", "team_types"
+  add_foreign_key "teams", "teams", column: "parent_id"
   add_foreign_key "time_clock_periods", "teams"
   add_foreign_key "time_clock_punches", "people"
   add_foreign_key "time_clock_punches", "time_clock_periods"
