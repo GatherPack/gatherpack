@@ -10,7 +10,7 @@ class Account < ApplicationRecord
   end
 
   def self.ransackable_associations(auth_object = nil)
-    [ 'team' ]
+    [ "team" ]
   end
 
   def balance
@@ -19,5 +19,9 @@ class Account < ApplicationRecord
 
   def holders
     account_relationships.map(&:holder)
+  end
+
+  def identifier_icon
+    "receipt"
   end
 end
