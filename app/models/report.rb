@@ -6,4 +6,8 @@ class Report < ApplicationRecord
   def self.ransackable_attributes(auth_object = nil)
     %w[ name updated_at ]
   end
+
+  def identifier_icon
+    "file-code"
+  end
 end
