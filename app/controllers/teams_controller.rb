@@ -51,7 +51,11 @@ class TeamsController < InternalController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_team
-      @team = policy_scope(Team).find(params[:id])
+      begin
+        @team = policy_scope(Team).find(params[:id])
+      rescue ActiveRecord::RecordNotFound
+        raise Pundit::NotAuthorizedError
+      end
     end
 
     # Only allow a list of trusted parameters through.
