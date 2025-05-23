@@ -25,7 +25,7 @@ class ApplicationController < ActionController::Base
   end
 
   def pundit_not_authorized
-    redirect_to root_path, notice: 'You are not allowed to do that'
+    redirect_back_or_to root_path, notice: 'You are not allowed to do that'
   end
 
   def set_time_zone(&block)

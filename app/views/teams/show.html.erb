@@ -52,7 +52,7 @@
         </div>
       </div>
       <div class="col">
-        <% if @team.parent.present? %>
+        <% if @team.parent.present? && @team.parent.people.include?(current_user) %>
           <p><%= i 'turn-up' %><%= link_to @team.parent.name, @team.parent %></p>
         <% end %>
         <% if policy_scope(@team.children).present? %>
