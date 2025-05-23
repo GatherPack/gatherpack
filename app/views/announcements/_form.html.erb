@@ -7,7 +7,7 @@
       <%= f.input :title %>
     </div>
     <div class="col-12 col-md-6">
-      <%= f.association :team, collection: current_user.person.managed_teams, include_blank: admin? %>
+      <%= f.association :team, collection: current_user.person.all_managed_teams, include_blank: admin? %>
     </div>
   </div>
   <div class="row">

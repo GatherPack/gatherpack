@@ -4,7 +4,7 @@ class TimeClockPunchPolicy < ApplicationPolicy
       if user.admin
         scope.all
       elsif person.manager?
-        scope.where(person: (person.managed_teams.map(&:person_ids).flatten << person.id).uniq)
+        scope.where(person: (person.all_managed_teams.map(&:person_ids).flatten << person.id).uniq)
       else
         scope.where(person: person)
       end
@@ -19,11 +19,11 @@ class TimeClockPunchPolicy < ApplicationPolicy
     elsif record.time_clock_period.team.nil?
       person == record.person && record.time_clock_period.permission == "added_by_user"
     # can update punches if manager of punch's period's team, up to 'added_by_manager' perms
-    elsif person.managed_teams.include?(record.time_clock_period.team)
+    elsif person.all_managed_teams.include?(record.time_clock_period.team)
       record.time_clock_period.permission != "added_by_admin"
     # can update punches if part of punch's period's team and the period has 'added_by_team_member' perms, or if 'added_by_user' perms, and the punch was added by self
     else
-      (person.teams.include?(record.time_clock_period.team) && record.time_clock_period.permission == "added_by_team_member") || (person == record.person && record.time_clock_period.permission == "added_by_user")
+      (person.all_teams.include?(record.time_clock_period.team) && record.time_clock_period.permission == "added_by_team_member") || (person == record.person && record.time_clock_period.permission == "added_by_user")
     end
   end
 

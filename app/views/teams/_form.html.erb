@@ -4,11 +4,12 @@
 <div class="row">
   <div class="col-4">
     <%= f.input :name %>
+    <%= f.association :parent, include_blank: true %>
     <%= f.input :color, as: :fancy_color %>
     <%= f.association :team_type, include_blank: false %>
     <%= f.input :join_permission, collection: Team.join_permissions.keys, label_method: :titleize, include_blank: false %>
   </div>
   <div class="col-8">
-    <%= f.association :people, as: :check_boxes, label_method: :display_name, collection: current_user.person.managed_people.order(last_name: :asc, first_name: :asc) %>
+    <%= f.association :people, as: :check_boxes, label_method: :display_name, collection: current_user.person.managed_people %>
   </div>
 </div>
