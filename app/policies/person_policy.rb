@@ -4,7 +4,7 @@ class PersonPolicy < ApplicationPolicy
       if user.admin
         scope.all
       else
-        scope.where(id: (person.all_teams.map(&:person_ids).flatten << person.id)).distinct
+        scope.where(id: (person.all_teams.map(&:all_people).flatten.map(&:id) << person.id)).distinct
       end
     end
   end
