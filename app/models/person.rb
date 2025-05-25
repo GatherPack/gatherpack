@@ -42,15 +42,19 @@ class Person < ApplicationRecord
   end
 
   def all_teams
+    Team.where(id: all_team_ids)
+  end
+
+  def all_team_ids
     direct_team_ids = teams.select(:id)
     managed_team_ids = memberships.where(manager: true).select(:team_id)
     descendant_ids = Team.where(id: managed_team_ids).flat_map(&:all_descendants).map(&:id)
-    all_ids = Team.where(id: direct_team_ids).or(Team.where(id: descendant_ids)).select(:id)
-    ancestor_ids = Team.where(id: all_ids).flat_map(&:all_ancestors).map(&:id)
-    Team.where(id: all_ids).or(Team.where(id: ancestor_ids))
+    ancestor_ids = Team.where(id: direct_team_ids).flat_map(&:all_ancestors).map(&:id)
+    direct_team_ids + descendant_ids + ancestor_ids
   end
 
   def all_managed_teams
+    return Team.all if user&.admin?
     managed_team_ids = memberships.where(manager: true).pluck(:team_id)
     descendant_ids = Team.where(id: managed_team_ids).flat_map(&:all_descendant_ids)
     Team.where(id: managed_team_ids + descendant_ids)

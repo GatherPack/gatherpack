@@ -4,7 +4,7 @@ class TeamPolicy < ApplicationPolicy
       if user.admin
         scope.all
       else
-        scope.where(id: person.team_ids).or(scope.where(join_permission: Team.join_permissions[:has_account]))
+        scope.where(id: person.all_team_ids).or(scope.where(join_permission: Team.join_permissions[:has_account]))
       end
     end
   end
