@@ -4,7 +4,7 @@ class MailboxMessagePolicy < ApplicationPolicy
       if user.admin
         scope.all
       else
-        scope.where(mailbox_id: MailboxAssignment.where(target: person).or(MailboxAssignment.where(target: person.teams)).map(&:mailbox_id))
+        scope.where(mailbox_id: MailboxAssignment.where(target: person).or(MailboxAssignment.where(target: person.all_teams)).map(&:mailbox_id))
       end
     end
   end
@@ -19,8 +19,8 @@ class MailboxMessagePolicy < ApplicationPolicy
 
   def show?
     user.admin? ||
-    record.mailbox.targets.include?(person) || 
-      (record.mailbox.targets & person.teams).any? ||
+    record.mailbox.targets.include?(person) ||
+      (record.mailbox.targets & person.all_teams).any? ||
       (record.mailbox.targets & person.events).any?
   end
 

@@ -9,6 +9,8 @@ class Team < ApplicationRecord
   has_many :people, through: :memberships
   has_many :events
   has_many :pages
+  belongs_to :parent, class_name: "Team", optional: true
+  has_many :children, class_name: "Team", foreign_key: :parent_id, dependent: :nullify
   enum :join_permission, { added_by_admin: 0, added_by_manager: 1, added_by_current_member: 2, has_account: 3 }
 
   validates :name, presence: true
@@ -22,8 +24,41 @@ class Team < ApplicationRecord
     [ "team_type" ]
   end
 
-  def managers
-    people.joins(:memberships).where(memberships: { manager: true })
+  def all_descendant_ids
+    children.flat_map { |child| [ child.id ] + child.all_descendant_ids }
+  end
+
+  def all_descendants
+    children.flat_map { |child| [ child ] + child.all_descendants }
+  end
+
+  def all_ancestor_ids
+    parent ? [ parent.id ] + parent.all_ancestor_ids : []
+  end
+
+  def all_ancestors
+    parent ? [ parent ] + parent.all_ancestors : []
+  end
+
+  def all_people
+    inherited_manager_ids = Team.where(id: all_ancestor_ids)
+      .joins(:memberships)
+      .where(memberships: { manager: true })
+      .select("people.id")
+
+    Person.joins(:memberships)
+      .where(memberships: { team_id: all_descendant_ids + [ id ] })
+      .or(Person.where(id: inherited_manager_ids))
+      .distinct
+  end
+
+  def all_managers
+    ancestor_ids = [ id ] + all_ancestor_ids
+    Person.joins(:memberships).joins(:user).where(memberships: { team_id: ancestor_ids, manager: true }).or(Person.where(user: { admin: true })).distinct
+  end
+
+  def manager?(person)
+    all_managers.include?(person)
   end
 
   def identifier_icon

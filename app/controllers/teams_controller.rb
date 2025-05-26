@@ -10,7 +10,7 @@ class TeamsController < InternalController
 
   # GET /teams/1
   def show
-    @people = @team.people.order(last_name: :asc, first_name: :asc).page(params[:page])
+    @people = @team.all_people.order(last_name: :asc, first_name: :asc).page(params[:page])
   end
 
   # GET /teams/new
@@ -27,7 +27,7 @@ class TeamsController < InternalController
     @team = authorize Team.new(team_params)
 
     if @team.save
-      redirect_to @team, notice: 'Team was successfully created.'
+      redirect_to @team, notice: "Team was successfully created."
     else
       render :new, status: :unprocessable_entity
     end
@@ -36,7 +36,7 @@ class TeamsController < InternalController
   # PATCH/PUT /teams/1
   def update
     if authorize(@team).update(permitted_attributes(@team))
-      redirect_to @team, notice: 'Team was successfully updated.', status: :see_other
+      redirect_to @team, notice: "Team was successfully updated.", status: :see_other
     else
       render :edit, status: :unprocessable_entity
     end
@@ -45,17 +45,21 @@ class TeamsController < InternalController
   # DELETE /teams/1
   def destroy
     @team.destroy!
-    redirect_to teams_url, notice: 'Team was successfully destroyed.', status: :see_other
+    redirect_to teams_url, notice: "Team was successfully destroyed.", status: :see_other
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_team
-      @team = policy_scope(Team).find(params[:id])
+      begin
+        @team = policy_scope(Team).find(params[:id])
+      rescue ActiveRecord::RecordNotFound
+        raise Pundit::NotAuthorizedError
+      end
     end
 
     # Only allow a list of trusted parameters through.
     def team_params
-      params.require(:team).permit(:name, :color, :team_type_id, :join_permission, person_ids: [])
+      params.require(:team).permit(:name, :parent_id, :color, :team_type_id, :join_permission, person_ids: [])
     end
 end

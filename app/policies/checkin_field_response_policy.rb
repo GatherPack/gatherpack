@@ -4,7 +4,7 @@ class CheckinFieldResponsePolicy < ApplicationPolicy
       if user.admin
         scope.all
       else
-        scope.where(team: person.teams).or(scope.where(team_id: ""))
+        scope.where(team: person.all_teams).or(scope.where(team_id: ""))
       end
     end
   end
