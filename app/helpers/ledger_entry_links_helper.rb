@@ -1,0 +1,2 @@
+module LedgerEntryLinksHelper
+end

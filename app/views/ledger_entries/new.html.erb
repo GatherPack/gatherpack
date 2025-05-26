@@ -1,0 +1,16 @@
+<% breadcrumb :new, "ledger_entry" %>
+
+<%= simple_form_for([@ledger, @ledger_entry]) do |f| %>
+<div class="card">
+  <div class="card-header">
+    <h1>New ledger entry</h1>
+  </div>
+  <div class="card-body">
+    <%= render "form", f: f %>
+  </div>
+  <div class="card-footer">
+    <%= link_to "Cancel", @ledger, class: 'btn btn-warning' %>
+    <%= f.button :submit, class: 'btn btn-primary' %>
+  </div>
+</div>
+<% end %>

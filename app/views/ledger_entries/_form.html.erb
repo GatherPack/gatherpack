@@ -1,0 +1,39 @@
+<%= f.error_notification %>
+<%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+<div class="form-inputs">
+  <%= f.input :remark %>
+  <%= f.input :amount %>
+
+  <div class="row">
+    <div class="col-12 col-lg-6">
+      <%= f.input :receipts, input_html: { multiple: true } %>
+      <% f.object.receipts.each do |receipt| %>
+        <div class="row my-2 align-items-center">
+          <div class="col-6 col-md-3 col-lg-2">
+            <%= image_tag receipt, class: 'receipt-preview' %>
+          </div>
+          <div class="col">
+            <%= f.hidden_field :receipts, multiple: true, value: receipt.signed_id %>
+            <a class="remove-receipt-button btn btn-sm btn-danger" ><%= i 'trash' %></a>
+          </div>
+        </div>
+      <% end %>
+    </div>
+    <div class="col-12 col-lg-6">
+      <%= f.association :ledger_tags, as: :check_boxes, label_method: ->(tag) { as_badge tag } %>
+    </div>
+  </div>
+
+  <%= f.input :approved %>
+</div>
+
+<script>
+  document.body.querySelector('.remove-receipt-button').addEventListener('click', (e) => {
+    var parent = e.target.parentElement;
+    while(!parent.classList.contains('row')) {
+      parent = parent.parentElement;
+    }
+    parent.remove();
+  })
+</script>

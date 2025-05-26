@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  resources :ledger_transfers, only: [ :new, :create ]
+  resources :ledger_entry_links
+  resources :ledger_tags
+  resources :ledgers do
+    resources :ledger_entries, except: [ :index ]
+  end
   get "time_kiosk", to: "time_kiosk#index"
   post "time_kiosk", to: "time_kiosk#create"
   resources :checkin_fields

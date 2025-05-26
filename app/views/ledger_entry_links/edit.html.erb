@@ -1,0 +1,16 @@
+<% breadcrumb @ledger_entry_link %>
+
+<%= simple_form_for(@ledger_entry_link) do |f| %>
+<div class="card">
+  <div class="card-header">
+    <h1>Editing <%= @ledger_entry_link.identifier_name %></h1>
+  </div>
+  <div class="card-body">
+    <%= render "form", f: f %>
+  </div>
+  <div class="card-footer">
+    <%= link_to "Cancel", @ledger_entry_link, class: 'btn btn-warning' %>
+    <%= f.button :submit, class: 'btn btn-primary' %>
+  </div>
+</div>
+<% end %>

@@ -1,0 +1,86 @@
+<% breadcrumb @ledger %>
+
+<div class="card">
+  <div class="card-header">
+    <h1>
+      <%= @ledger.identifier_name %>
+    </h1>
+  </div>
+  <div class="card-body">
+    <div class="row align-items-center justify-content-around">
+      <div class="col-lg-2 text-end">
+        <div>Balance:</div>
+        <div class="fs-3 my-0 tight">
+          <%= as_currency @ledger.balance %>
+        </div>
+      </div>
+      <div class="col-lg-2">
+        <p>Part of <%= as_badge @ledger.team %></p>
+
+        <% if @ledger.owners.any? %>
+          <div>Owned by:</div>
+
+          <ul>
+          <% @ledger.owners.each do |o| %>
+            <%= link_to o do %>
+              <li><%= as_badge o %></li>
+            <% end %>
+          <% end %>
+          </ul>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="card-footer">
+    <%= link_to 'Transfer', new_ledger_transfer_path(to_ledger_id: @ledger.id), class: 'btn btn-primary' if policy(@ledger).update? %>
+    <%= link_to 'Post New Entry', new_ledger_ledger_entry_path(@ledger), class: 'btn btn-primary' if policy(@ledger).update? %>
+    <%= link_to 'Edit', edit_ledger_path(@ledger), class: 'btn btn-warning' if policy(@ledger).update? %>
+    <%= link_to 'Delete', @ledger, class: 'btn btn-danger', data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } if policy(@ledger).destroy? %>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header">
+    <h2>Entries</h2>
+  </div>
+  <div class="card-body ledger">
+    <div class="row header">
+      <div class="col-4 col-lg-2">Posted At</div>
+      <div class="col-8 col-lg-3">Remark</div>
+      <div class="col-12 col-lg-3">Tags</div>
+      <div class="col-6 col-lg-2">Amount</div>
+      <div class="col-6 col-lg-2">Actions</div>
+    </div>
+    <% @ledger.ledger_entries.order('created_at DESC').each do |e| %>
+      <div class="row entry">
+        <div class="col-4 col-lg-2">
+          <%= nice_date e.created_at %>
+        </div>
+        <div class="col-8 col-lg-3">
+          <%= e.remark %>
+          <% if e.ledger_entry_links.any? %>
+            <%= i 'link' %>
+          <% end %>
+          <% e.receipts.each do |r| %>
+            <%= link_to i('file-invoice-dollar'), r, target: '_blank' %>
+          <% end %>
+        </div>
+        <div class="col-12 col-lg-3">
+          <div class="badge-container">
+            <% e.ledger_tags.each do |tag| %>
+              <%= as_badge tag %>
+            <% end %>
+          </div>
+        </div>
+        <div class="col-6 col-lg-2">
+          <%= as_currency e.amount %>
+        </div>
+        <div class="col-6 col-lg-2">
+          <%= link_to i('magnifying-glass'), ledger_ledger_entry_path(@ledger, e), class: 'btn btn-sm btn-info' if policy(e).show? %>
+          <%= link_to i('pen-to-square'), edit_ledger_ledger_entry_path(@ledger, e), class: 'btn btn-sm btn-warning' if policy(e).edit? %>
+          <%= link_to i('trash'), ledger_ledger_entry_path(@ledger, e), data: { turbo_method: 'DELETE', turbo_confirm: 'Really delete entry?'}, class: 'btn btn-sm btn-danger' if policy(e).destroy? %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

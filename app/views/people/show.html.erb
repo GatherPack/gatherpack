@@ -22,11 +22,15 @@
         <% if @teams.any? %>
           <div class="mb-3">
             <h3>Teams</h3>
-            <% @teams.each do |team| %>
-              <%= link_to team, class: 'undecorated' do %>
-                <%= as_badge team %>
+            <div class="badge-container">
+              <% @teams.each do |team| %>
+                <div class="<%= "manager" if @person.managed_teams.include? team %>">
+                <%= link_to team, class: "undecorated" do %>
+                  <%= as_badge team %>
+                <% end %>
+                </div>
               <% end %>
-            <% end %>
+            </div>
           </div>
         <% end %>
 
