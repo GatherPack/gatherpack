@@ -31,7 +31,7 @@ class TimeClockPunchesController < InternalController
     @time_clock_punch.created_by = current_user.person
 
     if @time_clock_punch.save
-      redirect_to time_clock_punches_path, notice: 'Time clock punch was successfully created.'
+      redirect_to time_clock_punches_path, notice: "Time clock punch was successfully created."
     else
       render :new, status: :unprocessable_entity
     end
@@ -41,7 +41,7 @@ class TimeClockPunchesController < InternalController
   def update
     @time_clock_punch.created_by = current_user.person
     if @time_clock_punch.update(time_clock_punch_params)
-      redirect_to time_clock_punches_path, notice: 'Time clock punch was successfully updated.', status: :see_other
+      redirect_to time_clock_punches_path, notice: "Time clock punch was successfully updated.", status: :see_other
     else
       render :edit, status: :unprocessable_entity
     end
@@ -50,7 +50,7 @@ class TimeClockPunchesController < InternalController
   # DELETE /time_clock_punches/1
   def destroy
     @time_clock_punch.destroy!
-    redirect_to time_clock_punches_url, notice: 'Time clock punch was successfully destroyed.', status: :see_other
+    redirect_to time_clock_punches_url, notice: "Time clock punch was successfully destroyed.", status: :see_other
   end
 
   private
@@ -64,9 +64,9 @@ class TimeClockPunchesController < InternalController
       unless current_user.admin?
         # keep: periods of teams that they manage with 'added_by_manager' perms, periods of teams that they are in with 'added_by_team_member/user' perms, generic periods with 'added_by_manager/team_member/user' perms)
         # remove: periods of teams they are in or generic teams with 'added_by_admin' perms
-        @time_clock_periods = @time_clock_periods.reject { |period| period.permission == 'added_by_admin' }
+        @time_clock_periods = @time_clock_periods.reject { |period| period.permission == "added_by_admin" }
         # periods of teams they are in and don't manage with 'added_by_manager' perms
-        @time_clock_periods = @time_clock_periods.reject { |period| period.permission == 'added_by_manager' && current_user.person.managed_teams.exclude?(period.team) }
+        @time_clock_periods = @time_clock_periods.reject { |period| period.permission == "added_by_manager" && current_user.person.all_managed_teams.exclude?(period.team) }
         # periods of teams they are not in
         @time_clock_periods = @time_clock_periods.reject { |period| current_user.person.teams.exclude?(period.team) }
       end

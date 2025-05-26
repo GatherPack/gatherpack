@@ -4,13 +4,13 @@ class PersonPolicy < ApplicationPolicy
       if user.admin
         scope.all
       else
-        scope.where(id: (person.teams.map(&:person_ids).flatten << person.id)).distinct
+        scope.where(id: (person.all_teams.map(&:all_people).flatten.map(&:id) << person.id)).distinct
       end
     end
   end
 
   def update?
-    record == person || user.admin? || (person.managed_teams & record.teams).any?
+    record == person || user.admin? || (person.all_managed_teams & record.all_teams).any?
   end
 
   def destroy?
