@@ -9,8 +9,7 @@ class Person < ApplicationRecord
   has_many :checkins, dependent: :destroy
   has_many :events, through: :checkins
   has_many :tokens, as: :tokenable
-  has_many :account_relationships, as: :holder, dependent: :destroy
-  has_many :accounts, through: :account_relationships
+  has_many :ledger_ownerships, dependent: :destroy, as: :owner
   has_many :time_clock_punches, dependent: :destroy
   before_save :check_display_name
   accepts_nested_attributes_for :user
@@ -68,6 +67,10 @@ class Person < ApplicationRecord
 
   def relationships
     Relationship.where(parent_id: id).or(Relationship.where(child_id: id))
+  end
+
+  def ledgers
+    Ledger.where(id: LedgerOwnership.where(owner: self).pluck(:ledger_id))
   end
 
   def identifier_name

@@ -1,0 +1,8 @@
+<%= f.error_notification %>
+<%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+<div class="form-inputs">
+  <%= f.input :from_ledger_id, as: :select, collection: policy_scope(Ledger) %>
+  <%= f.input :to_ledger_id, as: :select, collection: policy_scope(Ledger) %>
+  <%= f.input :amount %>
+</div>
