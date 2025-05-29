@@ -1,0 +1,11 @@
+<div class="card" id="<%= dom_id ledger %>">
+  <div class="card-header">
+    <% if ledger.team %>
+      <%= link_to i(ledger.team.team_type.icon), team_path(ledger.team), class: "badge rounded-pill", style: "background-color:#{ledger.team.color};color:#{contrasting_color(ledger.team.color)}", "data-turbo": "false", title: "Belongs to #{ledger.team.name}" %>&nbsp;
+    <% end %>
+    <%= link_to ledger.identifier_name, ledger, 'data-turbo': false %>
+  </div>
+  <div class="card-body">
+    <%= as_currency ledger.balance %>
+  </div>
+</div>

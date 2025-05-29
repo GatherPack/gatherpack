@@ -13,7 +13,7 @@ class PeopleController < InternalController
     @teams = policy_scope(@person.all_teams).includes(:team_type).order('team_type.name': :asc, name: :asc)
     @badges = policy_scope(@person.badges).order(name: :asc)
     @tokens = policy_scope(@person.tokens).order(value: :asc)
-    @accounts = policy_scope(@person.accounts).order(name: :asc)
+    @ledgers = policy_scope(@person.ledgers).order(name: :asc)
     @relationships = policy_scope(@person.relationships).includes(:relationship_type).order('relationship_type.parent_label': :asc, 'relationship_type.child_label': :asc, created_at: :asc)
     @time_clocks = policy_scope(@person.time_clock_punches).order(time_clock_period_id: :asc).map do |punch|
       Hash[TimeClockPeriod.find_by_id(punch.time_clock_period_id), punch.hours]
