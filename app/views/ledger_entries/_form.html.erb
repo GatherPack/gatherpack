@@ -2,8 +2,36 @@
 <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
 <div class="form-inputs">
-  <%= f.input :remark %>
-  <%= f.input :amount %>
+  <div class="row">
+    <div class="col-12 col-md-3">
+      <%= f.input :remark %>
+    </div>
+    <% if f.object.split? %>
+      <div class="col-8 col-md-4">
+        <%= label_tag :split_amount, 'Total Amount', class: 'form-label' %>
+        <%= text_field_tag :split_amount, f.object.amount, readonly: true, class: 'form-control disabled'%>
+      </div>
+      <div class="col-4 col-md-2">
+        <% if f.object.fully_split? %>
+          <%= i 'file-circle-check' %>
+        <% else %>
+          <%= label_tag :split_diff, 'Split Off By', class: 'form-label' %>
+          <%= text_field_tag :split_diff, f.object.split_difference, readonly: true, class: 'form-control disabled' %>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="col-md-6">
+        <% if f.object.transfer_mirror %>
+          <%= f.input :amount, input_html: { value: -f.object.amount}, label: 'Transferred Amount' %>
+        <% else %>
+          <%= f.input :amount %>
+        <% end %>
+      </div>
+    <% end %>
+    <div class="col-12 col-md-3">
+      <%= f.input :created_at, label: 'Posted at' %>
+    </div>
+  </div>
 
   <div class="row">
     <div class="col-12 col-lg-6">
@@ -21,11 +49,32 @@
       <% end %>
     </div>
     <div class="col-12 col-lg-6">
-      <%= f.association :ledger_tags, as: :check_boxes, label_method: ->(tag) { as_badge tag } %>
+      <% if !f.object.split? %>
+        <%= f.association :ledger_tags, as: :check_boxes, label_method: ->(tag) { as_badge tag }, label: 'Tags' %>
+      <% end %>
     </div>
   </div>
 
   <%= f.input :approved %>
+
+  <% if f.object.split? %>
+    <%= f.simple_fields_for :child_entries do |ff| %>
+      <div class="row">
+        <div class="col-6 col-md-3">
+          <%= ff.input :id, as: :hidden %>
+          <%= ff.input :remark %>
+        </div>
+        <div class="col-6 col-md-3">
+          <%= ff.input :amount %>
+        </div>
+        <div class="col-12 col-md-6">
+          <%= ff.association :ledger_tags, as: :check_boxes, label_method: ->(tag) { as_badge tag }, label: 'Tags' %>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+
+  
 </div>
 
 <script>

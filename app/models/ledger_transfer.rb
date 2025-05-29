@@ -26,8 +26,8 @@ class LedgerTransfer
   end
 
   def create
-    t = LedgerEntry.create(ledger: from_ledger, amount: amount, remark: "Transfer to #{to_ledger.name}", created_by: creator)
-    f = LedgerEntry.create(ledger: to_ledger, amount: -amount, remark: "Transfer from #{from_ledger.name}", created_by: creator)
+    t = LedgerEntry.create(ledger: from_ledger, amount: amount, remark: "Transfer to #{to_ledger.name}", created_by: creator, transfer_mirror: true)
+    f = LedgerEntry.create(ledger: to_ledger, amount: amount, remark: "Transfer from #{from_ledger.name}", created_by: creator)
 
     LedgerEntryLink.create(ledger_entries: [ t, f ])
   end

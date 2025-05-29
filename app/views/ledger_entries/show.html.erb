@@ -1,50 +1,22 @@
 <% breadcrumb @ledger_entry %>
 
-<div class="card">
-  <div class="card-header">
-    <h1><%= @ledger_entry.identifier_name %></h1>
-  </div>
-  <div class="card-body">
-    <div class="row align-items-center">
-      <div class="col">
-        <div>
-          <% if @ledger_entry.approved %>
-            <%= i 'check-to-slot' %> Approved
-          <% else %>
-            <%= i 'eye' %> Needs Approved
-          <% end %>
-        </div>
-        <div class="fs-3">
-          <%= as_currency @ledger_entry.amount %>
-        </div>
-      </div>
-      <div class="col fs-3">
-        <%= @ledger_entry.remark %>
-      </div>
-      <div class="col">
-        <dl>
-          <dt>Posted to</dt>
-          <dd><%= as_badge @ledger %></dd>
-          <dt>Posted by</dt>
-          <dd><%= as_badge @ledger_entry.created_by %></dd>
-          <dt>Posted at</dt>
-          <dd><%= nice_datetime @ledger_entry.created_at %></dd>
-          <% if (@ledger_entry.updated_at - @ledger_entry.created_at) > 60  %>
-            <dt>Last Updated At</dt>
-            <dd><%= nice_datetime @ledger_entry.updated_at %></dd>
-          <% end %>
-          <dt>Tags</dt>
-        </dl>
-        <div class="badge-container">
-          <% @ledger_entry.ledger_tags.each do |tag| %>
-            <%= as_badge tag %>
-          <% end %>
-        </div>
-      </div>
+<%= render partial: 'ledger_entry_card', locals: {ledger_entry: @ledger_entry} %>
+
+<% if @ledger_entry.linked_entries.any? %>
+  <h2>Also Posted As</h2>
+
+  <% @ledger_entry.linked_entries.each do |e| %>
+    <%= render partial: 'ledger_entry_card', locals: {ledger_entry: e} %>
+  <% end %>
+<% end %>
+
+<% if @ledger_entry.split? %>
+  <h2>Split To</h2>
+
+  <div class="row">
+  <% @ledger_entry.child_entries.each do |e| %>
+    <div class="col-12 col-lg-6">
+      <%= render partial: 'ledger_entry_card', locals: {ledger_entry: e} %>
     </div>
-  </div>
-  <div class="card-footer">
-    <%= link_to 'Edit', edit_ledger_ledger_entry_path(@ledger, @ledger_entry), class: 'btn btn-warning' if policy(@ledger_entry).update? %>
-    <%= link_to 'Delete', [@ledger, @ledger_entry], class: 'btn btn-danger', data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } if policy(@ledger_entry).destroy? %>
-  </div>
-</div>
+  <% end %>
+<% end %>

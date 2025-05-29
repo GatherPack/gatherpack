@@ -24,6 +24,8 @@ module ApplicationHelper
       person_as_badge(obj.person, opt)
     when Ledger
       ledger_as_badge(obj)
+    when LedgerEntry
+      ledger_entry_as_badge(obj)
     when LedgerTag
       ledger_tag_as_badge(obj)
     when TimeClockPeriod

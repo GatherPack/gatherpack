@@ -25,9 +25,7 @@
             <div class="badge-container">
               <% @teams.each do |team| %>
                 <div class="<%= "manager" if @person.managed_teams.include? team %>">
-                <%= link_to team, class: "undecorated" do %>
-                  <%= as_badge team %>
-                <% end %>
+                <%= link_to as_badge(team), team, class: "undecorated" %>
                 </div>
               <% end %>
             </div>
@@ -46,9 +44,7 @@
 
               <% @badges.each do |badge| %>
                 <div class="col-4 col-xl-2 mb-3 fs-3 justify-content-center">
-                  <%= link_to badge, class: 'undecorated' do %>
-                    <%= as_badge badge %>
-                  <% end %>
+                  <%= link_to as_badge(badge), badge, class: 'undecorated' %>
                 </div>
               <% end %>
             </div>
@@ -59,20 +55,16 @@
           <div class="mb-3">
             <h3>Tokens</h3>
             <% policy_scope(@person.tokens).each do |token| %>
-              <%= link_to token, class: 'undecorated' do %>
-                <%= as_badge token %>
-              <% end %>
+              <%= link_to as_badge(token), token, class: 'undecorated' %>
             <% end %>
           </div>
         <% end %>
 
-        <% if @accounts.any? %>
+        <% if @ledgers.any? %>
           <div class="mb-3">
-            <h3>Accounts</h3>
-            <% @accounts.each do |account| %>
-              <%= link_to account do %>
-                <%= as_badge account %>
-              <% end %>
+            <h3>Ledgers</h3>
+            <% @ledgers.each do |ledger| %>
+              <%= link_to as_badge(ledger), ledger, class: 'undecorated' %>
             <% end %>
           </div>
         <% end %>

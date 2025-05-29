@@ -45,21 +45,34 @@
   </div>
   <div class="card-body ledger">
     <div class="row header">
-      <div class="col-4 col-lg-2">Posted At</div>
+      <div class="col-4 col-lg-1">Posted At</div>
+      <div class="col-6 col-lg-2 text-end">Amount</div>
       <div class="col-8 col-lg-3">Remark</div>
       <div class="col-12 col-lg-3">Tags</div>
-      <div class="col-6 col-lg-2">Amount</div>
       <div class="col-6 col-lg-2">Actions</div>
     </div>
     <% @ledger.ledger_entries.order('created_at DESC').each do |e| %>
       <div class="row entry">
-        <div class="col-4 col-lg-2">
+        <div class="col-4 col-lg-1">
           <%= nice_date e.created_at %>
         </div>
+        <div class="col-6 col-lg-2 fs-4 text-end">
+          <%= as_currency e.amount %>
+        </div>
         <div class="col-8 col-lg-3">
+          
           <%= e.remark %>
           <% if e.ledger_entry_links.any? %>
             <%= i 'link' %>
+          <% end %>
+          <% if e.parent.present? %>
+            <%= i 'arrows-split-up-and-left' %>
+          <% end %>
+          <% if e.split? %>
+            <%= i 'code-fork' %>
+            <% if !e.fully_split? %>
+              <%= i 'triangle-exclamation' %>
+            <% end %>
           <% end %>
           <% e.receipts.each do |r| %>
             <%= link_to i('file-invoice-dollar'), r, target: '_blank' %>
@@ -73,11 +86,13 @@
           </div>
         </div>
         <div class="col-6 col-lg-2">
-          <%= as_currency e.amount %>
-        </div>
-        <div class="col-6 col-lg-2">
-          <%= link_to i('magnifying-glass'), ledger_ledger_entry_path(@ledger, e), class: 'btn btn-sm btn-info' if policy(e).show? %>
-          <%= link_to i('pen-to-square'), edit_ledger_ledger_entry_path(@ledger, e), class: 'btn btn-sm btn-warning' if policy(e).edit? %>
+          <% if e.parent.present? %>
+            <%= link_to i('arrows-split-up-and-left'), ledger_ledger_entry_path(@ledger, e.parent), class: 'btn btn-sm btn-dark' if policy(e).show? %>
+            <%= link_to i('pen-to-square'), edit_ledger_ledger_entry_path(@ledger, e.parent), class: 'btn btn-sm btn-warning' if policy(e).edit? %>
+          <% else %>
+            <%= link_to i('magnifying-glass'), ledger_ledger_entry_path(@ledger, e), class: 'btn btn-sm btn-info' if policy(e).show? %>
+            <%= link_to i('pen-to-square'), edit_ledger_ledger_entry_path(@ledger, e), class: 'btn btn-sm btn-warning' if policy(e).edit? %>
+          <% end %>
           <%= link_to i('trash'), ledger_ledger_entry_path(@ledger, e), data: { turbo_method: 'DELETE', turbo_confirm: 'Really delete entry?'}, class: 'btn btn-sm btn-danger' if policy(e).destroy? %>
         </div>
       </div>

@@ -9,6 +9,14 @@ class LedgerEntryPolicy < ApplicationPolicy
     end
   end
 
+  def split?
+    update?
+  end
+
+  def unsplit?
+    update?
+  end
+
   def create?
     person.admin? || record.ledger.team.managers.include?(person)
   end

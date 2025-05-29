@@ -3,7 +3,12 @@ Rails.application.routes.draw do
   resources :ledger_entry_links
   resources :ledger_tags
   resources :ledgers do
-    resources :ledger_entries, except: [ :index ]
+    resources :ledger_entries, except: [ :index ] do
+      member do
+        post "split"
+        post "unsplit"
+      end
+    end
   end
   get "time_kiosk", to: "time_kiosk#index"
   post "time_kiosk", to: "time_kiosk#create"
@@ -17,7 +22,6 @@ Rails.application.routes.draw do
     post "revert", to: "audit_logs#revert", on: :member
   end
   resources :transactions, only: %i[ index create ]
-  resources :accounts
   resources :pages
   resources :tokens
   resources :hooks

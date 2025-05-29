@@ -4,9 +4,17 @@ class LedgerPolicy < ApplicationPolicy
       if user.admin
         scope.all
       else
-        scope.where(team: person.teams).or(scope.where(team_id: ""))
+        scope.includes(:ledger_ownerships).where(team: person.teams).or(scope.where('ledger_ownerships.owner': person))
       end
     end
+  end
+
+  def split?
+    update?
+  end
+
+  def unsplit?
+    update?
   end
 
   def create?
@@ -14,10 +22,10 @@ class LedgerPolicy < ApplicationPolicy
   end
 
   def update?
-    person.admin? || record.team.managers.include?(person)
+    person.admin? || record.team.all_managers.include?(person)
   end
 
   def destroy?
-    person.admin? || record.team.managers.include?(person)
+    person.admin? || record.team.all_managers.include?(person)
   end
 end
