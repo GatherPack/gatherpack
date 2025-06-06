@@ -15,7 +15,7 @@ class LedgerEntry < ApplicationRecord
   monetize :amount_cents
 
   before_save :mirror_amount
-  after_commit :refresh_ledger
+  after_save :refresh_ledger
   before_destroy :destroy_linked_entries
 
   scope :deposits, -> { where("amount_cents >= 0") }

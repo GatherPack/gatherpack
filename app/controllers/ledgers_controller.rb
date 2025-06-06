@@ -27,7 +27,6 @@ class LedgersController < InternalController
     if @ledger.save
       redirect_to @ledger, notice: "Ledger was successfully created."
     else
-      raise "ded"
       render :new, status: :unprocessable_entity
     end
   end

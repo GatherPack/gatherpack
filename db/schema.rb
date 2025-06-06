@@ -179,7 +179,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_28_235456) do
     t.datetime "updated_at", null: false
   end
 
-<<<<<<< HEAD
   create_table "ledger_entries", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "ledger_id", null: false
     t.string "remark"
@@ -265,28 +264,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_28_235456) do
     t.index ["mailbox_id"], name: "index_mailbox_messages_on_mailbox_id"
   end
 
-=======
-  create_table "mailbox_assignments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "mailbox_id", null: false
-    t.string "target_type", null: false
-    t.uuid "target_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["mailbox_id"], name: "index_mailbox_assignments_on_mailbox_id"
-    t.index ["target_type", "target_id"], name: "index_mailbox_assignments_on_target"
-  end
-
-  create_table "mailbox_messages", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "from"
-    t.string "subject"
-    t.string "body"
-    t.uuid "mailbox_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["mailbox_id"], name: "index_mailbox_messages_on_mailbox_id"
-  end
-
->>>>>>> main
   create_table "mailboxes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "address"
     t.datetime "created_at", null: false
@@ -299,8 +276,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_28_235456) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "manager", default: false
-    t.uuid "inherited_id"
-    t.index ["inherited_id"], name: "index_memberships_on_inherited_id"
     t.index ["person_id"], name: "index_memberships_on_person_id"
     t.index ["team_id"], name: "index_memberships_on_team_id"
   end
@@ -504,10 +479,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_28_235456) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "join_permission", default: 0
-    t.uuid "parent_team_id"
     t.uuid "parent_id"
     t.index ["parent_id"], name: "index_teams_on_parent_id"
-    t.index ["parent_team_id"], name: "index_teams_on_parent_team_id"
     t.index ["team_type_id"], name: "index_teams_on_team_type_id"
   end
 
@@ -591,7 +564,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_28_235456) do
   add_foreign_key "checkins", "people"
   add_foreign_key "events", "event_types"
   add_foreign_key "events", "time_clock_periods"
-<<<<<<< HEAD
   add_foreign_key "ledger_entries", "ledgers"
   add_foreign_key "ledger_entry_linkings", "ledger_entries"
   add_foreign_key "ledger_entry_linkings", "ledger_entry_links"
@@ -599,13 +571,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_28_235456) do
   add_foreign_key "ledger_taggings", "ledger_entries"
   add_foreign_key "ledger_taggings", "ledger_tags"
   add_foreign_key "ledgers", "teams"
-=======
->>>>>>> main
   add_foreign_key "mailbox_assignments", "mailboxes"
   add_foreign_key "mailbox_messages", "mailboxes"
   add_foreign_key "memberships", "people"
   add_foreign_key "memberships", "teams"
-  add_foreign_key "memberships", "teams", column: "inherited_id"
   add_foreign_key "relationships", "people", column: "child_id"
   add_foreign_key "relationships", "people", column: "parent_id"
   add_foreign_key "relationships", "relationship_types"
@@ -617,7 +586,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_28_235456) do
   add_foreign_key "solid_queue_scheduled_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
   add_foreign_key "teams", "team_types"
   add_foreign_key "teams", "teams", column: "parent_id"
-  add_foreign_key "teams", "teams", column: "parent_team_id"
   add_foreign_key "time_clock_periods", "teams"
   add_foreign_key "time_clock_punches", "people"
   add_foreign_key "time_clock_punches", "time_clock_periods"
