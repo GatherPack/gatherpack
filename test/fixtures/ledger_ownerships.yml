@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  ledger: one
+  owner: one
+  owner_type: Owner
+
+two:
+  ledger: two
+  owner: two
+  owner_type: Owner

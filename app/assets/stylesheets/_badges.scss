@@ -1,8 +1,18 @@
 .badge-container {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
+
+  .badge {
+    @extend .mx-2;
+    @extend .my-1;
+  }
 }
 
 .badge {
   font-family: $font-family-sans-serif;
+}
+
+.manager .badge {
+  border: 2px solid #bb1;
 }

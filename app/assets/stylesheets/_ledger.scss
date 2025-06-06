@@ -1,0 +1,18 @@
+.ledger {
+  .row {
+    @extend .py-2;
+    align-items: center;
+    
+    &.header {
+      @extend .mb-2;
+      font-size: 1.25rem;
+      font-weight: bold;
+      border-top: thin solid $greige-darkest;
+      border-bottom: thin solid $greige-darkest;
+    }
+
+    &.entry:nth-child(even) {
+      background-color: rgba(255,255,255,0.33);
+    }
+  }
+}

@@ -1,0 +1,22 @@
+<% breadcrumb @ledger_entry %>
+
+<%= render partial: 'ledger_entry_card', locals: {ledger_entry: @ledger_entry} %>
+
+<% if @ledger_entry.linked_entries.any? %>
+  <h2>Also Posted As</h2>
+
+  <% @ledger_entry.linked_entries.each do |e| %>
+    <%= render partial: 'ledger_entry_card', locals: {ledger_entry: e} %>
+  <% end %>
+<% end %>
+
+<% if @ledger_entry.split? %>
+  <h2>Split To</h2>
+
+  <div class="row">
+  <% @ledger_entry.child_entries.each do |e| %>
+    <div class="col-12 col-lg-6">
+      <%= render partial: 'ledger_entry_card', locals: {ledger_entry: e} %>
+    </div>
+  <% end %>
+<% end %>

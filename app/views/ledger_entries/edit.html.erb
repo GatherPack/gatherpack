@@ -1,0 +1,19 @@
+<% breadcrumb @ledger_entry %>
+
+<%= simple_form_for([@ledger, @ledger_entry]) do |f| %>
+<div class="card">
+  <div class="card-header">
+    <h1>Editing <%= @ledger_entry.identifier_name %></h1>
+  </div>
+  <div class="card-body">
+    <%= render "form", f: f %>
+  </div>
+  <div class="card-footer">
+    <% if @ledger_entry.split? %>
+      <%= link_to "Split Again", split_ledger_ledger_entry_path(@ledger_entry.ledger, @ledger_entry), class: 'btn btn-dark', data: { turbo_method: 'POST' } if policy(@ledger_entry).edit? %>
+    <% end %>
+    <%= link_to "Cancel", @ledger, class: 'btn btn-warning' %>
+    <%= f.button :submit, class: 'btn btn-primary' %>
+  </div>
+</div>
+<% end %>

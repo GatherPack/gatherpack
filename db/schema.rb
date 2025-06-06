@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_05_06_230927) do
+ActiveRecord::Schema[8.0].define(version: 2025_05_28_235456) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -179,6 +179,71 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_06_230927) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "ledger_entries", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "ledger_id", null: false
+    t.string "remark"
+    t.integer "amount_cents", default: 0
+    t.string "created_by_type", null: false
+    t.uuid "created_by_id", null: false
+    t.boolean "approved"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "transfer_mirror", default: false
+    t.uuid "parent_id"
+    t.index ["created_by_type", "created_by_id"], name: "index_ledger_entries_on_created_by"
+    t.index ["ledger_id"], name: "index_ledger_entries_on_ledger_id"
+    t.index ["parent_id"], name: "index_ledger_entries_on_parent_id"
+  end
+
+  create_table "ledger_entry_linkings", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "ledger_entry_id", null: false
+    t.uuid "ledger_entry_link_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["ledger_entry_id"], name: "index_ledger_entry_linkings_on_ledger_entry_id"
+    t.index ["ledger_entry_link_id"], name: "index_ledger_entry_linkings_on_ledger_entry_link_id"
+  end
+
+  create_table "ledger_entry_links", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "ledger_ownerships", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "ledger_id", null: false
+    t.string "owner_type", null: false
+    t.uuid "owner_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["ledger_id"], name: "index_ledger_ownerships_on_ledger_id"
+    t.index ["owner_type", "owner_id"], name: "index_ledger_ownerships_on_owner"
+  end
+
+  create_table "ledger_taggings", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "ledger_entry_id", null: false
+    t.uuid "ledger_tag_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["ledger_entry_id"], name: "index_ledger_taggings_on_ledger_entry_id"
+    t.index ["ledger_tag_id"], name: "index_ledger_taggings_on_ledger_tag_id"
+  end
+
+  create_table "ledger_tags", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.string "color"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "ledgers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.uuid "team_id", null: false
+    t.integer "balance_cents", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["team_id"], name: "index_ledgers_on_team_id"
+  end
+
   create_table "mailbox_assignments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "mailbox_id", null: false
     t.string "target_type", null: false
@@ -211,8 +276,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_06_230927) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "manager", default: false
-    t.uuid "inherited_id"
-    t.index ["inherited_id"], name: "index_memberships_on_inherited_id"
     t.index ["person_id"], name: "index_memberships_on_person_id"
     t.index ["team_id"], name: "index_memberships_on_team_id"
   end
@@ -416,10 +479,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_06_230927) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "join_permission", default: 0
-    t.uuid "parent_team_id"
     t.uuid "parent_id"
     t.index ["parent_id"], name: "index_teams_on_parent_id"
-    t.index ["parent_team_id"], name: "index_teams_on_parent_team_id"
     t.index ["team_type_id"], name: "index_teams_on_team_type_id"
   end
 
@@ -503,11 +564,17 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_06_230927) do
   add_foreign_key "checkins", "people"
   add_foreign_key "events", "event_types"
   add_foreign_key "events", "time_clock_periods"
+  add_foreign_key "ledger_entries", "ledgers"
+  add_foreign_key "ledger_entry_linkings", "ledger_entries"
+  add_foreign_key "ledger_entry_linkings", "ledger_entry_links"
+  add_foreign_key "ledger_ownerships", "ledgers"
+  add_foreign_key "ledger_taggings", "ledger_entries"
+  add_foreign_key "ledger_taggings", "ledger_tags"
+  add_foreign_key "ledgers", "teams"
   add_foreign_key "mailbox_assignments", "mailboxes"
   add_foreign_key "mailbox_messages", "mailboxes"
   add_foreign_key "memberships", "people"
   add_foreign_key "memberships", "teams"
-  add_foreign_key "memberships", "teams", column: "inherited_id"
   add_foreign_key "relationships", "people", column: "child_id"
   add_foreign_key "relationships", "people", column: "parent_id"
   add_foreign_key "relationships", "relationship_types"
@@ -519,7 +586,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_06_230927) do
   add_foreign_key "solid_queue_scheduled_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
   add_foreign_key "teams", "team_types"
   add_foreign_key "teams", "teams", column: "parent_id"
-  add_foreign_key "teams", "teams", column: "parent_team_id"
   add_foreign_key "time_clock_periods", "teams"
   add_foreign_key "time_clock_punches", "people"
   add_foreign_key "time_clock_punches", "time_clock_periods"
