@@ -1,4 +1,6 @@
-Rails.application.routes.draw do
+Rails.application.routes.draw do  
+  resources :ledger_payments, only: [ :new, :create ]
+  resources :gateways
   resources :ledger_transfers, only: [ :new, :create ]
   resources :ledger_entry_links
   resources :ledger_tags

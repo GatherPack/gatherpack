@@ -1,0 +1,2 @@
+class GatewayPolicy < AdminPolicy
+end

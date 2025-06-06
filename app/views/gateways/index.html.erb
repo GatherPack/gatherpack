@@ -1,0 +1,28 @@
+<% breadcrumb :gateways %>
+
+<% Gateway.registry.each do |svc, gateways| %>
+  <div class="card">
+    <div class="card-header">
+      <h2><%= svc %></h2>
+    </div>
+
+    <div class="card-body">
+      <% gateways.each do |klass| %>
+        <h3><%= klass.to_s.split('::').last %></h3>
+        <div class="row align-items-center">
+          <div class="col-12 col-md-10">
+            <% klass.all.each do |gateway| %>
+              <div class="row">
+                <div class="col"><%= i gateway.identifier_icon %> <%= link_to gateway.name, gateway_path(gateway) %></div>
+              </div>
+            <% end %>
+          </div>
+          <div class="col-12 col-md-2">
+            <%= link_to i('plus-square'), new_gateway_path(type: klass.to_s), class: 'btn btn-primary' %>
+          </div>
+        </div>
+        
+      <% end %>
+    </div>
+  </div>
+<% end %>
