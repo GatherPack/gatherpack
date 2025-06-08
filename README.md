@@ -4,32 +4,34 @@ Your one-stop shop for managing a group of people.
 
 ## A Little Backstory...
 
-Once upon a time, [some guy](https://brad-thompson.com) started mentoring a [FIRST Robotics Competition](https://westside-robotics.info) team. 
-At the time, all of the critical information about what was going on inside the organization, from meeting attendance to fundraising progress, was stored in a few different spreadsheets owned by a couple of different people (this was in the dark days before Google Sheets!) & sticky notes spread across the lead mentor's desk.
+GatherPack's journey began with a FIRST Robotics Competition team drowning in spreadsheets and sticky notes. In those days, critical information about meeting attendance, fundraising progress, and team logistics was scattered across multiple files, desks, and brains. This fragmented system made it challenging for team members to track progress, meet requirements, keep an eye on the finances, or know who was planning on traveling to events without going around and asking people.
 
-This was not great.
-Not only was it easy for things to get lost if a file didn't get saved or a note got knocked off of the desk, but there was no way for the participants to know whether they were meeting the attendance requirements or on the list to go to a competition or anything without asking someone - or, in many cases, a couple of someones - to find that information.
+[One of the volunteers with the program](https://brad-thompson.com), a web developer by trade, decided to fix this with a simple little web application. This brought all of that operational information together in one place that everyone on the team could access.
 
-Being in the web development business, our hero created a custom web application to replace all of the spreadsheets & sticky notes, and it was good.
-
-And then the organization quadrupled in size & scope. 
-
-Plus, we met other people who would love to have something like this for their community organizations, too.
-There are other similar-ish tools out there, but they tend to be either incredibly expensive, unnecessarily complicated, or build more around the idea of a passive group - like a membership-driven non-profit that hosts a fundraiser dinner twice a year - than a very active, multi-layered, excited mass of people.
-
-So, welcome to our next-generation solution to our organization's information management problems - and hopefully yours, too - GatherPack.
+And now, almost 10 years later, that organization has basically quadrupled in size & scope - and that original tool is starting to show its age and inability to keep up with some of the ways that the organization runs now. That same volunteer - now the executive director of the organization - and a few of the students on the team decided to build a new tool from the ground up, built to be more flexible, capable, and robust to handle not only their needs, but the needs of other teams and organizations that have been looking for a tool like this to help keep their groups more organized.
 
 ## Get Up & Running
 
-On a machine with Ruby & Node & Yarn installed.
+On a machine with Ruby & Node & Yarn & Docker installed.
 
-```
+```bash
 git clone git@github.com:GatherPack/gatherpack.git
 cd gatherpack
 bin/setup
 docker-compose up
 bin/dev
 ```
+
+## Get Up & Running with Docker
+
+There's a `docker-compose-app.yml` available as a base for running a production-ready-ish instance of GatherPack.
+
+```bash
+docker compose -f docker-compose-app.yml build
+docker compose -f docker-compose-app.yml up
+```
+
+## Developer Hints
 
 ### Formatting and Linting 
 
