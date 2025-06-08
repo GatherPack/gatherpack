@@ -4,6 +4,7 @@ class LedgerPayment
 
   attribute :gateway_id, :string
   attribute :ledger_id, :string
+  attribute :ledger_entry_id, :string
   attribute :amount, :decimal
   attribute :remark, :string
 
@@ -13,5 +14,9 @@ class LedgerPayment
 
   def ledger
     Ledger.find(ledger_id)
+  end
+
+  def ledger_entry
+    LedgerEntry.find(ledger_entry_id)
   end
 end

@@ -1,5 +1,7 @@
 class GatewaysController < InternalController
-  before_action :set_gateway, only: %i[ show edit update destroy ]
+  before_action :set_gateway, only: %i[ show edit update destroy webhook ]
+  skip_before_action :check_for_user, only: :webhook
+  skip_before_action :verify_authenticity_token, only: :webhook
 
   # GET /gateways
   def index
@@ -45,6 +47,12 @@ class GatewaysController < InternalController
   def destroy
     @gateway.destroy!
     redirect_to gateways_url, notice: 'Gateway was successfully destroyed.', status: :see_other
+  end
+
+  def webhook
+    # ProcessGatewayWebhookJob.perform_later @gateway, request.body.read
+    @gateway.handle_webhook(request.body.read, nil)
+    head :no_content
   end
 
   private

@@ -34,7 +34,7 @@
   <div class="card-footer">
     <%= link_to 'Transfer', new_ledger_transfer_path(to_ledger_id: @ledger.id), class: 'btn btn-primary' if policy(@ledger).update? %>
     <%= link_to 'Post New Entry', new_ledger_ledger_entry_path(@ledger), class: 'btn btn-primary' if policy(@ledger).update? %>
-    <%= link_to 'Pay Into Ledger', new_ledger_payment_path(ledger_id: @ledger.id), class: 'btn btn-primary' if policy(@ledger).update? && Gateway.any_registered?(:payment) %>
+    <%= link_to 'Pay Into Ledger', new_ledger_payment_path(ledger_id: @ledger.id), class: 'btn btn-primary' if policy(@ledger).pay? && Gateway.any_registered?(:payment) %>
     <%= link_to 'Edit', edit_ledger_path(@ledger), class: 'btn btn-warning' if policy(@ledger).update? %>
     <%= link_to 'Delete', @ledger, class: 'btn btn-danger', data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } if policy(@ledger).destroy? %>
   </div>
@@ -61,7 +61,7 @@
           <% if e.finalized %>
             <%= as_currency e.amount %>
           <% else %>
-            <strike><%= as_currency e.amount %></strike>
+            <strike><em><%= as_currency e.amount %></em></strike>
           <% end %>
         </div>
         <div class="col-8 col-lg-3">
