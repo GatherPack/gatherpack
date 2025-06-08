@@ -19,7 +19,19 @@ class Gateway < ApplicationRecord
     end
   end
 
+  after_create :start_finalizing_setup
+
+  def start_finalizing_setup
+    FinalizeGatewaySetupJob.perform_later(self)
+  end
+
   def gateway_name
     self.class.to_s.split("::").last
+  end
+
+  def finish_setup
+  end
+
+  def handle_webhook(payload, signature)
   end
 end

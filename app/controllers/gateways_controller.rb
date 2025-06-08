@@ -50,8 +50,8 @@ class GatewaysController < InternalController
   end
 
   def webhook
-    # ProcessGatewayWebhookJob.perform_later @gateway, request.body.read
-    @gateway.handle_webhook(request.body.read, nil)
+    ProcessGatewayWebhookJob.perform_later @gateway, request.body.read, nil
+    # @gateway.handle_webhook(request.body.read, nil)
     head :no_content
   end
 

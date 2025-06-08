@@ -5,7 +5,8 @@ class LedgerPaymentsController < InternalController
 
   def create
     @ledger_payment = LedgerPayment.new(ledger_payment_params)
-    redirect_to [@ledger_payment.ledger, @ledger_payment.gateway.start_payment(@ledger_payment, current_user)]
+    @ledger_entry = @ledger_payment.gateway.start_payment(@ledger_payment, current_user)
+    redirect_to [@ledger_payment.ledger, @ledger_entry]
   end
 
   def ledger_payment_params

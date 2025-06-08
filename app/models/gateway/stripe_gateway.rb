@@ -29,7 +29,7 @@ class Gateway::StripeGateway < Gateway
         }
       ],
       mode: 'payment',
-      success_url: Rails.application.routes.url_helpers.ledger_ledger_entry_url(ledger_entry.ledger, ledger_entry, host: 'http://localhost:3000')
+      success_url: Rails.application.routes.url_helpers.ledger_ledger_entry_url(ledger_entry.ledger, ledger_entry)
     },
     {
       api_key: secret_key
@@ -46,5 +46,16 @@ class Gateway::StripeGateway < Gateway
       ledger_entry = LedgerEntry.where("metadata->'stripe_checkout_session'->>'id' = ?", event.data.object.id)
       ledger_entry.update(finalized: event.data.object.payment_status == "paid")
     end
+  end
+
+  def finish_setup
+    Stripe::WebhookEndpoint.create({
+      enabled_events: ['charge.succeeded', 'charge.failed'],
+      url: Rails.application.routes.url_helpers.webhook_gateway_url(self),
+    },
+    {
+      api_key: secret_key
+    }
+    )
   end
 end
