@@ -1,16 +1,16 @@
 <%% breadcrumb :new, "<%= singular_table_name.downcase %>" %>
 
 <%%= simple_form_for(@<%= singular_table_name %>) do |f| %>
-<div class="card">
-  <div class="card-header">
-    <h1>New <%= human_name.downcase %></h1>
+  <div class="card">
+    <div class="card-header">
+      <h1>New <%= human_name.downcase %></h1>
+    </div>
+    <div class="card-body">
+      <%%= render "form", f: f %>
+    </div>
+    <div class="card-footer">
+      <%%= link_to "Cancel", <%= index_helper(type: :path) %>, class: 'btn btn-warning' %>
+      <%%= f.button :submit, class: 'btn btn-primary' %>
+    </div>
   </div>
-  <div class="card-body">
-    <%%= render "form", f: f %>
-  </div>
-  <div class="card-footer">
-    <%%= link_to "Cancel", <%= index_helper(type: :path) %>, class: 'btn btn-warning' %>
-    <%%= f.button :submit, class: 'btn btn-primary' %>
-  </div>
-</div>
 <%% end %>
