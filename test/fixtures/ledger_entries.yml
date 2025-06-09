@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  ledger: one
+  comment: MyString
+  amount_cents: 1
+  created_by: one
+  created_by_type: Created by
+  approved: false
+
+two:
+  ledger: two
+  comment: MyString
+  amount_cents: 1
+  created_by: two
+  created_by_type: Created by
+  approved: false

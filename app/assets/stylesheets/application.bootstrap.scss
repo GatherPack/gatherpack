@@ -71,6 +71,7 @@ $form-feedback-valid-color: inherit;
 @import 'breadcrumbs';
 @import 'currency';
 @import 'people';
+@import 'ledger';
 @import 'combobox';
 
 .fullscreen {
@@ -128,6 +129,11 @@ a.undecorated {
   .hw-combobox__main__wrapper {
     @extend .w-100;
   }
+}
+
+.fa-stack {
+  width: var(--fa-fw-width, 1.25em);
+  height: 1em;
 }
 
 @media print {

@@ -23,3 +23,7 @@
   @extend .my-3;
   border: thin solid $primary;
 }
+
+.manager .badge {
+  border: 2px solid #bb1;
+}

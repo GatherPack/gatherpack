@@ -1,0 +1,13 @@
+<% breadcrumb @ledger_entry_link %>
+
+<div class="card">
+  <div class="card-header">
+    <h1><%= @ledger_entry_link.identifier_name %></h1>
+  </div>
+  <div class="card-body">
+  </div>
+  <div class="card-footer">
+    <%= link_to 'Edit', edit_ledger_entry_link_path(@ledger_entry_link), class: 'btn btn-warning' %>
+    <%= link_to 'Delete', @ledger_entry_link, class: 'btn btn-danger', data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %>
+  </div>
+</div>
