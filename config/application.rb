@@ -40,6 +40,10 @@ module Gatherpack
     end
 
     config.mission_control.jobs.http_basic_auth_enabled = false
+
+    config.action_controller.default_url_options = {host: ENV['ROOT_URL'] || "localhost"}
+    config.action_mailer.default_url_options = {host: ENV['ROOT_URL'] || "localhost"}
+    Rails.application.routes.default_url_options[:host] = ENV['ROOT_URL'] || "localhost"
   end
 end
 
