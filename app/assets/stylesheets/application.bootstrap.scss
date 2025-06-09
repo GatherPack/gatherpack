@@ -129,3 +129,9 @@ a.undecorated {
     @extend .w-100;
   }
 }
+
+@media print {
+  .no-print {
+    display: none;
+  }
+}

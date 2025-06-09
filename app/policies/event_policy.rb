@@ -20,4 +20,12 @@ class EventPolicy < ApplicationPolicy
   def update?
     person.all_managed_teams.include?(record.team) || user.admin
   end
+
+  def arrange?
+    update?
+  end
+
+  def print?
+    update?
+  end
 end

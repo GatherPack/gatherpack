@@ -1,8 +1,25 @@
 .badge-container {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
+
+  .badge {
+    @extend .mx-2;
+    @extend .my-1;
+  }
 }
 
 .badge {
   font-family: $font-family-sans-serif;
+}
+
+.arranging-badge {
+  background-color: $primary;
+  cursor: move !important;
+}
+
+.arranging-container {
+  @extend .py-3;
+  @extend .my-3;
+  border: thin solid $primary;
 }

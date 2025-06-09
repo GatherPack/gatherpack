@@ -9,6 +9,7 @@ class Checkin < ApplicationRecord
   validates :person, presence: true, uniqueness: { scope: :event, message: "has already been checked in" }
 
   before_update :check_attributes
+  after_initialize :set_up_fields
 
   attr_accessor :created_by
 
@@ -25,6 +26,12 @@ class Checkin < ApplicationRecord
   end
 
   private
+
+  def set_up_fields
+    event.event_type.checkin_fields.each do |field|
+      checkin_field_responses.build(checkin: self, checkin_field: field) unless checkin_field_responses.where(checkin_field: field).present?
+    end
+  end
 
   def check_attributes
     self.checkin_field_responses.each do |r|

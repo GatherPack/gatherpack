@@ -1,0 +1,112 @@
+<% breadcrumb :arrange_event, @event %>
+
+<div class="card">
+  <div class="card-header">
+    <h1>Arranging <%= @event.identifier_name %></h1>
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-12 col-md-6">
+        <%= form_with url: arrange_event_path(@event), method: "GET" do |f| %>
+          <%= f.label :field_id, "Arrange By", class: 'form-label' %>
+          <%= f.collection_select :field_id, @event.event_type.checkin_fields, :id, :name, { }, selected: params[:field_id], class: 'form-control' %>
+
+          <%= f.submit 'Start Arranging', class: 'btn btn-primary' %>
+        <% end %>
+      </div>
+      <div class="col-12 col-md-6">
+        <% if @field.present? %>
+          <label name="newField" class="form-label">New Response Value</label>
+          <input name="newField" id="newField" type="text" class="form-control">
+          <button id="addNewField" class="btn btn-primary">Add New <%= @field.name %></button>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% if @field.present? %>
+  <div class="card">
+    <div class="card-header">
+      <h2>Arranging by <%= @field.name %></h2>
+    </div>
+    <div class="card-body" id="responseContainer">
+      <% @responses.pluck(:response).uniq.sort_by { |v| v || 'zzzzz' }.each do |v| %>
+        <div class="row align-items-center">
+          <div class="col-12 col-md-4 col-xl-2">
+            <h3><%= v.presence || 'unassigned' %></h3>
+          </div>
+          <div class="col-12 col-md-8 col-xl-10">
+            <div class="badge-container arranging-container" data-arranging-container="<%= URI.encode_uri_component v %>">
+              <% @responses.where(response: v).each do |r| %>
+                <div class="badge arranging-badge" draggable="true" id="<%= r.id %>"><%= r.checkin.person.identifier_name %></div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>
+
+<script>
+  function dragstartHandler(ev) {
+    ev.dataTransfer.setData("text/plain", ev.target.id);
+  }
+
+  function dragoverHandler(ev) {
+    ev.preventDefault();
+    ev.dataTransfer.dropEffect = "move";
+  }
+
+  function dropHandler(ev) {
+    ev.preventDefault();
+    const data = ev.dataTransfer.getData("text/plain");
+    ev.target.appendChild(document.getElementById(data));
+
+    const csrfToken = document.querySelector("[name='csrf-token']").content
+
+    console.log(`/events/<%= @event.id %>/checkins/${data}`);
+
+    fetch("/events/<%= @event.id %>/field_update", {
+      method: "PATCH",
+      headers: {
+        "X-CSRF-Token": csrfToken,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ field_id: data, response: ev.target.dataset.arrangingContainer })
+    }).then(response => {
+      if (!response.ok) { throw response; }
+    }).catch(error => {
+      console.error("error", error);
+    })
+  }
+
+  function addNewFieldHandler(ev) {
+    const val = document.getElementById("newField").value;
+    const template = `<div class="row align-items-center">
+          <div class="col-12 col-md-4 col-xl-2">
+            <h3>${val}</h3>
+          </div>
+          <div class="col-12 col-md-8 col-xl-10">
+            <div class="badge-container arranging-container" data-arranging-container="${encodeURIComponent(val)}">
+            </div>
+          </div>
+        </div>`;
+    document.getElementById("responseContainer").insertAdjacentHTML("afterbegin", template);
+    const zones = document.querySelectorAll(".arranging-container");
+    zones.forEach( (e) => { e.addEventListener("drop", dropHandler) });
+    zones.forEach( (e) => { e.addEventListener("dragover", dragoverHandler) });
+  }
+
+  window.addEventListener("turbo:load", () => {
+    const element = document.querySelectorAll(".arranging-badge");
+    element.forEach( (e) => { e.addEventListener("dragstart", dragstartHandler) });
+
+    const zones = document.querySelectorAll(".arranging-container");
+    zones.forEach( (e) => { e.addEventListener("drop", dropHandler) });
+    zones.forEach( (e) => { e.addEventListener("dragover", dragoverHandler) });
+
+    document.getElementById("addNewField").addEventListener("click", addNewFieldHandler)
+  });
+</script>
