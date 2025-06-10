@@ -9,16 +9,10 @@ class CheckinsController < InternalController
   # GET /checkins/new
   def new
     @checkin = authorize @event.checkins.build
-    @event.event_type.checkin_fields.each do |field|
-      authorize @checkin.checkin_field_responses.build(checkin_field: field)
-    end
   end
 
   # GET /checkins/1/edit
   def edit
-    @event.event_type.checkin_fields.each do |field|
-      authorize @checkin.checkin_field_responses.build(checkin_field: field) if @checkin.checkin_field_responses.where(checkin_field: field).empty?
-    end
   end
 
   # POST /checkins

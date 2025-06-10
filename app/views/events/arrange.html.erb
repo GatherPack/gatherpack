@@ -9,7 +9,7 @@
       <div class="col-12 col-md-6">
         <%= form_with url: arrange_event_path(@event), method: "GET" do |f| %>
           <%= f.label :field_id, "Arrange By", class: 'form-label' %>
-          <%= f.collection_select :field_id, @event.event_type.checkin_fields, :id, :name, { }, selected: params[:field_id], class: 'form-control' %>
+          <%= f.collection_select :field_id, @event.event_type.checkin_fields, :id, :name, { }, selected: params[:field_id], class: 'form-control mb-3' %>
 
           <%= f.submit 'Start Arranging', class: 'btn btn-primary' %>
         <% end %>
@@ -17,7 +17,7 @@
       <div class="col-12 col-md-6">
         <% if @field.present? %>
           <label name="newField" class="form-label">New Response Value</label>
-          <input name="newField" id="newField" type="text" class="form-control">
+          <input name="newField" id="newField" type="text" class="form-control mb-3">
           <button id="addNewField" class="btn btn-primary">Add New <%= @field.name %></button>
         <% end %>
       </div>
