@@ -30,6 +30,11 @@ Rails.application.routes.draw do
   resources :badge_types
   resources :events do
     resources :checkins, except: %i[ index ]
+    member do
+      get "arrange"
+      get "print"
+      patch "field_update", to: "checkins#field_update"
+    end
     collection do
       post "calendar", to: "events#calendar"
       get "calendar", to: "events#calendar"

@@ -16,3 +16,8 @@
     text-decoration: none;
   }
 }
+
+.card-body .card {
+  border: thin solid $primary;
+  page-break-inside: avoid;
+}

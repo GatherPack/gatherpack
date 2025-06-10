@@ -1,0 +1,38 @@
+<% breadcrumb :print_event, @event %>
+
+<div class="card no-print">
+  <div class="card-header">
+    <h1>Printing <%= @event.identifier_name %></h1>
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-12 col-md-6">
+        <%= form_with url: print_event_path(@event), method: "GET" do |f| %>
+          <%= f.label :field_id, "Group By", class: 'form-label' %>
+          <%= f.collection_select :field_id, @event.event_type.checkin_fields, :id, :name, { }, selected: params[:field_id], class: 'form-control mb-3' %>
+
+          <%= f.submit 'Update', class: 'btn btn-primary' %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% if @field.present? %>
+  <% @responses.pluck(:response).uniq.sort_by { |v| v || 'zzzzz' }.each do |v| %>
+    <div class="card">
+      <div class="card-header">
+        <h2><%= @event.identifier_name %> -  <%= v || 'unassigned' %></h2>
+      </div>
+      <div class="card-body" id="responseContainer">
+        <div class="row align-items-center">
+          <% @responses.where(response: v).each do |r| %>
+            <div class="col-6 col-sm-3 col-md-4 col-xl-2">
+              <%= render "people/person", person: r.checkin.person %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+<% end %>
