@@ -1,10 +1,9 @@
 class ApplicationController < ActionController::Base
   include Pundit::Authorization
-  around_action :set_time_zone
+  impersonates :user
 
+  around_action :set_time_zone
   before_action :set_paper_trail_whodunnit
-  # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
-  # allow_browser versions: :modern # commenting this out may break javascript for some people...
 
   def admin?
     current_user&.admin
@@ -30,5 +29,9 @@ class ApplicationController < ActionController::Base
 
   def set_time_zone(&block)
     Time.use_zone(Settings[:time_zone].presence || 'UTC', &block)
+  end
+
+  def user_for_paper_trail
+    true_user
   end
 end

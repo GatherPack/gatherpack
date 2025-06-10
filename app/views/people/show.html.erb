@@ -90,6 +90,7 @@
     </div>
   </div>
   <div class="card-footer">
+    <%= link_to "Impersonate", impersonate_person_path(@person), data: { turbo_method: :post }, class: 'btn btn-dark' if policy(@person).impersonate? %>
     <%= link_to 'Add Relationship', new_person_relationship_path(@person), class: 'btn btn-info' if policy(@person.relationships.build).create? %>
     <%= link_to 'Edit', edit_person_path(@person), class: 'btn btn-warning' if policy(@person).update? %>
     <%= link_to 'Delete', @person, class: 'btn btn-danger', data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } if policy(@person).destroy? %>

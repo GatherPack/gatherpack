@@ -1,5 +1,5 @@
 class PeopleController < InternalController
-  before_action :set_person, only: %i[ show edit update destroy ]
+  before_action :set_person, only: %i[ show edit update destroy impersonate ]
 
   # GET /people
   def index
@@ -64,6 +64,17 @@ class PeopleController < InternalController
   def destroy
     @person.destroy!
     redirect_to people_url, notice: "Person was successfully destroyed.", status: :see_other
+  end
+
+  def impersonate
+    user = @person.user
+    impersonate_user(user)
+    redirect_back_or_to root_path
+  end
+
+  def stop_impersonating
+    stop_impersonating_user
+    redirect_back_or_to root_path
   end
 
   private
