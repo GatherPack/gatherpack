@@ -10,11 +10,7 @@
         </div>
 
         <div class="fs-3">
-          <% if ledger_entry.finalized %>
-            <%= as_currency ledger_entry.amount %>
-          <% else %>
-            <s><em><%= as_currency ledger_entry.amount %></em></s>
-          <% end %>
+          <%= as_currency ledger_entry.amount, failed: ledger_entry.failed, finalized: ledger_entry.finalized %>
         </div>
 
         <% if ledger_entry.gateway %>

@@ -1,5 +1,7 @@
 <% if ledger_entry.finalized? %>
   <p>Paid via <%= i 'cc-stripe', family: 'brands' %></p>
+<% elsif ledger_entry.failed? %>
+  <p><%= i 'cc-stripe', family: 'brands' %> payment failed, please try again.</p>
 <% else %>
   <p>
     Pending via <%= i 'cc-stripe', family: 'brands' %> -
