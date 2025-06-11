@@ -34,10 +34,7 @@ class PagePolicy < ApplicationPolicy
 
   def update?
     return true if user.present? && user.admin
-    return false if user.nil? && record.editor != "public"
     case record.editor
-    when "public"
-      true
     when "user"
       user.present?
     when "team"

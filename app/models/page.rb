@@ -8,7 +8,7 @@ class Page < ApplicationRecord
   validates :title, presence: true
   validates :content, presence: true
   validates :viewer, inclusion: { in: PERMISSION_LEVELS }
-  validates :editor, inclusion: { in: PERMISSION_LEVELS }
+  validates :editor, inclusion: { in: PERMISSION_LEVELS - [ "public" ] }
   validates :editor, inclusion: { in: [ "admin" ], message: "must be restricted to admins when enabling ERB parsing" }, if: -> { dynamic == true }
   validate :permissions_make_sense
 

@@ -12,7 +12,7 @@
     <%= f.input :viewer, as: :select, collection: page_permissions, include_blank: false %>
   </div>
   <div class="col-md">
-    <%= f.input :editor, as: :select, collection: page_permissions, include_blank: false %>
+    <%= f.input :editor, as: :select, collection: page_permissions - [ "public" ], include_blank: false %>
   </div>
 </div>
 
