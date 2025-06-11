@@ -361,6 +361,8 @@ GEM
       postmark (>= 1.21.3, < 2.0)
     pp (0.6.2)
       prettyprint
+    pretender (0.6.0)
+      actionpack (>= 7.1)
     prettyprint (0.2.0)
     prism (1.4.0)
     propshaft (1.1.0)
@@ -607,6 +609,7 @@ DEPENDENCIES
   pg (~> 1.1)
   pmap (~> 1.1)
   postmark-rails (~> 0.22.1)
+  pretender (~> 0.6.0)
   propshaft
   pstore
   puma (>= 5.0)

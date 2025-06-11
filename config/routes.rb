@@ -57,6 +57,12 @@ Rails.application.routes.draw do
   resources :people do
     resources :relationships, only: %i[ new create destroy ]
     resource :user, only: %i[ new create edit update ]
+    member do
+      post "impersonate"
+    end
+    collection do
+      post "stop_impersonating"
+    end
   end
 
   if Settings[:local_signup]

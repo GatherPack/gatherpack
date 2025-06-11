@@ -1,5 +1,20 @@
 .person-img {
-    aspect-ratio: 1;
-    object-position: center;
-    object-fit: cover;
+  aspect-ratio: 1;
+  object-position: center;
+  object-fit: cover;
+}
+
+.impersonator {
+  background-color: $red-400;
+
+  a {
+    color: white !important;
+  }
+}
+
+.impersonator-label {
+  background-color: $red-400;
+  font-weight: 500;
+  font-size: 0.875rem;
+  text-transform: uppercase;
 }
