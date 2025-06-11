@@ -59,6 +59,8 @@ Rails.application.routes.draw do
     resource :user, only: %i[ new create edit update ]
     member do
       post "impersonate"
+    end
+    collection do
       post "stop_impersonating"
     end
   end

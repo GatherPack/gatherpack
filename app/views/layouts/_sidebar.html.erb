@@ -20,7 +20,7 @@
         </div>
         <% if current_user != true_user %>
           <div class="nav-item d-flex align-items-center px-3 pt-1 impersonator">
-            <%= button_to "Stop Impersonating", stop_impersonating_person_path, data: {turbo: false}, class: 'btn btn-danger btn-sm w-100' %>
+            <%= button_to "Stop Impersonating", stop_impersonating_people_path, data: {turbo: false}, class: 'btn btn-danger btn-sm w-100' %>
           </div>
         <% end %>
 
