@@ -1,16 +1,17 @@
 class PagePolicy < ApplicationPolicy
   class Scope < ApplicationPolicy::Scope
     def resolve
+      return scope.where(viewer: "public") unless user.present?
       if user.admin
         scope.all
       else
-        scope.where(team: person.all_teams).or(scope.where(team_id: "")).or(scope.where(viewer: "public"))
+        scope.where(team: person.all_teams).or(scope.where(team_id: "")).or(scope.where(viewer: "public")).or(scope.where(viewer: "user"))
       end
     end
   end
 
   def show?
-    return true if user.admin
+    return true if user.present? && user.admin
     case record.viewer
     when "public"
       true
@@ -28,11 +29,12 @@ class PagePolicy < ApplicationPolicy
   end
 
   def new?
-    user.admin? || person.manager? || person.all_teams.present?
+    user.present? && (user.admin? || person.manager? || person.all_teams.present?)
   end
 
   def update?
-    return true if user.admin
+    return true if user.present? && user.admin
+    return false if user.nil? && record.editor != "public"
     case record.editor
     when "public"
       true
