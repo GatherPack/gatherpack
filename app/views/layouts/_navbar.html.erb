@@ -4,13 +4,15 @@
       <%= image_tag 'logo.svg' %>
       <%= Settings[:title] %>
     </a>
-    <button class="navbar-toggler text-white-50" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
-      <%= i 'bars' %>
-    </button>
+    <% if !current_page?(time_kiosk_path) && current_user.present? %>
+      <button class="navbar-toggler text-white-50" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+        <%= i 'bars' %>
+      </button>
+    <% end %>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0 d-flex align-items-center">
       </ul>
-      <% unless current_page?(time_kiosk_path) %>
+      <% if !current_page?(time_kiosk_path) && current_user.present? %>
         <form class="d-flex" role="search" action="<%= search_path %>">
           <input class="form-control me-2" type="search" name="q" placeholder="Search for anything..." aria-label="Search">
           <button class="btn btn-success" type="submit">Search</button>
