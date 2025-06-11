@@ -33,7 +33,8 @@ class PagePolicy < ApplicationPolicy
   end
 
   def update?
-    return true if user.present? && user.admin
+    return false unless user.present?
+    return true if user.admin
     case record.editor
     when "user"
       user.present?
