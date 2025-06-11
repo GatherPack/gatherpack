@@ -69,8 +69,12 @@ class Person < ApplicationRecord
     Relationship.where(parent_id: id).or(Relationship.where(child_id: id))
   end
 
+  def ledger_ids
+    LedgerOwnership.where(owner: self).pluck(:ledger_id)
+  end
+
   def ledgers
-    Ledger.where(id: LedgerOwnership.where(owner: self).pluck(:ledger_id))
+    Ledger.where(id: ledger_ids)
   end
 
   def identifier_name
