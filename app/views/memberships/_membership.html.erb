@@ -10,7 +10,7 @@
   </div>
   <div class="col-md">
     <%= f.submit 'Save', class: 'btn btn-primary' %>
-    <%= link_to 'Delete', [@team, membership], class: 'btn btn-danger', data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %>
+    <%= link_to 'Delete', [@team, membership], class: 'btn btn-danger', data: { turbo: true, turbo_method: :delete, turbo_confirm: 'Are you sure?' } %>
   </div>
 </div>
 <% end %>
