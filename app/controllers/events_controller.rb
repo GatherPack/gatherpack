@@ -1,5 +1,5 @@
 class EventsController < InternalController
-  before_action :set_event, only: %i[ show edit update destroy ]
+  before_action :set_event, only: %i[ show edit update destroy arrange print ]
 
   # GET /events
   def index
@@ -12,6 +12,22 @@ class EventsController < InternalController
     @q = policy_scope(@event.checkins).ransack(params[:q])
     @checkins = @q.result(distinct: true).page(params[:page])
     @checkin = @event.checkins.build
+  end
+
+  def arrange
+    @field = CheckinField.find(params[:field_id]) rescue nil
+    @responses = CheckinFieldResponse
+      .includes(checkin: :person)
+      .joins(:checkin)
+      .where(checkin_field: @field, checkins: { event_id: @event.id })
+  end
+
+  def print
+    @field = CheckinField.find(params[:field_id]) rescue nil
+    @responses = CheckinFieldResponse
+      .includes(checkin: :person)
+      .joins(:checkin)
+      .where(checkin_field: @field, checkins: { event_id: @event.id })
   end
 
   # GET /events/new

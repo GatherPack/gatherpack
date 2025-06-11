@@ -16,4 +16,12 @@ class PersonPolicy < ApplicationPolicy
   def destroy?
     user.admin?
   end
+
+  def impersonate?
+    user.admin?
+  end
+
+  def stop_impersonating?
+    user.admin?
+  end
 end

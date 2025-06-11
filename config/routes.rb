@@ -36,6 +36,11 @@ Rails.application.routes.draw do
   resources :badge_types
   resources :events do
     resources :checkins, except: %i[ index ]
+    member do
+      get "arrange"
+      get "print"
+      patch "field_update", to: "checkins#field_update"
+    end
     collection do
       post "calendar", to: "events#calendar"
       get "calendar", to: "events#calendar"
@@ -58,6 +63,12 @@ Rails.application.routes.draw do
   resources :people do
     resources :relationships, only: %i[ new create destroy ]
     resource :user, only: %i[ new create edit update ]
+    member do
+      post "impersonate"
+    end
+    collection do
+      post "stop_impersonating"
+    end
   end
 
   if Settings[:local_signup]
