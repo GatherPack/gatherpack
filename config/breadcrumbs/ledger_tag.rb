@@ -1,5 +1,5 @@
 crumb :ledger_tags do
-  link "Ledger_tags", ledger_tags_path
+  link "Ledger Tags", ledger_tags_path
 end
 
 crumb :ledger_tag do |ledger_tag|
