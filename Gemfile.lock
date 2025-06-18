@@ -207,7 +207,7 @@ GEM
     json (2.12.2)
     jwt (2.10.1)
       base64
-    kamal (2.6.1)
+    kamal (2.7.0)
       activesupport (>= 7.0)
       base64 (~> 0.2)
       bcrypt_pbkdf (~> 1.0)
@@ -340,7 +340,7 @@ GEM
       actionpack (>= 4.2)
       omniauth (~> 2.0)
     orm_adapter (0.5.0)
-    ostruct (0.6.1)
+    ostruct (0.6.2)
     paper_trail (16.0.0)
       activerecord (>= 6.1)
       request_store (~> 1.4)
