@@ -1,8 +1,8 @@
-require_relative 'boot'
-ENV['RANSACK_FORM_BUILDER'] = '::SimpleForm::FormBuilder'
-require 'rails/all'
+require_relative "boot"
+ENV["RANSACK_FORM_BUILDER"] = "::SimpleForm::FormBuilder"
+require "rails/all"
 
-require_relative '../lib/settings.rb'
+require_relative "../lib/settings.rb"
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -39,14 +39,14 @@ module Gatherpack
       config.action_mailbox.ingress = :postmark
     end
 
-    config.action_controller.default_url_options = {host: ENV['ROOT_URL'] || "localhost"}
-    config.action_mailer.default_url_options = {host: ENV['ROOT_URL'] || "localhost"}
-    Rails.application.routes.default_url_options[:host] = ENV['ROOT_URL'] || "localhost"
+    config.action_controller.default_url_options = { host: ENV["ROOT_URL"] || "localhost" }
+    config.action_mailer.default_url_options = { host: ENV["ROOT_URL"] || "localhost" }
+    Rails.application.routes.default_url_options[:host] = ENV["ROOT_URL"] || "localhost"
 
-    config.hosts << URI.parse(ENV['ROOT_URL'] || "localhost").host
+    config.hosts << URI.parse(ENV["ROOT_URL"] || "localhost").host
   end
 end
 
-Dir[File.join(Rails.root, 'lib', 'patches', '*.rb')].each do |p|
+Dir[File.join(Rails.root, "lib", "patches", "*.rb")].each do |p|
   require p
 end

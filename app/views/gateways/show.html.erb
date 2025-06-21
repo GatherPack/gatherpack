@@ -5,7 +5,11 @@
     <h1><%= @gateway.identifier_name %></h1>
   </div>
   <div class="card-body">
-    <code><pre><%= JSON.pretty_generate @gateway.configuration %></pre></code>
+    <h2>Configuration</h2>
+    <code data-lang="json"><pre><%= JSON.pretty_generate @gateway.configuration %></pre></code>
+
+    <h2>Webhook URL</h2>
+    <code data-lang="md"><pre><%= webhook_gateway_url(@gateway) %></pre></code>
   </div>
   <div class="card-footer">
     <%= link_to 'Edit', edit_gateway_path(@gateway), class: 'btn btn-warning' %>
