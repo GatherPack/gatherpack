@@ -5,6 +5,16 @@
   &.money-negative { color: $red-600; }
   &.money-zero { color: $gray-700; }
 
+  &.money-failed { 
+    color: $gray-700; 
+    text-decoration: line-through;
+  }
+
+  &.money-pending { 
+    color: $gray-700; 
+    font-style: italic;
+  }
+
   .money-whole { font-weight: bold; }
 }
 

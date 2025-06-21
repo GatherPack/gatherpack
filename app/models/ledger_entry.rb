@@ -1,5 +1,5 @@
 class LedgerEntry < ApplicationRecord
-  belongs_to :ledger
+  belongs_to :ledger, touch: true
   belongs_to :created_by, polymorphic: true
   has_many :ledger_taggings
   has_many :ledger_tags, through: :ledger_taggings
@@ -73,10 +73,6 @@ class LedgerEntry < ApplicationRecord
 
   def fully_split?
     split_difference == 0
-  end
-
-  def gateway!
-    Gateway.find(metadata&.dig("gateway_id"))
   end
 
   def gateway

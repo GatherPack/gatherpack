@@ -58,11 +58,7 @@
           <%= nice_date e.created_at %>
         </div>
         <div class="col-6 col-lg-2 fs-4 text-end">
-          <% if e.finalized %>
-            <%= as_currency e.amount %>
-          <% else %>
-            <strike><em><%= as_currency e.amount %></em></strike>
-          <% end %>
+          <%= as_currency e.amount, failed: e.failed, finalized: e.finalized %>
         </div>
         <div class="col-8 col-lg-3">
           <%= e.remark %>
