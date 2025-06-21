@@ -17,6 +17,10 @@ class LedgerPolicy < ApplicationPolicy
     update?
   end
 
+  def pay?
+    person.admin? || record.team.all_managers.include?(person) || record.owners.include?(person)
+  end
+
   def create?
     person.manager?
   end
