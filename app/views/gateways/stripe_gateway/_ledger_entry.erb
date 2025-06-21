@@ -1,0 +1,8 @@
+<% if ledger_entry.finalized? %>
+  <p>Paid via <%= i 'cc-stripe', family: 'brands' %></p>
+<% else %>
+  <p>
+    Pending via <%= i 'cc-stripe', family: 'brands' %> -
+    <%= link_to "Pay Now", ledger_entry.metadata.dig("stripe_checkout_session", "url") %>
+  </p>
+<% end %>

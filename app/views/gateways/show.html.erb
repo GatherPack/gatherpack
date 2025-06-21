@@ -1,0 +1,14 @@
+<% breadcrumb @gateway %>
+
+<div class="card">
+  <div class="card-header">
+    <h1><%= @gateway.identifier_name %></h1>
+  </div>
+  <div class="card-body">
+    <code><pre><%= JSON.pretty_generate @gateway.configuration %></pre></code>
+  </div>
+  <div class="card-footer">
+    <%= link_to 'Edit', edit_gateway_path(@gateway), class: 'btn btn-warning' %>
+    <%= link_to 'Delete', gateway_path(@gateway), class: 'btn btn-danger', data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %>
+  </div>
+</div>

@@ -4,7 +4,7 @@ class LedgerEntryPolicy < ApplicationPolicy
       if user.admin
         scope.all
       else
-        scope.includes(:ledger).where('ledger.team': person.teams)
+        scope.includes(:ledger).where('ledger.team': person.teams).or(scope.includes(:ledger).where('ledger.id': person.ledger_ids))
       end
     end
   end
@@ -18,14 +18,14 @@ class LedgerEntryPolicy < ApplicationPolicy
   end
 
   def create?
-    person.admin? || record.ledger.team.managers.include?(person)
+    person.admin? || record.ledger.team.all_managers.include?(person)
   end
 
   def update?
-    person.admin? || record.ledger.team.managers.include?(person)
+    person.admin? || record.ledger.team.all_managers.include?(person)
   end
 
   def destroy?
-    person.admin? || record.ledger.team.managers.include?(person)
+    person.admin? || record.ledger.team.all_managers.include?(person)
   end
 end

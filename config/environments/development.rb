@@ -1,5 +1,7 @@
 require "active_support/core_ext/integer/time"
 
+Rails.application.default_url_options = { host: 'localhost', port: 3000 }
+
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
@@ -8,8 +10,8 @@ Rails.application.configure do
   # since you don't have to restart the web server when you make code changes.
   config.enable_reloading = true
 
-  # Do not eager load code on boot.
-  config.eager_load = false
+  # For gateway registration to work correctly, this needs to happen
+  config.eager_load = true
 
   # Show full error reports.
   config.consider_all_requests_local = true

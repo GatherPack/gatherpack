@@ -13,6 +13,6 @@ class Ledger < ApplicationRecord
   end
 
   def refresh_balance
-    update(balance_cents: ledger_entries.where(parent_id: nil).sum(:amount_cents))
+    update(balance_cents: ledger_entries.where(parent_id: nil, finalized: true).sum(:amount_cents))
   end
 end
