@@ -21,6 +21,12 @@ class ApplicationRecord < ActiveRecord::Base
     elsif method_name.to_s.end_with?("_gids=")
       relationship = method_name.to_s.chomp("_gids=")
       assign_global_ids(relationship, args.first)
+    elsif method_name.to_s.end_with?("_gid")
+      relationship = method_name.to_s.chomp("_gid")
+      send(relationship)&.to_global_id&.to_s
+    elsif method_name.to_s.end_with?("_gids")
+      relationship = method_name.to_s.chomp("_gids")
+      send(relationship)&.map { |model| model.to_global_id.to_s }
     else
       super
     end

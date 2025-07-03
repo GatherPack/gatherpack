@@ -178,6 +178,7 @@ GEM
       raabro (~> 1.4)
     globalid (1.2.1)
       activesupport (>= 6.1)
+    hashids (1.0.6)
     hashie (5.0.0)
     http (5.3.1)
       addressable (~> 2.8)
@@ -361,6 +362,9 @@ GEM
       postmark (>= 1.21.3, < 2.0)
     pp (0.6.2)
       prettyprint
+    prefixed_ids (1.8.1)
+      hashids (>= 1.0.0, < 2.0.0)
+      rails (>= 6.0.0)
     pretender (0.6.0)
       actionpack (>= 7.1)
     prettyprint (0.2.0)
@@ -609,6 +613,7 @@ DEPENDENCIES
   pg (~> 1.1)
   pmap (~> 1.1)
   postmark-rails (~> 0.22.1)
+  prefixed_ids (~> 1.8)
   pretender (~> 0.6.0)
   propshaft
   pstore
