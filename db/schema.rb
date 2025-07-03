@@ -166,6 +166,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_06_211114) do
     t.datetime "updated_at", null: false
     t.boolean "locked"
     t.uuid "time_clock_period_id"
+    t.integer "checkin_limit"
     t.index ["event_type_id"], name: "index_events_on_event_type_id"
     t.index ["team_id"], name: "index_events_on_team_id"
     t.index ["time_clock_period_id"], name: "index_events_on_time_clock_period_id"
@@ -287,8 +288,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_06_211114) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "manager", default: false
-    t.uuid "inherited_id"
-    t.index ["inherited_id"], name: "index_memberships_on_inherited_id"
     t.index ["person_id"], name: "index_memberships_on_person_id"
     t.index ["team_id"], name: "index_memberships_on_team_id"
   end
@@ -492,10 +491,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_06_211114) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "join_permission", default: 0
-    t.uuid "parent_team_id"
     t.uuid "parent_id"
     t.index ["parent_id"], name: "index_teams_on_parent_id"
-    t.index ["parent_team_id"], name: "index_teams_on_parent_team_id"
     t.index ["team_type_id"], name: "index_teams_on_team_type_id"
   end
 
@@ -590,7 +587,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_06_211114) do
   add_foreign_key "mailbox_messages", "mailboxes"
   add_foreign_key "memberships", "people"
   add_foreign_key "memberships", "teams"
-  add_foreign_key "memberships", "teams", column: "inherited_id"
   add_foreign_key "relationships", "people", column: "child_id"
   add_foreign_key "relationships", "people", column: "parent_id"
   add_foreign_key "relationships", "relationship_types"
@@ -602,7 +598,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_06_211114) do
   add_foreign_key "solid_queue_scheduled_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
   add_foreign_key "teams", "team_types"
   add_foreign_key "teams", "teams", column: "parent_id"
-  add_foreign_key "teams", "teams", column: "parent_team_id"
   add_foreign_key "time_clock_periods", "teams"
   add_foreign_key "time_clock_punches", "people"
   add_foreign_key "time_clock_punches", "time_clock_periods"
