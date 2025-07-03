@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_06_06_211114) do
+ActiveRecord::Schema[8.0].define(version: 2025_07_03_180857) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -201,7 +201,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_06_211114) do
     t.uuid "parent_id"
     t.jsonb "metadata"
     t.boolean "finalized", default: true
-    t.boolean "failed", default: false
     t.index ["created_by_type", "created_by_id"], name: "index_ledger_entries_on_created_by"
     t.index ["ledger_id"], name: "index_ledger_entries_on_ledger_id"
     t.index ["parent_id"], name: "index_ledger_entries_on_parent_id"
@@ -288,8 +287,20 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_06_211114) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "manager", default: false
+    t.uuid "inherited_id"
+    t.index ["inherited_id"], name: "index_memberships_on_inherited_id"
     t.index ["person_id"], name: "index_memberships_on_person_id"
     t.index ["team_id"], name: "index_memberships_on_team_id"
+  end
+
+  create_table "notifiers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "person_id", null: false
+    t.jsonb "scope"
+    t.jsonb "schedule"
+    t.jsonb "target"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["person_id"], name: "index_notifiers_on_person_id"
   end
 
   create_table "pages", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -491,8 +502,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_06_211114) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "join_permission", default: 0
+    t.uuid "parent_team_id"
     t.uuid "parent_id"
     t.index ["parent_id"], name: "index_teams_on_parent_id"
+    t.index ["parent_team_id"], name: "index_teams_on_parent_team_id"
     t.index ["team_type_id"], name: "index_teams_on_team_type_id"
   end
 
@@ -587,6 +600,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_06_211114) do
   add_foreign_key "mailbox_messages", "mailboxes"
   add_foreign_key "memberships", "people"
   add_foreign_key "memberships", "teams"
+  add_foreign_key "memberships", "teams", column: "inherited_id"
+  add_foreign_key "notifiers", "people"
   add_foreign_key "relationships", "people", column: "child_id"
   add_foreign_key "relationships", "people", column: "parent_id"
   add_foreign_key "relationships", "relationship_types"
@@ -598,6 +613,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_06_211114) do
   add_foreign_key "solid_queue_scheduled_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
   add_foreign_key "teams", "team_types"
   add_foreign_key "teams", "teams", column: "parent_id"
+  add_foreign_key "teams", "teams", column: "parent_team_id"
   add_foreign_key "time_clock_periods", "teams"
   add_foreign_key "time_clock_punches", "people"
   add_foreign_key "time_clock_punches", "time_clock_periods"

@@ -1,5 +1,5 @@
 class Gateway::PostmarkSendingGateway < Gateway
-  Gateway.register(self, :email_delivery)
+  Gateway.register(self, :email_sending)
   store_accessor :configuration, :api_token
   store_accessor :configuration, :sender
 

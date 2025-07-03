@@ -1,5 +1,5 @@
 class Gateway::PostmarkReceivingGateway < Gateway
-  Gateway.register(self, :email_delivery)
+  Gateway.register(self, :email_receiving)
   store_accessor :configuration, :server_token
 
   def fields
@@ -7,7 +7,7 @@ class Gateway::PostmarkReceivingGateway < Gateway
   end
 
   def identifier_icon
-    "mailbox"
+    "envelope-open-text"
   end
 
   def handle_webhook(body, signature)
