@@ -6,7 +6,7 @@ class SearchController < ApplicationController
 
   def combo
     scope = params[:scope].presence || "people events teams badges tokens announcements"
-    @results = search(params[:q], scope).map { |e| { record: e, display: e.identifier_name, value: e.to_global_id.to_s } }
+    @results = search(params[:q], scope).map { |e| { record: e, display: e.identifier_name, value: e.to_global_id.to_s } }.first(12)
   end
 
   private
