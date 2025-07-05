@@ -1,4 +1,5 @@
 class Report < ApplicationRecord
+  has_neat_id :rpt
   has_paper_trail versions: { class_name: "AuditLog" }
 
   validates :name, presence: true

@@ -1,5 +1,5 @@
 class Token < ApplicationRecord
-  has_prefixed_id :tok
+  has_neat_id :tok
   include CanBeHooked
   has_paper_trail versions: { class_name: "AuditLog" }
   belongs_to :tokenable, polymorphic: true, optional: true

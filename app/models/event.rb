@@ -1,4 +1,5 @@
 class Event < ApplicationRecord
+  has_neat_id :evt
   include CanBeHooked
   has_paper_trail versions: { class_name: "AuditLog" }
   belongs_to :event_type

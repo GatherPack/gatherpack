@@ -1,4 +1,5 @@
 class Hook < ApplicationRecord
+  has_neat_id :hook
   has_paper_trail versions: { class_name: "AuditLog" }
 
   validates :name, presence: true

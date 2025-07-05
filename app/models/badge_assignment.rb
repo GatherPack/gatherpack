@@ -1,4 +1,5 @@
 class BadgeAssignment < ApplicationRecord
+  has_neat_id :bda
   include CanBeHooked
   belongs_to :badge
   belongs_to :person

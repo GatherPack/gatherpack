@@ -1,4 +1,5 @@
 class LedgerEntry < ApplicationRecord
+  has_neat_id :le
   belongs_to :ledger
   belongs_to :created_by, polymorphic: true
   has_many :ledger_taggings

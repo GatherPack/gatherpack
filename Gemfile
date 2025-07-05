@@ -121,4 +121,4 @@ gem "dotenv", "~> 3.1"
 
 gem "pretender", "~> 0.6.0"
 
-gem "prefixed_ids", "~> 1.8"
+gem "neat_ids"

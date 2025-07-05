@@ -3,5 +3,5 @@
 
 <div class="form-inputs">
   <%= f.input :name %>
-  <%= f.association :team, collection: policy_scope(current_user.person.managed_teams) %>
+  <%= f.input :team_id, as: :searching_combobox, label: 'Team', scope: "managed_teams", include_blank: admin? %>
 </div>
