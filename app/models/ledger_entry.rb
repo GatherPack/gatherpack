@@ -1,5 +1,7 @@
 class LedgerEntry < ApplicationRecord
   has_neat_id :le
+  include CanBeHooked
+  has_paper_trail versions: { class_name: "AuditLog" }
   belongs_to :ledger, touch: true
   belongs_to :created_by, polymorphic: true
   has_many :ledger_taggings

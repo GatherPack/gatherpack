@@ -1,6 +1,7 @@
 class Membership < ApplicationRecord
   has_neat_id :mbr
   include CanBeHooked
+  has_paper_trail versions: { class_name: "AuditLog" }
   belongs_to :person
   belongs_to :team
 

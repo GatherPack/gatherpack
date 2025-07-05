@@ -1,4 +1,8 @@
 class Gateway < ApplicationRecord
+  has_neat_id :gw
+  include CanBeHooked
+  has_paper_trail versions: { class_name: "AuditLog" }
+
   class << self
     def registry
       @@registry ||= {}

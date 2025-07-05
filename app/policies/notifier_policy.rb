@@ -4,7 +4,7 @@ class NotifierPolicy < ApplicationPolicy
       if user.admin
         scope.all
       else
-        scope.where(team: person.teams).or(scope.where(team_id: ""))
+        scope.where(person: person)
       end
     end
   end
