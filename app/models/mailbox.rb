@@ -1,4 +1,5 @@
 class Mailbox < ApplicationRecord
+  has_neat_id :mbx
   has_many :mailbox_messages
   has_many :mailbox_assignments
 

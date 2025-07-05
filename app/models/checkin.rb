@@ -1,4 +1,5 @@
 class Checkin < ApplicationRecord
+  has_neat_id :cki
   include CanBeHooked
   has_paper_trail versions: { class_name: "AuditLog" }
   belongs_to :person

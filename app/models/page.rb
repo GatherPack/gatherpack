@@ -1,4 +1,5 @@
 class Page < ApplicationRecord
+  has_neat_id :pg
   include CanBeHooked
   has_paper_trail versions: { class_name: "AuditLog" }
   belongs_to :team, optional: true

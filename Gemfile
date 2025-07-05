@@ -122,3 +122,5 @@ gem "stripe", "~> 15.2"
 gem "dotenv", "~> 3.1"
 
 gem "pretender", "~> 0.6.0"
+
+gem "neat_ids"

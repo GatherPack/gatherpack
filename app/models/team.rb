@@ -1,4 +1,5 @@
 class Team < ApplicationRecord
+  has_neat_id :tm
   include CanBeHooked
   has_paper_trail versions: { class_name: "AuditLog" }
   belongs_to :team_type
