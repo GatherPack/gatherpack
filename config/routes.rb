@@ -1,5 +1,4 @@
 Rails.application.routes.draw do  
-  resources :notifiers
   resources :ledger_payments, only: [ :new, :create ]
   resources :gateways do
     member do

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_07_03_180857) do
+ActiveRecord::Schema[8.0].define(version: 2025_06_27_035705) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -291,16 +291,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_03_180857) do
     t.index ["inherited_id"], name: "index_memberships_on_inherited_id"
     t.index ["person_id"], name: "index_memberships_on_person_id"
     t.index ["team_id"], name: "index_memberships_on_team_id"
-  end
-
-  create_table "notifiers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "person_id", null: false
-    t.jsonb "scope"
-    t.jsonb "schedule"
-    t.jsonb "target"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["person_id"], name: "index_notifiers_on_person_id"
   end
 
   create_table "pages", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -601,7 +591,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_03_180857) do
   add_foreign_key "memberships", "people"
   add_foreign_key "memberships", "teams"
   add_foreign_key "memberships", "teams", column: "inherited_id"
-  add_foreign_key "notifiers", "people"
   add_foreign_key "relationships", "people", column: "child_id"
   add_foreign_key "relationships", "people", column: "parent_id"
   add_foreign_key "relationships", "relationship_types"
