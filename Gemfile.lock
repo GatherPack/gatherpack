@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/braddoeswebdev/hotwire_combobox.git
-  revision: 24c8e9f52ce8118c3c5049b0d3704faa3d1f03f8
+  revision: 2bd68964079466a1bb5791f41bcbea3446d49a32
   specs:
     hotwire_combobox (0.4.0)
       platform_agent (>= 1.0.1)
@@ -428,7 +428,7 @@ GEM
       activerecord (>= 6.1.5)
       activesupport (>= 6.1.5)
       i18n
-    rdoc (6.14.1)
+    rdoc (6.14.2)
       erb
       psych (>= 4.0.0)
     regexp_parser (2.10.0)
