@@ -14,7 +14,7 @@ class SearchController < ApplicationController
     else
       params[:attribute].to_sym
     end
-    @results = search(params[:q], scope).map { |e| { record: e, display: e.identifier_name, value: e.send(attr) } }.first(12)
+    @results = search(params[:q], scope).map { |e| { record: e, display: e.identifier_name, value: e.send(attr) } }
   end
 
   private

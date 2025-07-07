@@ -2,7 +2,7 @@
 <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
 <div class="form-inputs">
-  <%= f.association :person, collection: policy_scope(Person), label_method: :display_name, include_blank: false %>
+  <%= f.input :person_id, as: :searching_combobox, scope: 'people', include_blank: false %>
   <%= f.input :notes %>
   <%= f.simple_fields_for :checkin_field_responses do |ff| %>
     <% if ff.object.permission_check(current_user.person) %>
