@@ -19,7 +19,7 @@ class Settings
       @description = description || ""
 
       store.transaction do
-        store[@setting_key] = default_value
+        store[@setting_key] ||= default_value
       end
     end
 
