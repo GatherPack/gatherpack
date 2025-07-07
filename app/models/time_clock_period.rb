@@ -18,10 +18,10 @@ class TimeClockPeriod < ApplicationRecord
   end
 
   def identifier_name
-    "#{name} (#{start_time.strftime("%Y-%m-%d %H:%M:%S")} - #{end_time.strftime("%Y-%m-%d %H:%M:%S")})"
+    "#{name} (#{start_time.strftime("%Y-%m-%d")} - #{end_time.strftime("%Y-%m-%d")})"
   end
 
-  def  identifier_icon
+  def identifier_icon
     "hourglass"
   end
 

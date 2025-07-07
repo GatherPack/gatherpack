@@ -16,12 +16,12 @@
         <%= f.association :event_type %>
       </div>
       <div class="col">
-        <%= f.input :time_clock_period_nid, as: :searching_combobox, label: 'Time Clock Period', scope: "time_clock_periods", include_blank: true %>
+        <%= f.input :time_clock_period_id, as: :searching_combobox, label: 'Time Clock Period', scope: "time_clock_periods", include_blank: true %>
       </div>
     </div>
     <div class="row">
       <div class="col">
-        <%= f.input :team_nid, as: :searching_combobox, label: 'Team', scope: "managed_teams", include_blank: admin? %>
+        <%= f.input :team_id, as: :searching_combobox, label: 'Team', scope: "managed_teams", include_blank: admin? %>
       </div>
     </div>
     <div class="row">

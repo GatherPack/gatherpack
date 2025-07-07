@@ -5,6 +5,7 @@
   <%= f.input :start_time %>
   <%= f.input :end_time %>
   <%= f.input :person_id, as: :searching_combobox, label: 'Person', scope: "managed_people me" %>
+  <%#= TODO JS TO CHANGE COLLECTION OF PEOPLE BASED ON ASSOCIATED TIME CLOCK PERIOD (PARTICULARLY LACK OF OR PERIOD WITH ADDED_BY_TEAM_MEMBER %>
   <%= f.input :time_clock_period_id, as: :searching_combobox, label: 'Time Clock Period', scope: "time_clock_periods" %>
   <%= f.input :note %>
 </div>
