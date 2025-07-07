@@ -42,7 +42,7 @@ erb_lint --lint-all -a
 
 ### Settings
 
-Settings can be added in the `app/models/settings.rb` file in the `initialize` function at the bottom.
+Settings can be added in the `lib/settings.rb` file in the `initialize` function at the bottom.
 Settings follow the format of
 
 ```ruby
