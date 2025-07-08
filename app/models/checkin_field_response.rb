@@ -1,5 +1,7 @@
 class CheckinFieldResponse < ApplicationRecord
   has_neat_id :cfr
+  include CanBeHooked
+  has_paper_trail versions: { class_name: "AuditLog" }
   belongs_to :checkin
   belongs_to :checkin_field
 

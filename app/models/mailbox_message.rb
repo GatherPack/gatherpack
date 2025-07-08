@@ -1,5 +1,7 @@
 class MailboxMessage < ApplicationRecord
   has_neat_id :mxm
+  include CanBeHooked
+  has_paper_trail versions: { class_name: "AuditLog" }
   belongs_to :mailbox
   has_many_attached :attachments
 

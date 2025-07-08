@@ -1,6 +1,7 @@
 class BadgeAssignment < ApplicationRecord
   has_neat_id :bda
   include CanBeHooked
+  has_paper_trail versions: { class_name: "AuditLog" }
   belongs_to :badge
   belongs_to :person
 

@@ -83,10 +83,8 @@ class Settings
     @settings = Hash.new
     add_setting(:title, :string, "Site Name", "GatherPack", nil, "The name of the site")
     add_setting(:time_zone, :time_zone, "Time Zone", "Etc/UTC", nil, "The default time zone")
-
-    add_setting(:from_email, :string, "From Email", "noreply@gatherpack.com", "Email", "Email address that system emails come from")
-    add_setting(:postmark_key, :string, "Postmark API Key", nil, "Email", "API Key for sending email through PostMark")
-    add_setting(:incoming_email_secret, :string, "Incoming Email Secret", "gatheremail", "Email", '"Password" for validating incoming email API requests')
+    add_setting(:infodump_day, :string, "Infodump Day", "Monday", nil, "The day of the week for the infodump to go out")
+    add_setting(:infodump_time, :string, "Infodump Time", "5:30", nil, "The time of day for the infodump to go out (24h format)")
 
     add_setting(:local_auth, :boolean, "Enable Local Users", "true", "Local Auth", "Enable local log in capabilities")
     add_setting(:local_signup, :boolean, "Enable Creating Local Accounts", "true", "Local Auth", "Enable people to sign themselves up with an email & password")
