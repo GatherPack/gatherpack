@@ -3,12 +3,20 @@
 <%= search_form_for @q, url: team_memberships_path(@team), data: {"controller": "turbo_search", "turbo_frame": "results"} do |f| %>
 <div class="card">
   <div class="card-header">
-    <h1>Memberships</h1>
+    <h1>Direct Memberships</h1>
   </div>
   <div class="card-body">
-    <%= f.input :person_display_name_cont, label: 'Name' %>
+    <div class="row">
+      <div class="col">
+        <%= f.input :person_display_name_cont, label: 'Name' %>
+      </div>
+      <div class="col">
+        <%= f.input :manager_eq, label: 'Manager?', as: :select, collection: [['Yes', true], ['No', false]], include_blank: true %>
+      </div>
+    </div>
   </div>
   <div class="card-footer">
+    <%= link_to 'Add Member', new_team_membership_path(@team), class: 'btn btn-success' %>
     <%= f.submit 'Search', class: 'btn btn-primary', data: { action: "turbo_search#search" } %>
     <%= link_to 'Clear Search', request.path, class: "btn btn-dark", data: { action: "turbo_search#clear" } %>
   </div>
@@ -16,30 +24,24 @@
 <% end %>
 
 <%= turbo_frame_tag "results" do %>
-  <div class="dropdown mb-2">
+  <div class="dropdown">
     <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
       Sort By
     </button>
     <ul class="dropdown-menu">
       <li><%= sort_link @q, :manager, "Manager Status", class: "dropdown-item", default_order: :desc %></li>
+      <li><%= sort_link @q, :last_name, "Last Name", class: "dropdown-item" %></li>
+      <li><%= sort_link @q, :first_name, "First Name", class: "dropdown-item" %></li>
+      <li><%= sort_link @q, :birthday, "Age", class: "dropdown-item" %></li>
       <li><%= sort_link @q, :updated_at, "Last Updated", class: "dropdown-item" %></li>
     </ul>
   </div>
 
-  <div id="memberships">
-    <div class="row bg-primary-subtle align-items-center py-1 mb-1">
-      <div class="col-md">
-        Person
-      </div>
-      <div class="col-md">
-        Manager?
-      </div>
-      <div class="col-md">
-        &nbsp;
-      </div>
-    </div>
+  <div id="people" class="row">
     <% @memberships.each do |membership| %>
-      <%= render membership %>
+      <div class="col-6 col-md-2">
+        <%= render membership %>
+      </div>
     <% end %>
   </div>
 
