@@ -4,6 +4,8 @@ class Announcement < ApplicationRecord
   has_paper_trail versions: { class_name: "AuditLog" }
   belongs_to :team, optional: true
 
+  attr_accessor :notify_now
+
   validates :title, presence: true
   validates :content, presence: true
   validates :start_time, presence: true

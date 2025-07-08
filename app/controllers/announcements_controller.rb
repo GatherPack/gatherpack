@@ -57,6 +57,6 @@ class AnnouncementsController < InternalController
 
     # Only allow a list of trusted parameters through.
     def announcement_params
-      params.require(:announcement).permit(:title, :content, :start_time, :end_time, :team_id)
+      params.require(:announcement).permit(:title, :content, :start_time, :end_time, :team_id, :notify_now)
     end
 end
