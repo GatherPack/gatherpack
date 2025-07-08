@@ -11,14 +11,14 @@ class Gateway::PostmarkSendingGateway < Gateway
     "envelopes-bulk"
   end
 
-  def send_later(sender, address, subject, body)
+  def send_later(address, subject, body)
     address = [ address ].flatten
     address.each do |a|
       SendEmailJob.perform_later(a, subject, body)
     end
   end
 
-  def send_message(sender, address, subject, body)
+  def send_message(address, subject, body)
     client = Postmark::ApiClient.new(api_token)
 
     client.deliver(

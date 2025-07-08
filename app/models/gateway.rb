@@ -14,12 +14,18 @@ class Gateway < ApplicationRecord
     end
 
     def any_registered?(svc)
-      registry[svc] ||= []
-      registry[svc].flat_map(&:all).any?
+      registry[svc.to_sym] ||= []
+      registry[svc.to_sym].flat_map(&:all).any?
     end
 
     def registered(svc)
-      registry[svc].flat_map(&:all)
+      registry[svc.to_sym] ||= []
+      registry[svc.to_sym].flat_map(&:all)
+    end
+
+    def [](svc)
+      registry[svc.to_sym] ||= []
+      registry[svc.to_sym].flat_map(&:all).first
     end
   end
 
