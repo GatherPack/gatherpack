@@ -20,13 +20,11 @@
         <% if @ledger.owners.any? %>
           <div>Owned by:</div>
 
-          <ul>
+          <div class="badge-container">
           <% @ledger.owners.each do |o| %>
-            <%= link_to o do %>
-              <li><%= as_badge o %></li>
-            <% end %>
+              <%= as_badge o %>
           <% end %>
-          </ul>
+          </div>
         <% end %>
       </div>
     </div>
@@ -34,6 +32,7 @@
   <div class="card-footer">
     <%= link_to 'Transfer', new_ledger_transfer_path(to_ledger_id: @ledger.id), class: 'btn btn-primary' if policy(@ledger).update? %>
     <%= link_to 'Post New Entry', new_ledger_ledger_entry_path(@ledger), class: 'btn btn-primary' if policy(@ledger).update? %>
+    <%= link_to 'Manage Ownership', ledger_ownerships_path(@ledger), class: 'btn btn-warning' if policy(@ledger).update? %>
     <%= link_to 'Edit', edit_ledger_path(@ledger), class: 'btn btn-warning' if policy(@ledger).update? %>
     <%= link_to 'Delete', @ledger, class: 'btn btn-danger', data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } if policy(@ledger).destroy? %>
   </div>

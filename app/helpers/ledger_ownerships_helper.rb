@@ -1,0 +1,2 @@
+module LedgerOwnershipsHelper
+end
