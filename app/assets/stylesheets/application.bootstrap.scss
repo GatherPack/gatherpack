@@ -122,6 +122,10 @@ a.undecorated {
   text-decoration: none;
 }
 
+.w-10 {
+  width: 10%;
+}
+
 .hw-combobox {
   @extend .form-control;
   border-color: $greige-darkest;
