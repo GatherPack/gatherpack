@@ -6,7 +6,7 @@
     <%= f.input :title %>
   </div>
   <div class="col-md">
-    <%= f.association :team, collection: current_user.person.teams.includes(:team_type).order('team_type.name': :asc, name: :asc), include_blank: admin? %>
+    <%= f.input :team_id, as: :searching_combobox, label: 'Team', scope: "managed_teams", include_blank: admin? %>
   </div>
   <div class="col-md">
     <%= f.input :viewer, as: :select, collection: page_permissions, include_blank: false %>

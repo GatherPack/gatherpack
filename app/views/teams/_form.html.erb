@@ -4,7 +4,7 @@
 <div class="row">
   <div class="col-4">
     <%= f.input :name %>
-    <%= f.association :parent, include_blank: true %>
+    <%= f.input :parent_id, as: :searching_combobox, label: 'Parent Team', scope: "teams", include_blank: true %>
     <%= f.input :color, as: :fancy_color %>
     <%= f.association :team_type, include_blank: false %>
     <%= f.input :join_permission, collection: Team.join_permissions.keys, label_method: :titleize, include_blank: false %>

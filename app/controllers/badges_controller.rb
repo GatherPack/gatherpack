@@ -26,7 +26,7 @@ class BadgesController < InternalController
     @badge = authorize Badge.new(badge_params)
 
     if @badge.save
-      redirect_to @badge, notice: 'Badge was successfully created.'
+      redirect_to @badge, notice: "Badge was successfully created."
     else
       render :new, status: :unprocessable_entity
     end
@@ -35,7 +35,7 @@ class BadgesController < InternalController
   # PATCH/PUT /badges/1
   def update
     if @badge.update(badge_params)
-      redirect_to @badge, notice: 'Badge was successfully updated.', status: :see_other
+      redirect_to @badge, notice: "Badge was successfully updated.", status: :see_other
     else
       render :edit, status: :unprocessable_entity
     end
@@ -44,7 +44,7 @@ class BadgesController < InternalController
   # DELETE /badges/1
   def destroy
     @badge.destroy!
-    redirect_to badges_url, notice: 'Badge was successfully destroyed.', status: :see_other
+    redirect_to badges_url, notice: "Badge was successfully destroyed.", status: :see_other
   end
 
   private

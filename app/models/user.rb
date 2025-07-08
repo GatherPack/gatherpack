@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  has_neat_id :usr
   include CanBeHooked
   has_paper_trail versions: { class_name: "AuditLog" }, ignore: :encrypted_password
   has_one :person

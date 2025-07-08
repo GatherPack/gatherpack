@@ -55,6 +55,6 @@ class TokensController < InternalController
 
     # Only allow a list of trusted parameters through.
     def token_params
-      params.require(:token).permit(:value, :tokenable_gid)
+      params.require(:token).permit(:value, :tokenable_nid)
     end
 end

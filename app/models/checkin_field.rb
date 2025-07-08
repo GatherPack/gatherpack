@@ -1,4 +1,5 @@
 class CheckinField < ApplicationRecord
+  has_neat_id :ckf
   has_paper_trail versions: { class_name: "AuditLog" }
   belongs_to :event_type
   has_many :checkin_field_responses
@@ -7,7 +8,7 @@ class CheckinField < ApplicationRecord
   validates :name, presence: true
 
   def self.ransackable_attributes(auth_object = nil)
-    [ 'name', 'permission', 'updated_at' ]
+    [ "name", "permission", "updated_at" ]
   end
 
   def identifier_name

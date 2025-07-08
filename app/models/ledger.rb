@@ -1,4 +1,5 @@
 class Ledger < ApplicationRecord
+  has_neat_id :leg
   belongs_to :team
   has_many :ledger_ownerships, dependent: :destroy
   has_many :ledger_entries, dependent: :destroy

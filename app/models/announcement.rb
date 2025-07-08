@@ -1,4 +1,5 @@
 class Announcement < ApplicationRecord
+  has_neat_id :ann
   include CanBeHooked
   has_paper_trail versions: { class_name: "AuditLog" }
   belongs_to :team, optional: true

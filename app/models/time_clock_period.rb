@@ -1,4 +1,5 @@
 class TimeClockPeriod < ApplicationRecord
+  has_neat_id :tcpd
   belongs_to :team, optional: true
   has_many :time_clock_punches, dependent: :destroy
   has_many :events, dependent: :nullify
@@ -14,6 +15,14 @@ class TimeClockPeriod < ApplicationRecord
     %w[ team ]
   end
 
+  def identifier_name
+    "#{name} (#{start_time.strftime("%Y-%m-%d")} - #{end_time.strftime("%Y-%m-%d")})"
+  end
+
+  def identifier_icon
+    "hourglass"
+  end
+
   def available_hours
     self.events.map(&:hours).sum
   end
@@ -22,13 +31,13 @@ class TimeClockPeriod < ApplicationRecord
 
   def valid_times
     if start_time.present? && end_time.present?
-      errors.add(:end_time, 'cannot be before start time') if end_time.before? start_time
+      errors.add(:end_time, "cannot be before start time") if end_time.before? start_time
     end
   end
 
   def permissions_make_sense
-    errors.add(:team, "can't be empty if \"team\" managers can add punches to this period") if team.nil? && permission == 'added_by_manager'
-    errors.add(:team, "can't be empty if \"team\" members can add punches to this period") if team.nil? && permission == 'added_by_team_member'
+    errors.add(:team, "can't be empty if \"team\" managers can add punches to this period") if team.nil? && permission == "added_by_manager"
+    errors.add(:team, "can't be empty if \"team\" members can add punches to this period") if team.nil? && permission == "added_by_team_member"
     errors.add(:team, "can't be associated with a period that contains non-team member punches in this period (unlink them first)") if team.present? && TimeClockPunch.all.where(time_clock_period: self).any? { |punch| punch.person.teams.exclude? team }
   end
 end
