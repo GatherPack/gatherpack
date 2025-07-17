@@ -19,19 +19,20 @@ class ReportsController < InternalController
 
   # GET /reports/new
   def new
-    @report = Report.new
+    @report = authorize Report.new
   end
 
   # GET /reports/1/edit
   def edit
+    authorize @report
   end
 
   # POST /reports
   def create
-    @report = Report.new(report_params)
+    @report = authorize Report.new(report_params)
 
     if @report.save
-      redirect_to @report, notice: 'Report was successfully created.'
+      redirect_to @report, notice: "Report was successfully created."
     else
       render :new, status: :unprocessable_entity
     end
@@ -39,8 +40,9 @@ class ReportsController < InternalController
 
   # PATCH/PUT /reports/1
   def update
+    authorize @report
     if @report.update(report_params)
-      redirect_to @report, notice: 'Report was successfully updated.', status: :see_other
+      redirect_to @report, notice: "Report was successfully updated.", status: :see_other
     else
       render :edit, status: :unprocessable_entity
     end
@@ -49,7 +51,7 @@ class ReportsController < InternalController
   # DELETE /reports/1
   def destroy
     @report.destroy!
-    redirect_to reports_url, notice: 'Report was successfully destroyed.', status: :see_other
+    redirect_to reports_url, notice: "Report was successfully destroyed.", status: :see_other
   end
 
   private

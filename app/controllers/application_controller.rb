@@ -9,7 +9,11 @@ class ApplicationController < ActionController::Base
     current_user&.admin
   end
 
-  helper_method :admin?
+  def architect?
+    current_user&.architect
+  end
+
+  helper_method :admin?, :architect?
 
   rescue_from Pundit::NotAuthorizedError, with: :pundit_not_authorized
 
@@ -21,6 +25,10 @@ class ApplicationController < ActionController::Base
 
   def check_for_admin
     redirect_to root_path, notice: "You are not allowed to do that" unless admin?
+  end
+
+  def check_for_architect
+    redirect_to root_path, notice: "You are not allowed to do that" unless architect?
   end
 
   def pundit_not_authorized

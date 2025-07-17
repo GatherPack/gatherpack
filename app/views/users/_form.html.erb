@@ -15,4 +15,7 @@
 <% if current_user.admin? %>
   <p><strong>Sitewide Privileges</strong></p>
   <%= f.input :admin %>
+  <% if current_user.architect? %>
+    <%= f.input :architect %>
+  <% end %>
 <% end %>

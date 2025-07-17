@@ -8,7 +8,7 @@
     <code data-lang="ruby"><pre><%= @hook.code %></pre></code>
   </div>
   <div class="card-footer">
-    <%= link_to 'Edit', edit_hook_path(@hook), class: 'btn btn-warning' %>
+    <%= link_to 'Edit', edit_hook_path(@hook), class: 'btn btn-warning' if policy(@hook).edit? %>
     <%= link_to 'Delete', @hook, class: 'btn btn-danger', data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %>
   </div>
 </div>
