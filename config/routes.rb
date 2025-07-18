@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   resources :ledger_entry_links
   resources :ledger_tags
   resources :ledgers do
+    resources :ownerships, controller: "ledger_ownerships"
     resources :ledger_entries, except: [ :index ] do
       member do
         post "split"
