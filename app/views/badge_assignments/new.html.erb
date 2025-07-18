@@ -1,0 +1,16 @@
+<% breadcrumb :new, "badge_assignment" %>
+
+<%= simple_form_for([@badge, @badge_assignment]) do |f| %>
+  <div class="card">
+    <div class="card-header">
+      <h1>New <%= as_badge @badge %> <%= @badge.name %> assignment</h1>
+    </div>
+    <div class="card-body">
+      <%= render "form", f: f %>
+    </div>
+    <div class="card-footer">
+      <%= link_to "Cancel", badge_badge_assignments_path(@badge), class: 'btn btn-warning' %>
+      <%= f.button :submit, class: 'btn btn-primary' %>
+    </div>
+  </div>
+<% end %>

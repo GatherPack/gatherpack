@@ -5,41 +5,27 @@ class BadgeAssignmentPolicy < ApplicationPolicy
     end
   end
 
-  def create?
-    case record.badge.permission
-    when "added_by_admin"
-      user.admin?
-    when "added_by_admin_or_self"
-      true
-    when "added_by_manager"
-      (person.all_managed_teams.include?(record.badge.team)) || user.admin
-    when "added_by_manager_or_self"
-      true
-    when "added_by_current_member"
-      (person.all_teams.include?(record.badge.team)) || user.admin
-    when "has_account"
-      true
+  def index?
+    if record.is_a?(Badge)
+      BadgePolicy.new(user, record).edit?
+    else
+      BadgePolicy.new(user, record.badge).edit?
     end
+  end
+
+  def show?
+    BadgePolicy.new(user, record.badge).edit?
+  end
+
+  def create?
+    BadgePolicy.new(user, record).create?
   end
 
   def update?
-    case record.badge.permission
-    when "added_by_admin"
-      user.admin?
-    when "added_by_admin_or_self"
-      user.admin? || person == record.person
-    when "added_by_manager"
-      (person.all_managed_teams.include?(record.badge.team) && record.person.all_teams.include?(record.badge.team)) || user.admin
-    when "added_by_manager_or_self"
-      (person.all_managed_teams.include?(record.badge.team) && record.person.all_teams.include?(record.badge.team)) || user.admin || person == record.person
-    when "added_by_current_member"
-      (person.all_teams.include?(record.badge.team) && record.person.all_teams.include?(record.badge.team)) || user.admin
-    when "has_account"
-      true
-    end
+    BadgePolicy.new(user, record.badge).update?
   end
 
   def destroy?
-    create?
+    BadgePolicy.new(user, record.badge).update?
   end
 end
