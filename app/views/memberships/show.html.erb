@@ -1,0 +1,54 @@
+<% breadcrumb @team, @membership %>
+
+<div class="card">
+  <div class="card-header">
+    <h1><%= @membership.identifier_name %></h1>
+  </div>
+  <div class="card-body">
+    <div class="row align-items-center">
+      <div class="col-md-2">
+        <%= link_to image_tag(get_avatar_url(@membership.person.avatar), class: 'person-img'), person_path(@membership.person) %>
+      </div>
+      <div class="col-md-6">
+        <p>
+          <%= link_to @membership.person.display_name, person_path(@membership.person) %> is a <%= @membership.manager? ? 'manager' : 'member' %> of <%= as_badge @membership.team %>
+        </p>
+
+        <% if @membership.team.parent.present? %>
+            <p>
+              That means <%= @membership.person.display_name %> is also a member of:
+            </p>
+          <% p = @membership.team %>
+          <div class="badge-container">
+            <% while p = p.parent %>
+              <%= as_badge p %>
+            <% end %>
+          </div>
+        <% end %>
+
+        <% if @membership.manager? && @membership.team.children.present? %>
+          <p>
+            That means <%= @membership.person.display_name %> can also manage:
+          </p>
+          <div class="badge-container">
+            <% @membership.team.children.order(name: :asc).each do |child_team| %>
+              <%= as_badge child_team %>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+      <div class="col-md-4">
+        <p><%= @membership.person.display_name %> has <%= pluralize @membership.person.memberships.count - 1, 'other membership' %>.</p>
+        <div class="badge-container">
+          <% @membership.person.memberships.each do |membership| %>
+            <%= as_badge membership unless membership == @membership %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card-footer">
+    <%= link_to 'Edit', edit_team_membership_path(@team, @membership), class: 'btn btn-warning' %>
+    <%= link_to 'Delete', [@team, @membership], class: 'btn btn-danger', data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %>
+  </div>
+</div>

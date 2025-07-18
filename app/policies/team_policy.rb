@@ -31,6 +31,6 @@ class TeamPolicy < ApplicationPolicy
 
   private
   def has_perms
-    user.admin || record.all_managers.include?(user.person)
+    user.admin || record.all_managers_and_admins.include?(user.person)
   end
 end

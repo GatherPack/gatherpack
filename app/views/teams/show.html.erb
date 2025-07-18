@@ -5,6 +5,34 @@
     <h1><%= i @team.team_type.icon %> <%= @team.identifier_name %></h1>
   </div>
   <div class="card-body">
+    <div class="row mb-3">
+      <div class="col-4">
+        <h2>Managers</h2>
+        <div class="d-flex flex-row align-items-center flex-wrap">
+          <% @team.all_managers.order(display_name: :asc).each do |person| %>
+            <div class="p-1 w-10">
+              <%= link_to person, title: person.display_name do %>
+                <%= image_tag get_avatar_url(person.avatar), class: 'person-img' %>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+      <div class="col-8">
+        <% if @team.parent.present? %>
+          <h2>Part Of</h2>
+          <%= as_badge @team.parent %>
+        <% end %>
+        <% if policy_scope(@team.children).any? %>
+          <h2>Sub-Teams</h2>
+          <div class="badge-container">
+            <% @team.children.order(name: :asc).each do |child_team| %>
+              <%= as_badge child_team %>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </div>
     <div class="row">
       <div class="col">
         <div class="mb-3">
@@ -50,16 +78,6 @@
           </ul>
           <%= link_to 'Show All Team Events', events_path(q: { team_id_eq: @team.id }) %>
         </div>
-      </div>
-      <div class="col">
-        <% if @team.parent.present? %>
-          <p><%= i 'turn-up' %><%= link_to @team.parent.name, @team.parent %></p>
-        <% end %>
-        <% if policy_scope(@team.children).present? %>
-          <% policy_scope(@team.children).each do |t| %>
-            <p><%= i 'turn-down' %><%= link_to t.name, t %></p>
-          <% end %>
-        <% end %>
       </div>
     </div>
   </div>

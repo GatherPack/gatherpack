@@ -11,4 +11,11 @@ class Membership < ApplicationRecord
   def self.ransackable_associations(auth_object = nil)
     [ "person" ]
   end
+
+  def identifier_icon
+  end
+
+  def identifier_name
+    "#{person.display_name} => #{team.name}"
+  end
 end
