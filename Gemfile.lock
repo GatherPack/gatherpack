@@ -110,7 +110,7 @@ GEM
     bigdecimal (3.2.2)
     bindata (2.5.1)
     bindex (0.8.1)
-    brakeman (7.0.2)
+    brakeman (7.1.0)
       racc
     builder (3.3.0)
     capybara (3.40.0)
