@@ -88,7 +88,7 @@ class EventsController < InternalController
         birthdays = ransacked_people.where("DATE_PART('doy', birthday) >= ? AND DATE_PART('doy', birthday) <= ? AND DATE_PART('year', birthday) <= ?", start_time_doy >= end_time_doy ? 0 : start_time_doy, end_time_doy, start_time_year)
           .or(ransacked_people.where("DATE_PART('doy', birthday) >= ? AND DATE_PART('doy', birthday) <= ? AND DATE_PART('year', birthday) <= ?", start_time_doy >= end_time_doy ? start_time_doy : 367, 366, start_time_year))
         notes = ransacked_notes.where("start_time >= ? AND start_time <= ?", start_time, end_time)
-          .or(ransacked_events.where("start_time <= ? AND end_time >= ?", start_time, start_time))
+          .or(ransacked_notes.where("start_time <= ? AND end_time >= ?", start_time, start_time))
 
         render json: Jbuilder.new { |json|
           json.array! events do |event|
