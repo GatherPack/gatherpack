@@ -2,7 +2,7 @@
 
 <div class="card">
   <div class="card-header">
-    <h1><%= @calendar_note.identifier_name %><% if @calendar_note.noteable %> - <%= link_to @calendar_note.noteable.identifier_name, @calendar_note.noteable %><% end %></h1>
+    <h1><%= @calendar_note.identifier_name %><% if @calendar_note.noteable %> - <%= as_badge @calendar_note.noteable %><% end %></h1>
   </div>
   <div class="card-body">
     <p><%= @calendar_note.start_time.to_fs(:long) %><% if @calendar_note.end_time.present? %> to <%= @calendar_note.end_time.to_fs(:long) %><% end %></p>
