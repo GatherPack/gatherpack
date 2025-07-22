@@ -1,0 +1,16 @@
+<% breadcrumb @calendar_note %>
+
+<%= simple_form_for(@calendar_note) do |f| %>
+<div class="card">
+  <div class="card-header">
+    <h1>Editing <%= @calendar_note.identifier_name %></h1>
+  </div>
+  <div class="card-body">
+    <%= render "form", f: f %>
+  </div>
+  <div class="card-footer">
+    <%= link_to "Cancel", @calendar_note, class: 'btn btn-warning' %>
+    <%= f.button :submit, class: 'btn btn-primary' %>
+  </div>
+</div>
+<% end %>

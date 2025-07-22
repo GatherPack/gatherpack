@@ -1,0 +1,11 @@
+<div class="card" id="<%= dom_id calendar_note %>">
+  <div class="card-header">
+    <%= link_to calendar_note.identifier_name, calendar_note, 'data-turbo': false %>
+  </div>
+  <div class="card-body">
+    <p><%= calendar_note.start_time.to_fs(:long) %><% if calendar_note.end_time.present? %> to <%= calendar_note.end_time.to_fs(:long) %><% end %></p>
+    <% if calendar_note.noteable %>
+      <p><strong>Associated Person/Team:</strong> <%= calendar_note.noteable.identifier_name %></p>
+    <% end %>
+  </div>
+</div>

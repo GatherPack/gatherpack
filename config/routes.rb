@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :calendar_notes
   resources :ledger_transfers, only: [ :new, :create ]
   resources :ledger_entry_links
   resources :ledger_tags
