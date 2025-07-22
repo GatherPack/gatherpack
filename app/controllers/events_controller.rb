@@ -73,7 +73,8 @@ class EventsController < InternalController
         ransacked_people = policy_scope(Person).ransack(
           display_name_i_cont: params[:q][:name_i_cont]
         ).result(distinct: true)
-        ransacked_people = ransacked_people.joins(:memberships).where(memberships: { team_id: params[:q][:team_id_eq] }) if params[:q][:team_id_eq].present?
+        ransacked_people.joins(:memberships).where(memberships: { team_id: params[:q][:team_id_eq] }) if params[:q][:team_id_eq].present?
+        ransacked_notes = policy_scope(CalendarNote).ransack(params[:q]).result(distinct: true)
 
         start_time = params[:start_time]
         end_time = params[:end_time]
@@ -86,6 +87,8 @@ class EventsController < InternalController
           .or(ransacked_events.where("start_time <= ? AND end_time >= ?", start_time, start_time))
         birthdays = ransacked_people.where("DATE_PART('doy', birthday) >= ? AND DATE_PART('doy', birthday) <= ? AND DATE_PART('year', birthday) <= ?", start_time_doy >= end_time_doy ? 0 : start_time_doy, end_time_doy, start_time_year)
           .or(ransacked_people.where("DATE_PART('doy', birthday) >= ? AND DATE_PART('doy', birthday) <= ? AND DATE_PART('year', birthday) <= ?", start_time_doy >= end_time_doy ? start_time_doy : 367, 366, start_time_year))
+        notes = ransacked_notes.where("start_time >= ? AND start_time <= ?", start_time, end_time)
+          .or(ransacked_events.where("start_time <= ? AND end_time >= ?", start_time, start_time))
 
         render json: Jbuilder.new { |json|
           json.array! events do |event|
@@ -116,6 +119,21 @@ class EventsController < InternalController
 
             json.extendedProps do
               json.icon "fa-cake-candles"
+            end
+          end
+
+          json.array! notes do |note|
+            json.id note.id
+            json.title note.identifier_name + if note.noteable then " - " + note.noteable.identifier_name else "" end
+            json.allDay note.end_time.nil?
+            json.start note.start_time
+            json.end note.end_time
+            json.url calendar_note_url(note)
+            json.backgroundColor "#efad03"
+            json.textColor "#6d6753"
+
+            json.extendedProps do
+              json.icon "fa-note-sticky"
             end
           end
         }.target!
