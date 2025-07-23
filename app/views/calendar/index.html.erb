@@ -1,0 +1,57 @@
+<% breadcrumb :calendar %>
+
+<%= search_form_for @q, data: {"controller": "turbo_search", "turbo_frame": "results"} do |f| %>
+<div class="card">
+  <div class="card-header">
+    <h1>Calendar</h1>
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col">
+        <%= f.input :name_i_cont, label: 'Name' %>
+      </div>
+      <div class="col">
+        <%= f.input :location_i_cont, label: 'Location' %>
+      </div>
+      <div class="col">
+        <%= f.input :event_type_id_eq, label: 'Event Type', as: :select, collection: EventType.all %>
+      </div>
+      <div class="col">
+        <%= f.input :team_id_eq, label: 'Teams', as: :select, collection: policy_scope(Team) %>
+      </div>
+      <div class="col">
+        <%= f.input :time_clock_period_id_eq, label: 'Time Clock Period', as: :select, collection: policy_scope(TimeClockPeriod) %>
+      </div>
+    </div>
+  </div>
+  <div class="card-footer">
+    <div class="float-end">
+      <!-- TODO: be able to enable and disable certain items from renderings on calendar
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" name="q[birthdays]" id="birthdays" checked>
+        <label class="form-check-label me-1" for="birthdays">Show Birthdays</label>
+        <input class="form-check-input" type="checkbox" name="q[events]" id="events" checked>
+        <label class="form-check-label me-1" for="events">Show Events</label>
+        <input class="form-check-input" type="checkbox" name="q[notes]" id="notes" checked>
+        <label class="form-check-label" for="notes">Show Notes</label>
+      </div>
+      -->
+    </div>
+    <%= link_to "New Event", new_event_path, class: 'btn btn-success' if policy(Event).new? %>
+    <%= link_to "New Note", new_calendar_note_path, class: 'btn btn-success' if policy(CalendarNote).new? %>
+    <%= f.submit 'Search', class: 'btn btn-primary', data: { action: "turbo_search#search" } %>
+    <%= link_to 'Clear Search', request.path, class: "btn btn-dark", data: { action: "turbo_search#clear" } %>
+  </div>
+</div>
+<% end %>
+
+<%= turbo_frame_tag "results" do %>
+  <div class="card">
+    <div class="card-body">
+      <div data-controller="calendar" data-calendar-timezone-value="<%= Settings[:time_zone].presence || 'UTC' %>">
+        <div id="calendar" data-turbo="false">
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

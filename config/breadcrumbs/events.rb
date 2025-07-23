@@ -4,7 +4,7 @@ end
 
 crumb :event do |event|
   link event.identifier_name, event
-  parent :events
+  parent :calendar
 end
 
 crumb :checkin do |checkin|

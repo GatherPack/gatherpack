@@ -36,9 +36,11 @@ Rails.application.routes.draw do
       get "print"
       patch "field_update", to: "checkins#field_update"
     end
+  end
+  resources :calendar, only: %i[ index ] do
     collection do
-      post "calendar", to: "events#calendar"
-      get "calendar", to: "events#calendar"
+      post "calendar", to: "calendar#calendar"
+      get "calendar", to: "calendar#calendar"
     end
   end
   resources :event_types
