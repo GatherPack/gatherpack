@@ -33,12 +33,25 @@
 <% end %>
 
 <%= turbo_frame_tag "results" do %>
-  <div class="card">
-    <div class="card-body">
-      <div data-controller="calendar" data-calendar-timezone-value="<%= Settings[:time_zone].presence || 'UTC' %>">
-        <div id="calendar" data-turbo="false">
-        </div>
-      </div>
-    </div>
+  <div class="dropdown">
+    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+        Sort By
+    </button>
+    <ul class="dropdown-menu">
+      <li><%= sort_link @q, :name, "Name", class: "dropdown-item" %></li>
+      <li><%= sort_link @q, :start_time, "Start Time", class: "dropdown-item" %></li>
+      <li><%= sort_link @q, :end_time, "End Time", class: "dropdown-item" %></li>
+      <li><%= sort_link @q, :updated_at, "Last Updated", class: "dropdown-item" %></li>
+    </ul>
   </div>
+
+  <div id="calendar_notes" class="row">
+    <% @events.each do |event| %>
+      <div class="col-md-3">
+        <%= render event %>
+      </div>
+    <% end %>
+  </div>
+
+  <%= paginate @events %>
 <% end %>

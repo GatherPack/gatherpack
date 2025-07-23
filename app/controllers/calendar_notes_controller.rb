@@ -44,7 +44,7 @@ class CalendarNotesController < InternalController
   # DELETE /calendar_notes/1
   def destroy
     @calendar_note.destroy!
-    redirect_to calendar_notes_url, notice: 'Calendar note was successfully destroyed.', status: :see_other
+    redirect_to calendar_index_url, notice: 'Calendar note was successfully destroyed.', status: :see_other
   end
 
   private

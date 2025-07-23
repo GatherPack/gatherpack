@@ -4,6 +4,7 @@ class EventsController < InternalController
   # GET /events
   def index
     @q = policy_scope(Event).ransack(params[:q])
+    @q.sorts = "name asc" if @q.sorts.empty?
     @events = @q.result(distinct: true).page(params[:page]).includes(:event_type)
   end
 
@@ -62,7 +63,7 @@ class EventsController < InternalController
   # DELETE /events/1
   def destroy
     @event.destroy!
-    redirect_to events_url, notice: "Event was successfully destroyed.", status: :see_other
+    redirect_to calendar_index_url, notice: "Event was successfully destroyed.", status: :see_other
   end
 
   private
