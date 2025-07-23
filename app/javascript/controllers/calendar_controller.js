@@ -54,7 +54,7 @@ export default class extends Controller {
             "Content-Type": "application/json",
             "X-CSRF-Token": document.querySelector("meta[name='csrf-token']").content
           },
-          body: JSON.stringify({ "start_time": info.start.toISOString(), "end_time": info.end.toISOString(), "q": this.parse_params(document.getElementsByTagName("turbo-frame")[0])})
+          body: JSON.stringify(Object.assign({ "start_time": info.start.toISOString(), "end_time": info.end.toISOString(), "q": this.parse_params(document.getElementsByTagName("turbo-frame")[0])}, this.get_show_settings()))
         }).then((response) => response.json())
           .then((data) => {
             successfulCallback(data)
@@ -63,6 +63,22 @@ export default class extends Controller {
     })
 
     calendar.render()
+
+    document.querySelectorAll(".form-check-input").forEach((checkbox) => {
+      if (!(checkbox.id.match(/[a-z]+-check/))) { return }
+      
+      checkbox.addEventListener("change", () => {
+        calendar.refetchEvents()
+      })
+    })
+  }
+
+  get_show_settings() {
+    return {
+      birthdays: document.getElementById("birthdays-check")?.checked ?? true,
+      events: document.getElementById("events-check")?.checked ?? true,
+      notes: document.getElementById("notes-check")?.checked ?? true
+    }
   }
 
   parse_params(el) {
