@@ -11,7 +11,7 @@ class Checkin < ApplicationRecord
   validate :check_limit
 
   before_update :check_attributes
-  before_validation :set_up_fields
+  before_validation :refresh_fields
 
   attr_accessor :created_by
 
@@ -27,15 +27,18 @@ class Checkin < ApplicationRecord
     "#{person.identifier_name}'s checkin"
   end
 
-  private
-
-  def set_up_fields
+  def refresh_fields
     event.event_type.checkin_fields.each do |field|
       unless checkin_field_responses.any? { |r| r.checkin_field_id == field.id }
-        checkin_field_responses.build(checkin: self, checkin_field: field)
+        checkin_field_responses.build(checkin: self, checkin_field: field).save
       end
     end
+    checkin_field_responses.each do |response|
+      response.delete unless event.event_type.checkin_fields.any? { |f| f.id == response.checkin_field_id }
+    end
   end
+
+  private
 
   def check_attributes
     self.checkin_field_responses.each do |r|
