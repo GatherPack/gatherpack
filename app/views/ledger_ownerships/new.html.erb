@@ -3,7 +3,7 @@
 <%= simple_form_for(@ledger_ownership) do |f| %>
   <div class="card">
     <div class="card-header">
-      <h1>New ledger ownership</h1>
+      <h1>Add New Owner for <%= @ledger.name %></h1>
     </div>
     <div class="card-body">
       <%= render "form", f: f %>

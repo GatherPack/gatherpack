@@ -2,6 +2,5 @@
 <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
 <div class="form-inputs">
-  <%= f.input :ledger_id, as: :searching_combobox, scope: 'ledgers' %>
-  <%= f.input :owner_nid, as: :searching_combobox, scope: 'people events' %>
+  <%= f.input :owner_nid, as: :searching_combobox, scope: 'people events', label: 'Owner' %>
 </div>

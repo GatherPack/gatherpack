@@ -14,7 +14,7 @@ class LedgerOwnershipsController < InternalController
 
   # GET /ledger_ownerships/new
   def new
-    @ledger_ownership = authorize LedgerOwnership.new
+    @ledger_ownership = authorize @ledger.ledger_ownerships.build
   end
 
   # GET /ledger_ownerships/1/edit
@@ -24,7 +24,7 @@ class LedgerOwnershipsController < InternalController
 
   # POST /ledger_ownerships
   def create
-    @ledger_ownership = authorize LedgerOwnership.new(ledger_ownership_params)
+    @ledger_ownership = authorize @ledger.ledger_ownerships.build(ledger_ownership_params)
 
     if @ledger_ownership.save
       redirect_to ledger_ownership_path(@ledger, @ledger_ownership), notice: "Ledger ownership was successfully created."
@@ -60,6 +60,6 @@ class LedgerOwnershipsController < InternalController
 
     # Only allow a list of trusted parameters through.
     def ledger_ownership_params
-      params.require(:ledger_ownership).permit(:ledger_id, :owner_nid)
+      params.require(:ledger_ownership).permit(:owner_nid)
     end
 end
