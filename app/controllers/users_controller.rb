@@ -11,7 +11,7 @@ class UsersController < InternalController
     @person.user = @user
 
     if @user.save
-      redirect_to @person, notice: 'User information was successfully updated.', status: :see_other
+      redirect_to @person, notice: "User information was successfully updated.", status: :see_other
     else
       render :new, status: :unprocessable_entity
     end
@@ -22,7 +22,7 @@ class UsersController < InternalController
 
   def update
     if @user.update(user_params)
-      redirect_to @person, notice: 'User information was successfully updated.', status: :see_other
+      redirect_to @person, notice: "User information was successfully updated.", status: :see_other
       if current_user == @user
         bypass_sign_in @user
       end
@@ -41,6 +41,9 @@ class UsersController < InternalController
     end
 
     def user_params
-      params.require(:user).permit(:id, :email, :password, :password_confirmation, :admin, :person_id, :old_password)
+      fields = [ :email, :password, :password_confirmation, :person_id, :old_password ]
+      fields << :admin if current_user.admin?
+      fields << :architect if current_user.architect?
+      params.require(:user).permit(*fields)
     end
 end

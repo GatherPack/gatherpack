@@ -18,7 +18,7 @@
 
 <%= f.input :content, wrapper_html: { class: 'code-editor' }, input_html: { rows: 12, data: { lang: "html" } } %>
 
-<% if admin? %>
+<% if architect? %>
   <div class="alert alert-danger">
     <%= f.input :dynamic, label: 'Enable ERB Parsing?' %>  
   </div>
