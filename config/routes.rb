@@ -47,7 +47,7 @@ Rails.application.routes.draw do
   end
   resources :variables
   resources :teams do
-    resources :memberships, only: %i[ index update destroy ]
+    resources :memberships
   end
   resources :settings, only: %i[ index ] do
     post "update", on: :collection, as: "update"
