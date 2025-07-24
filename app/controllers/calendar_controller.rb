@@ -4,7 +4,7 @@ class CalendarController < ApplicationController
 
   def calendar
     respond_to do |format|
-      format.html { redirect_to events_url }
+      format.html { redirect_to calendar_index_path }
       format.json do
         start_time = params[:start_time]
         end_time = params[:end_time]
