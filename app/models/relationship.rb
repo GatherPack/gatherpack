@@ -1,4 +1,5 @@
 class Relationship < ApplicationRecord
+  has_neat_id :rel
   include CanBeHooked
   has_paper_trail versions: { class_name: "AuditLog" }
   belongs_to :relationship_type

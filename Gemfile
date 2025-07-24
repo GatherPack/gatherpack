@@ -85,7 +85,7 @@ gem "ransack", "~> 4.1"
 
 gem "kaminari", "~> 1.2"
 
-gem "color", "~> 1.8"
+gem "color", "~> 2.0"
 
 gem "pundit", "~> 2.3"
 
@@ -122,3 +122,5 @@ gem "stripe", "~> 15.2"
 gem "dotenv", "~> 3.1"
 
 gem "pretender", "~> 0.6.0"
+
+gem "neat_ids"

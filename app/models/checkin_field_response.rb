@@ -1,4 +1,5 @@
 class CheckinFieldResponse < ApplicationRecord
+  has_neat_id :cfr
   belongs_to :checkin
   belongs_to :checkin_field
 

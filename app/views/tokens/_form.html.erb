@@ -3,6 +3,5 @@
 
 <div class="form-inputs">
   <%= f.input :value %>
-  <%= label_tag "token[tokenable_gid]", "Assign to" %>
-  <%= combobox_tag "token[tokenable_gid]", combo_search_path(scope: "people hooks"), render_in: { partial: 'search/result' } %>
+  <%= f.input :tokenable_nid, as: :searching_combobox, label: 'Assign To', scope: "people hooks" %>
 </div>

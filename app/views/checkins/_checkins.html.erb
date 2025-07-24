@@ -21,6 +21,7 @@
 </div>
 <% end %>
 
+<h2 class="mt-3">Checkins (<%= checkins.count %><% if @event.checkin_limit.present? && @event.checkin_limit > 0 %>/<%= @event.checkin_limit %><% end %>)</h2>
 <%= turbo_frame_tag "results" do %>
   <div id="checkins" class="row">
     <% checkins.each do |checkin| %>

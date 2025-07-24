@@ -13,6 +13,11 @@
         Where: <%= @event.location %>
       </p>
     <% end %>
+    <% if @event.checkin_limit.present? && @event.checkin_limit > 0 %>
+      <p>
+        Checkin Limit: <%= @event.checkin_limit %>
+      </p>
+    <% end %>
     <% if @event.time_clock_period.present? %>
       <p>
         <%= as_badge @event.time_clock_period %>

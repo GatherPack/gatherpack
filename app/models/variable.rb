@@ -1,4 +1,5 @@
 class Variable < ApplicationRecord
+  has_neat_id :var
   has_paper_trail versions: { class_name: "AuditLog" }
 
   TYPES = %w[ string int float structure ]

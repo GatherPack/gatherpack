@@ -16,7 +16,7 @@
   </div>
   <div class="col-md-6">
     <%= f.association :badge_type %>
-    <%= f.association :team, collection: current_user.person.all_managed_teams, include_blank: admin? %>
+    <%= f.input :team_id, as: :searching_combobox, label: 'Team', scope: "teams", include_blank: admin? %>
     <%= f.input :permission, as: :select, collection: Badge.permissions.keys, label_method: :titleize, include_blank: false %>
   </div>
 </div>

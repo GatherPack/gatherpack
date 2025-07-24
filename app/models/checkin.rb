@@ -1,4 +1,5 @@
 class Checkin < ApplicationRecord
+  has_neat_id :cki
   include CanBeHooked
   has_paper_trail versions: { class_name: "AuditLog" }
   belongs_to :person
@@ -7,6 +8,7 @@ class Checkin < ApplicationRecord
   accepts_nested_attributes_for :checkin_field_responses
 
   validates :person, presence: true, uniqueness: { scope: :event, message: "has already been checked in" }
+  validate :check_limit
 
   before_update :check_attributes
   before_validation :set_up_fields
@@ -40,6 +42,14 @@ class Checkin < ApplicationRecord
       if !r.permission_check(self.created_by)
         r.response = r.response_was
       end
+    end
+  end
+
+  def check_limit
+    limit = self.event.checkin_limit || 0
+
+    if limit > 0 && self.event.checkins.count >= limit
+      errors.add(:base, "Unable to checkin, checkin count exceeds checkin limit for this event.")
     end
   end
 end

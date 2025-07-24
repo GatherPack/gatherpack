@@ -68,6 +68,10 @@ Rails.application.configure do
   # config.generators.apply_rubocop_autocorrect_after_generate!
 
   config.mission_control.jobs.http_basic_auth_enabled = false
+  config.action_mailer.default_url_options = { host: "localhost", port: 3000 }
+
+  config.hosts << "gpstaging.frc461.xyz"
+  config.hosts << "laptoptestapp.sldghmr.xyz"
 
   Rails.application.configure do
     config.secret_key_base = ENV["SECRET_KEY_BASE"] || SecureRandom.hex(64)

@@ -1,4 +1,5 @@
 class Badge < ApplicationRecord
+  has_neat_id :bdg
   include CanBeHooked
   has_paper_trail versions: { class_name: "AuditLog" }
   belongs_to :badge_type

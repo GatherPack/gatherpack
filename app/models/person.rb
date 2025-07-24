@@ -1,4 +1,5 @@
 class Person < ApplicationRecord
+  has_neat_id :per
   include CanBeHooked
   has_paper_trail versions: { class_name: "AuditLog" }
   belongs_to :user, optional: true

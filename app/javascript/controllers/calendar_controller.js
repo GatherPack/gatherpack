@@ -4,13 +4,14 @@ import FullCalendar from "fullcalendar"
 // Connects to data-controller="calendar"
 export default class extends Controller {
   static values = {
-    timezone: String
+    timezone: String,
+    defaultView: String,
   }
 
   connect() {
     const calendarEl = document.getElementById("calendar")
     const calendar = new FullCalendar.Calendar(calendarEl, {
-      initialView: "dayGridMonth",
+      initialView: this.defaultViewValue || "dayGridMonth",
       editable: false,
       fixedWeekCount: false,
       weekNumbers: true,
@@ -20,7 +21,7 @@ export default class extends Controller {
       headerToolbar: {
         left: "prev,next " + "today",
         center: "title",
-        right: "dayGridMonth,timeGridWeek,listMonth"
+        right: "listMonth,dayGridMonth,timeGridWeek"
       },
 
       buttonText: {
