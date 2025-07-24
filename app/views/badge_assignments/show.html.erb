@@ -1,0 +1,23 @@
+<% breadcrumb @badge_assignment %>
+
+<div class="card">
+  <div class="card-header">
+    <h1><%= @badge_assignment.identifier_name %></h1>
+  </div>
+  <div class="card-body">
+    <div class="row align-items-center">
+      <div class="col-6 col-md-2">
+        <%= render @badge_assignment.person %>
+      </div>
+      <div class="col-3 col-md-2 fs-1">
+        <%= as_badge @badge_assignment.badge %>
+      </div>
+      <div class="col">
+        <p><strong>Assigned on:</strong> <%= @badge_assignment.created_at.strftime("%B %d, %Y") %></p>
+      </div>
+    </div>
+  </div>
+  <div class="card-footer">
+    <%= link_to 'Delete', [@badge_assignment.badge, @badge_assignment], class: 'btn btn-danger', data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %>
+  </div>
+</div>
