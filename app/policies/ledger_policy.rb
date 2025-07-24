@@ -22,10 +22,10 @@ class LedgerPolicy < ApplicationPolicy
   end
 
   def update?
-    person.admin? || record.team.all_managers.include?(person)
+    person.admin? || record.team.all_managers_and_admins.include?(person)
   end
 
   def destroy?
-    person.admin? || record.team.all_managers.include?(person)
+    person.admin? || record.team.all_managers_and_admins.include?(person)
   end
 end
