@@ -17,12 +17,22 @@ class Team < ApplicationRecord
   validates :name, presence: true
   validates :join_permission, inclusion: { in: join_permissions.keys }
 
+  scope :top_level, -> { where(parent_id: nil) }
+
+  def self.ransackable_scopes(auth_object = nil)
+    [ :top_level ]
+  end
+
+  def self.ransackable_conditions(auth_object = nil)
+    [ "team_type_id", "parent_id" ]
+  end
+
   def self.ransackable_attributes(auth_object = nil)
-    [ "name", "team_type_id", "updated_at", "people.count" ]
+    [ "name", "team_type_id", "updated_at", "people.count", "parent_id", "join_permission" ]
   end
 
   def self.ransackable_associations(auth_object = nil)
-    [ "team_type" ]
+    [ "team_type", "parent" ]
   end
 
   def all_descendant_ids
@@ -41,25 +51,38 @@ class Team < ApplicationRecord
     parent ? [ parent ] + parent.all_ancestors : []
   end
 
-  def all_people
-    inherited_manager_ids = Team.where(id: all_ancestor_ids)
-      .joins(:memberships)
-      .where(memberships: { manager: true })
+  def ancestor_manager_ids
+    Person.joins(:memberships)
+      .where(memberships: { team_id: all_ancestor_ids, manager: true })
       .select("people.id")
+  end
 
+  def descendant_member_ids
     Person.joins(:memberships)
       .where(memberships: { team_id: all_descendant_ids + [ id ] })
-      .or(Person.where(id: inherited_manager_ids))
+      .select("people.id")
+      .distinct
+  end
+
+  def all_people
+    Person.joins(:memberships)
+      .where(memberships: { team_id: all_descendant_ids + [ id ] })
+      .or(Person.where(id: ancestor_manager_ids))
       .distinct
   end
 
   def all_managers
     ancestor_ids = [ id ] + all_ancestor_ids
+    Person.joins(:memberships).joins(:user).where(memberships: { team_id: ancestor_ids, manager: true }).distinct
+  end
+
+  def all_managers_and_admins
+    ancestor_ids = [ id ] + all_ancestor_ids
     Person.joins(:memberships).joins(:user).where(memberships: { team_id: ancestor_ids, manager: true }).or(Person.where(user: { admin: true })).distinct
   end
 
   def manager?(person)
-    all_managers.include?(person)
+    all_managers_and_admins.include?(person)
   end
 
   def identifier_icon

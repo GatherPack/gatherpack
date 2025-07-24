@@ -9,7 +9,6 @@ Rails.application.configure do
   config.enable_reloading = true
 
   # For gateway registration to work correctly, this needs to happen
-  # Do not eager load code on boot.
   config.eager_load = true
 
   # Show full error reports.

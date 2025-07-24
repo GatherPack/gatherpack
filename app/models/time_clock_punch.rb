@@ -42,7 +42,7 @@ class TimeClockPunch < ApplicationRecord
       true
     else
       if time_clock_period.team.present?
-        errors.add(:person, "is not a member of the team that the selected period is part of") unless person.teams.include? time_clock_period.team
+        errors.add(:person_id, "is not a member of the team that the selected period is part of") unless person.all_teams.include? time_clock_period.team
       end
       valid = case time_clock_period.permission
       when "added_by_admin"
@@ -50,7 +50,7 @@ class TimeClockPunch < ApplicationRecord
       when "added_by_manager"
           created_by.all_managed_teams.include? time_clock_period.team
       when "added_by_team_member"
-          created_by.teams.include? time_clock_period.team
+          created_by.all_teams.include? time_clock_period.team
       when "added_by_user"
           true
       end

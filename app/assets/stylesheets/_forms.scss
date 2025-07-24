@@ -11,6 +11,12 @@
   }
 }
 
+.form-control:disabled, .hw-combobox:disabled, .form-select:disabled, select.form-control:disabled, textarea.form-control:disabled {
+  background-color: darken($greige-light, 5%);
+  color: $greige-darkest;
+  border-color: $greige-darkest;
+}
+
 .code-editor textarea.form-control {
   font-family: $font-family-monospace;
   background-color: $greige-darkest;

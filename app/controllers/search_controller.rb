@@ -24,6 +24,10 @@ class SearchController < ApplicationController
     results = []
     results += policy_scope(Person).ransack(first_name_or_last_name_or_display_name_cont: params[:q]).result(distinct: true) if scope.include?("people")
     results += current_user.person.all_managed_people.ransack(first_name_or_last_name_or_display_name_cont: params[:q]).result(distinct: true) if scope.include?("managed_people")
+    team_people_ids = scope.select { |s| s.start_with?("team_people:") }.map { |s| s.split(":").last }
+    team_people_ids.each do |team_id|
+      results += policy_scope(Team.find(team_id).all_people).ransack(first_name_or_last_name_or_display_name_cont: params[:q]).result(distinct: true)
+    end
     results += Person.where(id: current_user.person.id).ransack(first_name_or_last_name_or_display_name_cont: params[:q]).result(distinct: true) if scope.include?("me")
     results += policy_scope(Event).ransack(name_or_description_cont: params[:q]).result(distinct: true) if scope.include?("events")
     results += policy_scope(Team).ransack(name_cont: params[:q]).result(distinct: true) if scope.include?("teams")

@@ -2,6 +2,5 @@
 <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
 <div class="form-inputs">
-  <%= f.input :value %>
-  <%= f.input :tokenable_nid, as: :searching_combobox, label: 'Assign To', scope: "people hooks" %>
+  <%= f.input :person_id, as: :searching_combobox, scope: @badge.team ? "team_people:#{@badge.team.id}" : "managed_people" %>
 </div>

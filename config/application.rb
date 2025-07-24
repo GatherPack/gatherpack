@@ -34,6 +34,7 @@ module Gatherpack
 
     config.generators do |g|
       g.orm :active_record, primary_key_type: :uuid
+      g.jbuilder false
     end
 
     if Settings[:postmark_key]

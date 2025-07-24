@@ -1,7 +1,7 @@
 module PagesHelper
   def format_page_content(page)
     if page.dynamic
-      simple_format ERB.new(page.content).result(binding)
+      ERB.new(page.content).result(binding).html_safe
     else
       simple_format page.content
     end
@@ -10,11 +10,11 @@ module PagesHelper
   def page_permissions
     permissions = %w[user team]
     if current_user.person.manager?
-      permissions << 'manager'
+      permissions << "manager"
     end
     if current_user.person.admin?
-      permissions.unshift 'public'
-      permissions << 'admin'
+      permissions.unshift "public"
+      permissions << "admin"
     end
     permissions
   end
