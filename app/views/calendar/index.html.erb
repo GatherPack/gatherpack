@@ -8,23 +8,23 @@
   <div class="card-body">
     <div class="row">
       <div class="col">
-        <%= label_tag :name_i_cont, "Name", class: "form-label required" %>
+        <%= label_tag :name_i_cont, "Name", class: "form-label" %>
         <%= text_field_tag :name_i_cont, nil, class: "form-control", name: "q[name_i_cont]" %>
       </div>
       <div class="col">
-        <%= label_tag :location_i_cont, "Location", class: "form-label required" %>
+        <%= label_tag :location_i_cont, "Location", class: "form-label" %>
         <%= text_field_tag :location_i_cont, nil, class: "form-control", name: "q[location_i_cont]" %>
       </div>
       <div class="col">
-        <%= label_tag :event_type_id_eq, "Event Type", class: "form-label required" %>
+        <%= label_tag :event_type_id_eq, "Event Type", class: "form-label" %>
         <%= select_tag :event_type_id_eq, options_from_collection_for_select(EventType.all, "id", "name"), class: "form-select", name: "q[event_type_id_eq]", include_blank: true %>
       </div>
       <div class="col">
-        <%= label_tag :team_id_eq, "Team", class: "form-label required" %>
+        <%= label_tag :team_id_eq, "Team", class: "form-label" %>
         <%= select_tag :team_id_eq, options_from_collection_for_select(policy_scope(Team), "id", "name"), class: "form-select", name: "q[team_id_eq]", include_blank: true %>
       </div>
       <div class="col">
-        <%= label_tag :time_clock_period_id_eq, "Time Clock Period", class: "form-label required" %>
+        <%= label_tag :time_clock_period_id_eq, "Time Clock Period", class: "form-label" %>
         <%= select_tag :time_clock_period_id_eq, options_from_collection_for_select(policy_scope(TimeClockPeriod), "id", "name"), class: "form-select", name: "q[time_clock_period_id_eq]", include_blank: true %>
       </div>
     </div>
