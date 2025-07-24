@@ -29,6 +29,10 @@ class Event < ApplicationRecord
     "calendar"
   end
 
+  def to_combobox_display
+    "#{name} (#{start_time.strftime("%Y-%m-%d %H:%M")})"
+  end
+
   private
 
   def valid_times
