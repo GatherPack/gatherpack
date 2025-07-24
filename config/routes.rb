@@ -26,7 +26,7 @@ Rails.application.routes.draw do
   resources :tokens
   resources :hooks
   resources :badges do
-    resources "badge_assignments", only: %i[ index ]
+    resources "badge_assignments"
   end
   resources :badge_types
   resources :events do
@@ -50,7 +50,7 @@ Rails.application.routes.draw do
   end
   resources :variables
   resources :teams do
-    resources :memberships, only: %i[ index update destroy ]
+    resources :memberships
   end
   resources :settings, only: %i[ index ] do
     post "update", on: :collection, as: "update"
