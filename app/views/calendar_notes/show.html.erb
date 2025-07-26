@@ -1,0 +1,18 @@
+<% breadcrumb @calendar_note %>
+
+<div class="card">
+  <div class="card-header">
+    <h1><%= @calendar_note.identifier_name %><% if @calendar_note.noteable %> - <%= as_badge @calendar_note.noteable %><% end %></h1>
+  </div>
+  <div class="card-body">
+    <p><%= @calendar_note.start_time.to_fs(:long) %><% if @calendar_note.end_time.present? %> to <%= @calendar_note.end_time.to_fs(:long) %><% end %></p>
+    <% if @calendar_note.description.present? %>
+      <hr>
+      <%= @calendar_note.description %>
+    <% end %>
+  </div>
+  <div class="card-footer">
+    <%= link_to 'Edit', edit_calendar_note_path(@calendar_note), class: 'btn btn-warning' %>
+    <%= link_to 'Delete', @calendar_note, class: 'btn btn-danger', data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %>
+  </div>
+</div>

@@ -12,6 +12,7 @@ class Person < ApplicationRecord
   has_many :tokens, as: :tokenable
   has_many :ledger_ownerships, dependent: :destroy, as: :owner
   has_many :time_clock_punches, dependent: :destroy
+  has_many :calendar_notes, as: :noteable
   before_save :check_display_name
   accepts_nested_attributes_for :user
   has_one_attached :avatar
