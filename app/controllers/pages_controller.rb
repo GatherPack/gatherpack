@@ -26,7 +26,7 @@ class PagesController < ApplicationController
     @page = authorize Page.new(page_params)
 
     if @page.save
-      redirect_to @page, notice: 'Page was successfully created.'
+      redirect_to @page, notice: "Page was successfully created."
     else
       render :new, status: :unprocessable_entity
     end
@@ -35,7 +35,7 @@ class PagesController < ApplicationController
   # PATCH/PUT /pages/1
   def update
     if @page.update(page_params)
-      redirect_to @page, notice: 'Page was successfully updated.', status: :see_other
+      redirect_to @page, notice: "Page was successfully updated.", status: :see_other
     else
       render :edit, status: :unprocessable_entity
     end
@@ -44,7 +44,7 @@ class PagesController < ApplicationController
   # DELETE /pages/1
   def destroy
     @page.destroy!
-    redirect_to pages_url, notice: 'Page was successfully destroyed.', status: :see_other
+    redirect_to pages_url, notice: "Page was successfully destroyed.", status: :see_other
   end
 
   private
@@ -55,6 +55,8 @@ class PagesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def page_params
-      params.require(:page).permit(:title, :content, :viewer, :editor, :dynamic, :team_id)
+      fields = [ :title, :content, :viewer, :editor, :team_id ]
+      fields << :dynamic if current_user&.architect?
+      params.require(:page).permit(*fields)
     end
 end

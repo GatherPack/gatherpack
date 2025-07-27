@@ -132,3 +132,7 @@ input.datetime {
 .cm-editor.cm-focused .cm-selectionBackground {
   background-color: scale-color($greige-dark, $alpha: -50%) !important;
 }
+
+fieldset:last-child {
+  @extend .mb-0;
+}
