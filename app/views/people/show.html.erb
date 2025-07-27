@@ -36,7 +36,11 @@
           <div class="mb-3">
             <h3>Badges</h3>
             <div class="row">
-              <% if @person.user&.admin? %>
+              <% if @person.user&.architect? %>
+                <div class="col-4 col-xl-2 mb-3 fs-3 justify-content-center">
+                  <span class="badge" title="Site Architect" style="background-color: black; color: #d52; border: thick solid #b21;"><%= i 'screwdriver-wrench' %></span>
+                </div>
+              <% elsif @person.user&.admin? %>
                 <div class="col-4 col-xl-2 mb-3 fs-3 justify-content-center">
                   <span class="badge" title="Site Admin" style="background-color: black; color: #dd2; border: thick solid #bb1;"><%= i 'crown' %></span>
                 </div>
