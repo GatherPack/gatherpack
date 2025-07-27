@@ -5,5 +5,5 @@ end
 
 crumb :ledger_ownership do |ledger_ownership|
   link ledger_ownership.identifier_name, ledger_ownership_path(ledger_ownership.ledger, ledger_ownership)
-  parent :ledger, ledger_ownership.ledger
+  parent :ledger_ownerships, ledger_ownership.ledger
 end
