@@ -44,7 +44,7 @@ class TimeKioskController < ApplicationController
       end
 
       if current_punches.empty?
-        @time_clock_periods = TimeClockPeriod.where(team: @person.teams).or(TimeClockPeriod.where(team: nil)).where("start_time <= ? AND end_time >= ?", Time.now, Time.now)
+        @time_clock_periods = TimeClockPeriod.where(team: @person.all_teams).or(TimeClockPeriod.where(team: nil)).where("start_time <= ? AND end_time >= ?", Time.now, Time.now)
 
         if @time_clock_periods.empty?
           TimeClockPunch.create(person: @person, start_time: Time.now, time_clock_period: nil)

@@ -30,6 +30,8 @@ module ApplicationHelper
       ledger_tag_as_badge(obj)
     when TimeClockPeriod
       time_clock_period_as_badge(obj, opt)
+    when Membership
+      membership_as_badge(obj)
     else
       raise "Tried to display a #{obj.class} as a badge but couldn't!"
     end.html_safe

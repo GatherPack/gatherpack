@@ -10,11 +10,11 @@ class BadgePolicy < ApplicationPolicy
   end
 
   def new?
-    person.all_managed_teams.present? || user.admin
+     user.admin || person.all_managed_teams.present?
   end
 
   def create?
-    person.all_managed_teams.include?(record.team) || user.admin
+    user.admin || (record.badge.team && person.all_managed_teams.include?(record.badge.team))
   end
 
   def update?

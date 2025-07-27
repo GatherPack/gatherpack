@@ -1,11 +1,18 @@
 class MembershipsController < InternalController
   before_action :set_team
-  before_action :set_membership, only: %i[ update destroy ]
+  before_action :set_membership, only: %i[ show edit update destroy ]
 
   # GET /memberships
   def index
     @q = policy_scope(Membership).where(team: @team).ransack(params[:q])
     @memberships = @q.result(distinct: true).includes(:person).page(params[:page])
+  end
+
+  def show
+  end
+
+  def new
+    @membership = authorize Membership.new(team: @team)
   end
 
   # POST /memberships
@@ -14,16 +21,19 @@ class MembershipsController < InternalController
     @membership = authorize Membership.new(membership_params)
 
     if @membership.save
-      redirect_to team_memberships_path(@team), notice: 'Membership was successfully created.'
+      redirect_to team_memberships_path(@team), notice: "Membership was successfully created."
     else
       render :new, status: :unprocessable_entity
     end
   end
 
+  def edit
+  end
+
   # PATCH/PUT /memberships/1
   def update
     if @membership.update(membership_params)
-      redirect_to team_memberships_path(@team), notice: 'Membership was successfully updated.', status: :see_other
+      redirect_to team_memberships_path(@team), notice: "Membership was successfully updated.", status: :see_other
     else
       render :edit, status: :unprocessable_entity
     end
@@ -32,7 +42,7 @@ class MembershipsController < InternalController
   # DELETE /memberships/1
   def destroy
     @membership.destroy!
-    redirect_to team_memberships_path(@team), notice: 'Membership was successfully destroyed.', status: :see_other
+    redirect_to team_memberships_path(@team), notice: "Membership was successfully destroyed.", status: :see_other
   end
 
   private
