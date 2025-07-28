@@ -39,6 +39,7 @@ class ApplicationRecord < ActiveRecord::Base
   private
 
   def assign_global_id(relationship, gid)
+    return nil unless gid.present?
     model = NeatIds.find(gid)
     if model
       send("#{relationship}=", model)
