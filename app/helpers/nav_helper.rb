@@ -5,7 +5,9 @@ module NavHelper
       data['turbo-method'] = method
     end
     tag.div class: 'nav-item' do
-      if (path == '/' && request.path == '/') || (path != '/' && request.path.starts_with?(path))
+      if (path == '/' && request.path == '/') ||
+          (path != '/' && request.path.starts_with?(path)) || 
+          (path == '/calendar' && request.path.starts_with?("/events"))
         link_to path, class: 'active', data: data do
           icon_text(icon, link)
         end

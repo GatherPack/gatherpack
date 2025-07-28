@@ -1,14 +1,16 @@
-Rails.application.routes.draw do  
+Rails.application.routes.draw do
   resources :ledger_payments, only: [ :new, :create ]
   resources :gateways do
     member do
-      post 'webhook'
+      post "webhook"
     end
   end
+  resources :calendar_notes
   resources :ledger_transfers, only: [ :new, :create ]
   resources :ledger_entry_links
   resources :ledger_tags
   resources :ledgers do
+    resources :ownerships, controller: "ledger_ownerships"
     resources :ledger_entries, except: [ :index ] do
       member do
         post "split"
@@ -41,9 +43,11 @@ Rails.application.routes.draw do
       get "print"
       patch "field_update", to: "checkins#field_update"
     end
+  end
+  resources :calendar, only: %i[ index ] do
     collection do
-      post "calendar", to: "events#calendar"
-      get "calendar", to: "events#calendar"
+      post "calendar", to: "calendar#calendar"
+      get "calendar", to: "calendar#calendar"
     end
   end
   resources :event_types
