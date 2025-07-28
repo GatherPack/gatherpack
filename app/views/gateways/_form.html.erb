@@ -1,0 +1,16 @@
+
+
+<div class="form-inputs">
+  <%= f.hidden_field :type, value: @gateway.type %>
+  <div class="mb-3">
+    <%= f.label "gateway[name]", "Name", class: "form-label" %>
+    <%= f.text_field "gateway[name]", class: "form-control", value: @gateway.name %>
+  </div>
+
+  <% @gateway.fields.each do |fd| %>
+    <div class="mb-3">
+      <%= f.label "gateway[#{fd}]", fd, class: "form-label" %>
+      <%= f.text_field "gateway[#{fd}]", class: "form-control", value: @gateway.send(fd.to_sym) %>
+    </div>
+  <% end %>
+</div>

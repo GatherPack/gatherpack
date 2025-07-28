@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  resources :ledger_payments, only: [ :new, :create ]
+  resources :gateways do
+    member do
+      post "webhook"
+    end
+  end
   resources :calendar_notes
   resources :ledger_transfers, only: [ :new, :create ]
   resources :ledger_entry_links

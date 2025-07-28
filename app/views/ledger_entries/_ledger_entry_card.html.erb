@@ -4,10 +4,18 @@
   </div>
   <div class="card-body">
     <div class="row align-items-center">
-      <div class="col">
+      <div class="col-lg-6">
         <div class="fs-4">
           <%= ledger_entry.remark %>
         </div>
+
+        <div class="fs-3">
+          <%= as_currency ledger_entry.amount, failed: ledger_entry.failed, finalized: ledger_entry.finalized %>
+        </div>
+
+        <% if ledger_entry.gateway %>
+          <%= render "gateways/#{ledger_entry.gateway.gateway_name.underscore}/ledger_entry", ledger_entry: ledger_entry %>
+        <% end %>
 
         <div>
           <% if ledger_entry.approved %>
@@ -17,10 +25,6 @@
           <% end %>
         </div>
 
-        <div class="fs-3">
-          <%= as_currency ledger_entry.amount %>
-        </div>
-
         <% if ledger_entry.split? %>
           <% if !ledger_entry.fully_split? %>
             <%= i 'triangle-exclamation' %> Split off by <%= as_currency ledger_entry.split_difference %>!
@@ -28,7 +32,7 @@
         <% end %>
       </div>
 
-      <div class="col">
+      <div class="col-lg-6">
         <dl>
           <% if ledger_entry.parent.present? %>
             <dt>Part of</dt>
@@ -51,6 +55,8 @@
             <%= as_badge tag %>
           <% end %>
         </div>
+
+        <% if current_user.admin %><code><pre><%= JSON.pretty_generate ledger_entry.metadata %></pre></code><% end %>
       </div>
     </div>
   </div>

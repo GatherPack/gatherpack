@@ -1,6 +1,6 @@
 class LedgerEntry < ApplicationRecord
   has_neat_id :le
-  belongs_to :ledger
+  belongs_to :ledger, touch: true
   belongs_to :created_by, polymorphic: true
   has_many :ledger_taggings
   has_many :ledger_tags, through: :ledger_taggings
@@ -17,7 +17,7 @@ class LedgerEntry < ApplicationRecord
 
   before_save :mirror_amount
   after_save :refresh_ledger
-  before_destroy :destroy_linked_entries
+  around_destroy :update_associated_entries
 
   scope :deposits, -> { where("amount_cents >= 0") }
   scope :expenses, -> { where("amount_cents < 0") }
@@ -30,7 +30,7 @@ class LedgerEntry < ApplicationRecord
     LedgerEntry.where(id: (ledger_entry_links.flat_map(&:ledger_entries).map(&:id) - [ id ]))
   end
 
-  def destroy_linked_entries
+  def update_associated_entries
     links = ledger_entry_links
     entries = links.flat_map(&:ledger_entries)
     linkings = links.flat_map(&:ledger_entry_linkings)
@@ -40,6 +40,8 @@ class LedgerEntry < ApplicationRecord
     links.each(&:delete)
     taggings.each(&:delete)
     entries.each(&:delete)
+
+    yield
 
     ledgers.each(&:refresh_balance)
   end
@@ -72,5 +74,10 @@ class LedgerEntry < ApplicationRecord
 
   def fully_split?
     split_difference == 0
+  end
+
+  def gateway
+    return nil unless metadata&.dig("gateway_id")
+    Gateway.find(metadata&.dig("gateway_id"))
   end
 end

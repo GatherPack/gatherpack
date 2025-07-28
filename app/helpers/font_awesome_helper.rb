@@ -1,5 +1,9 @@
 module FontAwesomeHelper
   def i(icon, family: nil, size: nil)
+    if icon.is_a? Array
+      family = icon[1]
+      icon = icon[0]
+    end
     family ||= "solid"
     klass = "fa-fw fa-#{family}"
     klass += " " + size if size

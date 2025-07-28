@@ -1,7 +1,10 @@
 module LedgersHelper
   def as_currency(amount, opts = {})
     return "-" unless amount.present?
-    content_tag :span, class: [ "money", "money-#{money_amount_class(amount)}" ] do
+    classes = [ "money", "money-#{money_amount_class(amount)}" ]
+    classes << "money-failed" if opts[:failed]
+    classes << "money-pending" if opts[:finalized] == false
+    content_tag :span, class: classes do
       amount.format(opts.merge(
         html_wrap: true,
         sign_positive: true
