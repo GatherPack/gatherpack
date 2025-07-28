@@ -20,7 +20,7 @@ class CheckinField < ApplicationRecord
   private
 
   def create_checkin_field_responses
-    event_type.events.where("starts_at > ?", Time.current).each do |event|
+    event_type.events.where("start_time > ?", Time.current).each do |event|
       event.checkins.each do |checkin|
         checkin.refresh_fields
       end
