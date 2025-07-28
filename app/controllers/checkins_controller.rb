@@ -9,10 +9,12 @@ class CheckinsController < InternalController
   # GET /checkins/new
   def new
     @checkin = authorize @event.checkins.build
+    @checkin.refresh_fields
   end
 
   # GET /checkins/1/edit
   def edit
+    @checkin.refresh_fields
   end
 
   # POST /checkins

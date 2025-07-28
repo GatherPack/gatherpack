@@ -7,11 +7,23 @@ class CheckinField < ApplicationRecord
 
   validates :name, presence: true
 
+  after_create :create_checkin_field_responses
+
   def self.ransackable_attributes(auth_object = nil)
     [ "name", "permission", "updated_at" ]
   end
 
   def identifier_name
     "#{event_type.name} / #{name}"
+  end
+
+  private
+
+  def create_checkin_field_responses
+    event_type.events.where("starts_at > ?", Time.current).each do |event|
+      event.checkins.each do |checkin|
+        checkin.refresh_fields
+      end
+    end
   end
 end

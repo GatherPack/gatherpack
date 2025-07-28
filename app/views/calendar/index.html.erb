@@ -1,0 +1,81 @@
+<% breadcrumb :calendar %>
+
+<%= form_tag calendar_index_path, method: :get, data: { "controller": "turbo_search", "turbo_frame": "results" } do %>
+<div class="card">
+  <div class="card-header">
+    <h1>Calendar</h1>
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col">
+        <%= label_tag :name_i_cont, "Name", class: "form-label" %>
+        <%= text_field_tag :name_i_cont, nil, class: "form-control", name: "q[name_i_cont]" %>
+      </div>
+      <div class="col">
+        <%= label_tag :location_i_cont, "Location", class: "form-label" %>
+        <%= text_field_tag :location_i_cont, nil, class: "form-control", name: "q[location_i_cont]" %>
+      </div>
+      <div class="col">
+        <%= label_tag :event_type_id_eq, "Event Type", class: "form-label" %>
+        <%= select_tag :event_type_id_eq, options_from_collection_for_select(EventType.all, "id", "name"), class: "form-select", name: "q[event_type_id_eq]", include_blank: true %>
+      </div>
+      <div class="col">
+        <%= label_tag :team_id_eq, "Team", class: "form-label" %>
+        <%= select_tag :team_id_eq, options_from_collection_for_select(policy_scope(Team), "id", "name"), class: "form-select", name: "q[team_id_eq]", include_blank: true %>
+      </div>
+      <div class="col">
+        <%= label_tag :time_clock_period_id_eq, "Time Clock Period", class: "form-label" %>
+        <%= select_tag :time_clock_period_id_eq, options_from_collection_for_select(policy_scope(TimeClockPeriod), "id", "name"), class: "form-select", name: "q[time_clock_period_id_eq]", include_blank: true %>
+      </div>
+    </div>
+  </div>
+  <div class="card-footer">
+    <%= link_to "New Event", new_event_path, class: 'btn btn-success' if policy(Event).new? %>
+    <%= link_to "New Note", new_calendar_note_path, class: 'btn btn-success' if policy(CalendarNote).new? %>
+    <%= submit_tag 'Search', class: 'btn btn-primary', data: { action: "turbo_search#search" } %>
+    <%= link_to 'Clear Search', request.path, class: "btn btn-dark", data: { action: "turbo_search#clear" } %>
+    <div class="float-end">
+      <%= link_to "All Events", events_path, class: 'btn btn-info' %>
+      <%= link_to "All Notes", calendar_notes_path, class: 'btn btn-info' %>
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#calendarViewModal">
+        Calendar View Settings
+      </button>
+      <div class="modal fade" id="calendarViewModal" tabindex="-1" aria-labelledby="calendarViewModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="calendarViewModalLabel">Calendar View Settings</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="calendar-birthdays">
+                <label class="form-check-label me-1" for="calendar-birthdays">Show Birthdays</label>
+                <input class="form-check-input" type="checkbox" id="calendar-events">
+                <label class="form-check-label me-1" for="calendar-events">Show Events</label>
+                <input class="form-check-input" type="checkbox" id="calendar-notes">
+                <label class="form-check-label" for="calendar-notes">Show Notes</label>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary" id="calendar-settings-submit" data-bs-dismiss="modal">Save changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<% end %>
+
+<%= turbo_frame_tag "results" do %>
+  <div class="card">
+    <div class="card-body">
+      <div data-controller="calendar" data-calendar-timezone-value="<%= Settings[:time_zone].presence || 'UTC' %>">
+        <div id="calendar" data-turbo="false">
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

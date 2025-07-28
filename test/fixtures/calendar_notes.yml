@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyString
+  description: MyText
+  start_time: 2025-07-22
+  end_time: 2025-07-22
+  noteable: one
+  noteable_type: Noteable
+
+two:
+  title: MyString
+  description: MyText
+  start_time: 2025-07-22
+  end_time: 2025-07-22
+  noteable: two
+  noteable_type: Noteable
