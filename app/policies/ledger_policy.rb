@@ -4,7 +4,7 @@ class LedgerPolicy < ApplicationPolicy
       if user.admin
         scope.all
       else
-        scope.includes(:ledger_ownerships).where(team: person.teams).or(scope.where('ledger_ownerships.owner': person))
+        scope.includes(:ledger_ownerships).where(team: person.teams).or(scope.where('ledger_ownerships.owner_id': person.id, 'ledger_ownerships.owner_type': person.class.name))
       end
     end
   end
