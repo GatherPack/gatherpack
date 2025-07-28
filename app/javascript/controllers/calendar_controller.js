@@ -71,10 +71,17 @@ export default class extends Controller {
 
   get_view_settings() {
     return {
-      birthdays: localStorage.getItem("calendar-birthdays") === "true" ?? true,
-      events: localStorage.getItem("calendar-events") === "true" ?? true,
-      notes: localStorage.getItem("calendar-notes") === "true" ?? true
+      birthdays: this.evalute_setting_from_local_storage("calendar-birthdays"),
+      events: this.evalute_setting_from_local_storage("calendar-events"),
+      notes: this.evalute_setting_from_local_storage("calendar-notes")
     }
+  }
+
+  evalute_setting_from_local_storage(setting) {
+    setting = localStorage.getItem(setting)
+    if (setting === null) { return true }
+
+    return setting === "true"
   }
 
   render_initial_settings(calendar) {
