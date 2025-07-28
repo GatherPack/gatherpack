@@ -29,6 +29,10 @@ class Person < ApplicationRecord
     user&.admin
   end
 
+  def architect?
+    user&.architect
+  end
+
   def manager?
     user&.admin || memberships.where(manager: true).any?
   end
