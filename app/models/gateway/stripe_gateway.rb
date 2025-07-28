@@ -10,7 +10,7 @@ class Gateway::StripeGateway < Gateway
   end
 
   def identifier_icon
-    ["cc-stripe", "brands"]
+    [ "cc-stripe", "brands" ]
   end
 
   def start_payment(ledger_payment, creator)
@@ -19,17 +19,17 @@ class Gateway::StripeGateway < Gateway
       line_items: [
         {
           price_data: {
-            currency: 'usd',
+            currency: "usd",
             unit_amount: ledger_entry.amount_cents,
             product_data: {
               name: ledger_payment.remark
             }
           },
-          quantity: 1,
+          quantity: 1
 
         }
       ],
-      mode: 'payment',
+      mode: "payment",
       success_url: Rails.application.routes.url_helpers.ledger_ledger_entry_url(ledger_entry.ledger, ledger_entry)
     },
     {
@@ -42,7 +42,7 @@ class Gateway::StripeGateway < Gateway
 
   def handle_webhook(payload, signature)
     event = Stripe::Event.construct_from(JSON.parse(payload))
-    
+
     if secret.present?
       begin
         event = Stripe::Webhook.construct_event(payload, signature, secret)
@@ -63,8 +63,8 @@ class Gateway::StripeGateway < Gateway
 
   def finish_setup
     endpoint = Stripe::WebhookEndpoint.create({
-      enabled_events: ["checkout.session.completed", "checkout.session.async_payment_succeeded", "checkout.session.expired", "checkout.session.async_payment_failed"],
-      url: Rails.application.routes.url_helpers.webhook_gateway_url(self),
+      enabled_events: [ "checkout.session.completed", "checkout.session.async_payment_succeeded", "checkout.session.expired", "checkout.session.async_payment_failed" ],
+      url: Rails.application.routes.url_helpers.webhook_gateway_url(self)
     },
     {
       api_key: secret_key
@@ -72,6 +72,5 @@ class Gateway::StripeGateway < Gateway
     )
 
     update(secret: endpoint.secret)
-
   end
 end

@@ -1,5 +1,7 @@
 class Ledger < ApplicationRecord
   has_neat_id :leg
+  include CanBeHooked
+  has_paper_trail versions: { class_name: "AuditLog" }
   belongs_to :team
   has_many :ledger_ownerships, dependent: :destroy
   has_many :ledger_entries, dependent: :destroy

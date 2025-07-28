@@ -1,5 +1,7 @@
 class Mailbox < ApplicationRecord
   has_neat_id :mbx
+  include CanBeHooked
+  has_paper_trail versions: { class_name: "AuditLog" }
   has_many :mailbox_messages
   has_many :mailbox_assignments
 

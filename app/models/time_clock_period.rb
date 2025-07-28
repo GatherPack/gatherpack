@@ -1,5 +1,7 @@
 class TimeClockPeriod < ApplicationRecord
   has_neat_id :tcpd
+  include CanBeHooked
+  has_paper_trail versions: { class_name: "AuditLog" }
   belongs_to :team, optional: true
   has_many :time_clock_punches, dependent: :destroy
   has_many :events, dependent: :nullify

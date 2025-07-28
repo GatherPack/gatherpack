@@ -7,7 +7,7 @@
   <div class="card-body">
     <div class="row">
       <div class="col-12 col-md-9 col-lg-8">
-        <%= @mailbox_message.body %>
+        <iframe srcdoc="<%= @mailbox_message.body %>" sandbox="allow-same-origin" style="width: 100%; max-height: 100vh;"></iframe>
       </div>
       <div class="col-12 col-md-3 col-lg-4">
         <% if @mailbox_message.attachments.any? %>
