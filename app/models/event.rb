@@ -11,6 +11,8 @@ class Event < ApplicationRecord
   validates :name, presence: true
   validates :start_time, presence: true
 
+  after_update :update_checkins
+
   def self.ransackable_attributes(auth_object = nil)
     [ "name", "start_time", "end_time", "location", "event_type_id", "team_id", "time_clock_period_id" ]
   end
@@ -35,5 +37,11 @@ class Event < ApplicationRecord
     if start_time? && end_time? then
       errors.add(:end_time, "cannot be before start time!") if end_time.before?(start_time)
     end
+  end
+
+  def update_checkins
+    checkins.each do |checkin|
+      checkin.refresh_fields
+    end if event_type_id_changed?
   end
 end
