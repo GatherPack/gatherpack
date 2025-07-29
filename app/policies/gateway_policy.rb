@@ -1,4 +1,4 @@
-class GatewayPolicy < AdminPolicy
+class GatewayPolicy < ArchitectPolicy
   def webhook?
     true
   end
