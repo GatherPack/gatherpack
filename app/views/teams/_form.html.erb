@@ -2,14 +2,13 @@
 <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
 <div class="row">
-  <div class="col-4">
+  <div class="col-md-6">
     <%= f.input :name %>
     <%= f.input :parent_id, as: :searching_combobox, label: 'Parent Team', scope: "teams", include_blank: true %>
     <%= f.input :color, as: :fancy_color %>
+  </div>
+  <div class="col-md-6">
     <%= f.association :team_type, include_blank: false %>
     <%= f.input :join_permission, collection: Team.join_permissions.keys, label_method: :titleize, include_blank: false %>
-  </div>
-  <div class="col-8">
-    <%= f.association :people, as: :check_boxes, label_method: :display_name, collection: current_user.person.managed_people %>
   </div>
 </div>
