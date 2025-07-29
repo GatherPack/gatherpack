@@ -20,6 +20,6 @@ class Gateway::PostmarkReceivingGateway < Gateway
   end
 
   def finish_setup
-    client = Postmark::ApiClient.new(api_token)
+    client = Postmark::ApiClient.new(server_token)
   end
 end
