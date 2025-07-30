@@ -14,7 +14,7 @@ class Gateway::PostmarkSendingGateway < Gateway
   def send_later(address, subject, body)
     address = [ address ].flatten
     address.each do |a|
-      SendEmailJob.perform_later(a, subject, body)
+      SendEmailJob.perform_later(self, a, subject, body)
     end
   end
 

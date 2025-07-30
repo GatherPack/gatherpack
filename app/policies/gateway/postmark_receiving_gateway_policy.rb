@@ -1,5 +1,5 @@
 class Gateway
-  class PostmarkReceivingGatewayPolicy < AdminPolicy
+  class PostmarkReceivingGatewayPolicy < ArchitectPolicy
     def webhook?
       true
     end

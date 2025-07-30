@@ -5,7 +5,7 @@ class AnnouncementNotificationRouter
   end
 
   def run
-    return unless @announcement.notify_now
+    return if @announcement.notify_now.blank? || @announcement.notify_now == "0"
     subject = "#{Settings[:title]} - #{@announcement.title}"
     content = ""
     content << "<h1>Announcement Posted in #{@announcement.team.name}</h1>"

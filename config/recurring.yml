@@ -7,3 +7,7 @@
 #   command: "SoftDeletedRecord.due.delete_all"
 #   priority: 2
 #   schedule: at 5am every day
+generate_notifications_job:
+  class: GenerateNotificationsJob
+  queue: default
+  schedule: every 5 minutes

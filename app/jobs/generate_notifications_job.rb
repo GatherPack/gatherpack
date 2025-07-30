@@ -5,17 +5,24 @@ class GenerateNotificationsJob < ApplicationJob
     infodump_day = Settings[:infodump_day]
     infodump_time = Settings[:infodump_time]
 
-    # if they are not set, do nothing
     if infodump_day.nil? || infodump_time.nil?
       current_day = Time.now.strftime("%A")
       current_time = Time.now.strftime("%H:%M")
 
-      # if the current day and time match the infodump day and time, send notifications
-      if current_day == infodump_day && (current_time >= (infodump_time.to_i - 5))
-        User.all.each do |user|
-          DeliverInfodumpJob.perform_later(user.person)
+      if current_day == infodump_day
+        now_minutes = minutes_since_midnight(current_time)
+        infodump_minutes = minutes_since_midnight(infodump_time)
+        if (now_minutes - infodump_minutes) <= 5 && (now_minutes - infodump_minutes) >= 0
+          User.all.each do |user|
+            DeliverInfodumpJob.perform_later(user.person)
+          end
         end
       end
     end
+  end
+
+  def minutes_since_midnight(time_str)
+    h, m = time_str.split(":").map(&:to_i)
+    h * 60 + m
   end
 end

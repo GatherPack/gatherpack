@@ -12,13 +12,13 @@ class MembershipsController < InternalController
   end
 
   def new
-    @membership = authorize Membership.new(team: @team)
+    @membership = authorize @team.memberships.build
   end
 
   # POST /memberships
   # not currently used, but maybe it will be later?
   def create
-    @membership = authorize Membership.new(membership_params)
+    @membership = authorize @team.memberships.build(membership_params)
 
     if @membership.save
       redirect_to team_memberships_path(@team), notice: "Membership was successfully created."

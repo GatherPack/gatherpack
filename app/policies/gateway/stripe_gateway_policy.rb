@@ -1,5 +1,5 @@
 class Gateway
-  class StripeGatewayPolicy < AdminPolicy
+  class StripeGatewayPolicy < ArchitectPolicy
     def webhook?
       true
     end
