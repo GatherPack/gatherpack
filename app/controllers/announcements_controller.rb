@@ -14,7 +14,7 @@ class AnnouncementsController < InternalController
 
   # GET /announcements/new
   def new
-    @announcement = authorize Announcement.new(start_time: Time.now, end_time: Time.now + 1.week)
+    @announcement = authorize Announcement.new(start_time: Time.current, end_time: Time.current + 1.week)
   end
 
   # GET /announcements/1/edit

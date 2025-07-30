@@ -34,7 +34,7 @@ class TimeKioskController < ApplicationController
       current_punches = TimeClockPunch.all.where(person: @person, end_time: nil)
       current_punches.each do |punch|
         # punch out people even if the TimeClockPeriod ended
-        current_time = Time.now
+        current_time = Time.current
         max_time = punch.time_clock_period&.end_time || current_time
         end_time = current_time > max_time ? max_time: current_time
 
@@ -44,14 +44,14 @@ class TimeKioskController < ApplicationController
       end
 
       if current_punches.empty?
-        @time_clock_periods = TimeClockPeriod.where(team: @person.all_teams).or(TimeClockPeriod.where(team: nil)).where("start_time <= ? AND end_time >= ?", Time.now, Time.now)
+        @time_clock_periods = TimeClockPeriod.where(team: @person.all_teams).or(TimeClockPeriod.where(team: nil)).where("start_time <= ? AND end_time >= ?", Time.current, Time.current)
 
         if @time_clock_periods.empty?
-          TimeClockPunch.create(person: @person, start_time: Time.now, time_clock_period: nil)
+          TimeClockPunch.create(person: @person, start_time: Time.current, time_clock_period: nil)
           @message[:info] = "Punched in #{@person.identifier_name}."
         elsif @time_clock_periods.one?
           period = @time_clock_periods.first
-          punch = TimeClockPunch.new(person: @person, start_time: Time.now, time_clock_period: period)
+          punch = TimeClockPunch.new(person: @person, start_time: Time.current, time_clock_period: period)
           punch.created_by = "kiosk"
           punch.save
           @message[:info] = "Punched in #{@person.identifier_name} for #{period.name}."
@@ -67,7 +67,7 @@ class TimeKioskController < ApplicationController
     period = TimeClockPeriod.find(time_clock_period_params[:time_clock_period_id])
     @message = {}
 
-    punch = TimeClockPunch.new(person: person, start_time: Time.now, time_clock_period: period)
+    punch = TimeClockPunch.new(person: person, start_time: Time.current, time_clock_period: period)
     punch.created_by = "kiosk"
     punch.save
     @accept_input = true

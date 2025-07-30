@@ -8,7 +8,7 @@ class LedgerEntriesController < InternalController
 
   # GET /ledger_entries/new
   def new
-    @ledger_entry = authorize @ledger.ledger_entries.build(created_at: Time.now)
+    @ledger_entry = authorize @ledger.ledger_entries.build(created_at: Time.current)
   end
 
   # GET /ledger_entries/1/edit

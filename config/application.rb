@@ -29,6 +29,9 @@ module Gatherpack
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
 
+    # Set Time.zone default to UTC to keep everything nice and consistent.
+    config.time_zone = "UTC"
+
     config.active_job.queue_adapter = :solid_queue
     config.active_record.yaml_column_permitted_classes = [ Symbol, Date, Time, ActiveSupport::TimeWithZone, ActiveSupport::TimeZone ]
 
