@@ -9,7 +9,7 @@ class Infodump
     infodump_time = Settings[:infodump_time]
 
     if infodump_day.present? && infodump_time.present?
-      current_day = Time.current.strftime("%A")
+      current_day = Time.current.in_time_zone(Settings[:time_zone]).strftime("%A")
       current_time = Time.current.in_time_zone(Settings[:time_zone]).strftime("%H:%M")
 
       if current_day == infodump_day
