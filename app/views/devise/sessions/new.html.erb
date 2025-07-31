@@ -18,11 +18,11 @@
               <%= f.input :remember_me, as: :boolean %>
             <% end %>
 
-            <%- if devise_mapping.recoverable? %>
-              <div class="mb-3">
-                <%= link_to "Forgot your password?", new_password_path(resource_name) %>
+            <%# if devise_mapping.recoverable? %>
+              <!-- <div class="mb-3"> Hiding this until we figure out how to get devise to work with our mail gateways instead of rails mailers
+                <%# link_to "Forgot your password?", new_password_path(resource_name) %>
               </div>
-            <% end %>
+            <% end %> -->
 
             <div class="actions">
               <%= f.submit "Sign in", class: 'btn btn-primary' %>
