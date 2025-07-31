@@ -117,7 +117,7 @@ gem "jbuilder", "~> 2.13"
 
 gem "hotwire_combobox", "~> 0.4.0", github: "braddoeswebdev/hotwire_combobox"
 
-gem "stripe", "~> 15.2"
+gem "stripe", "~> 15.4"
 
 gem "dotenv", "~> 3.1"
 
