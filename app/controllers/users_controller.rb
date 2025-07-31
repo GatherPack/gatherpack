@@ -21,6 +21,7 @@ class UsersController < InternalController
   end
 
   def update
+    @user.acting_user = current_user
     if @user.update(user_params)
       redirect_to @person, notice: "User information was successfully updated.", status: :see_other
       if current_user == @user
