@@ -6,7 +6,7 @@ class UserPolicy < ApplicationPolicy
   end
 
   def update?
-    record == person || user.admin? || (person.all_managed_teams & (record&.person&.all_teams || [])).any?
+    record == user || user.admin? || (person.all_managed_teams & (record&.person&.all_teams || [])).any?
   end
 
   def destroy?
