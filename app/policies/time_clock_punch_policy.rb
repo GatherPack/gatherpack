@@ -16,6 +16,8 @@ class TimeClockPunchPolicy < ApplicationPolicy
     if user.admin || (person == record.person && record.time_clock_period.nil?)
       true
     # can update punches if part of a generic period with 'added_by_user' perms
+    elsif record.time_clock_period.nil?
+      person == record.person || (person.all_managed_teams & (record&.person&.all_teams || [])).any?
     elsif record.time_clock_period.team.nil?
       person == record.person && record.time_clock_period.permission == "added_by_user"
     # can update punches if manager of punch's period's team, up to 'added_by_manager' perms
