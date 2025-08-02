@@ -1,6 +1,6 @@
 const iconsQuery = `
 {
-    release (version: "6.x") {
+    release (version: "7.x") {
         icons (license: "free") {
             id
             membership {
@@ -66,13 +66,16 @@ function setListValues(list, values, elem_type="li", elem_modifier=null) {
 };
 
 document.addEventListener("turbo:load", async ev => {
+    let elements = document.querySelectorAll("input.icon");
+    if (elements.length === 0) { return; }
+
     const raw_icons = (await sendQuery(iconsQuery)).data.release.icons;
     const icons = raw_icons
         .filter(icon => icon.membership.free.includes("solid"))
         .map(icon => icon.id);
     window.icons = icons;
 
-    document.querySelectorAll("input.icon").forEach(icon => {
+    elements.forEach(icon => {
         let list = icon.parentNode.nextSibling;
         let inputFunc = ev => {
             let iconType = icons.includes(icon.value) ? icon.value : "circle-question";
