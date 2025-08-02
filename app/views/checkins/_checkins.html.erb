@@ -1,7 +1,7 @@
 <%= search_form_for q, url: event_url, data: {"controller": "turbo_search", "turbo-frame": "results"} do |f| %>
 <div class="card">
   <div class="card-header">
-    <h3>Search people</h3>
+    <h3>Search People</h3>
   </div>
   <div class="card-body">
       <div class="col">
@@ -16,7 +16,7 @@
     <% end %>
 
     <%= f.submit 'Search', class: 'btn btn-primary', data: { action: "turbo_search#search" } %>
-    <%= link_to 'Clear search', request.path, class: "btn btn-dark", data: { action: "turbo_search#clear" } %>
+    <%= link_to 'Clear Search', request.path, class: "btn btn-dark", data: { action: "turbo_search#clear" } %>
   </div>
 </div>
 <% end %>
