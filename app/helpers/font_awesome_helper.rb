@@ -27,7 +27,7 @@ module FontAwesomeHelper
   end
 
   def font_awesome_tag
-    tag.script src: "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/js/all.min.js", data: { mutateApproach: "sync" }
+    tag.script src: "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/js/all.min.js", data: { mutateApproach: "sync" }
   end
 
   def icon_text(icon, text, family: nil)
