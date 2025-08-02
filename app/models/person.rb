@@ -83,6 +83,21 @@ class Person < ApplicationRecord
     Ledger.where(id: ledger_ids)
   end
 
+  def related_to?(target)
+    case target
+    when Person
+      relationships.where("parent_id = ? OR child_id = ?", target.id, target.id).exists?
+    when Team
+      memberships.where(team_id: target.id).exists?
+    when Event
+      checkins.where(event_id: target.id).exists?
+    when Ledger
+      ledger_ids.include?(target.id)
+    else
+      false
+    end
+  end
+
   def identifier_name
     display_name.presence || id
   end

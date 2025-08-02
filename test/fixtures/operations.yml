@@ -1,0 +1,21 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  permission: MyString
+  model: MyString
+  scope: MyString
+  icon: MyString
+  color: MyString
+  code: MyText
+  view: MyText
+
+two:
+  name: MyString
+  permission: MyString
+  model: MyString
+  scope: MyString
+  icon: MyString
+  color: MyString
+  code: MyText
+  view: MyText

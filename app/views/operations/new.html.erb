@@ -1,0 +1,16 @@
+<% breadcrumb :new, "operation" %>
+
+<%= simple_form_for(@operation) do |f| %>
+  <div class="card">
+    <div class="card-header">
+      <h1>New operation</h1>
+    </div>
+    <div class="card-body">
+      <%= render "form", f: f %>
+    </div>
+    <div class="card-footer">
+      <%= link_to "Cancel", operations_path, class: 'btn btn-warning' %>
+      <%= f.button :submit, class: 'btn btn-primary' %>
+    </div>
+  </div>
+<% end %>

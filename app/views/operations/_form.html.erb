@@ -1,0 +1,22 @@
+<%= f.error_notification %>
+<%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+<div class="form-inputs">
+  <%= f.input :name %>
+  <div class="row align-items-center">
+    <div class="col-md">
+      <%= f.input :model, collection: Operation::MODELS %>
+      <%= f.input :scope, collection: Operation::SCOPES %>
+    </div>
+    <div class="col-md">
+      <%= f.input :permission, collection: Operation::PERMISSION_LEVELS %>
+    </div>
+    <div class="col-md">
+      <%= f.input :icon, as: :icon %>
+      <%= f.input :color, as: :fancy_color %>
+    </div>
+  </div>
+  
+  <%= f.input :code, wrapper_html: { class: 'code-editor' }, input_html: { rows: 12, data: { lang: "ruby" } } %>
+  <%= f.input :view, wrapper_html: { class: 'code-editor' }, input_html: { rows: 12, data: { lang: "html" } } %>
+</div>

@@ -94,10 +94,15 @@
     </div>
   </div>
   <div class="card-footer">
-    <%= link_to "Impersonate", impersonate_person_path(@person), data: { turbo_method: :post }, class: 'btn btn-dark' if @person.user.present? && policy(@person).impersonate? %>
-    <%= link_to 'Add Relationship', new_person_relationship_path(@person), class: 'btn btn-info' if policy(@person.relationships.build).create? %>
-    <%= link_to 'Edit Profile', edit_person_path(@person), class: 'btn btn-warning' if policy(@person).update? %>
-    <%= link_to "Change Email/Password", if @person.user.id then edit_person_user_path(@person) else new_person_user_path(@person) end, class: "btn btn-primary" %>
-    <%= link_to 'Delete', @person, class: 'btn btn-danger', data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } if policy(@person).destroy? %>
+    <div class="toolbox">
+      <%= tool_button('user-secret', "Impersonate", 'btn-dark', impersonate_person_path(@person), method: :post) if @person.user.present? && policy(@person).impersonate? %>
+      <%= tool_button('user-plus', 'Add Relationship', 'btn-info', new_person_relationship_path(@person)) if policy(@person.relationships.build).create? %>
+      <%= tool_button('user-pen', 'Edit Profile', 'btn-warning', edit_person_path(@person)) if policy(@person).update? %>
+      <%= tool_button('envelope', "Change Email/Password", 'btn-primary', (@person.user&.id ? edit_person_user_path(@person) : new_person_user_path(@person))) %>
+      <% Operation.where(model: 'Person', scope: 'member').each do |operation| %>
+        <%= operation_button(operation) %>
+      <% end %>
+      <%= tool_button('user-xmark', 'Delete', 'btn-danger', @person, method: :delete, data: { turbo_confirm: 'Are you sure?' }) if policy(@person).destroy? %>
+    </div>
   </div>
 </div>

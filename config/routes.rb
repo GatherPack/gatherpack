@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+  resources :operations do
+    member do
+      post "run"
+    end
+  end
   resources :ledger_payments, only: [ :new, :create ]
   resources :gateways do
     member do
