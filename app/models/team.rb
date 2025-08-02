@@ -72,6 +72,16 @@ class Team < ApplicationRecord
       .distinct
   end
 
+  def descendant_people
+    Person.joins(:memberships)
+      .where(memberships: { team_id: all_descendant_ids + [ id ] })
+      .distinct
+  end
+
+  def managers
+    Person.joins(:memberships).where(memberships: { team_id: id, manager: true }).distinct
+  end
+
   def all_managers
     ancestor_ids = [ id ] + all_ancestor_ids
     Person.joins(:memberships).joins(:user).where(memberships: { team_id: ancestor_ids, manager: true }).distinct
