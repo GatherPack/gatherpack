@@ -6,6 +6,7 @@ export default class extends Controller {
   static values = {
     timezone: String,
     defaultView: String,
+    startTime: String,
   }
 
   connect() {
@@ -54,7 +55,16 @@ export default class extends Controller {
             "Content-Type": "application/json",
             "X-CSRF-Token": document.querySelector("meta[name='csrf-token']").content
           },
-          body: JSON.stringify(Object.assign({ "start_time": info.start.toISOString(), "end_time": info.end.toISOString(), "q": this.parse_params(document.getElementsByTagName("turbo-frame")[0])}, this.get_view_settings()))
+          body: JSON.stringify(
+            Object.assign(
+              { 
+                "start_time": this.startTimeValue || info.start.toISOString(),
+                "end_time": info.end.toISOString(),
+                "q": this.parse_params(document.getElementsByTagName("turbo-frame")[0])
+              },
+              this.get_view_settings()
+            )
+          )
         }).then((response) => response.json())
           .then((data) => {
             successfulCallback(data)
