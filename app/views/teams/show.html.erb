@@ -9,11 +9,43 @@
       <div class="col-4">
         <h2>Managers</h2>
         <div class="d-flex flex-row align-items-center flex-wrap">
-          <% @team.all_managers.order(display_name: :asc).each do |person| %>
+          <% @team.managers.order(display_name: :asc).each do |person| %>
             <div class="p-1 w-10">
               <%= link_to person, title: person.display_name do %>
                 <%= image_tag get_avatar_url(person.avatar), class: 'person-img' %>
               <% end %>
+            </div>
+          <% end %>
+          <% if @team.all_managers.count > @team.managers.count %>
+            <div class="p-1 w-10">
+                <%= link_to i('plus', size: 'fa-2x'), '#', class: 'badge bg-secondary', data: { bs_toggle: 'modal', bs_target: '#ancestorManagersModal' }, title: 'Show Parent Team Managers' %>
+
+                <div class="modal fade" id="ancestorManagersModal" tabindex="-1" aria-labelledby="ancestorManagersModalLabel" aria-hidden="true">
+                  <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h3 class="modal-title" id="ancestorManagersModalLabel">Indirect Managers</h3>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        <% @team.all_ancestors.each do |ancestor| %>
+                          <div class="mb-3">
+                          <h4><%= as_badge ancestor %></h4>
+                          <div class="d-flex flex-row align-items-center flex-wrap">
+                            <% ancestor.managers.order(display_name: :asc).each do |person| %>
+                            <div class="p-1 w-10">
+                              <%= link_to person, title: person.display_name do %>
+                              <%= image_tag get_avatar_url(person.avatar), class: 'person-img' %>
+                              <% end %>
+                            </div>
+                            <% end %>
+                          </div>
+                          </div>
+                        <% end %>
+                      </div>
+                    </div>
+                  </div>
+                </div>
             </div>
           <% end %>
         </div>
