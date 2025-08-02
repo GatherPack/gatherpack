@@ -213,6 +213,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_22_201000) do
     t.uuid "parent_id"
     t.jsonb "metadata"
     t.boolean "finalized", default: true
+    t.boolean "failed", default: false
     t.index ["created_by_type", "created_by_id"], name: "index_ledger_entries_on_created_by"
     t.index ["ledger_id"], name: "index_ledger_entries_on_ledger_id"
     t.index ["parent_id"], name: "index_ledger_entries_on_parent_id"
