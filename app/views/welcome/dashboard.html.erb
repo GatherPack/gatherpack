@@ -31,7 +31,7 @@
         <h2>Calendar</h2>
       </div>
       <div class="card-body">
-        <div data-controller="calendar" data-calendar-default-view-value="listMonth" data-calendar-timezone-value="<%= Settings[:time_zone].presence || 'UTC' %>">
+        <div data-controller="calendar" data-calendar-default-view-value="listMonth" data-calendar-timezone-value="<%= Settings[:time_zone].presence || 'UTC' %>" data-calendar-start-time-value="<%= Date.today.iso8601 %>">
           <div id="calendar" data-turbo="false">
           </div>
         </div>
