@@ -1,5 +1,6 @@
 crumb :badge_types do
   link "Badge Types", badge_types_path
+  parent :setup
 end
 
 crumb :badge_type do |badge_type|

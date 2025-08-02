@@ -1,5 +1,6 @@
 crumb :event_types do
   link "Event Types", event_types_path
+  parent :setup
 end
 
 crumb :event_type do |event_type|

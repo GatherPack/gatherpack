@@ -1,5 +1,6 @@
 crumb :ledger_tags do
   link "Ledger Tags", ledger_tags_path
+  parent :setup
 end
 
 crumb :ledger_tag do |ledger_tag|

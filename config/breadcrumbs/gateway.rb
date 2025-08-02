@@ -1,5 +1,6 @@
 crumb :gateways do
   link "Gateways", gateways_path
+  parent :setup
 end
 
 crumb :gateway do |gateway|

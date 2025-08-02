@@ -1,5 +1,6 @@
 crumb :team_types do
   link "Team Types", team_types_path
+  parent :setup
 end
 
 crumb :team_type do |team_type|

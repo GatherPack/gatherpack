@@ -1,5 +1,6 @@
 crumb :checkin_fields do
   link "Checkin Fields", checkin_fields_path
+  parent :setup
 end
 
 crumb :checkin_field do |checkin_field|
