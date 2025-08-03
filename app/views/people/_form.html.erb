@@ -43,7 +43,8 @@
         <%= f.input :shirt_size, as: :select, collection: Settings[:shirt_sizes].split(',').map(&:strip) %>
       </div>
       <div class="col-6">
-        <%= f.input :phone_number %>
+        
+        <%= f.input :birthday, as: :string, input_html: { type: :date } %>
       </div>
     </div>
 
@@ -52,33 +53,24 @@
         <%= f.input :address %>
       </div>
       <div class="col-12 col-md-6">
-        <%= f.input :birthday, as: :string, input_html: { type: :date } %>
+        <%= f.input :phone_number %>
       </div>
       <div class="col-12 col-md-6">
         <%= f.input :dietary_restrictions %>
       </div>
+      <div class="col-md">
+        <%= f.simple_fields_for :user do |ff| %>
+          <%= ff.input :email, disabled: true %>
+
+          <% if @person.user.provider %>
+            <div class="alert alert-warning">
+              This person signs in with <%= @person.user.provider %>
+            </div>
+          <% else %>
+            <%= link_to "Change Email/Password", if @person.user.id then edit_person_user_path(@person) else new_person_user_path(@person) end, class: "btn btn-primary" %>
+          <% end %>
+        <% end %>
+      </div>
     </div>
-  </div>
-</div>
-
-<div class="row mt-4">
-  <div class="col-md">
-    <%= f.simple_fields_for :user do |ff| %>
-      <%= ff.input :email, disabled: true %>
-
-      <% if @person.user.provider %>
-        <div class="alert alert-warning">
-          This person signs in with <%= @person.user.provider %>
-        </div>
-      <% else %>
-        <%= link_to "Change Email/Password", if @person.user.id then edit_person_user_path(@person) else new_person_user_path(@person) end, class: "btn btn-primary" %>
-      <% end %>
-    <% end %>
-  </div>
-  <div class="col-md">
-    <%= f.association :teams, as: :check_boxes, label_method: :name, collection: get_joinable_teams(@person, current_user) %>
-  </div>
-  <div class="col-md">
-    <%= f.association :badges, as: :check_boxes, label_method: :name, collection: Pundit.policy_scope(@person.user, Badge).order(name: :asc) %>
   </div>
 </div>
