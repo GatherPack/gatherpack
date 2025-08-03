@@ -4,7 +4,7 @@
 <div class="row">
   <div class="col-md-6">
     <%= f.input :name %>
-    <%= f.input :parent_id, as: :searching_combobox, label: 'Parent Team', scope: "teams", include_blank: true %>
+    <%= f.input :parent_id, as: :searching_combobox, label: 'Parent Team', scope: "managed_teams", include_blank: true %>
     <%= f.input :color, as: :fancy_color %>
   </div>
   <div class="col-md-6">

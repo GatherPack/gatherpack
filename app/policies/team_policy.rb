@@ -10,7 +10,11 @@ class TeamPolicy < ApplicationPolicy
   end
 
   def new?
-    user.admin
+    person.manager?
+  end
+
+  def create?
+    person.admin? || (person.manager? && record.parent != nil && person.teams.include?(record.parent))
   end
 
   def update?
