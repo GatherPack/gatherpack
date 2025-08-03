@@ -17,14 +17,8 @@ class Infodump
         infodump_minutes = minutes_since_midnight(infodump_time)
         if (now_minutes - infodump_minutes) <= 5 && (now_minutes - infodump_minutes) >= 0
           return true
-        else
-          puts "Infodump is scheduled for #{infodump_day} at #{infodump_time}, but it is #{current_day} at #{current_time}."
         end
-      else
-        puts "Infodump is scheduled for #{infodump_day}, but it is #{current_day}."
       end
-    else
-      puts "Infodump day or time not set in settings."
     end
     false
   end
@@ -35,20 +29,25 @@ class Infodump
 
   def generate
     @deliverable = false
-    @announcements = {}
+    @announcements = []
     @person.teams.each do |team|
-      @announcements[team] = team.announcements.visible.order(created_at: :desc)
+      team.announcements.visible.each do |announcement|
+        @announcements << announcement
+      end
+    end
+    Announcement.visible.where(team_id: nil).each do ||announcement|
+      @announcements << announcement
     end
 
-    @content = ""
-    @content << "<h1>Weekly #{Settings[:title]} Updates for #{@person.display_name}</h1>"
-    @announcements.each do |team, announcements|
-      next if announcements.empty?
-      @deliverable = true
+    @announcements.sort_by! { |a| [ a.start_time, a.end_time ]  }.reverse!
 
-      @content << "<h2>#{team.name} Announcements</h2>"
-      announcements.each do |announcement|
-        @content << "<h3>#{announcement.title}</h3><div>#{announcement.content}</div>"
+    @content = ""
+    @content << "<h1>#{Date.today.strftime("%B %d")} Updates for #{@person.display_name}</h1>"
+    @announcements.each do |announcement|
+      if announcement
+        @deliverable = true
+
+        @content << "<h2>#{announcement.title}</h2><div>#{announcement.content}</div>"
       end
     end
   end

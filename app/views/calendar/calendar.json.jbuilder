@@ -31,7 +31,7 @@ end if @birthdays
 
 json.array! @notes do |note|
   json.id note.id
-  json.title note.identifier_name + if note.noteable then " - " + note.noteable.identifier_name else "" end
+  json.title note.identifier_name
   json.allDay note.end_time.nil?
   json.start note.start_time
   json.end note.end_time
