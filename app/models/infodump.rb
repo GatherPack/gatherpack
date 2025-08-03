@@ -35,7 +35,7 @@ class Infodump
         @announcements << announcement
       end
     end
-    Announcement.visible.where(team_id: nil).each do ||announcement|
+    Announcement.visible.where(team_id: nil).each do |announcement|
       @announcements << announcement
     end
 
