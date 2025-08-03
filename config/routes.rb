@@ -69,6 +69,12 @@ Rails.application.routes.draw do
     resource :user, only: %i[ new create edit update ]
     member do
       post "impersonate"
+      resources :person_activity, only: %i[ index ], path: "activity" do
+        collection do
+          get "time_clock_punches"
+          get "events"
+        end
+      end
     end
     collection do
       post "stop_impersonating"

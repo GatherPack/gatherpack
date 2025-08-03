@@ -1,0 +1,28 @@
+<% breadcrumb :person_activity, @person %>
+
+<div class="card">
+  <div class="card-body">
+    <div class="row align-items-center">
+      <div class="col-md-2">
+        <%= link_to image_tag(get_avatar_url(@person.avatar), class: 'person-img'), @person %>
+      </div>
+      <div class="col-2">
+        <h2><%= @person.identifier_name %></h2>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card navtab">
+  <ul class="nav nav-underline">
+    <li class="nav-item">
+      <a href="<%= person_activity_index_path %>" class="nav-link <%= "active" if current_page?(person_activity_index_path) %>">Overview</a>
+    </li>
+    <li class="nav-item">
+      <a href="<%= time_clock_punches_person_activity_index_path %>" class="nav-link <%= "active" if current_page?(time_clock_punches_person_activity_index_path) %> ">Time Clock Punches</a>
+    </li>
+    <li class="nav-item">
+      <a href="<%= events_person_activity_index_path %>" class="nav-link <%= "active" if current_page?(events_person_activity_index_path) %>">Events</a>
+    </li>
+  </ul>
+</div>
