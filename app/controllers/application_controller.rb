@@ -20,7 +20,14 @@ class ApplicationController < ActionController::Base
   private
 
   def check_for_user
-    redirect_to root_path, notice: "You must be logged in to do that" unless current_user
+    unless current_user
+      session[:user_return_to] = request.fullpath if request.get? && !request.xhr?
+      redirect_to new_user_session_path, notice: "You must be logged in to do that"
+    end
+  end
+
+  def after_sign_up_path_for(resource)
+    session.delete(:user_return_to) || stored_location_for(resource) || root_path
   end
 
   def check_for_admin

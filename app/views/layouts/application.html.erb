@@ -25,11 +25,11 @@
 
     <div class="container-fluid">
       <div class="row">
-        <% if current_user.present? %>
+        <% if (current_user.present? rescue false) %>
           <%= render partial: 'layouts/sidebar' %>
         <% end %>
 
-        <main class="<%= "col-md-9 ms-sm-auto col-lg-10" if current_user.present? %> px-md-4">
+        <main class="<%= "col-md-9 ms-sm-auto col-lg-10" if (current_user.present? rescue false) %> px-md-4">
           <div class="card breadcrumb-container">
             <%= breadcrumbs display_single_fragment: true, separator: "&nbsp&rsaquo;&nbsp", style: :inline, class: "breadcrumb", link_class: "breadcrumb-link", current_class: "breadcrumb-current" %>
           </div>
