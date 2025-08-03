@@ -39,7 +39,7 @@ class Infodump
       @announcements << announcement
     end
 
-    @announcements.sort_by! { |a| [ a.start_time, a.end_time ]  }.reverse!
+    @announcements.sort_by! { |a| [ a.start_time.to_date, a.end_time.to_date ]  }
 
     @content = ""
     @content << "<h1>#{Date.today.strftime("%B %d")} Updates for #{@person.display_name}</h1>"
