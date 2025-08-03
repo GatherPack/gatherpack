@@ -26,8 +26,8 @@ Devise.setup do |config|
   # with default "from" parameter.
   config.mailer_sender = Settings[:email_from]
 
-  # Configure the class responsible to send e-mails.
-  # config.mailer = 'Devise::Mailer'
+# Configure the class responsible to send e-mails.
+config.mailer = "DeviseGatewayMailer"
 
   # Configure the parent class responsible to send e-mails.
   # config.parent_mailer = 'ActionMailer::Base'
