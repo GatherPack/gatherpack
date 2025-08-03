@@ -4,6 +4,6 @@ crumb :ledger_tags do
 end
 
 crumb :ledger_tag do |ledger_tag|
-  link ledger_tag.identifier_name, ledger_tag
+  link ledger_tag.new_record? ? "New ledger tag" : ledger_tag.identifier_name, ledger_tag
   parent :ledger_tags
 end

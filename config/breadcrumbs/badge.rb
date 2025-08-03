@@ -3,6 +3,6 @@ crumb :badges do
 end
 
 crumb :badge do |badge|
-  link badge.identifier_name, badge
+  link badge.new_record? ? "New badge" : badge.identifier_name, badge
   parent :badges
 end

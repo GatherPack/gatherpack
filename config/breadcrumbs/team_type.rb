@@ -4,6 +4,6 @@ crumb :team_types do
 end
 
 crumb :team_type do |team_type|
-  link team_type.identifier_name, team_type
+  link team_type.new_record? ? "New team type" : team_type.identifier_name, team_type
   parent :team_types
 end

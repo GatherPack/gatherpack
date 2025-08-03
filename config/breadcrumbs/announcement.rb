@@ -3,6 +3,6 @@ crumb :announcements do
 end
 
 crumb :announcement do |announcement|
-  link announcement.identifier_name, announcement
+  link announcement.new_record? ? "New announcement" : announcement.identifier_name, announcement
   parent :announcements
 end

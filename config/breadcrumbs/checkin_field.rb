@@ -4,6 +4,6 @@ crumb :checkin_fields do
 end
 
 crumb :checkin_field do |checkin_field|
-  link checkin_field.identifier_name, checkin_field
+  link checkin_field.new_record? ? "New checkin field" : checkin_field.identifier_name, checkin_field
   parent :checkin_fields
 end

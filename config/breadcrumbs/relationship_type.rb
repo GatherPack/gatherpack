@@ -4,6 +4,6 @@ crumb :relationship_types do
 end
 
 crumb :relationship_type do |relationship_type|
-  link relationship_type.identifier_name, relationship_type
+  link relationship_type.new_record? ? "New relationship type" : relationship_type.identifier_name, relationship_type
   parent :relationship_types
 end

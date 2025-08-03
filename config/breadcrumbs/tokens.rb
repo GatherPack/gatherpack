@@ -3,6 +3,6 @@ crumb :tokens do
 end
 
 crumb :token do |token|
-  link token.identifier_name, token
+  link token.new_record? ? "New token" : token.identifier_name, token
   parent :tokens
 end

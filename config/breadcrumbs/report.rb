@@ -3,7 +3,7 @@ crumb :reports do
 end
 
 crumb :report do |report|
-  link report.identifier_name, report
+  link report.new_record? ? "New report" : report.identifier_name, report
   parent :reports
 end
 

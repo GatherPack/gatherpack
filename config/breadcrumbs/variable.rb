@@ -3,6 +3,6 @@ crumb :variables do
 end
 
 crumb :variable do |variable|
-  link variable.identifier_name, variable
+  link variable.new_record? ? "New variable" : variable.identifier_name, variable
   parent :variables
 end

@@ -3,6 +3,6 @@ crumb :<%= plural_table_name %> do
 end
 
 crumb :<%= singular_table_name %> do |<%= singular_table_name %>|
-  link <%= singular_table_name %>.identifier_name, <%= singular_table_name %>
+  link <%= singular_table_name %>.new_record? ? "New <%= singular_table_name.humanize.downcase %>" : <%= singular_table_name %>.identifier_name, <%= singular_table_name %>
   parent :<%= plural_table_name %>
 end

@@ -4,6 +4,6 @@ crumb :badge_types do
 end
 
 crumb :badge_type do |badge_type|
-  link badge_type.identifier_name, badge_type
+  link badge_type.new_record? ? "New badge type" : badge_type.identifier_name, badge_type
   parent :badge_types
 end

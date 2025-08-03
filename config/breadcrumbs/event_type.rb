@@ -4,6 +4,6 @@ crumb :event_types do
 end
 
 crumb :event_type do |event_type|
-  link event_type.identifier_name, event_type
+  link event_type.new_record? ? "New event type" : event_type.identifier_name, event_type
   parent :event_types
 end
