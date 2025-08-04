@@ -3,12 +3,12 @@ crumb :events do
 end
 
 crumb :event do |event|
-  link event.identifier_name, event
+  link event.new_record? ? "New event" : event.identifier_name, event
   parent :calendar
 end
 
 crumb :checkin do |checkin|
-  link checkin.identifier_name
+  link checkin.new_record? ? "New checkin" : checkin.identifier_name
   parent :event, checkin.event
 end
 

@@ -3,6 +3,6 @@ crumb :teams do
 end
 
 crumb :team do |team|
-  link team.identifier_name, team
+  link team.new_record? ? "New team" : team.identifier_name, team
   parent :teams
 end

@@ -3,7 +3,7 @@ crumb :people do
 end
 
 crumb :person do |person|
-  link person.identifier_name, person
+  link person.new_record? ? "New person" : person.identifier_name, person
   parent :people
 end
 

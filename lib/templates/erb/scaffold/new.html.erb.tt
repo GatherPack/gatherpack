@@ -1,9 +1,9 @@
-<%% breadcrumb :new, "<%= singular_table_name.downcase %>" %>
+<%% breadcrumb @<%= singular_table_name %> %>
 
 <%%= simple_form_for(@<%= singular_table_name %>) do |f| %>
   <div class="card">
     <div class="card-header">
-      <h1>New <%= human_name.downcase %></h1>
+      <h1>New <%= human_name.humanize.downcase %></h1>
     </div>
     <div class="card-body">
       <%%= render "form", f: f %>

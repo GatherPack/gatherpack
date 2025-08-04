@@ -4,6 +4,6 @@ crumb :badge_assignments do |badge|
 end
 
 crumb :badge_assignment do |badge_assignment|
-  link badge_assignment.identifier_name, badge_badge_assignment_path(badge_assignment.badge, badge_assignment)
-  parent :badge, badge_assignment.badge
+  link badge_assignment.new_record? ? "New badge assignment" : [ badge_assignment.identifier_name, badge_badge_assignment_path(badge_assignment.badge, badge_assignment) ]
+  parent :badge_assignments, badge_assignment.badge
 end

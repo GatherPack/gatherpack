@@ -3,6 +3,11 @@ crumb :ledgers do
 end
 
 crumb :ledger do |ledger|
-  link ledger.identifier_name, ledger
+  link ledger.new_record? ? "New ledger" : ledger.identifier_name, ledger
+  parent :ledgers
+end
+
+crumb :ledger_transfer do
+  link "New ledger transfer"
   parent :ledgers
 end

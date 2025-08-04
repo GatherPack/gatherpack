@@ -1,9 +1,9 @@
-<% breadcrumb :new, "Relationship Type" %>
+<% breadcrumb @relationship_type %>
 
 <%= simple_form_for(@relationship_type) do |f| %>
 <div class="card">
   <div class="card-header">
-    <h1>New Relationship Type</h1>
+    <h1>New relationship type</h1>
   </div>
   <div class="card-body">
     <%= render "form", f: f %>

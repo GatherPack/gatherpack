@@ -3,6 +3,6 @@ crumb :hooks do
 end
 
 crumb :hook do |hook|
-  link hook.identifier_name, hook
+  link hook.new_record? ? "New hook" : hook.identifier_name, hook
   parent :hooks
 end
