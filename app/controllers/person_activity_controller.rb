@@ -8,6 +8,14 @@ class PersonActivityController < ApplicationController
   end
 
   def time_clock_punches
+    @time_clock_punches = policy_scope(@person.time_clock_punches).order(start_time: :desc, end_time: :desc).page(params[:page])
+    @time_clock_punches.each do |punch|
+      if policy(punch).edit?
+        @has_editable_punches = true
+        break
+      end
+    end
+    @has_editable_punches ||= false
   end
 
   def events

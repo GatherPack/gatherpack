@@ -1,1 +1,8 @@
 <%= render "shared" %>
+
+<div class="row">
+  <div class="col">
+    <%= render "time_clock_punches/time_clock_punches" %>
+  </div>
+</div>
+<%= paginate @time_clock_punches %>
