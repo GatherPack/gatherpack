@@ -1,1 +1,48 @@
 <%= render "shared" %>
+
+<div class="card">
+  <div class="card-body">
+    <div class="row">
+      <h2>Statistics</h2>
+      <p>Joined <%= time_ago_in_words(@person.created_at) %> ago</p>
+      <p>Punched in <%= @person.time_clock_punches.map(&:hours).sum %> hours</p>
+      <p>Checked in <%= @person.checkins.count %> events</p>
+      <hr>
+      <h2>Recent Activity</h2>
+      <div class="col-md-4">
+        <h3>Upcoming Events</h3>
+        <% if @upcoming_events.count == 0 %>
+          <p><%= @person.identifier_name %> has not checked in to any upcoming events.</p>
+        <% end %>
+        <% @upcoming_events.each do |event| %>
+          <%= as_badge event %>
+        <% end %>
+      </div>
+      <div class="col-md-4">
+        <h3>Recent Punches</h3>
+        <% if @recent_punches.count == 0 %>
+          <p><%= @person.identifier_name %> has no recent punches.</p>
+        <% end %>
+        <% @recent_punches.each do |punch| %>
+          <%= as_badge punch %>
+        <% end %>
+      </div>
+      <div class="col-md-4">
+        <h3>Recent Notes</h3>
+        <% if @recent_notes.count == 0 %>
+          <p><%= @person.identifier_name %> has no recent notes.</p>
+        <% end %>
+        <% @recent_notes.each do |note| %>
+          <div class="card">
+            <div class="card-header">
+              <strong><a href="<%= calendar_note_path(note) %>"><%= note.name %></a></strong>
+            </div>
+            <div class="card-body">
+              <%= note.description %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
