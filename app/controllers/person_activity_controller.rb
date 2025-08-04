@@ -1,4 +1,4 @@
-class PersonActivityController < ApplicationController
+class PersonActivityController < InternalController
   before_action :set_person
 
   def index
