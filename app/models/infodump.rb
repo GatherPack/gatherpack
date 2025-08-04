@@ -15,7 +15,7 @@ class Infodump
       if current_day == infodump_day
         now_minutes = minutes_since_midnight(current_time)
         infodump_minutes = minutes_since_midnight(infodump_time)
-        if (now_minutes - infodump_minutes) <= 5 && (now_minutes - infodump_minutes) >= 0
+        if (now_minutes - infodump_minutes) <= 4 && (now_minutes - infodump_minutes) >= 0
           return true
         end
       end
