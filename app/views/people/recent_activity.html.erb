@@ -32,7 +32,11 @@
         <% @recent_notes.each do |note| %>
           <div class="card">
             <div class="card-header">
-              <strong><a href="<%= calendar_note_path(note) %>"><%= note.name %></a></strong>
+              <strong>
+                <a href="<%= calendar_note_path(note) %>">
+                  <%= note.name %> - <%= note.start_time.to_fs(:long) %><% if note.end_time.present? %> to <%= note.end_time.to_fs(:long) %><% end %>
+                </a>
+              </strong>
             </div>
             <div class="card-body">
               <%= note.description %>
