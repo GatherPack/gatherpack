@@ -93,6 +93,12 @@ class Person < ApplicationRecord
     Ledger.where(id: ledger_ids)
   end
 
+  def current_time_clock_periods
+    all_current_time_clock_periods = TimeClockPeriod.where("start_time <= ? AND end_time >= ?", Time.now, Time.now)
+    all_current_time_clock_periods.where(team_id: all_team_ids)
+      .or(all_current_time_clock_periods.where(team_id: nil))
+  end
+
   def identifier_name
     display_name.presence || id
   end
