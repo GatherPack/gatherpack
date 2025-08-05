@@ -5,5 +5,9 @@
     <h1><%= @person.identifier_name %></h1>
   </div>
   <div class="card-body">
+    <h2>Statistics</h2>
+    <p>Joined <%= time_ago_in_words(@person.created_at) %> ago</p>
+    <p>Punched in <%= pluralize @person.time_clock_punches.map(&:hours).sum, "hour" %></p>
+    <p>Checked in <%= pluralize @person.checkins.count, "event" %></p>
   </div>
 </div>

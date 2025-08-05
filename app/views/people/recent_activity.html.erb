@@ -7,7 +7,7 @@
   <div class="card-body">
     <div class="row">
       <div class="col-md-4">
-        <h3>Upcoming Events</h3>
+        <h2>Upcoming Events</h2>
         <% if @upcoming_events.count == 0 %>
           <p><%= @person.identifier_name %> has not checked in to any upcoming events.</p>
         <% end %>
@@ -16,7 +16,7 @@
         <% end %>
       </div>
       <div class="col-md-4">
-        <h3>Recent Punches</h3>
+        <h2>Recent Punches</h2>
         <% if @recent_punches.count == 0 %>
           <p><%= @person.identifier_name %> has no recent punches.</p>
         <% end %>
@@ -25,7 +25,7 @@
         <% end %>
       </div>
       <div class="col-md-4">
-        <h3>Recent Notes</h3>
+        <h2>Recent Notes</h2>
         <% if @recent_notes.count == 0 %>
           <p><%= @person.identifier_name %> has no recent notes.</p>
         <% end %>
