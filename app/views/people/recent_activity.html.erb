@@ -1,0 +1,49 @@
+<%= render "show_shared" %>
+
+<div class="card">
+  <div class="card-header">
+    <h1><%= @person.identifier_name %></h1>
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-4">
+        <h2>Upcoming Events</h2>
+        <% if @upcoming_events.count == 0 %>
+          <p><%= @person.identifier_name %> has not checked in to any upcoming events.</p>
+        <% end %>
+        <% @upcoming_events.each do |event| %>
+          <%= as_badge event %>
+        <% end %>
+      </div>
+      <div class="col-md-4">
+        <h2>Recent Punches</h2>
+        <% if @recent_punches.count == 0 %>
+          <p><%= @person.identifier_name %> has no recent punches.</p>
+        <% end %>
+        <% @recent_punches.each do |punch| %>
+          <%= as_badge punch %>
+        <% end %>
+      </div>
+      <div class="col-md-4">
+        <h2>Recent Notes</h2>
+        <% if @recent_notes.count == 0 %>
+          <p><%= @person.identifier_name %> has no recent notes.</p>
+        <% end %>
+        <% @recent_notes.each do |note| %>
+          <div class="card">
+            <div class="card-header">
+              <strong>
+                <a href="<%= calendar_note_path(note) %>">
+                  <%= note.name %> - <%= note.start_time.to_fs(:long) %><% if note.end_time.present? %> to <%= note.end_time.to_fs(:long) %><% end %>
+                </a>
+              </strong>
+            </div>
+            <div class="card-body">
+              <%= note.description %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

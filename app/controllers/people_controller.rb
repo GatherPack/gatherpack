@@ -1,5 +1,5 @@
 class PeopleController < InternalController
-  before_action :set_person, only: %i[ show edit update destroy impersonate ]
+  before_action :set_person, only: %i[ show edit update destroy impersonate recent_activity calendar statistics ]
 
   # GET /people
   def index
@@ -75,6 +75,18 @@ class PeopleController < InternalController
   def stop_impersonating
     stop_impersonating_user
     redirect_back_or_to root_path
+  end
+
+  def recent_activity
+    @upcoming_events = policy_scope(@person.events).where("start_time > ?", Time.current)
+    @recent_punches = policy_scope(@person.time_clock_punches).order(start_time: :desc).first(10)
+    @recent_notes = policy_scope(@person.calendar_notes).order(start_time: :desc).first(3)
+  end
+
+  def calendar
+  end
+
+  def statistics
   end
 
   private

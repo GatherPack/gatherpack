@@ -1,0 +1,25 @@
+<%= render "show_shared" %>
+
+<div class="card">
+  <div class="card-header">
+    <h1><%= @person.identifier_name %></h1>
+  </div>
+  <div class="card-body">
+    <h2>General Statistics</h2>
+    <p>Joined <%= time_ago_in_words(@person.created_at) %> ago</p>
+    <p>Punched in <%= pluralize @person.time_clock_punches.map(&:hours).sum, "hour" %></p>
+    <p>Checked in <%= pluralize @person.checkins.count, "event" %></p>
+    <% if @person.current_time_clock_periods.any? %>
+      <hr>
+      <div class="row">
+        <% @person.current_time_clock_periods.each do |period| %>
+          <div class="col-md-6">
+            <h3>Statistics for <%= as_badge period, true %></h3>
+            <p>Punched in <%= pluralize @person.time_clock_punches.where(time_clock_period: period).map(&:hours).sum, "hour" %> in this period.</p>
+            <p>Checked in <%= pluralize @person.checkins.joins(:event).where(event: { time_clock_period: period }).count, "event" %> from this period.</p>
+          </div>
+        <% end %>
+      </div>
+    <% end%>
+  </div>
+</div>
