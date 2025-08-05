@@ -30,12 +30,12 @@ class Infodump
   def generate
     @deliverable = false
     @announcements = []
-    @person.teams.each do |team|
+    @person.all_teams.each do |team|
       team.announcements.visible.each do |announcement|
         @announcements << announcement
       end
     end
-    Announcement.visible.where(team_id: nil).each do |announcement|
+    Announcement.visible.where(team_id: nil).or(Announcement.visible.where(team_id: "")).each do |announcement|
       @announcements << announcement
     end
 
