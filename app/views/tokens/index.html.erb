@@ -7,10 +7,10 @@
   </div>
   <div class="card-body">
     <div class="row">
-      <div class="col">
+      <div class="col-md">
         <%= f.input :tokenable_id_eq, label: "Tokenable Person", as: :select, collection: policy_scope(Person).map { |p| [p.display_name, p.id] }  %>
       </div>
-      <div class="col">
+      <div class="col-md">
         <%= f.input :value_cont, label: "Value" %>
       </div>
     </div>

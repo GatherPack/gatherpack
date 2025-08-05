@@ -7,20 +7,20 @@
   </div>
   <div class="card-body">
     <div class="row">
-      <div class="col">
+      <div class="col-md">
         <% if params['q']&.has_key?('person_id_eq') %>
           <%= f.input :person_id_eq, label: 'Person', as: :select, collection: policy_scope(Person), label_method: :identifier_name %>
         <% else %>
           <%= f.input :person_display_name_cont, label: 'Person' %>
         <% end %>
       </div>
-      <div class="col">
+      <div class="col-md">
         <%= f.input :start_time_gteq, label: 'Starting After', input_html: { type: "datetime-local" } %>
       </div>
-      <div class="col">
+      <div class="col-md">
         <%= f.input :end_time_lteq, label: 'Ending Before', input_html: { type: "datetime-local" }  %>
       </div>
-      <div class="col">
+      <div class="col-md">
         <%= f.input :time_clock_period_id_eq, label: 'Periods', as: :select, collection: policy_scope(TimeClockPeriod) %>
       </div>
     </div>
