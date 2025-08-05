@@ -7,6 +7,10 @@ export default class extends Controller {
     timezone: String,
     defaultView: String,
     startTime: String,
+    showBirthdays: Boolean, // force show settings
+    showEvents: Boolean,
+    showNotes: Boolean,
+    personId: String, // for personal calendars
   }
 
   connect() {
@@ -62,7 +66,8 @@ export default class extends Controller {
                 "end_time": info.end.toISOString(),
                 "q": this.parse_params(document.getElementsByTagName("turbo-frame")[0])
               },
-              this.get_view_settings()
+              this.get_view_settings(),
+              (this.personIdValue) ? { "person_id": this.personIdValue } : null
             )
           )
         }).then((response) => response.json())
@@ -81,9 +86,9 @@ export default class extends Controller {
 
   get_view_settings() {
     return {
-      birthdays: this.evalute_setting_from_local_storage("calendar-birthdays"),
-      events: this.evalute_setting_from_local_storage("calendar-events"),
-      notes: this.evalute_setting_from_local_storage("calendar-notes")
+      birthdays: this.showBirthdaysValue || this.evalute_setting_from_local_storage("calendar-birthdays"),
+      events: this.showEventsValue || this.evalute_setting_from_local_storage("calendar-events"),
+      notes: this.showNotesValue || this.evalute_setting_from_local_storage("calendar-notes")
     }
   }
 

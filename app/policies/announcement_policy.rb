@@ -4,7 +4,7 @@ class AnnouncementPolicy < ApplicationPolicy
       if user.admin
         scope.all
       else
-        scope.where(team_id: person.all_teams.map(&:id)).or(scope.where(team_id: ""))
+        scope.where(team_id: person.all_teams.map(&:id)).or(scope.where(team_id: "").or(scope.where(team_id: nil)))
       end
     end
   end

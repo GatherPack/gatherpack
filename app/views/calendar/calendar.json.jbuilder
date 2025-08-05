@@ -43,3 +43,21 @@ json.array! @notes do |note|
     json.icon "fa-note-sticky"
   end
 end if @notes
+
+json.array! @punches do |punch|
+  title = "#{punch&.time_clock_period&.name || ""} Clock Punch"
+  title.prepend(punch.hours.to_s, "-hour ") if punch.hours
+
+  json.id punch.id
+  json.title title
+  json.allDay punch.end_time.nil?
+  json.start punch.start_time
+  json.end punch.end_time
+  json.url time_clock_period_path(punch.time_clock_period, q: { person_id_eq: params[:person_id] }) if punch.time_clock_period
+  json.backgroundColor "#6d6753"
+  json.textColor "#fffdf6"
+
+  json.extendedProps do
+    json.icon "fa-hourglass-half"
+  end
+end if @punches
