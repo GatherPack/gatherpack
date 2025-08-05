@@ -37,6 +37,12 @@ class CalendarController < ApplicationController
           @notes = ransacked_notes.where("start_time >= ? AND start_time <= ?", start_time, end_time)
             .or(ransacked_notes.where("start_time <= ? AND end_time >= ?", start_time, start_time))
         end
+
+        if params[:person_id]
+          punches = policy_scope(Person.find(params[:person_id]).time_clock_punches)
+          @punches = punches.where("start_time >= ? AND end_time <= ?", start_time, end_time)
+            .or(punches.where("start_time <= ? AND end_time >= ?", start_time, end_time))
+        end
       end
     end
   end
