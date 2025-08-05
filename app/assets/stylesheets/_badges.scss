@@ -13,6 +13,10 @@
   font-family: $font-family-sans-serif;
 }
 
+div:has(.badge) {
+  overflow: hidden;
+}
+
 .arranging-badge {
   background-color: $primary;
   cursor: move !important;
