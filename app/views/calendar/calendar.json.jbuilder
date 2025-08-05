@@ -53,6 +53,7 @@ json.array! @punches do |punch|
   json.allDay punch.end_time.nil?
   json.start punch.start_time
   json.end punch.end_time
+  json.url time_clock_period_path(punch.time_clock_period, q: { person_id_eq: params[:person_id] }) if punch.time_clock_period
   json.backgroundColor "#6d6753"
   json.textColor "#fffdf6"
 
