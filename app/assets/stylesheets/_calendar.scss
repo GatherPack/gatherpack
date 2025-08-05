@@ -1,0 +1,14 @@
+.fc-popover {
+  @extend .card;
+}
+
+.fc-popover-header {
+  @extend .card-header;
+  background-color: lighten($card-bg, 10%);
+  border-bottom-color: $greige;
+}
+
+.fc-popover-body {
+  @extend .card-body;
+  background-color: $greige-light;
+}

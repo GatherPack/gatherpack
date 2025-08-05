@@ -7,13 +7,13 @@
   </div>
   <div class="card-body">
     <div class="row">
-      <div class="col">
+      <div class="col-md">
         <%= f.input :name_or_description_or_short_cont, label: 'Name' %>
       </div>
-      <div class="col">
+      <div class="col-md">
         <%= f.input :badge_type_id_eq, label: 'Badge Type', as: :select, collection: BadgeType.all  %>
       </div>
-      <div class="col">
+      <div class="col-md">
         <%= f.input :team_id_eq, label: 'Team', as: :select, collection: Team.all  %>
       </div>
     </div>

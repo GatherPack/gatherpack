@@ -7,16 +7,16 @@
   </div>
   <div class="card-body">
     <div class="row">
-      <div class="col">
+      <div class="col-md">
         <%= f.input :name_cont, label: 'Name' %>
       </div>
-      <div class="col">
+      <div class="col-md">
         <%= f.input :start_time_gteq, label: 'Starting After', input_html: { type: :date } %>
       </div>
-      <div class="col">
+      <div class="col-md">
         <%= f.input :end_time_lteq, label: 'Ending Before', input_html: { type: :date }  %>
       </div>
-      <div class="col">
+      <div class="col-md">
         <%= f.input :team_id_eq, label: 'Team', as: :select, collection: policy_scope(Team) %>
       </div>
     </div>

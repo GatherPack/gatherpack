@@ -7,13 +7,13 @@
   </div>
   <div class="card-body">
     <div class="row">
-      <div class="col">
+      <div class="col-md">
         <%= f.input :event_eq, label: 'Event', as: :select, collection: ['create', 'update', 'destroy'] %>
       </div>
-      <div class="col">
+      <div class="col-md">
         <%= f.input :whodunnit_eq, label: 'Whodunnit', as: :select, collection: User.all.map { |u| [u.person.display_name, u.id] } %>
       </div>
-      <div class="col">
+      <div class="col-md">
         <%= f.input :item_type_eq, label: 'Model' %>
       </div>
     </div>

@@ -7,10 +7,10 @@
   </div>
   <div class="card-body">
     <div class="row">
-      <div class="col">
+      <div class="col-md">
         <%= f.input :person_display_name_cont, label: 'Name' %>
       </div>
-      <div class="col">
+      <div class="col-md">
         <%= f.input :manager_eq, label: 'Manager?', as: :select, collection: [['Yes', true], ['No', false]], include_blank: true %>
       </div>
     </div>

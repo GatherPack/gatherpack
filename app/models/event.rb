@@ -23,8 +23,12 @@ class Event < ApplicationRecord
 
   validate :valid_times
 
+  def complete?
+    start_time.present? && end_time.present?
+  end
+
   def hours
-    ((self.end_time - self.start_time) / 3600 * 20).round / 20.0
+    complete? ? ((self.end_time - self.start_time) / 3600 * 20).round / 20.0 : 0.0
   end
 
   def identifier_icon

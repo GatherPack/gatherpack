@@ -16,7 +16,7 @@ export default class extends Controller {
   connect() {
     const calendarEl = document.getElementById("calendar")
     const calendar = new FullCalendar.Calendar(calendarEl, {
-      initialView: this.defaultViewValue || "dayGridMonth",
+      initialView: this.get_initial_view(calendarEl.getBoundingClientRect().width),
       editable: false,
       fixedWeekCount: false,
       weekNumbers: true,
@@ -24,7 +24,7 @@ export default class extends Controller {
       timeZone: this.timezoneValue,
 
       headerToolbar: {
-        left: "prev,next " + "today",
+        left: "prev,next today",
         center: "title",
         right: "listMonth,dayGridMonth,timeGridWeek"
       },
@@ -82,6 +82,11 @@ export default class extends Controller {
     if (document.querySelectorAll("[id^='calendar-']").length != 0) { 
       this.render_initial_settings(calendar)
     }
+  }
+
+  get_initial_view(width) {
+    let default_value = width >= 570 ? "dayGridMonth" : "listMonth"
+    return this.defaultViewValue || default_value
   }
 
   get_view_settings() {
