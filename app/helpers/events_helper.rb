@@ -11,4 +11,12 @@ module EventsHelper
     
     parts.join
   end
+
+  def event_as_badge(event)
+    content = i("calendar") + " #{event.identifier_name} (#{event.start_time})"
+    content +=" - #{event.team.name}" if event.team
+    link_to event, class: "undecorated" do
+      tag.span content, class: "badge", style: "background-color: #{event.team&.color || "#0dcaf0"};"
+    end
+  end
 end
