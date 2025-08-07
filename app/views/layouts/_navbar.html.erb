@@ -4,11 +4,27 @@
       <%= image_tag 'logo.svg' %>
       <%= Settings[:title] %>
     </a>
+
     <% if !current_page?(time_kiosk_path) && (current_user.present? rescue false) %>
-      <button class="navbar-toggler text-white-50" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
-        <%= i 'bars' %>
-      </button>
+      <div class="navbar-toggler" style="outline: none; border: none;">
+        <button class="navbar-toggler text-white-50" type="button" data-bs-toggle="dropdown">
+          <%= i 'magnifying-glass' %>
+        </button>
+        <div class="dropdown-menu shadow-lg justify-content-center">
+          <form class="d-flex" role="search" action="<%= search_path %>" style="width: 95%;">
+            <input class="form-control me-1" type="search" name="q" placeholder="Search for anything..." aria-label="Search">
+            <button class="btn btn-success" type="submit">
+              <%= i 'magnifying-glass' %>
+            </button>
+          </form>
+        </div>
+
+        <button class="navbar-toggler text-white-50" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+          <%= i 'bars' %>
+        </button>
+      </div>
     <% end %>
+
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0 d-flex align-items-center">
       </ul>
