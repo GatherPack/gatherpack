@@ -152,3 +152,15 @@
     text-align: right;
   }
 }
+
+.navbar-toggler > .dropdown-menu.show {
+  transform: translate(0em, 0.5em);
+  display: flex;
+  width: calc(100% - 1rem); 
+  background-color: $greige-light;
+  border-color: black;
+  border-radius: 0.5em;
+  border-width: 1px;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+}
