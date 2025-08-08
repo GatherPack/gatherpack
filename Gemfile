@@ -85,7 +85,7 @@ gem "ransack", "~> 4.1"
 
 gem "kaminari", "~> 1.2"
 
-gem "color", "~> 2.0"
+gem "color", "~> 2.1"
 
 gem "pundit", "~> 2.3"
 
