@@ -3,6 +3,6 @@
     <%= link_to page.identifier_name, page, 'data-turbo': false %>
   </div>
   <div class="card-body">
-    <%= strip_tags(format_page_content(page)).truncate(50, separator: ' ') %>
+    <%= strip_tags(format_page_content(page)).truncate(50, separator: ' ') rescue "ERROR" %>
   </div>
 </div>

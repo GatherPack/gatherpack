@@ -1,7 +1,11 @@
 module PagesHelper
   def format_page_content(page)
     if page.dynamic
-      ERB.new(page.content).result(binding).html_safe
+      begin
+        ERB.new(page.content).result(binding).html_safe
+      rescue SyntaxError => e
+        "<pre>Syntax error in page content: \n#{e.message}\n</pre>".html_safe
+      end
     else
       simple_format page.content
     end

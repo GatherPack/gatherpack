@@ -25,6 +25,12 @@ class TokensController < InternalController
   def create
     @token = authorize Token.new(token_params)
 
+    @other_token = Token.find_by(value: @token.value)
+    if @other_token
+      redirect_to edit_token_path(@other_token), notice: "Token with the same value already exists."
+      return
+    end
+
     if @token.save
       redirect_to @token, notice: "Token was successfully created."
     else
