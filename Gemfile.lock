@@ -16,6 +16,12 @@ GIT
       actionview (>= 6.1)
       railties (>= 6.1)
 
+PATH
+  remote: ../gatherpack_member_services_kiosk
+  specs:
+    gatherpack_member_services_kiosk (0.1.0)
+      rails (>= 8.0.2)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -598,6 +604,7 @@ DEPENDENCIES
   devise (~> 4.9)
   dotenv (~> 3.1)
   erb_lint
+  gatherpack_member_services_kiosk!
   gretel!
   hotwire_combobox (~> 0.4.0)!
   http (~> 5.2)

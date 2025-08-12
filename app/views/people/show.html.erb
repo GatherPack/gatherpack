@@ -97,7 +97,11 @@
     <%= link_to "Impersonate", impersonate_person_path(@person), data: { turbo_method: :post }, class: 'btn btn-dark' if @person.user.present? && policy(@person).impersonate? %>
     <%= link_to 'Add Relationship', new_person_relationship_path(@person), class: 'btn btn-info' if policy(@person.relationships.build).create? %>
     <%= link_to 'Edit Profile', edit_person_path(@person), class: 'btn btn-warning' if policy(@person).update? %>
-    <%= link_to "Change Email/Password", if @person.user.id then edit_person_user_path(@person) else new_person_user_path(@person) end, class: "btn btn-primary" %>
+    <% if @person.user&.id %>
+      <%= link_to "Change Email/Password", edit_person_user_path(@person), class: "btn btn-primary" %>
+    <% else %>
+      <%= link_to "Create Email/Password", new_person_user_path(@person), class: "btn btn-primary" %>
+    <% end %>
     <%= link_to 'Delete', @person, class: 'btn btn-danger', data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } if policy(@person).destroy? %>
   </div>
 </div>
