@@ -7,19 +7,19 @@
   </div>
   <div class="card-body">
     <div class="row">
-      <div class="col">
+      <div class="col-md">
         <%= f.input :name_i_cont, label: 'Name' %>
       </div>
-      <div class="col">
+      <div class="col-md">
         <%= f.input :location_i_cont, label: 'Location' %>
       </div>
-      <div class="col">
+      <div class="col-md">
         <%= f.input :event_type_id_eq, label: 'Event Type', as: :select, collection: EventType.all %>
       </div>
-      <div class="col">
+      <div class="col-md">
         <%= f.input :team_id_eq, label: 'Teams', as: :select, collection: policy_scope(Team) %>
       </div>
-      <div class="col">
+      <div class="col-md">
         <%= f.input :time_clock_period_id_eq, label: 'Time Clock Period', as: :select, collection: policy_scope(TimeClockPeriod) %>
       </div>
     </div>

@@ -7,13 +7,13 @@
   </div>
   <div class="card-body">
     <div class="row">
-      <div class="col">
+      <div class="col-md">
         <%= f.input :name_cont, label: 'Name' %>
       </div>
-      <div class="col">
+      <div class="col-md">
         <%= f.input :team_type_id_eq, label: 'Team Type', as: :select, collection: TeamType.all  %>
       </div>
-      <div class="col">
+      <div class="col-md">
         <%= f.input :top_level, label: 'Top Level', as: :select, collection: [['Only Top Level Teams', true]], include_blank: true %>
       </div>
     </div>
