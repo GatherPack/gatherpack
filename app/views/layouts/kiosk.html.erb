@@ -20,7 +20,15 @@
   </head>
 
   <body>
-    <%= render partial: 'layouts/navbar' %>
+    <header class="navbar navbar-expand-lg bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/">
+          <%= image_tag 'logo.svg' %>
+          <%= Settings[:title] %>
+        </a>
+      </div>
+    </header>
+
 
     <div class="container-fluid">
       <div class="row">

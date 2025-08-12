@@ -23,7 +23,13 @@ class SearchController < ApplicationController
     scope = scope.split(" ").map(&:strip).uniq
     results = []
     results += policy_scope(Person).ransack(first_name_or_last_name_or_display_name_cont: params[:q]).result(distinct: true) if scope.include?("people")
-    results += current_user.person.all_managed_people.ransack(first_name_or_last_name_or_display_name_cont: params[:q]).result(distinct: true) if scope.include?("managed_people")
+    if scope.include?("managed_people")
+      if current_user.admin?
+        results += policy_scope(Person).ransack(first_name_or_last_name_or_display_name_cont: params[:q]).result(distinct: true)
+      else
+        results += current_user.person.all_managed_people.ransack(first_name_or_last_name_or_display_name_cont: params[:q]).result(distinct: true)
+      end
+    end
     team_people_ids = scope.select { |s| s.start_with?("team_people:") }.map { |s| s.split(":").last }
     team_people_ids.each do |team_id|
       results += policy_scope(Team.find(team_id).all_people).ransack(first_name_or_last_name_or_display_name_cont: params[:q]).result(distinct: true)
