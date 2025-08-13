@@ -1,24 +1,24 @@
 <%= f.error_notification %>
 <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
-<div class="row">
+<div class="row" data-controller="photo-capture">
   <div class="col-md-4">
     <div class="row mb-2">
       <div class="col">
-        <input type="button" class="btn btn-light w-100" value="Loading..." id="activate-webcam">
+        <input type="button" class="btn btn-light w-100" value="Loading..." id="activate-webcam" data-photo-capture-target="activateWebcam">
       </div>
       <div class="col">
-        <input type="button" class="btn btn-success w-100" value="Capture" id="capture-image" style="display: none">
+        <input type="button" class="btn btn-success w-100" value="Capture" id="capture-image" style="display: none" data-photo-capture-target="captureImage">
       </div>
     </div>
 
-    <canvas id="capture-canvas" style="display: none"></canvas>
-    <img id="avatar-img" src="<%= get_avatar_url(@person.avatar) %>">
-    <video id="capture-video"></video>
+    <canvas id="capture-canvas" style="display: none" data-photo-capture-target="captureCanvas"></canvas>
+    <img id="avatar-img" src="<%= get_avatar_url(@person.avatar) %>" data-photo-capture-target="avatarImg">
+    <video id="capture-video" data-photo-capture-target="captureVideo"></video>
     
     <div class="row mt-2">
       <div class="col">
-        <%= f.input :avatar, label: false %>
+        <%= f.input :avatar, label: false, input_html: { id: 'person_avatar', 'data-photo-capture-target': 'personAvatar' } %>
       </div>
     </div>
   </div>

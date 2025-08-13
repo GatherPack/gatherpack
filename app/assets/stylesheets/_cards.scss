@@ -21,3 +21,8 @@
   border: thin solid lighten($primary, 25%);
   page-break-inside: avoid;
 }
+
+.card-body.scrollable {
+  overflow-y: auto;
+  height: 100%;
+}

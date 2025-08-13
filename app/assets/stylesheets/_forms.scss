@@ -23,7 +23,7 @@
   color: $greige-lightest;
 }
 
-.form-check .form-check-input {
+.form-check-input {
   float: none;
   margin-left: 0;
   margin-right: 0.33rem;
@@ -32,6 +32,10 @@
 
   &:checked {
     background-color: $greige-darkest;
+  }
+
+  &:focus {
+    background-color: $greige-dark !important;
   }
 }
 

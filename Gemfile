@@ -1,5 +1,13 @@
 source "https://rubygems.org"
 
+# Load deployment-specific gems from Pluginfile if it exists
+pluginfile = File.expand_path("Pluginfile", __dir__)
+if File.exist?(pluginfile)
+  instance_eval(File.read(pluginfile), pluginfile)
+end
+
+source "https://rubygems.org"
+
 # Use main development branch of Rails
 gem "rails", "~> 8.0"
 # The modern asset pipeline for Rails [https://github.com/rails/propshaft]

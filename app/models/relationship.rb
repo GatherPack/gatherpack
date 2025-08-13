@@ -9,7 +9,7 @@ class Relationship < ApplicationRecord
   validate :no_self_relationships
   validate :permission_check
 
-  attr_accessor :start_node, :node_occupant, :created_by
+  attr_accessor :start_node, :node_occupant, :node_occupant_id, :other_occupant, :other_occupant_id, :created_by
 
   def reify
     raise ArgumentError unless start_node.present? && node_occupant.present?
@@ -19,11 +19,21 @@ class Relationship < ApplicationRecord
 
     if side == "p"
       self.parent = node_occupant
+      self.child = other_occupant if other_occupant.present?
     elsif side == "c"
       self.child = node_occupant
+      self.parent = other_occupant if other_occupant.present?
     else
       raise ArgumentError
     end
+  end
+
+  def node_occupant_id=(id)
+    self.node_occupant = Person.find(id)
+  end
+
+  def other_occupant_id=(id)
+    self.other_occupant = Person.find(id)
   end
 
   private

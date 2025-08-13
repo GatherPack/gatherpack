@@ -53,13 +53,13 @@
       <div class="col-8">
         <% if @team.parent.present? %>
           <h2>Part Of</h2>
-          <%= as_badge @team.parent %>
+          <%= link_to as_badge(@team.parent), @team.parent %>
         <% end %>
         <% if policy_scope(@team.children).any? %>
           <h2>Sub-Teams</h2>
           <div class="badge-container">
             <% @team.children.order(name: :asc).each do |child_team| %>
-              <%= as_badge child_team %>
+              <%= link_to as_badge(child_team), child_team %>
             <% end %>
           </div>
         <% end %>

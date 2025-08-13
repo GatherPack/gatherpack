@@ -1,0 +1,20 @@
+.btn-tool {
+  @extend .btn;
+  height: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  min-width: 6rem !important;
+  max-width: 100%;
+
+  svg {
+    margin: auto;
+  }
+}
+
+.toolbox {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}

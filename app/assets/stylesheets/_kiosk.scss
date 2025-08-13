@@ -1,0 +1,18 @@
+html.kiosk-layout {
+  height: 100vh;
+  overflow: hidden;
+
+  .kiosk-container {
+    @extend .container-fluid;
+    height: calc(100vh - 60px);
+  }
+
+  #kiosk-content {
+    @extend .full-height;
+    overflow-y: hidden;
+  }
+
+  .full-height {
+    height: calc(100vh - 68px);
+  }
+}

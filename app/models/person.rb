@@ -23,7 +23,7 @@ class Person < ApplicationRecord
   end
 
   def self.ransackable_associations(auth_object = nil)
-    [ "user" ]
+    [ "user", "tokens" ]
   end
 
   def admin?
