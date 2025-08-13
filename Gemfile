@@ -121,7 +121,7 @@ gem "http", "~> 5.2"
 
 gem "pmap", "~> 1.1"
 
-gem "jbuilder", "~> 2.13"
+gem "jbuilder", "~> 2.14"
 
 gem "hotwire_combobox", "~> 0.4.0", github: "braddoeswebdev/hotwire_combobox"
 
