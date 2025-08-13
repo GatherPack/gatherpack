@@ -13,7 +13,11 @@ class ApplicationController < ActionController::Base
     current_user&.architect
   end
 
-  helper_method :admin?, :architect?
+  def manager?
+    current_user&.person&.manager?
+  end
+
+  helper_method :admin?, :architect?, :manager?
 
   rescue_from Pundit::NotAuthorizedError, with: :pundit_not_authorized
 

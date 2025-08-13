@@ -27,6 +27,28 @@
           <%= Settings[:title] %>
         </a>
       </div>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0 d-flex align-items-center">
+        <% if current_user != true_user %>
+          <div class="nav-item d-flex align-items-center px-1 lh-1 text-white text-end">
+            <%= true_user.person.identifier_name %>
+          </div>
+          <div class="nav-item d-flex align-items-center px-1">
+            <%= image_tag(get_avatar_url(true_user.person.avatar), class: 'person-img', style: 'height: 2em; width: auto;') %>
+          </div>
+          <div class="nav-item px-1 text-center w-100 text-white">
+            impersonating
+          </div>
+        <% end %>
+        <div class="nav-item d-flex align-items-center px-1 lh-1 text-white text-end">
+          <%= current_user.person.identifier_name %>
+        </div>
+        <div class="nav-item d-flex align-items-center px-1 pe-3">
+          <%= image_tag(get_avatar_url(current_user.person.avatar), class: 'person-img', style: 'height: 2em; width: auto;') %>
+        </div>
+      </ul>
+    </div>
     </header>
 
 

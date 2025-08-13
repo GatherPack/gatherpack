@@ -16,12 +16,6 @@ GIT
       actionview (>= 6.1)
       railties (>= 6.1)
 
-PATH
-  remote: ../westside_robotics_service_kiosk_plugin
-  specs:
-    westside_robotics_service_kiosk (0.1.0)
-      rails (>= 8.0.2)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -647,7 +641,6 @@ DEPENDENCIES
   turbo-rails
   tzinfo-data
   web-console
-  westside_robotics_service_kiosk!
 
 BUNDLED WITH
    2.7.1
