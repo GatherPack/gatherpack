@@ -15,4 +15,13 @@ html.kiosk-layout {
   .full-height {
     height: calc(100vh - 68px);
   }
+
+  .modal-dialog {
+    max-height: 90vh;
+
+    .modal-body {
+      max-height: 70vh;
+      overflow-y: auto;
+    }
+  }
 }
