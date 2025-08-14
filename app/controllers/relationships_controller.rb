@@ -22,7 +22,21 @@ class RelationshipsController < ApplicationController
     end
   end
 
+  def reverse
+    @relationship = Relationship.find(params[:id])
+    @relationship.reverse
+    @relationship.created_by = current_user.person
+    if @relationship.save
+      redirect_to relationships_person_path(@person), notice: "Relationship was successfully reversed."
+    else
+      redirect_to relationships_person_path(@person), notice: "Relationship was not successfully reversed."
+    end
+  end
+
   def destroy
+    @relationship = Relationship.find(params[:id])
+    @relationship.destroy
+    redirect_to relationships_person_path(@person), notice: "Relationship was successfully destroyed."
   end
 
   private

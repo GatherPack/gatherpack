@@ -95,7 +95,6 @@
   </div>
   <div class="card-footer">
     <%= link_to "Impersonate", impersonate_person_path(@person), data: { turbo_method: :post }, class: 'btn btn-dark' if @person.user.present? && policy(@person).impersonate? %>
-    <%= link_to 'Add Relationship', new_person_relationship_path(@person), class: 'btn btn-info' if policy(@person.relationships.build).create? %>
     <%= link_to 'Edit Profile', edit_person_path(@person), class: 'btn btn-warning' if policy(@person).update? %>
     <% if @person.user&.id %>
       <%= link_to "Change Email/Password", edit_person_user_path(@person), class: "btn btn-primary" %>

@@ -36,6 +36,10 @@ class Relationship < ApplicationRecord
     self.other_occupant = Person.find(id)
   end
 
+  def reverse
+    self.parent, self.child = self.child, self.parent
+  end
+
   private
 
   def no_self_relationships

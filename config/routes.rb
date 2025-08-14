@@ -65,12 +65,17 @@ Rails.application.routes.draw do
   resources :team_types
   resources :relationship_types
   resources :people do
-    resources :relationships, only: %i[ new create destroy ]
+    resources :relationships, only: %i[ new create destroy ] do
+      member do
+        post "reverse"
+      end
+    end
     resource :user, only: %i[ new create edit update ]
     member do
       post "impersonate"
       get "calendar"
       get "statistics"
+      get "relationships"
       get "recent_activity"
     end
     collection do

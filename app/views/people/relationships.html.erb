@@ -1,0 +1,40 @@
+<%= render "show_shared" %>
+
+<div class="card">
+  <div class="card-header">
+    <h1><%= @person.identifier_name %></h1>
+  </div>
+  <div class="card-body">
+    <h2>Relationships</h2>
+
+    <div class="row align-items-center">
+      <div class="col-12 col-lg-8">
+        <% @person.relationships.each do |relationship| %>
+          <div class="row align-items-center mb-3">
+            <div class="col-8 col-lg-3 text-end">
+              <%= relationship.relationship_type.parent_label %><br>
+              <strong><%= link_to relationship.parent.identifier_name, relationship.parent %></strong>
+            </div>
+            <div class="col-4 col-lg-1">
+              <%= image_tag get_avatar_url(relationship.parent.avatar), class: 'person-img' %>
+            </div>
+            <div class="col-4 col-lg-1">
+              <%= image_tag get_avatar_url(relationship.child.avatar), class: 'person-img' %>
+            </div>
+            <div class="col-8 col-lg-3">
+              <%= relationship.relationship_type.child_label %><br>
+              <strong><%= link_to relationship.child.identifier_name, relationship.child %></strong>
+            </div>
+            <div class="col-12 col-lg-4 mt-3 mt-lg-0 text-center text-lg-start">
+              <%= link_to 'Reverse', reverse_person_relationship_path(@person, relationship), class: 'btn btn-warning', data: { turbo_method: :post, turbo_confirm: 'Are you sure?' } if policy(relationship).update? %>
+              <%= link_to 'Delete', person_relationship_path(@person, relationship), class: 'btn btn-danger', data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } if policy(relationship).destroy? %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+      <div class="col-12 col-lg-4">
+        <%= link_to 'Add Relationship', new_person_relationship_path(@person), class: 'btn btn-info' if policy(@person.relationships.build).create? %>
+      </div>
+    </div>
+  </div>
+</div>

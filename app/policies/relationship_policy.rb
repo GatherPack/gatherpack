@@ -19,6 +19,6 @@ class RelationshipPolicy < ApplicationPolicy
   end
 
   def destroy?
-    false
+    true
   end
 end
