@@ -7,10 +7,16 @@ class UsersController < InternalController
   end
 
   def create
-    @user = authorize User.new(user_params)
-    @person.user = @user
+    existing_user = User.find_by(email: user_params[:email])
+    if existing_user && existing_user.person.nil?
+      @user = authorize existing_user
+      @user.assign_attributes(user_params)
+    else
+      @user = authorize User.new(user_params)
+    end
 
     if @user.save
+      @person.update(user: @user)
       redirect_to @person, notice: "User information was successfully updated.", status: :see_other
     else
       render :new, status: :unprocessable_entity
