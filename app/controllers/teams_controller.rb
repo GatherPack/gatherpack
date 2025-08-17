@@ -60,6 +60,6 @@ class TeamsController < InternalController
 
     # Only allow a list of trusted parameters through.
     def team_params
-      params.require(:team).permit(:name, :parent_id, :color, :team_type_id, :join_permission, person_ids: [])
+      params.require(:team).permit(:name, :parent_id, :color, :description, :team_type_id, :join_permission, person_ids: [])
     end
 end

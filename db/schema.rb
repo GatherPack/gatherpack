@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_07_22_201000) do
+ActiveRecord::Schema[8.0].define(version: 2025_08_17_165550) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -506,6 +506,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_22_201000) do
     t.integer "join_permission", default: 0
     t.uuid "parent_team_id"
     t.uuid "parent_id"
+    t.text "description"
     t.index ["parent_id"], name: "index_teams_on_parent_id"
     t.index ["parent_team_id"], name: "index_teams_on_parent_team_id"
     t.index ["team_type_id"], name: "index_teams_on_team_type_id"

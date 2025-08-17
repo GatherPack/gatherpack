@@ -22,7 +22,7 @@ class TeamPolicy < ApplicationPolicy
   end
 
   def permitted_attributes_for_update
-    [ :name, :color, :team_type_id ] + if user.admin?
+    [ :name, :color, :team_type_id, :description ] + if user.admin?
       [ :join_permission, :parent_id, person_ids: [] ]
     else
       if record.join_permission != "added_by_admin"
