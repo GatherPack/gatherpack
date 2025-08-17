@@ -1,0 +1,20 @@
+.page {
+  margin: 1rem;
+  padding: 1rem;
+  border: 1px solid $greige-darkest;
+  page-break-before: always;
+  page-break-after: always;
+  page-break-inside: avoid;
+}
+
+@media print {
+  .no-print {
+    display: none;
+  }
+
+  .page {
+    border: none;
+    margin: 0;
+    padding: 0;
+  }
+}

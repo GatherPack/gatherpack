@@ -78,6 +78,8 @@ $form-feedback-valid-color: inherit;
 @import 'calendar';
 @import 'kiosk';
 
+@import 'print';
+
 .fullscreen {
   height: 100vh;
   align-items: center;
@@ -142,12 +144,6 @@ a.undecorated {
 .fa-stack {
   width: var(--fa-fw-width, 1.25em);
   height: 1em;
-}
-
-@media print {
-  .no-print {
-    display: none;
-  }
 }
 
 .navtab {
