@@ -55,6 +55,6 @@ class RelationshipTypesController < InternalController
 
     # Only allow a list of trusted parameters through.
     def relationship_type_params
-      params.require(:relationship_type).permit(:parent_label, :child_label, :permission)
+      params.require(:relationship_type).permit(:parent_label, :child_label, :permission, parent_permissions: [], child_permissions: [])
     end
 end

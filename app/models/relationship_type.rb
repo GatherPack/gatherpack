@@ -3,6 +3,7 @@ class RelationshipType < ApplicationRecord
   has_paper_trail versions: { class_name: "AuditLog" }
   has_many :relationships
   enum :permission, added_by_admin: 0, added_by_manager: 1, added_by_team_member: 2, added_by_participant: 3, added_by_user: 4
+  NODE_PERMISSIONS = %w[ manage_account manage_checkins manage_ledgers manage_punches manage_tokens ]
 
   def self.ransackable_attributes(auth_object = nil)
     [ "parent_label", "child_label", "updated_at", "permission" ]

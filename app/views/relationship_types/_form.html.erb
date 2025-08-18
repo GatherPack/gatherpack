@@ -3,6 +3,8 @@
 
 <div class="form-inputs">
   <%= f.input :parent_label %>
+  <%= f.collection_check_boxes :parent_permissions, node_permissions, :downcase, :humanize %>
   <%= f.input :child_label %>
+  <%= f.collection_check_boxes :child_permissions, node_permissions, :downcase, :humanize %>
   <%= f.input :permission, as: :select, collection: RelationshipType.permissions.keys, label_method: :titleize, include_blank: false %>
 </div>
