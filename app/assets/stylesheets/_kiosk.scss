@@ -24,4 +24,14 @@ html.kiosk-layout {
       overflow-y: auto;
     }
   }
+
+  .card {
+    max-height: calc(100vh - 68px);
+    overflow-y: auto;
+
+    .card-body {
+      max-height: calc(100vh - 68px - 50px);
+      overflow-y: auto;
+    }
+  }
 }

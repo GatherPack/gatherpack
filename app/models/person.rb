@@ -85,6 +85,37 @@ class Person < ApplicationRecord
     Relationship.where(parent_id: id).or(Relationship.where(child_id: id))
   end
 
+  def relatives(relation_type = nil)
+    r = relationships
+    r = r.where(relation_type: relation_type) if relation_type
+    relative_ids = r.pluck(:parent_id, :child_id).flatten.uniq - [ id ]
+    Person.where(id: relative_ids)
+  end
+
+  def distant_relatives(relation_type = nil)
+    visited = Set.new([ id ])
+    to_visit = relatives().to_a
+    matching_relatives = []
+
+    while to_visit.any?
+      person = to_visit.pop
+      next if visited.include?(person.id)
+      visited << person.id
+      if relation_type
+        rels = Relationship.where(
+          "(parent_id = :a AND child_id = :b) OR (parent_id = :b AND child_id = :a)",
+          a: person.id, b: id
+        ).where(relationship_type: relation_type)
+        matching_relatives << person if rels.exists?
+      else
+        matching_relatives << person
+      end
+      to_visit.concat(person.relatives(nil).reject { |r| visited.include?(r.id) })
+    end
+
+    matching_relatives.uniq
+  end
+
   def ledger_ids
     LedgerOwnership.where(owner: self).pluck(:ledger_id)
   end
