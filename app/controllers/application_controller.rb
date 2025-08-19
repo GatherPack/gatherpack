@@ -1,9 +1,11 @@
+
 class ApplicationController < ActionController::Base
   include Pundit::Authorization
   impersonates :user
 
   around_action :set_time_zone
   before_action :set_paper_trail_whodunnit
+  before_action :check_for_user, unless: :devise_controller?
 
   def admin?
     current_user&.admin
@@ -25,17 +27,23 @@ class ApplicationController < ActionController::Base
 
   def check_for_user
     unless current_user
-      session[:user_return_to] = request.fullpath if request.get? && !request.xhr?
+      if request.get? && !request.xhr? && request.fullpath != new_user_session_path
+        session[:user_return_to] = request.fullpath
+      end
       redirect_to new_user_session_path, notice: "You must be logged in to do that"
     end
   end
 
   def after_sign_up_path_for(resource)
-    session[:user_return_to] || stored_location_for(resource) || root_path
+    path = session.delete(:user_return_to) || stored_location_for(resource) || root_path
+    Rails.logger.info "[Auth] after_sign_up_path_for: redirecting to \\#{path}"
+    path
   end
 
   def after_sign_in_path_for(resource)
-    session[:user_return_to] || stored_location_for(resource) || root_path
+    path = session.delete(:user_return_to) || stored_location_for(resource) || root_path
+    Rails.logger.info "[Auth] after_sign_in_path_for: redirecting to \\#{path}"
+    path
   end
 
   def check_for_admin
