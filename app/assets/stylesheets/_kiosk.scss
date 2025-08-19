@@ -1,37 +1,51 @@
+@include media-breakpoint-up(lg) { 
+  html.kiosk-layout {
+    height: 100vh;
+    overflow: hidden;
+
+    .kiosk-container {
+      height: calc(100vh - 60px);
+    }
+
+    #kiosk-content {
+      overflow-y: hidden;
+    }
+
+    .full-height {
+      height: calc(100vh - 68px);
+    }
+
+    .modal-dialog {
+      max-height: 90vh;
+
+      .modal-body {
+        max-height: 70vh;
+        overflow-y: auto;
+      }
+    }
+
+    .card {
+      max-height: calc(100vh - 68px);
+      overflow-y: auto;
+
+      .card-body {
+        max-height: calc(100vh - 68px - 50px);
+        overflow-y: auto;
+      }
+    }
+  }
+}
+
 html.kiosk-layout {
-  height: 100vh;
-  overflow: hidden;
+  min-height: 100vh;
+  overflow-y: auto;
 
   .kiosk-container {
     @extend .container-fluid;
-    height: calc(100vh - 60px);
+    min-height: calc(100vh - 60px);
   }
 
   #kiosk-content {
     @extend .full-height;
-    overflow-y: hidden;
-  }
-
-  .full-height {
-    height: calc(100vh - 68px);
-  }
-
-  .modal-dialog {
-    max-height: 90vh;
-
-    .modal-body {
-      max-height: 70vh;
-      overflow-y: auto;
-    }
-  }
-
-  .card {
-    max-height: calc(100vh - 68px);
-    overflow-y: auto;
-
-    .card-body {
-      max-height: calc(100vh - 68px - 50px);
-      overflow-y: auto;
-    }
   }
 }

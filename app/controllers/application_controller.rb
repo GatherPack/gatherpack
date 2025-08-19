@@ -31,7 +31,11 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_up_path_for(resource)
-    session.delete(:user_return_to) || stored_location_for(resource) || root_path
+    session[:user_return_to] || stored_location_for(resource) || root_path
+  end
+
+  def after_sign_in_path_for(resource)
+    session[:user_return_to] || stored_location_for(resource) || root_path
   end
 
   def check_for_admin
