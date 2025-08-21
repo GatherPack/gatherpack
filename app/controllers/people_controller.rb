@@ -1,5 +1,5 @@
 class PeopleController < InternalController
-  before_action :set_person, only: %i[ show edit update destroy impersonate recent_activity calendar statistics relationships ]
+  before_action :set_person, only: %i[ show edit update destroy impersonate recent_activity calendar statistics relationships teams ]
 
   # GET /people
   def index
@@ -90,6 +90,9 @@ class PeopleController < InternalController
   end
 
   def relationships
+  end
+
+  def teams
   end
 
   private

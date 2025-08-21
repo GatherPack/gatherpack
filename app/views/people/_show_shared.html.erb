@@ -6,6 +6,12 @@
       <a href="<%= person_path(@person) %>" class="nav-link <%= "active" if current_page?(person_path(@person)) %>">Overview</a>
     </li>
     <li class="nav-item">
+      <a href="<%= person_memberships_path(@person) %>" class="nav-link <%= "active" if current_page?(person_memberships_path(@person)) %>">Teams</a>
+    </li>
+    <li class="nav-item">
+      <a href="<%= relationships_person_path(@person) %>" class="nav-link <%= "active" if current_page?(relationships_person_path(@person)) %>">Relationships</a>
+    </li>
+    <li class="nav-item">
       <a href="<%= recent_activity_person_path(@person) %>" class="nav-link <%= "active" if current_page?(recent_activity_person_path(@person)) %>">Recent Activity</a>
     </li>
     <li class="nav-item">
@@ -14,8 +20,6 @@
     <li class="nav-item">
       <a href="<%= statistics_person_path(@person) %>" class="nav-link <%= "active" if current_page?(statistics_person_path(@person)) %>">Statistics</a>
     </li>
-    <li class="nav-item">
-      <a href="<%= relationships_person_path(@person) %>" class="nav-link <%= "active" if current_page?(relationships_person_path(@person)) %>">Relationships</a>
-    </li>
+
   </ul>
 </div>

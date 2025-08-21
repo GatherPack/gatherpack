@@ -1,20 +1,19 @@
 class MembershipPolicy < ApplicationPolicy
   class Scope < ApplicationPolicy::Scope
     def resolve
-      scope.all
+      if user.admin
+        scope.all
+      else
+        scope.where(team_id: person.all_team_ids).or(scope.where(person_id: person.id))
+      end
     end
   end
 
   def new?
-    has_perms
+    user.admin || user.person.manager?
   end
 
   def update?
-    has_perms
-  end
-
-  private
-  def has_perms
     user.admin || record.team.manager?(user.person)
   end
 end
