@@ -28,6 +28,7 @@ class Infodump
   end
 
   def generate
+    md = Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true, no_intra_emphasis: true, fenced_code_blocks: true, lax_spacing: true)
     @deliverable = false
     @announcements = []
     @person.all_teams.each do |team|
@@ -47,7 +48,7 @@ class Infodump
       if announcement
         @deliverable = true
 
-        @content << "<h2>#{announcement.title}</h2><div>#{announcement.content}</div>"
+        @content << "<h2>#{announcement.title}</h2><div>#{md.render(announcement.content)}</div>"
       end
     end
   end

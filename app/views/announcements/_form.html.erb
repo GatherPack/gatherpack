@@ -22,7 +22,7 @@
     </div>
   </div>
   
-  <%= f.input :content %>
+  <%= f.input :content, wrapper_html: { class: 'code-editor' }, input_html: { rows: 6, data: { lang: "markdown" } } %>
   
   
 </div>

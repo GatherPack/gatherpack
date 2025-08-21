@@ -13,7 +13,7 @@
     <p>
       <em>Runs from <%= nice_datetime_range @announcement.start_time, @announcement.end_time %></em>
     </p>
-    <%= @announcement.content %>
+    <%= md @announcement.content %>
   </div>
   <div class="card-footer">
     <%= link_to 'Edit', edit_announcement_path(@announcement), class: 'btn btn-warning' if policy(@announcement).update? %>

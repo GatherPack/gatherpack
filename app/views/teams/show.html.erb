@@ -7,7 +7,7 @@
   <div class="card-body">
     <div class="row mb-3">
       <div class="col-4">
-        <div class="mb-3"><%= @team.description %></div>
+        <div class="mb-3"><%= md @team.description %></div>
         <h2>Managers</h2>
         <div class="d-flex flex-row align-items-center flex-wrap">
           <% @team.managers.order(display_name: :asc).each do |person| %>

@@ -84,4 +84,9 @@ module ApplicationHelper
       "#{nice_datetime a} to #{nice_datetime b}"
     end
   end
+
+  def md(content)
+    md = Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true, no_intra_emphasis: true, fenced_code_blocks: true, lax_spacing: true)
+    md.render(content || "").html_safe
+  end
 end
