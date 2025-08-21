@@ -2,28 +2,45 @@
 
 <div class="row">
   <div class="col-12 col-lg-6">
-    <div class="card">
-      <div class="card-header">
-        <h2>Announcements</h2>
+    <% if @shortcuts.any? %>
+      <div class="card">
+        <div class="card-header">
+          <h2>Your Shortcuts</h2>
+        </div>
+        <div class="card-body">
+          <div class="toolbox">
+            <% @shortcuts.each do |shortcut| %>
+              <%= tool_button shortcut.icon, shortcut.name, "btn", shortcut.target, style: "background-color: #{shortcut.color}; color: #{contrasting_color(shortcut.color)}" %>
+            <% end %>
+          </div>
+        </div>
       </div>
-      <div class="card-body">
-        <% policy_scope(Announcement).visible.order(start_time: :asc, end_time: :asc).each do |announcement| %>
-          <div class="card mb-3" id="<%= dom_id announcement %>">
-            <div class="card-header">
-              <h3>
-                <% if announcement.team %>
-                  <%= link_to i(announcement.team.team_type.icon), team_path(announcement.team), class: "badge rounded-pill", style: "background-color:#{announcement.team.color};color:#{contrasting_color(announcement.team.color)}", "data-turbo": "false", title: "Posted in #{announcement.team.name}" %>
-                <% end %>
-                <%= link_to announcement.title, announcement %>
-              </h3>
-            </div>
-            <div class="card-body">
-              <%= announcement.content %>
-            </div>
-          </div>        
-        <% end %>
+    <% end %>
+
+    <% if @announcements.any? %>
+      <div class="card">
+        <div class="card-header">
+          <h2>Announcements</h2>
+        </div>
+        <div class="card-body">
+          <% @announcements.each do |announcement| %>
+            <div class="card mb-3" id="<%= dom_id announcement %>">
+              <div class="card-header">
+                <h3>
+                  <% if announcement.team %>
+                    <%= link_to i(announcement.team.team_type.icon), team_path(announcement.team), class: "badge rounded-pill", style: "background-color:#{announcement.team.color};color:#{contrasting_color(announcement.team.color)}", "data-turbo": "false", title: "Posted in #{announcement.team.name}" %>
+                  <% end %>
+                  <%= link_to announcement.title, announcement %>
+                </h3>
+              </div>
+              <div class="card-body">
+                <%= announcement.content %>
+              </div>
+            </div>        
+          <% end %>
+        </div>
       </div>
-    </div>
+    <% end %>
   </div>
   <div class="col-12 col-lg-6">
     <div class="card">

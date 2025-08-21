@@ -1,0 +1,18 @@
+<% breadcrumb @shortcut %>
+
+<div class="card">
+  <div class="card-header">
+    <h1><%= i @shortcut.icon %> <%= @shortcut.identifier_name %></h1>
+  </div>
+  <div class="card-body">
+    <p>
+      <a href="<%= @shortcut.target %>">
+        <tt><%= @shortcut.target %></tt>
+      </a>
+    </p>
+  </div>
+  <div class="card-footer">
+    <%= link_to 'Edit', edit_shortcut_path(@shortcut), class: 'btn btn-warning' %>
+    <%= link_to 'Delete', @shortcut, class: 'btn btn-danger', data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %>
+  </div>
+</div>

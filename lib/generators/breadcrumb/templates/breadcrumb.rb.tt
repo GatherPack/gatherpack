@@ -1,5 +1,5 @@
 crumb :<%= plural_table_name %> do
-  link "<%= plural_table_name.titlize %>", <%= index_helper(type: :path) %>
+  link "<%= plural_table_name.titleize %>", <%= index_helper(type: :path) %>
 end
 
 crumb :<%= singular_table_name %> do |<%= singular_table_name %>|

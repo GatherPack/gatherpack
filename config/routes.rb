@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :shortcuts
   resources :ledger_payments, only: [ :new, :create ]
   resources :gateways do
     member do

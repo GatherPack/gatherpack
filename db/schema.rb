@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_08_17_165550) do
+ActiveRecord::Schema[8.0].define(version: 2025_08_21_141052) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -213,6 +213,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_17_165550) do
     t.uuid "parent_id"
     t.jsonb "metadata"
     t.boolean "finalized", default: true
+    t.boolean "failed", default: false
     t.index ["created_by_type", "created_by_id"], name: "index_ledger_entries_on_created_by"
     t.index ["ledger_id"], name: "index_ledger_entries_on_ledger_id"
     t.index ["parent_id"], name: "index_ledger_entries_on_parent_id"
@@ -305,6 +306,19 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_17_165550) do
     t.index ["team_id"], name: "index_memberships_on_team_id"
   end
 
+  create_table "operations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.string "permission"
+    t.string "model"
+    t.string "scope"
+    t.string "icon"
+    t.string "color"
+    t.text "code"
+    t.text "view"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "pages", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "title"
     t.text "content"
@@ -357,6 +371,17 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_17_165550) do
     t.text "code"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "shortcuts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.string "target"
+    t.string "icon"
+    t.string "color"
+    t.uuid "team_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["team_id"], name: "index_shortcuts_on_team_id"
   end
 
   create_table "solid_cache_entries", force: :cascade do |t|
@@ -608,6 +633,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_17_165550) do
   add_foreign_key "relationships", "people", column: "child_id"
   add_foreign_key "relationships", "people", column: "parent_id"
   add_foreign_key "relationships", "relationship_types"
+  add_foreign_key "shortcuts", "teams"
   add_foreign_key "solid_queue_blocked_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
   add_foreign_key "solid_queue_claimed_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
   add_foreign_key "solid_queue_failed_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade

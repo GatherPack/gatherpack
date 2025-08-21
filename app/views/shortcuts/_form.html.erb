@@ -1,0 +1,25 @@
+<%= f.error_notification %>
+<%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+<div class="form-inputs">
+  <div class="row">
+    <div class="col-lg">
+      <%= f.input :name %>
+    </div>
+    <div class="col-lg">
+      <%= f.input :color, as: :fancy_color %>
+    </div>
+    <div class="col-lg">
+      <%= f.input :icon, as: :icon %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg">
+      <%= f.input :target, label: 'Target URL' %>
+    </div>
+    <div class="col-lg">
+      <%= f.association :team, as: :searching_combobox, scope: 'managed_teams' %>
+    </div>
+  </div>
+</div>
