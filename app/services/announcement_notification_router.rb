@@ -1,7 +1,7 @@
 class AnnouncementNotificationRouter
   def initialize(announcement)
     @announcement = announcement
-    @people = announcement.team ? announcement.team.people : Person.all
+    @people = announcement.team ? announcement.team.all_people : Person.all
   end
 
   def run
