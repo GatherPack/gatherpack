@@ -7,12 +7,12 @@
   <div class="card-body">
     <h2>Team Memberships</h2>
 
-    <% if @person.user.architect %>
+    <% if @person&.user&.architect %>
       <div class="alert alert-danger">
         <span class="badge fs-3" title="Site Architect" style="background-color: black; color: #d52; border: thick solid #b21;"><%= i 'screwdriver-wrench' %></span>
         This person is an architect and has full manager access to all teams.
       </div>
-    <% elsif @person.user.admin %>
+    <% elsif @person&.user&.admin %>
       <div class="alert alert-warning">
         <span class="badge fs-3" title="Site Admin" style="background-color: black; color: #dd2; border: thick solid #bb1;"><%= i 'crown' %></span>
         This person is an admin and has full manager access to all teams.
