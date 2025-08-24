@@ -1,0 +1,34 @@
+<div class="row align-items-center" id="kiosk-content">
+  <div class="col-12 col-lg-4">
+    <div class="card">
+      <div class="card-header">
+        <h2 class="card-title">Time Kiosk</h2>
+      </div>
+      <div class="card-body">
+        <%= simple_form_for TimeKiosk.new, url: time_kiosk_path do |f| %>
+          <%= f.hidden_field :tool, value: 'find_token' %>
+          <div class="row align-items-center">
+            <div class="col-8">
+              <%= f.input :token_value, label: "Token", input_html: { autocomplete: 'off', autofocus: true } %>
+            </div>
+            <div class="col-4">
+              <%= f.submit 'Search', class: 'btn btn-lg w-100 btn-primary' %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12 col-lg-8">
+    <% flash.each do |type, value| %>
+      <div class="alert <%= flash_to_class(type) %> alert-dismissible fade show my-2" role="alert">
+        <i class="bi flex-shrink-0 me-2 fa-solid <%= flash_to_icon(type) %>"></i>
+        <%= value %>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    <% end %>
+
+    <%= render @time_kiosk.tool %>
+  </div>
+</div>

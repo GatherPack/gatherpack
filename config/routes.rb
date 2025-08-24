@@ -20,7 +20,8 @@ Rails.application.routes.draw do
     end
   end
   get "time_kiosk", to: "time_kiosk#index"
-  post "time_kiosk", to: "time_kiosk#create"
+  post "time_kiosk", to: "time_kiosk#index"
+  patch "time_kiosk", to: "time_kiosk#index"
   resources :checkin_fields
   resources :mailboxes do
     resources :mailbox_messages, except: %i[ index ]

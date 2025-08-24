@@ -35,6 +35,14 @@ class TimeClockPunch < ApplicationRecord
     complete? ? ((self.end_time - self.start_time) / 3600 * 20).round / 20.0 : 0.0
   end
 
+  def hours_so_far
+    if complete?
+      ((self.end_time - self.start_time) / 3600 * 20).round / 20.0
+    else
+      ((Time.current - self.start_time) / 3600 * 20).round / 20.0
+    end
+  end
+
   private
 
   def permission_check

@@ -1,86 +1,78 @@
 class TimeKioskController < ApplicationController
+  layout "kiosk"
+
   def index
-    @accept_input = true
-    @message = {}
-    render layout: "kiosk"
-  end
+    @time_kiosk = TimeKiosk.new(time_kiosk_params)
+    @time_kiosk.tool ||= "welcome"
 
-  def create
-    if params[:time_clock_periods]
-      person_punch_in
-    else
-      kiosk_punch_in
+    if @time_kiosk.tool == "find_token"
+      if @time_kiosk.token
+        if @time_kiosk.token.tokenable.is_a?(Person)
+          @person = @time_kiosk.token.tokenable
+          @time_clocks = @person.time_clock_punches.order(time_clock_period_id: :asc).map do |punch|
+            Hash[TimeClockPeriod.find_by_id(punch.time_clock_period_id), punch.hours]
+          end.reduce do |a, b|
+            a.merge(b) { |_, c, d| c + d }
+          end
+          @time_clock_periods = TimeClockPeriod.where(team: @person.all_teams).or(TimeClockPeriod.where(team: nil)).where("start_time <= ? AND end_time >= ?", Time.current, Time.current)
+          @open_punches = TimeClockPunch.all.where(person: @person, end_time: nil)
+          @time_kiosk.tool = "found_person"
+        elsif @time_kiosk.token.tokenable.is_a?(Hook)
+          @hook = @time_kiosk.token.tokenable
+          @time_kiosk.tool = "found_hook"
+        else
+          @time_kiosk.tool = "not_found"
+        end
+      else
+        @time_kiosk.tool = "not_found"
+      end
     end
 
-    render :index, layout: "kiosk"
-  end
-
-  def kiosk_punch_in
-    @token = Token.find_by_rfid(time_kiosk_params[:token_id])
-    @accept_input = true
-    @message = {}
-
-    unless @token
-      @message[:danger] = "Invalid Token"
+    if @time_kiosk.tool == "punch_in"
+      if @time_kiosk.time_clock_period
+        period = @time_kiosk.time_clock_period
+        TimeClockPunch.create(person: @time_kiosk.person, start_time: Time.current, time_clock_period: period, created_by: "kiosk")
+      end
+      @time_kiosk.tool = "welcome"
     end
 
-    case @token&.tokenable_type
-    when "Hook"
-      @hook = Hook.find(@token.tokenable_id)
-      @message[:info] = @hook.run(@hook.code)
-    when "Person"
-      @person = Person.find(@token.tokenable_id)
-
-      current_punches = TimeClockPunch.all.where(person: @person, end_time: nil)
-      current_punches.each do |punch|
-        # punch out people even if the TimeClockPeriod ended
+    if @time_kiosk.tool == "punch_out"
+      if @time_kiosk.time_clock_punch
+        punch = @time_kiosk.time_clock_punch
         current_time = Time.current
         max_time = punch.time_clock_period&.end_time || current_time
         end_time = current_time > max_time ? max_time: current_time
 
         punch.created_by = "kiosk"
         punch.update(end_time: end_time)
-        @message[:info] = "Punched out #{@person.identifier_name}."
       end
-
-      if current_punches.empty?
-        @time_clock_periods = TimeClockPeriod.where(team: @person.all_teams).or(TimeClockPeriod.where(team: nil)).where("start_time <= ? AND end_time >= ?", Time.current, Time.current)
-
-        if @time_clock_periods.empty?
-          TimeClockPunch.create(person: @person, start_time: Time.current, time_clock_period: nil)
-          @message[:info] = "Punched in #{@person.identifier_name}."
-        elsif @time_clock_periods.one?
-          period = @time_clock_periods.first
-          punch = TimeClockPunch.new(person: @person, start_time: Time.current, time_clock_period: period)
-          punch.created_by = "kiosk"
-          punch.save
-          @message[:info] = "Punched in #{@person.identifier_name} for #{period.name}."
-        else
-          @accept_input = false
-        end
-      end
+      @time_kiosk.tool = "welcome"
     end
-  end
 
-  def person_punch_in
-    person = Person.find(time_clock_period_params[:person_id])
-    period = TimeClockPeriod.find(time_clock_period_params[:time_clock_period_id])
-    @message = {}
+    if @time_kiosk.tool == "punch_out_all"
+      @person = @time_kiosk.token.tokenable
+      @open_punches = TimeClockPunch.all.where(person: @person, end_time: nil)
 
-    punch = TimeClockPunch.new(person: person, start_time: Time.current, time_clock_period: period)
-    punch.created_by = "kiosk"
-    punch.save
-    @accept_input = true
-    @message[:info] = "Punched in #{person.identifier_name} for #{period.name}."
+      @open_punches.each do |punch|
+        current_time = Time.current
+        max_time = punch.time_clock_period&.end_time || current_time
+        end_time = current_time > max_time ? max_time: current_time
+
+        punch.created_by = "kiosk"
+        punch.update(end_time: end_time)
+      end
+      @time_kiosk.tool = "welcome"
+    end
+
+    respond_to do |format|
+      format.turbo_stream { render turbo_stream: turbo_stream.replace("kiosk-content", partial: "time_kiosk/kiosk") }
+      format.html { render :index }
+    end
   end
 
   private
 
-    def time_kiosk_params
-      params.require(:time_kiosk).permit(:token_id)
-    end
-
-    def time_clock_period_params
-      params.require(:time_clock_periods).permit(:person_id, :time_clock_period_id)
-    end
+  def time_kiosk_params
+    params.require(:time_kiosk).permit(:tool, :token_value, :time_clock_period_id, :time_clock_punch_id, :person_id) if params[:time_kiosk]
+  end
 end

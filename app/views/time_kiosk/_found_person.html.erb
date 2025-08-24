@@ -1,0 +1,64 @@
+<div class="card">
+  <div class="card-header">
+    <h2 class="card-title">Found Person</h2>
+  </div>
+  <div class="card-body">
+    <div class="row align-items-center mb-3">
+      <div class="col-3">
+        <%= image_tag get_avatar_url(@person.avatar), class: 'person-img' %>
+      </div>
+      <div class="col-6">
+        <h3 class="display-3"><%= @person.identifier_name %></h3>
+      </div>
+      <div class="col-3">
+        <dl>
+          <% @time_clocks.each do |period, hours| %>
+            <dt class="fs-4">
+              <%= period.name %>
+            </dt>
+            <dd class="fs-3 ms-3">
+              <%= hours.round(2) %>
+            </dd>
+          <% end %>
+        </dl>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-4">
+        <h3>Start New Punch</h3>
+        <div class="toolbox">
+          <% @time_clock_periods.each do |p| %>
+            <%= tool_button 'clock', p.name, "btn-primary w-100 my-2", time_kiosk_path(time_kiosk: { tool: "punch_in", person_id: @person.id, time_clock_period_id: p.id }), method: :post %>
+          <% end %>
+          <%= tool_button 'clock', "Start Unassigned", "btn-secondary w-100 my-2", time_kiosk_path(time_kiosk: { tool: "punch_in", person_id: @person.id, time_clock_period_id: nil }), method: :post %>
+        </div>
+      </div>
+      <div class="col-8 text-end">
+        <% if @open_punches.any? %>
+          <h3>Open Punches</h3>
+          <% @open_punches.each do |punch| %>
+            <div class="row align-items-center my-2">
+              <div class="col">
+                <dl>
+                  <dt class="fs-4">
+                    <%= punch.time_clock_period.name %>
+                  </dt>
+                  <dd class="fs-3 ms-3">
+                    <%= punch.hours_so_far.round(2) %>
+                  </dd>
+                </dl>
+              </div>
+              <div class="col">
+                <%= tool_button 'clock', "Punch Out", "btn-warning", time_kiosk_path(time_kiosk: { tool: "punch_out", time_clock_punch_id: punch.id }), method: :post %>
+              </div>
+            </div>
+
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+
+    
+  </div>
+</div>
