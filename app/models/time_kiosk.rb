@@ -22,4 +22,8 @@ class TimeKiosk
   def person
     @person ||= Person.find_by(id: person_id) || token&.tokenable
   end
+
+  def managed_periods
+    @managed_periods ||= person&.all_managed_teams&.map(&:time_clock_periods)&.flatten || []
+  end
 end

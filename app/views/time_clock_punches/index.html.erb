@@ -30,6 +30,9 @@
     <%= link_to "Time Clock Periods", time_clock_periods_path, class: 'btn btn-info' %>
     <%= f.submit 'Search', class: 'btn btn-primary', data: { action: "turbo_search#search" } %>
     <%= link_to 'Clear Search', request.path, class: "btn btn-dark", data: { action: "turbo_search#clear" } %>
+    <% if manager? %>
+      <%= link_to "Time Clock Kiosk", time_kiosk_path, class: "btn btn-warning", data: { turbo: false } %>
+    <% end %>
   </div>
 </div>
 <% end %>

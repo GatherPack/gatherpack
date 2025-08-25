@@ -9,24 +9,61 @@
       </div>
       <div class="col-6">
         <h3 class="display-3"><%= @person.identifier_name %></h3>
+        <% if @person.manager? %>
+          <div class="toolbox justify-content-around">
+            <%= tool_modal_button 'triangle-exclamation', "Manager", "btn-info", "managerModal" %>
+          </div>
+
+        <div class="modal modal-lg fade" id="managerModal" tabindex="-1" aria-labelledby="managerModalLabel" aria-hidden="true" data-controller="modal-form" data-modal-form-target="modal">
+          <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                  <h3 class="modal-title fs-5" id="managerModalLabel">Time Management</h3>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <% @time_kiosk.managed_periods.each do |period| %>
+                    <div class="row align-items-center">
+                      <div class="col-3">
+                        <%= period.name %> [<%= period.open_punches.count %>]
+                      </div>
+                      <div class="col-7">
+                        <div class="d-flex flex-row flex-wrap">
+                          <% period.open_punches.includes(:person).each do |punch| %>
+                            <%= image_tag get_avatar_url(punch.person.avatar), class: 'person-img p-1', style: 'width: 3rem; height: 3rem;' %>
+                          <% end %>
+                        </div>
+                      </div>
+                      <div class="col-2">
+                        <%= tool_button 'clock', "Clock Out", "btn-warning", time_kiosk_path(time_kiosk: { tool: "punch_out_period", time_clock_period_id: period.id }), method: :post %>
+                      </div>
+                    </div>
+                  <% end %>
+                </div>
+            </div>
+          </div>
+        </div>
+        <% end %>
       </div>
       <div class="col-3">
-        <dl>
-          <% @time_clocks.each do |period, hours| %>
-            <dt class="fs-4">
-              <%= period.name %>
-            </dt>
-            <dd class="fs-3 ms-3">
-              <%= hours.round(2) %>
-            </dd>
-          <% end %>
-        </dl>
+        <% if @time_clocks.present? %>
+          <dl>
+            <% @time_clocks.each do |period, hours| %>
+              <dt class="fs-4">
+                <%= period.name %>
+              </dt>
+              <dd class="fs-3 ms-3">
+                <%= hours.round(2) %>
+              </dd>
+            <% end %>
+          </dl>
+        <% end %>
       </div>
     </div>
 
     <div class="row">
       <div class="col-4">
-        <h3>Start New Punch</h3>
+        <h3>Clock In</h3>
         <div class="toolbox">
           <% @time_clock_periods.each do |p| %>
             <%= tool_button 'clock', p.name, "btn-primary w-100 my-2", time_kiosk_path(time_kiosk: { tool: "punch_in", person_id: @person.id, time_clock_period_id: p.id }), method: :post %>
@@ -50,7 +87,7 @@
                 </dl>
               </div>
               <div class="col">
-                <%= tool_button 'clock', "Punch Out", "btn-warning", time_kiosk_path(time_kiosk: { tool: "punch_out", time_clock_punch_id: punch.id }), method: :post %>
+                <%= tool_button 'clock', "Clock Out", "btn-warning", time_kiosk_path(time_kiosk: { tool: "punch_out", time_clock_punch_id: punch.id }), method: :post %>
               </div>
             </div>
 

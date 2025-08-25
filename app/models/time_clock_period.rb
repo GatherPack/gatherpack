@@ -31,6 +31,10 @@ class TimeClockPeriod < ApplicationRecord
     self.events.map(&:hours).sum
   end
 
+  def open_punches
+    self.time_clock_punches.where(end_time: nil)
+  end
+
   private
 
   def valid_times

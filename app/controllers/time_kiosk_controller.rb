@@ -43,23 +43,21 @@ class TimeKioskController < ApplicationController
         max_time = punch.time_clock_period&.end_time || current_time
         end_time = current_time > max_time ? max_time: current_time
 
-        punch.created_by = "kiosk"
-        punch.update(end_time: end_time)
+        punch.update(end_time: end_time, created_by: "kiosk")
       end
       @time_kiosk.tool = "welcome"
     end
 
-    if @time_kiosk.tool == "punch_out_all"
-      @person = @time_kiosk.token.tokenable
-      @open_punches = TimeClockPunch.all.where(person: @person, end_time: nil)
-
-      @open_punches.each do |punch|
+    if @time_kiosk.tool == "punch_out_period"
+      if @time_kiosk.time_clock_period
+        period = @time_kiosk.time_clock_period
         current_time = Time.current
-        max_time = punch.time_clock_period&.end_time || current_time
+        max_time = period&.end_time || current_time
         end_time = current_time > max_time ? max_time: current_time
 
-        punch.created_by = "kiosk"
-        punch.update(end_time: end_time)
+        period.open_punches.each do |punch|
+          punch.update(end_time: end_time, created_by: "kiosk")
+        end
       end
       @time_kiosk.tool = "welcome"
     end

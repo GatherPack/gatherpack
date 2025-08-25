@@ -10,6 +10,7 @@ class Team < ApplicationRecord
   has_many :people, through: :memberships
   has_many :events
   has_many :pages
+  has_many :time_clock_periods
   belongs_to :parent, class_name: "Team", optional: true
   has_many :children, class_name: "Team", foreign_key: :parent_id, dependent: :nullify
   has_many :calendar_notes, as: :noteable
