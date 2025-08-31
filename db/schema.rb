@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_08_21_141052) do
+ActiveRecord::Schema[8.0].define(version: 2025_08_31_174001) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -304,19 +304,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_21_141052) do
     t.index ["inherited_id"], name: "index_memberships_on_inherited_id"
     t.index ["person_id"], name: "index_memberships_on_person_id"
     t.index ["team_id"], name: "index_memberships_on_team_id"
-  end
-
-  create_table "operations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "name"
-    t.string "permission"
-    t.string "model"
-    t.string "scope"
-    t.string "icon"
-    t.string "color"
-    t.text "code"
-    t.text "view"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "pages", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

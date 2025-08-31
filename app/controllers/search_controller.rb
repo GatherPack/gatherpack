@@ -35,7 +35,7 @@ class SearchController < ApplicationController
       results += policy_scope(Team.find(team_id).all_people).ransack(first_name_or_last_name_or_display_name_cont: params[:q]).result(distinct: true)
     end
     results += Person.where(id: current_user.person.id).ransack(first_name_or_last_name_or_display_name_cont: params[:q]).result(distinct: true) if scope.include?("me")
-    results += policy_scope(Event).ransack(name_or_description_cont: params[:q]).result(distinct: true) if scope.include?("events")
+    results += policy_scope(Event).ransack(name_cont: params[:q]).result(distinct: true) if scope.include?("events")
     results += policy_scope(Team).ransack(name_cont: params[:q]).result(distinct: true) if scope.include?("teams")
     results += current_user.person.all_managed_teams.ransack(name_cont: params[:q]).result(distinct: true) if scope.include?("managed_teams")
     results += policy_scope(Badge).ransack(name_or_description_cont: params[:q]).result(distinct: true) if scope.include?("badges")
