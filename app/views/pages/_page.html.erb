@@ -3,6 +3,10 @@
     <%= link_to page.identifier_name, page, 'data-turbo': false %>
   </div>
   <div class="card-body">
-    <%= strip_tags(format_page_content(page)).truncate(50, separator: ' ') rescue "ERROR" %>
+    <% if page.dynamic %>
+      <div class="badge" style="font-variant: small-caps;">DYNAMIC</div>
+    <% else %>
+      <%= strip_tags(format_page_content(page)).truncate(50, separator: ' ') rescue "ERROR" %>
+    <% end %>
   </div>
 </div>

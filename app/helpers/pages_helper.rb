@@ -7,7 +7,7 @@ module PagesHelper
         "<pre>Syntax error in page content: \n#{e.message}\n</pre>".html_safe
       end
     else
-      simple_format page.content
+      md page.content
     end
   end
 
