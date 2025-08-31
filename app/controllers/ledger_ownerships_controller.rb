@@ -4,7 +4,7 @@ class LedgerOwnershipsController < InternalController
 
   # GET /ledger_ownerships
   def index
-    @q = policy_scope(LedgerOwnership).ransack(params[:q])
+    @q = policy_scope(@ledger.ledger_ownerships).ransack(params[:q])
     @ledger_ownerships = @q.result(distinct: true).page(params[:page])
   end
 
