@@ -54,5 +54,23 @@
         </div>
       </div>
     </div>
+
+    <div class="card">
+      <div class="card-header">
+        <h2>Ledgers</h2>
+      </div>
+      <div class="card-body">
+        <% current_user.person.ledgers.each do |ledger| %>
+          <div class="row">
+            <div class="col-9">
+              <%= link_to ledger.name, ledger %>
+            </div>
+            <div class="col-3 text-end">
+              <%= as_currency ledger.balance %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
   </div>
 </div>
