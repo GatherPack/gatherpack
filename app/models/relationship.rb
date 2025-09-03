@@ -55,17 +55,31 @@ class Relationship < ApplicationRecord
        t.add(:child, "does not meet relationship requirements")
     end unless case relationship_type.permission
                when "added_by_admin"
-      created_by.user.admin?
+      created_by_admin?
                when "added_by_manager"
-      ((created_by.all_managed_teams & parent.teams).present? &&
-        (created_by.all_managed_teams & child.teams).present?) || created_by.user.admin?
+      created_by_manager? || created_by_admin?
                when "added_by_team_member"
-      ((created_by.teams & parent.teams).present? &&
-        (created_by.teams & child.teams).present?) || created_by.user.admin?
+      created_by_team_member? || created_by_manager? || created_by_admin?
                when "added_by_participant"
-      created_by == parent || created_by == child || created_by.user.admin?
+      created_by_participant? || created_by_manager? || created_by_admin?  
                when "added_by_user"
       true
                end
+  end
+
+  def created_by_participant?
+    created_by == parent || created_by == child
+  end
+
+  def created_by_team_member?
+    (created_by.teams & parent.teams).present? && (created_by.teams & child.teams).present?
+  end
+
+  def created_by_manager?
+    (created_by.all_managed_teams & parent.teams).present? && (created_by.all_managed_teams & child.teams).present?
+  end
+
+  def created_by_admin?
+    created_by.user.admin?
   end
 end
