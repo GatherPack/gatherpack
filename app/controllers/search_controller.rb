@@ -34,6 +34,7 @@ class SearchController < ApplicationController
     team_people_ids.each do |team_id|
       results += policy_scope(Team.find(team_id).all_people).ransack(first_name_or_last_name_or_display_name_cont: params[:q]).result(distinct: true)
     end
+    results += policy_scope(User).ransack(email_or_person_first_name_or_person_last_name_or_person_display_name_cont: params[:q]).result(distinct: true) if scope.include?("users")
     results += Person.where(id: current_user.person.id).ransack(first_name_or_last_name_or_display_name_cont: params[:q]).result(distinct: true) if scope.include?("me")
     results += policy_scope(Event).ransack(name_cont: params[:q]).result(distinct: true) if scope.include?("events")
     results += policy_scope(Team).ransack(name_cont: params[:q]).result(distinct: true) if scope.include?("teams")
