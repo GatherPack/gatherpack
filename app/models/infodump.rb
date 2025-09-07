@@ -40,15 +40,20 @@ class Infodump
       @announcements << announcement
     end
 
-    @announcements.sort_by! { |a| [ a.start_time.to_date, a.end_time.to_date ]  }
+    @announcements.sort_by! { |a| [ a.team.name, a.start_time.to_date, a.end_time.to_date ]  }
 
     @content = ""
     @content << "<h1>#{Date.today.strftime("%B %d")} Updates for #{@person.display_name}</h1>"
+    team = nil
     @announcements.each do |announcement|
       if announcement
         @deliverable = true
+        if announcement.team != team
+          team = announcement.team
+          @content << "<h2>#{team ? team.name : Settings[:title]}</h2>"
+        end
 
-        @content << "<h2>#{announcement.title}</h2><div>#{md.render(announcement.content)}</div>"
+        @content << "<h3>#{announcement.title}</h3><div>#{md.render(announcement.content)}</div>"
       end
     end
   end
