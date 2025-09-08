@@ -6,12 +6,14 @@
     <div class="card-body">
       <div class="row align-items-center">
         <div class="col-12 col-md-3">
-          <%= f.input :amount %>
+          <%= f.input :amount, as: :currency %>
           <%= f.input :remark %>
         </div>
         <div class="col-12 col-md-6">
-          <%= f.input :ledger_id, as: :hidden %>
-          <%= f.input :gateway_id, as: :radio_buttons, collection: Gateway.registered(:payment) %>
+          <div>
+            <%= f.input :ledger_id, as: :hidden %>
+            <%= f.input :gateway_id, as: :radio_buttons, collection: Gateway.registered(:payment), label: 'Payment Gateway', item_wrapper_tag: :div, item_label_html: { class: 'form-check-label' }, label_method: lambda { |option| "#{i(option.identifier_icon)} #{option.identifier_name}".html_safe } %>
+          </div>
         </div>
         <div class="col-12 col-md-3">
           <%= f.button :submit, "Make Payment", class: 'btn btn-primary btn-lg w-100' %>

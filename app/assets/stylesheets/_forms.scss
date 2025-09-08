@@ -39,6 +39,15 @@
   }
 }
 
+.form-check .form-check-input {
+  margin-left: 0;
+}
+
+.was-validated .form-check-input:valid:checked, .form-check-input.is-valid:checked {
+  background-color: $greige-darkest;
+  border-color: $success;
+}
+
 .form-control.fancy_color {
   border: none;
   color: inherit !important;
@@ -139,4 +148,9 @@ input.datetime {
 
 fieldset:last-child {
   @extend .mb-0;
+}
+
+.input-group-text {
+  border: thin solid $greige-darkest;
+  background-color: $greige-lightest;
 }

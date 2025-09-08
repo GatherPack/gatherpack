@@ -19,4 +19,10 @@ class LedgerPayment
   def ledger_entry
     LedgerEntry.find(ledger_entry_id)
   end
+
+  def valid?
+    super && gateway.present? && ledger.present? && amount.present? && amount > 0
+  rescue ActiveRecord::RecordNotFound
+    false
+  end
 end

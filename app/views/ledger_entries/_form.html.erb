@@ -23,14 +23,14 @@
     <% else %>
       <div class="col-md-6">
         <% if f.object.transfer_mirror %>
-          <%= f.input :amount, input_html: { value: -f.object.amount}, label: 'Transferred Amount' %>
+          <%= f.input :amount, input_html: { value: -f.object.amount}, label: 'Transferred Amount', as: :currency %>
         <% else %>
-          <%= f.input :amount %>
+          <%= f.input :amount, as: :currency %>
         <% end %>
       </div>
     <% end %>
     <div class="col-12 col-md-3">
-      <%= f.input :created_at, label: 'Posted at' %>
+      <%= f.input :approved %>
     </div>
   </div>
 
@@ -55,8 +55,6 @@
       <% end %>
     </div>
   </div>
-
-  <%= f.input :approved %>
 
   <% if f.object.split? %>
     <%= f.simple_fields_for :child_entries do |ff| %>

@@ -8,7 +8,7 @@ class LedgerEntriesController < InternalController
 
   # GET /ledger_entries/new
   def new
-    @ledger_entry = authorize @ledger.ledger_entries.build(created_at: Time.current)
+    @ledger_entry = authorize @ledger.ledger_entries.build(ledger_entry_params)
   end
 
   # GET /ledger_entries/1/edit
@@ -70,6 +70,6 @@ class LedgerEntriesController < InternalController
 
     # Only allow a list of trusted parameters through.
     def ledger_entry_params
-      params.require(:ledger_entry).permit(:remark, :amount, :approved, receipts: [], ledger_tag_ids: [], child_entries_attributes: [ :id, :remark, :amount, ledger_tag_ids: [] ])
+      params.require(:ledger_entry).permit(:remark, :amount, :approved, receipts: [], ledger_tag_ids: [], child_entries_attributes: [ :id, :remark, :amount, ledger_tag_ids: [] ]) if params[:ledger_entry].present?
     end
 end
