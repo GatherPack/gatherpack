@@ -8,7 +8,11 @@ class LedgerPaymentsController < InternalController
     @ledger_payment = LedgerPayment.new(ledger_payment_params)
     if @ledger_payment.valid?
       @ledger_entry = @ledger_payment.gateway.start_payment(@ledger_payment, current_user)
-      redirect_to [@ledger_payment.ledger, @ledger_entry]
+      if @ledger_entry.gateway.entry_handler_url_for(@ledger_entry).present?
+        redirect_to @ledger_entry.gateway.entry_handler_url_for(@ledger_entry)
+      else
+        redirect_to [@ledger_payment.ledger, @ledger_entry]
+      end
     else
       render :new, status: :unprocessable_entity
     end

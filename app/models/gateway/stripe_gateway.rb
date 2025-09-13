@@ -30,7 +30,7 @@ class Gateway::StripeGateway < Gateway
         }
       ],
       mode: "payment",
-      success_url: Rails.application.routes.url_helpers.ledger_ledger_entry_url(ledger_entry.ledger, ledger_entry)
+      success_url: Rails.application.routes.url_helpers.ledger_url(ledger_entry.ledger)
     },
     {
       api_key: secret_key
@@ -72,5 +72,9 @@ class Gateway::StripeGateway < Gateway
     )
 
     update(secret: endpoint.secret)
+  end
+
+  def entry_handler_url_for(entry)
+    entry.metadata&.dig("stripe_checkout_session", "url")
   end
 end
