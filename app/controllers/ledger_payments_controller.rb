@@ -9,7 +9,7 @@ class LedgerPaymentsController < InternalController
     if @ledger_payment.valid?
       @ledger_entry = @ledger_payment.gateway.start_payment(@ledger_payment, current_user)
       if @ledger_entry.gateway.entry_handler_url_for(@ledger_entry).present?
-        redirect_to @ledger_entry.gateway.entry_handler_url_for(@ledger_entry)
+        redirect_to @ledger_entry.gateway.entry_handler_url_for(@ledger_entry), allow_other_host: true
       else
         redirect_to [@ledger_payment.ledger, @ledger_entry]
       end
