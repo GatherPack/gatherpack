@@ -14,7 +14,7 @@ class BadgePolicy < ApplicationPolicy
   end
 
   def create?
-    user.admin || (record.badge.team && person.all_managed_teams.include?(record.badge.team))
+    user.admin || (record.team && person.all_managed_teams.include?(record.team))
   end
 
   def update?
