@@ -11,10 +11,18 @@
     <% if @relationship.relationship_type %>
       <div class="row">
         <div class="col-12 col-md-6">
-          <%= f.association :parent, label: @relationship.relationship_type.parent_label, label_method: :identifier_name, disabled: @relationship.node_occupant == @relationship.parent, collection: policy_scope(Person) %>
+          <% if @relationship.node_occupant == @relationship.parent %>
+            <%= f.association :parent, label: @relationship.relationship_type.parent_label, label_method: :identifier_name, collection: policy_scope(Person.where(id: @relationship.parent.id)), disabled: true %>
+          <% else %>
+            <%= f.input :parent_id, as: :searching_combobox, label: @relationship.relationship_type.parent_label, scope: 'people' %>
+          <% end %>
         </div>
         <div class="col-12 col-md-6">
-          <%= f.association :child, label: @relationship.relationship_type.child_label, label_method: :identifier_name, disabled: @relationship.node_occupant == @relationship.child, collection: policy_scope(Person) %>
+          <% if @relationship.node_occupant == @relationship.child %>
+            <%= f.association :child, label: @relationship.relationship_type.child_label, label_method: :identifier_name, collection: policy_scope(Person.where(id: @relationship.child.id)), disabled: true %>
+          <% else %>
+            <%= f.input :child_id, as: :searching_combobox, label: @relationship.relationship_type.child_label, scope: 'people' %>
+          <% end %>
         </div>
       </div>
     <% end %>
