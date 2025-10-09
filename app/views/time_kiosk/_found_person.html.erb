@@ -14,7 +14,7 @@
             <%= tool_modal_button 'triangle-exclamation', "Manager", "btn-info", "managerModal" %>
           </div>
 
-        <div class="modal modal-lg fade" id="managerModal" tabindex="-1" aria-labelledby="managerModalLabel" aria-hidden="true" data-controller="modal-form" data-modal-form-target="modal">
+        <div class="modal modal-xl fade" id="managerModal" tabindex="-1" aria-labelledby="managerModalLabel" aria-hidden="true" data-controller="modal-form" data-modal-form-target="modal">
           <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -36,6 +36,16 @@
                       </div>
                       <div class="col-2">
                         <%= tool_button 'clock', "Clock Out", "btn-warning", time_kiosk_path(time_kiosk: { tool: "punch_out_period", time_clock_period_id: period.id }), method: :post %>
+                      </div>
+                    </div>
+                  <% end %>
+                  <% if @time_kiosk.managed_periods.many? %>
+                  <div class="row align-items-center">
+                      <div class="col-10 text-end fs-4 fw-bold">
+                        All Periods [<%= @time_kiosk.managed_periods.sum { |p| p.open_punches.count } %>]
+                      </div>
+                      <div class="col-2">
+                        <%= tool_button 'clock', "Clock Out", "btn-warning", time_kiosk_path(time_kiosk: { tool: "punch_out_all" }), method: :post %>
                       </div>
                     </div>
                   <% end %>

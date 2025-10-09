@@ -24,7 +24,7 @@ class TimeKioskController < ApplicationController
           @time_kiosk.tool = "not_found"
         end
       else
-        @time_kiosk.tool = "not_found"
+        @time_kiosk.tool = "welcome"
       end
     end
 
@@ -55,6 +55,18 @@ class TimeKioskController < ApplicationController
         max_time = period&.end_time || current_time
         end_time = current_time > max_time ? max_time: current_time
 
+        period.open_punches.each do |punch|
+          punch.update(end_time: end_time, created_by: "kiosk")
+        end
+      end
+      @time_kiosk.tool = "welcome"
+    end
+
+    if @time_kiosk.tool == "punch_out_all"
+      current_time = Time.current
+      @time_kiosk.managed_periods.each do |period|
+        max_time = period&.end_time || current_time
+        end_time = current_time > max_time ? max_time: current_time
         period.open_punches.each do |punch|
           punch.update(end_time: end_time, created_by: "kiosk")
         end
