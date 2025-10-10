@@ -2,6 +2,9 @@ services:
   app:
     environment:
       DATABASE_HOST: db
+      DATABASE_USERNAME: postgres
+      DATABASE_PASSWORD: password
+      ROOT_URL: http://gatherpack.com
     env_file: ".env"
     build: .
     command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails db:create && bundle exec rails db:migrate && bundle exec rails s -p 3000 -b '0.0.0.0'"

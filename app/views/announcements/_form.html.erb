@@ -7,7 +7,7 @@
       <%= f.input :title %>
     </div>
     <div class="col-12 col-md-6">
-      <%= f.input :team_id, as: :searching_combobox, label: 'Team', scope: "managed_teams", include_blank: admin? %>
+      <%= f.input :team_id, as: :searching_combobox, label: 'Team', scope: "managed_teams", include_blank: admin?, required: !admin? %>
     </div>
   </div>
   <div class="row">
