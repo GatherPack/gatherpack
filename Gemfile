@@ -9,7 +9,7 @@ end
 source "https://rubygems.org"
 
 # Use main development branch of Rails
-gem "rails", "~> 8.0"
+gem "rails", "~> 8.1"
 # The modern asset pipeline for Rails [https://github.com/rails/propshaft]
 gem "propshaft"
 # Use postgresql as the database for Active Record
