@@ -632,7 +632,7 @@ DEPENDENCIES
   pstore
   puma (~> 7)
   pundit (~> 2.3)
-  rails (~> 8.0)
+  rails (~> 8.1)
   ransack (~> 4.1)
   redcarpet (~> 3.6)
   rubocop
