@@ -9,6 +9,10 @@ class PersonPolicy < ApplicationPolicy
     end
   end
 
+  def show?
+    record == person || user.admin? || (person.all_teams & record.all_teams).any?
+  end
+
   def update?
     record == person || user.admin? || (person.all_managed_teams & record.all_teams).any?
   end
