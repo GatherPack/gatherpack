@@ -15,6 +15,6 @@ class BadgeAssignment < ApplicationRecord
 
   def team_membership
     return true unless badge.present? && badge.team.present?
-    errors.add(:person, " must be a member of the badge's team") unless person.teams.include?(badge.team)
+    errors.add(:person, " must be a member of the badge's team") unless person.all_teams.include?(badge.team)
   end
 end
