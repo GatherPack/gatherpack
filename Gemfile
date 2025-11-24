@@ -87,7 +87,7 @@ gem "simple_form", "~> 5.3"
 
 gem "omniauth", "~> 2.1"
 
-gem "omniauth-rails_csrf_protection", "~> 1.0"
+gem "omniauth-rails_csrf_protection", "~> 2.0"
 
 gem "ransack", "~> 4.1"
 
