@@ -134,3 +134,5 @@ gem "pretender", "~> 0.6.0"
 gem "neat_ids"
 
 gem "redcarpet", "~> 3.6"
+
+gem "overmind", "~> 2.5"

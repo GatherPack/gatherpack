@@ -22,7 +22,7 @@ docker-compose up
 bin/dev
 ```
 
-## Get Up & Running with Docker
+## Deploy with Docker
 
 There's a `docker-compose-app.yml` available as a base for running a production-ready-ish instance of GatherPack.
 
