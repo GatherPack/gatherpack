@@ -22,7 +22,18 @@ class AuditLogsController < ApplicationController
   end
 
   def revert
-    @log.reify&.save
+    log = @log.reify
+
+    if log.nil?
+      render @log, notice: "This action cannot be reverted!"
+      return
+    end
+
+    if log.respond_to?(:created_by)
+      log.created_by = current_user.person
+    end
+
+    log.save
 
     respond_to do |format|
       format.html { redirect_to audit_logs_url, notice: "Successfully reverted to version #{@log.created_at}." }

@@ -13,7 +13,9 @@
     </ul>
   </div>
   <div class="card-footer">
-    <%= link_to "Revert", revert_audit_log_path(@log), data: { turbo_method: :post, turbo_confirm: "Are you sure?" }, class: "btn btn-warning" %>
+    <% if @log.reify %>
+      <%= link_to "Revert", revert_audit_log_path(@log), data: { turbo_method: :post, turbo_confirm: "Are you sure?" }, class: "btn btn-warning" %>
+    <% end %>
     <%= link_to "Delete", @log, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "btn btn-danger" %>
   </div>
 </div>
