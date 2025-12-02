@@ -6,6 +6,10 @@
   </div>
   <div class="card-body">
     <%= @badge.description %>
+
+    <%= policy(@badge).update? %>
+
+    <%= current_user.person.all_managed_teams.include?(@badge.team) %>
   </div>
   <div class="card-footer">
     <%= link_to 'Edit', edit_badge_path(@badge), class: 'btn btn-warning' if policy(@badge).edit? %>

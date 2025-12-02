@@ -36,10 +36,6 @@ class BadgePolicy < ApplicationPolicy
     end
   end
 
-  def edit?
-    (person.all_managed_teams.include?(record.team) && !record.permission == "added_by_admin") || user.admin
-  end
-
   def destroy?
     edit?
   end

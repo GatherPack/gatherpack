@@ -9,7 +9,7 @@ end
 source "https://rubygems.org"
 
 # Use main development branch of Rails
-gem "rails", "~> 8.0"
+gem "rails", "~> 8.1"
 # The modern asset pipeline for Rails [https://github.com/rails/propshaft]
 gem "propshaft"
 # Use postgresql as the database for Active Record
@@ -105,7 +105,7 @@ gem "money-rails", "~> 1.15"
 
 gem "spicy-proton", "~> 2.1"
 
-gem "paper_trail", "~> 16.0"
+gem "paper_trail", "~> 17.0"
 
 gem "postmark-rails", "~> 0.22.1"
 
@@ -125,7 +125,7 @@ gem "jbuilder", "~> 2.13"
 
 gem "hotwire_combobox", "~> 0.4.0", github: "braddoeswebdev/hotwire_combobox"
 
-gem "stripe", "~> 16"
+gem "stripe", "~> 17"
 
 gem "dotenv", "~> 3.1"
 

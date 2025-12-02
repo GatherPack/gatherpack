@@ -18,7 +18,7 @@ class BadgeAssignmentPolicy < ApplicationPolicy
   end
 
   def create?
-    BadgePolicy.new(user, record).create?
+    BadgePolicy.new(user, record.badge).update?
   end
 
   def update?

@@ -5,7 +5,9 @@ class RelationshipPolicy < ApplicationPolicy
         scope.all
       else
         people = (person.all_teams.map(&:person_ids).flatten << person.id).uniq
-        scope.where(parent_id: people).or(scope.where(child_id: people)).distinct
+        scope.where(parent_id: people).and(scope.where(child_id: people))
+          .or(scope.where(parent_id: person.id).or(scope.where(child_id: person.id)))
+          .distinct
       end
     end
   end
