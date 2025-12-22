@@ -25,17 +25,17 @@ module LedgersHelper
     end
   end
 
-  def ledger_as_badge(ledger)
+  def ledger_as_badge(ledger, **opts)
     content = ledger.balance.format(sign_positive: true) + " " + i("receipt") + " " + ledger.identifier_name
     tag.span content.html_safe, class: [ "badge", "money-bg-#{money_amount_class(ledger.balance)}" ]
   end
 
-  def ledger_entry_as_badge(entry)
+  def ledger_entry_as_badge(entry, **opts)
     content = i("coins") + " " + entry.amount.format(sign_positive: true)
     tag.span content.html_safe, class: [ "badge", "money-bg-#{entry.amount}" ]
   end
 
-  def ledger_tag_as_badge(ltag)
+  def ledger_tag_as_badge(ltag, **opts)
     content = i("stamp") + " " + ltag.identifier_name
     tag.span content.html_safe, class: [ "badge" ], style: "background-color: #{ltag.color}; color: #{contrasting_color(ltag.color)}"
   end
