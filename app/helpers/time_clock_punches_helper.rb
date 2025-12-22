@@ -1,5 +1,5 @@
 module TimeClockPunchesHelper
-  def time_clock_punch_as_badge(punch)
+  def time_clock_punch_as_badge(punch, **opts)
     content = i("hourglass-half") + " #{punch.hours} hours - #{punch&.time_clock_period&.name || ""} Clock Punch - #{time_ago_in_words(punch.end_time || punch.start_time)} ago"
       tag.span content, class: "badge text-bg-primary"
   end
