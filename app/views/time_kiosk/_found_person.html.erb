@@ -23,7 +23,7 @@
                 </div>
                 <div class="modal-body">
                   <% @time_kiosk.managed_periods.each do |period| %>
-                    <div class="row align-items-center">
+                    <div class="row align-items-center my-1">
                       <div class="col-3">
                         <%= period.name %> [<%= period.open_punches.count %>]
                       </div>
@@ -35,17 +35,17 @@
                         </div>
                       </div>
                       <div class="col-2">
-                        <%= tool_button 'clock', "Clock Out", "btn-warning", time_kiosk_path(time_kiosk: { tool: "punch_out_period", time_clock_period_id: period.id }), method: :post %>
+                        <%= tool_button 'clock', "Clock Out", "btn-warning", time_kiosk_path(time_kiosk: { tool: "punch_out_period", time_clock_period_id: period.id, person_id: @person.id }), method: :post %>
                       </div>
                     </div>
                   <% end %>
                   <% if @time_kiosk.managed_periods.many? %>
-                  <div class="row align-items-center">
+                  <div class="row align-items-center my-1">
                       <div class="col-10 text-end fs-4 fw-bold">
                         All Periods [<%= @time_kiosk.managed_periods.sum { |p| p.open_punches.count } %>]
                       </div>
                       <div class="col-2">
-                        <%= tool_button 'clock', "Clock Out", "btn-warning", time_kiosk_path(time_kiosk: { tool: "punch_out_all" }), method: :post %>
+                        <%= tool_button 'clock', "Clock Out", "btn-warning", time_kiosk_path(time_kiosk: { tool: "punch_out_all", person_id: @person.id }), method: :post %>
                       </div>
                     </div>
                   <% end %>
