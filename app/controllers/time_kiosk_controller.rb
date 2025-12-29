@@ -16,6 +16,7 @@ class TimeKioskController < ApplicationController
           end
           @time_clock_periods = TimeClockPeriod.where(team: @person.all_teams).or(TimeClockPeriod.where(team: nil)).where("start_time <= ? AND end_time >= ?", Time.current, Time.current)
           @open_punches = TimeClockPunch.all.where(person: @person, end_time: nil)
+          @time_clock_periods -= @open_punches.map(&:time_clock_period).compact.uniq
           @time_kiosk.tool = "found_person"
         elsif @time_kiosk.token.tokenable.is_a?(Hook)
           @hook = @time_kiosk.token.tokenable
@@ -49,7 +50,7 @@ class TimeKioskController < ApplicationController
     end
 
     if @time_kiosk.tool == "punch_out_period"
-      if @time_kiosk.time_clock_period
+      if @time_kiosk.time_clock_period && @time_kiosk.person && Pundit.policy(@time_kiosk.person.user, @time_kiosk.time_clock_period).edit?
         period = @time_kiosk.time_clock_period
         current_time = Time.current
         max_time = period&.end_time || current_time
