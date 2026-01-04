@@ -28,7 +28,11 @@ class TimeClockPeriod < ApplicationRecord
   end
 
   def available_hours
-    self.events.map(&:hours).sum
+    self.events.where(start_time: start_time..end_time, end_time: start_time..end_time).where('end_time < ?', Time.now).map(&:hours).sum
+  end
+
+  def total_hours
+    self.events.where(start_time: start_time..end_time, end_time: start_time..end_time).map(&:hours).sum
   end
 
   def open_punches
