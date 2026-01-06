@@ -16,6 +16,7 @@ class EventsController < InternalController
   end
 
   def arrange
+    @event.checkins.each(&:refresh_fields)
     @field = CheckinField.find(params[:field_id]) rescue nil
     @responses = CheckinFieldResponse
       .includes(checkin: :person)

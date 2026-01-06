@@ -66,15 +66,13 @@
 
     const csrfToken = document.querySelector("[name='csrf-token']").content
 
-    console.log(`/events/<%= @event.id %>/checkins/${data}`);
-
     fetch("/events/<%= @event.id %>/field_update", {
       method: "PATCH",
       headers: {
         "X-CSRF-Token": csrfToken,
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({ field_id: data, response: ev.target.dataset.arrangingContainer })
+      body: JSON.stringify({ field_id: data, response: decodeURIComponent(ev.target.dataset.arrangingContainer) })
     }).then(response => {
       if (!response.ok) { throw response; }
     }).catch(error => {

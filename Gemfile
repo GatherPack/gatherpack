@@ -87,7 +87,7 @@ gem "simple_form", "~> 5.3"
 
 gem "omniauth", "~> 2.1"
 
-gem "omniauth-rails_csrf_protection", "~> 1.0"
+gem "omniauth-rails_csrf_protection", "~> 2"
 
 gem "ransack", "~> 4.1"
 
@@ -125,7 +125,7 @@ gem "jbuilder", "~> 2.13"
 
 gem "hotwire_combobox", "~> 0.4.0", github: "braddoeswebdev/hotwire_combobox"
 
-gem "stripe", "~> 17"
+gem "stripe", "~> 18"
 
 gem "dotenv", "~> 3.1"
 
@@ -134,3 +134,5 @@ gem "pretender", "~> 0.6.0"
 gem "neat_ids"
 
 gem "redcarpet", "~> 3.6"
+
+gem "overmind", "~> 2.5"
