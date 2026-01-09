@@ -77,7 +77,7 @@
           <div class="mb-3">
             <h3>Relationships</h3>
             <% @relationships.each do |relationship| %>
-              <%= as_badge relationship, @person %>
+              <%= as_badge relationship, host: @person %>
             <% end %>
           </div>
         <% end %>

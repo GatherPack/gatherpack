@@ -8,34 +8,34 @@ module ApplicationHelper
     end
   end
 
-  def as_badge(obj, opt = nil)
+  def as_badge(obj, **opts)
     case obj
     when Badge
-      badge_as_badge(obj)
+      badge_as_badge(obj, **opts)
     when Team
-      team_as_badge(obj)
+      team_as_badge(obj, **opts)
     when Token
-      token_as_badge(obj)
+      token_as_badge(obj, **opts)
     when Relationship
-      relationship_as_badge(obj, opt)
+      relationship_as_badge(obj, **opts)
     when Person
-      person_as_badge(obj, opt)
+      person_as_badge(obj, **opts)
     when User
-      person_as_badge(obj.person, opt)
+      person_as_badge(obj.person, **opts)
     when Ledger
-      ledger_as_badge(obj)
+      ledger_as_badge(obj, **opts)
     when LedgerEntry
-      ledger_entry_as_badge(obj)
+      ledger_entry_as_badge(obj, **opts)
     when LedgerTag
-      ledger_tag_as_badge(obj)
+      ledger_tag_as_badge(obj, **opts)
     when TimeClockPeriod
-      time_clock_period_as_badge(obj, opt)
+      time_clock_period_as_badge(obj, **opts)
     when Membership
-      membership_as_badge(obj)
+      membership_as_badge(obj, **opts)
     when Event
-      event_as_badge(obj)
+      event_as_badge(obj, **opts)
     when TimeClockPunch
-      time_clock_punch_as_badge(obj)
+      time_clock_punch_as_badge(obj, **opts)
     else
       raise "Tried to display a #{obj.class} as a badge but couldn't!"
     end.html_safe

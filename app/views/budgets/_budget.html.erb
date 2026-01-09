@@ -1,0 +1,19 @@
+<div class="card" id="<%= dom_id budget %>">
+  <div class="card-header">
+    <%= link_to budget.identifier_name, budget, 'data-turbo': false %>
+  </div>
+  <div class="card-body">
+    <div class="text-center"><%= as_currency budget.remaining_amount %><br>Remaining</div>
+    <div class="progress my-1" role="progressbar" aria-label="Basic example" aria-valuenow="<%= budget.percentage %>" aria-valuemin="0" aria-valuemax="100">
+      <div class="progress-bar bg-success" style="width: <%= budget.percentage %>%"></div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <div><%= as_currency budget.actual_amount %><br>Actual</div>
+      </div>
+      <div class="col">
+        <div class="text-end"><%= as_currency budget.amount %><br>Budgeted</div>
+      </div>
+    </div>
+  </div>
+</div>
