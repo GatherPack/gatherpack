@@ -21,6 +21,6 @@ class RelationshipPolicy < ApplicationPolicy
   end
 
   def destroy?
-    true
+    user.admin? || record.parent == user || record.child == user
   end
 end
