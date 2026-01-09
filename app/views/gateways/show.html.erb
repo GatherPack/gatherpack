@@ -14,5 +14,8 @@
   <div class="card-footer">
     <%= link_to 'Edit', edit_gateway_path(@gateway), class: 'btn btn-warning' %>
     <%= link_to 'Delete', gateway_path(@gateway), class: 'btn btn-danger', data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %>
+    <% @gateway.routes.each do |route| %>
+      <%= link_to route[:name], route[:path], class: 'btn btn-primary' %>
+    <% end %>
   </div>
 </div>

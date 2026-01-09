@@ -5,9 +5,13 @@
     <h1><%= @time_clock_period.identifier_name %></h1>
   </div>
   <div class="card-body">
-    <% if @time_clock_period.available_hours > 0 %>
+    
+    <% if @time_clock_period.total_hours > 0 %>
       <p>
-        <%= pluralize(@time_clock_period.available_hours, "hour") %> available from <%= pluralize(@time_clock_period.events.count, "event") %>.
+        <%= pluralize(@time_clock_period.total_hours, "hour") %> potential assigned hours from <%= pluralize(@time_clock_period.events.count, "event") %>.
+        <% if @time_clock_period.available_hours > 0 %>
+          <%= pluralize(@time_clock_period.available_hours, "hour") %> have accumulated so far.
+        <% end %>
       </p>
     <% end %>
   </div>

@@ -42,6 +42,10 @@ class Gateway < ApplicationRecord
   def finish_setup
   end
 
+  def routes
+    []
+  end
+
   def handle_webhook(payload, signature)
   end
 end

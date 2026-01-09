@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_12_22_191428) do
+ActiveRecord::Schema[8.1].define(version: 2025_12_29_210052) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -289,32 +289,11 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_22_191428) do
   create_table "ledgers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.integer "balance_cents", default: 0
     t.datetime "created_at", null: false
+    t.jsonb "metadata", default: {}, null: false
     t.string "name"
     t.uuid "team_id", null: false
     t.datetime "updated_at", null: false
     t.index ["team_id"], name: "index_ledgers_on_team_id"
-  end
-
-  create_table "lego_lottery_drawing_tickets", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.uuid "lego_lottery_drawing_id", null: false
-    t.uuid "person_id", null: false
-    t.jsonb "selections", default: {}, null: false
-    t.datetime "updated_at", null: false
-    t.integer "weight"
-    t.index ["lego_lottery_drawing_id"], name: "index_lego_lottery_drawing_tickets_on_lego_lottery_drawing_id"
-    t.index ["person_id"], name: "index_lego_lottery_drawing_tickets_on_person_id"
-  end
-
-  create_table "lego_lottery_drawings", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.boolean "active", default: true
-    t.datetime "created_at", null: false
-    t.text "description"
-    t.uuid "eligible_team_ids", default: [], array: true
-    t.string "name"
-    t.boolean "open", default: false
-    t.uuid "target_team_ids", default: [], array: true
-    t.datetime "updated_at", null: false
   end
 
   create_table "mailbox_assignments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -353,19 +332,6 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_22_191428) do
     t.index ["inherited_id"], name: "index_memberships_on_inherited_id"
     t.index ["person_id"], name: "index_memberships_on_person_id"
     t.index ["team_id"], name: "index_memberships_on_team_id"
-  end
-
-  create_table "operations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.text "code"
-    t.string "color"
-    t.datetime "created_at", null: false
-    t.string "icon"
-    t.string "model"
-    t.string "name"
-    t.string "permission"
-    t.string "scope"
-    t.datetime "updated_at", null: false
-    t.text "view"
   end
 
   create_table "pages", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -678,8 +644,6 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_22_191428) do
   add_foreign_key "ledger_taggings", "ledger_entries"
   add_foreign_key "ledger_taggings", "ledger_tags"
   add_foreign_key "ledgers", "teams"
-  add_foreign_key "lego_lottery_drawing_tickets", "lego_lottery_drawings"
-  add_foreign_key "lego_lottery_drawing_tickets", "people"
   add_foreign_key "mailbox_assignments", "mailboxes"
   add_foreign_key "mailbox_messages", "mailboxes"
   add_foreign_key "memberships", "people"

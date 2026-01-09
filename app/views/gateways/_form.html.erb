@@ -10,7 +10,7 @@
   <% @gateway.fields.each do |fd| %>
     <div class="mb-3">
       <%= f.label "gateway[#{fd}]", fd, class: "form-label", name: "gateway[#{fd}]" %>
-      <%= f.text_field "gateway[#{fd}]", class: "form-control", value: @gateway.send(fd.to_sym), name: "gateway[#{fd}]" %>
+      <%= f.text_area "gateway[#{fd}]", class: "form-control", value: @gateway.send(fd.to_sym), name: "gateway[#{fd}]" %>
     </div>
   <% end %>
 </div>
