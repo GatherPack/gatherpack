@@ -20,7 +20,7 @@
     <% end %>
     <% if @event.time_clock_period.present? %>
       <p>
-        <%= as_badge @event.time_clock_period %>
+        +<%= @event.hours %> to <%= as_badge @event.time_clock_period %>
       </p>
     <% end %>
 
