@@ -1,0 +1,23 @@
+<% breadcrumb @budget_period %>
+
+<div class="card">
+  <div class="card-header">
+    <h1><%= @budget_period.identifier_name %></h1>
+  </div>
+  <div class="card-body">
+    <%= nice_datetime_range @budget_period.starts_at, @budget_period.ends_at %>
+  </div>
+  <div class="card-footer">
+    <%= link_to 'Edit', edit_budget_period_path(@budget_period), class: 'btn btn-warning' if policy(@budget_period).edit? %>
+    <%= link_to 'Delete', @budget_period, class: 'btn btn-danger', data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } if policy(@budget_period).destroy? %>
+  </div>
+</div>
+
+<h2>Budgets</h2>
+<div class="row g-3">
+  <% @budget_period.budgets.each do |budget| %>
+    <div class="col-12 col-md-6 col-lg-3">
+      <%= render partial: 'budgets/budget', locals: { budget: budget } %>
+    </div>
+  <% end %>
+</div>

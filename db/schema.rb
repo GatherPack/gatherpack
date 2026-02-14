@@ -119,6 +119,33 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_29_210052) do
     t.index ["team_id"], name: "index_badges_on_team_id"
   end
 
+  create_table "budget_periods", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "ends_at"
+    t.string "name"
+    t.datetime "starts_at"
+    t.uuid "team_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["team_id"], name: "index_budget_periods_on_team_id"
+  end
+
+  create_table "budget_taggings", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "budget_id", null: false
+    t.datetime "created_at", null: false
+    t.uuid "ledger_tag_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["budget_id"], name: "index_budget_taggings_on_budget_id"
+    t.index ["ledger_tag_id"], name: "index_budget_taggings_on_ledger_tag_id"
+  end
+
+  create_table "budgets", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.integer "amount_cents"
+    t.uuid "budget_period_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["budget_period_id"], name: "index_budgets_on_budget_period_id"
+  end
+
   create_table "calendar_notes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.text "description"
@@ -599,6 +626,10 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_29_210052) do
   add_foreign_key "badge_assignments", "badges"
   add_foreign_key "badge_assignments", "people"
   add_foreign_key "badges", "badge_types"
+  add_foreign_key "budget_periods", "teams"
+  add_foreign_key "budget_taggings", "budgets"
+  add_foreign_key "budget_taggings", "ledger_tags"
+  add_foreign_key "budgets", "budget_periods"
   add_foreign_key "checkin_field_responses", "checkin_fields"
   add_foreign_key "checkin_field_responses", "checkins"
   add_foreign_key "checkin_fields", "event_types"

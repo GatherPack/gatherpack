@@ -15,9 +15,9 @@ module PeopleHelper
     ).uniq.sort_by { |t| [ t.team_type.name, t.name ] }
   end
 
-  def person_as_badge(person, opt = nil)
+  def person_as_badge(person, **opts)
     content = i("user") + " " + person.identifier_name
-    if opt.present? && opt
+    if opts[:link]
       link_to person, class: "undecorated", 'data-turbo': false do
         tag.span content, class: "badge text-bg-primary"
       end

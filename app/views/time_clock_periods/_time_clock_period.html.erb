@@ -1,6 +1,6 @@
 <div class="card" id="<%= dom_id time_clock_period %>">
   <div class="card-header">
-    <%= as_badge time_clock_period, true %>
+    <%= as_badge time_clock_period, link: true %>
   </div>
   <div class="card-body">
     <% if time_clock_period.start_time.present? %>
