@@ -11,12 +11,15 @@
           <%= f.label :field_id, "Arrange By", class: 'form-label' %>
           <%= f.collection_select :field_id, @event.event_type.checkin_fields, :id, :name, { }, selected: params[:field_id], class: 'form-control mb-3' %>
 
-          <%= f.submit 'Start Arranging', class: 'btn btn-primary' %>
+          <div class="d-flex flex-row">
+            <%= f.submit 'Start Arranging', class: 'btn btn-primary' %>
+            <%= link_to 'Print', print_event_path(@event, field_id: params[:field_id]), class: 'btn btn-dark ms-2' if @field.present? %>
+          </div>
         <% end %>
       </div>
       <div class="col-12 col-md-6">
         <% if @field.present? %>
-          <label name="newField" class="form-label">New Response Value</label>
+          <label name="newField" class="form-label">New <%= @field.name %> Value</label>
           <input name="newField" id="newField" type="text" class="form-control mb-3">
           <button id="addNewField" class="btn btn-primary">Add New <%= @field.name %></button>
         <% end %>
@@ -34,7 +37,7 @@
       <% @responses.pluck(:response).uniq.sort_by { |v| v || 'zzzzz' }.each do |v| %>
         <div class="row align-items-center">
           <div class="col-12 col-md-4 col-xl-2">
-            <h3><%= v.presence || 'unassigned' %></h3>
+            <h3><%= v.presence || 'unassigned' %> [<span data-arranging-count="<%= URI.encode_uri_component v %>"><%= @responses.where(response: v).count %></span>]</h3>
           </div>
           <div class="col-12 col-md-8 col-xl-10">
             <div class="badge-container arranging-container" data-arranging-container="<%= URI.encode_uri_component v %>">
@@ -62,7 +65,23 @@
   function dropHandler(ev) {
     ev.preventDefault();
     const data = ev.dataTransfer.getData("text/plain");
-    ev.target.appendChild(document.getElementById(data));
+    const draggedElement = document.getElementById(data);
+    const sourceContainer = draggedElement.parentElement;
+    const sourceContainerName = sourceContainer.dataset.arrangingContainer;
+    const targetContainerName = ev.target.dataset.arrangingContainer;
+    
+    ev.target.appendChild(draggedElement);
+
+    // Update counters
+    const sourceCounter = document.querySelector(`[data-arranging-count="${sourceContainerName}"]`);
+    const targetCounter = document.querySelector(`[data-arranging-count="${targetContainerName}"]`);
+    
+    if (sourceCounter) {
+      sourceCounter.textContent = parseInt(sourceCounter.textContent) - 1;
+    }
+    if (targetCounter) {
+      targetCounter.textContent = parseInt(targetCounter.textContent) + 1;
+    }
 
     const csrfToken = document.querySelector("[name='csrf-token']").content
 
@@ -84,7 +103,7 @@
     const val = document.getElementById("newField").value;
     const template = `<div class="row align-items-center">
           <div class="col-12 col-md-4 col-xl-2">
-            <h3>${val}</h3>
+            <h3>${val} [<span data-arranging-count="${encodeURIComponent(val)}">0</span>]</h3>
           </div>
           <div class="col-12 col-md-8 col-xl-10">
             <div class="badge-container arranging-container" data-arranging-container="${encodeURIComponent(val)}">

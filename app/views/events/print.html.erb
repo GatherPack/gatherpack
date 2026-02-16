@@ -4,35 +4,56 @@
   <div class="card-header">
     <h1>Printing <%= @event.identifier_name %></h1>
   </div>
-  <div class="card-body">
-    <div class="row">
-      <div class="col-12 col-md-6">
-        <%= form_with url: print_event_path(@event), method: "GET" do |f| %>
-          <%= f.label :field_id, "Group By", class: 'form-label' %>
-          <%= f.collection_select :field_id, @event.event_type.checkin_fields, :id, :name, { }, selected: params[:field_id], class: 'form-control mb-3' %>
-
-          <%= f.submit 'Update', class: 'btn btn-primary' %>
-        <% end %>
-      </div>
-    </div>
-  </div>
-</div>
-
-<% if @field.present? %>
-  <% @responses.pluck(:response).uniq.sort_by { |v| v || 'zzzzz' }.each do |v| %>
-    <div class="card">
-      <div class="card-header">
-        <h2><%= @event.identifier_name %> -  <%= v || 'unassigned' %></h2>
-      </div>
-      <div class="card-body" id="responseContainer">
-        <div class="row align-items-center">
-          <% @responses.where(response: v).each do |r| %>
-            <div class="col-6 col-sm-3 col-md-4 col-xl-2">
-              <%= render "people/person", person: r.checkin.person %>
+  <%= form_with url: print_event_path(@event), method: "GET" do |f| %>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-12 col-md-6">
+          
+            <%= f.label :field_id, "Group By", class: 'form-label' %>
+            <%= f.collection_select :field_id, @event.event_type.checkin_fields, :id, :name, { selected: params[:field_id] }, { class: 'form-control mb-3' } %>
+          
+        </div>
+        <div class="col-12 col-md-6">
+          <div class="form-check form-switch">
+            <%= f.check_box :paged, { class: 'form-check-input', id: 'paged', checked: @paged }, "true", "false" %>
+            <%= f.label :paged, "Print each group on a separate page", class: 'form-check-label', for: 'paged' %>
+          </div>
+          <hr>
+          <% @possible_values.each do |value| %>
+            <div class="form-check form-switch">
+              <%= f.check_box :'values[]', { class: 'form-check-input', id: "value_#{value}", checked: @values&.include?(value) }, value, nil %>
+              <%= f.label "value_#{value}", value.presence || 'unassigned', class: 'form-check-label' %>
             </div>
           <% end %>
         </div>
+        <div class="col-12">
+          <div class="d-flex flex-row">
+            <%= f.submit 'Update', class: 'btn btn-primary' %>
+            <%= link_to 'Arrange', arrange_event_path(@event, field_id: params[:field_id]), class: 'btn btn-info ms-2' %>
+          </div>
+        </div>
       </div>
     </div>
+  <% end %>
+</div>
+
+<% if @field.present? %>
+  <% @values.sort_by { |v| v || 'zzzzz' }.each do |v| %>
+    <% if @paged %><div class="page"><% end %>
+      <div class="card">
+        <div class="card-header">
+          <h2><%= @event.identifier_name %> -  <%= v.presence || 'unassigned' %> [<%= @responses.where(response: v).count %>]</h2>
+        </div>
+        <div class="card-body" id="responseContainer">
+          <div class="row align-items-center">
+            <% @responses.where(response: v).each do |r| %>
+              <div class="col-3 col-sm-2 fs-6">
+                <%= render "people/person", person: r.checkin.person %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    <% if @paged %></div><% end %>
   <% end %>
 <% end %>

@@ -29,8 +29,8 @@
           <%= render partial: 'layouts/sidebar' %>
         <% end %>
 
-        <main class="<%= "col-md-9 ms-sm-auto col-lg-10" if (current_user.present? rescue false) %> px-md-4">
-          <div class="card breadcrumb-container">
+        <div class="<%= "col-md-9 ms-sm-auto col-lg-10" if (current_user.present? rescue false) %> px-md-4">
+          <div class="card breadcrumb-container no-print">
             <%= breadcrumbs display_single_fragment: true, separator: "&nbsp&rsaquo;&nbsp", style: :inline, class: "breadcrumb", link_class: "breadcrumb-link", current_class: "breadcrumb-current" %>
           </div>
 
@@ -46,8 +46,10 @@
 
           <% breadcrumb :root %>
 
-          <%= yield %>
-        </main>
+          <main>
+            <%= yield %>
+          </main>
+        </div>
       </div>
     </div>
   </body>

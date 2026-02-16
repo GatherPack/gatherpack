@@ -112,7 +112,7 @@ GEM
     bigdecimal (4.0.1)
     bindata (2.5.1)
     bindex (0.8.1)
-    brakeman (7.1.2)
+    brakeman (8.0.2)
       racc
     builder (3.3.0)
     capybara (3.40.0)
@@ -155,7 +155,7 @@ GEM
     erubi (1.13.1)
     et-orbi (1.4.0)
       tzinfo
-    faraday (2.14.0)
+    faraday (2.14.1)
       faraday-net_http (>= 2.0, < 3.5)
       json
       logger
@@ -200,14 +200,15 @@ GEM
       activesupport (>= 6.0.0)
       railties (>= 6.0.0)
     io-console (0.8.2)
-    irb (1.16.0)
+    irb (1.17.0)
       pp (>= 0.6.0)
+      prism (>= 1.3.0)
       rdoc (>= 4.0.0)
       reline (>= 0.4.2)
     jbuilder (2.14.1)
       actionview (>= 7.0.0)
       activesupport (>= 7.0.0)
-    json (2.18.0)
+    json (2.18.1)
     jwt (3.1.2)
       base64
     kamal (2.10.1)
@@ -282,7 +283,7 @@ GEM
       sqids (~> 0.2.0)
     net-http (0.9.1)
       uri (>= 0.11.1)
-    net-imap (0.6.2)
+    net-imap (0.6.3)
       date
       net-protocol
     net-pop (0.1.2)
@@ -384,12 +385,12 @@ GEM
     pretender (0.6.0)
       actionpack (>= 7.1)
     prettyprint (0.2.0)
-    prism (1.8.0)
+    prism (1.9.0)
     propshaft (1.3.1)
       actionpack (>= 7.0.0)
       activesupport (>= 7.0.0)
       rack
-    pstore (0.2.0)
+    pstore (0.2.1)
     psych (5.3.1)
       date
       stringio
@@ -400,7 +401,7 @@ GEM
       activesupport (>= 3.0.0)
     raabro (1.4.0)
     racc (1.8.1)
-    rack (3.2.4)
+    rack (3.2.5)
     rack-protection (4.2.1)
       base64 (>= 0.1.0)
       logger (>= 1.6.0)
@@ -448,7 +449,7 @@ GEM
       activerecord (>= 7.2)
       activesupport (>= 7.2)
       i18n
-    rdoc (7.1.0)
+    rdoc (7.2.0)
       erb
       psych (>= 4.0.0)
       tsort
@@ -462,7 +463,7 @@ GEM
       actionpack (>= 7.0)
       railties (>= 7.0)
     rexml (3.4.4)
-    rubocop (1.82.1)
+    rubocop (1.84.2)
       json (~> 2.3)
       language_server-protocol (~> 3.17.0.2)
       lint_roller (~> 1.1.0)
@@ -470,7 +471,7 @@ GEM
       parser (>= 3.3.0.2)
       rainbow (>= 2.2.2, < 4.0)
       regexp_parser (>= 2.9.3, < 3.0)
-      rubocop-ast (>= 1.48.0, < 2.0)
+      rubocop-ast (>= 1.49.0, < 2.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (>= 2.4.0, < 4.0)
     rubocop-ast (1.49.0)
@@ -535,10 +536,10 @@ GEM
       net-sftp (>= 2.1.2)
       net-ssh (>= 2.8.0)
       ostruct
-    standard (1.53.0)
+    standard (1.54.0)
       language_server-protocol (~> 3.17.0.2)
       lint_roller (~> 1.0)
-      rubocop (~> 1.82.0)
+      rubocop (~> 1.84.0)
       standard-custom (~> 1.0.0)
       standard-performance (~> 1.8)
     standard-custom (1.0.2)
@@ -550,16 +551,16 @@ GEM
     stimulus-rails (1.3.4)
       railties (>= 6.0.0)
     stringio (3.2.0)
-    stripe (18.2.0)
+    stripe (18.3.1)
     thor (1.5.0)
-    thruster (0.1.17)
-    thruster (0.1.17-aarch64-linux)
-    thruster (0.1.17-arm64-darwin)
-    thruster (0.1.17-x86_64-darwin)
-    thruster (0.1.17-x86_64-linux)
+    thruster (0.1.18)
+    thruster (0.1.18-aarch64-linux)
+    thruster (0.1.18-arm64-darwin)
+    thruster (0.1.18-x86_64-darwin)
+    thruster (0.1.18-x86_64-linux)
     timeout (0.6.0)
     tsort (0.2.0)
-    turbo-rails (2.0.21)
+    turbo-rails (2.0.23)
       actionpack (>= 7.1.0)
       railties (>= 7.1.0)
     tzinfo (2.0.6)
@@ -661,4 +662,4 @@ DEPENDENCIES
   web-console
 
 BUNDLED WITH
-  4.0.4
+  4.0.6

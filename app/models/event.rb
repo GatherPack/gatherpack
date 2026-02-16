@@ -7,6 +7,7 @@ class Event < ApplicationRecord
   belongs_to :time_clock_period, optional: true
 
   has_many :checkins
+  has_many :checkin_field_responses, through: :checkins
 
   validates :name, presence: true
   validates :start_time, presence: true
