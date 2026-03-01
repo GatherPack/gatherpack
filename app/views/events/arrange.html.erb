@@ -41,7 +41,7 @@
           </div>
           <div class="col-12 col-md-8 col-xl-10">
             <div class="badge-container arranging-container" data-arranging-container="<%= URI.encode_uri_component v %>">
-              <% @responses.where(response: v).each do |r| %>
+              <% @responses.where(response: v).order('person.last_name ASC, person.first_name ASC').each do |r| %>
                 <div class="badge arranging-badge" draggable="true" id="<%= r.id %>"><%= r.checkin.person.identifier_name %></div>
               <% end %>
             </div>
