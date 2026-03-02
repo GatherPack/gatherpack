@@ -6,7 +6,7 @@ class BadgeAssignmentsController < InternalController
   def index
     authorize @badge, policy_class: BadgeAssignmentPolicy
     @q = policy_scope(@badge.badge_assignments).ransack(params[:q])
-    @badge_assignments = @q.result(distinct: true).page(params[:page])
+    @badge_assignments = @q.result(distinct: true).includes(:person).order("people.last_name ASC, people.first_name ASC").page(params[:page])
   end
 
   # GET /badge_assignments/1
