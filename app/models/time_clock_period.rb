@@ -28,7 +28,7 @@ class TimeClockPeriod < ApplicationRecord
   end
 
   def available_hours
-    self.events.where(start_time: start_time..end_time, end_time: start_time..end_time).where('end_time < ?', Time.now).map(&:hours).sum
+    self.events.where(start_time: start_time..end_time, end_time: start_time..end_time).where("end_time < ?", Time.now).map(&:hours).sum
   end
 
   def total_hours
@@ -50,6 +50,6 @@ class TimeClockPeriod < ApplicationRecord
   def permissions_make_sense
     errors.add(:team_id, "can't be empty if \"team\" managers can add punches to this period") if team.nil? && permission == "added_by_manager"
     errors.add(:team_id, "can't be empty if \"team\" members can add punches to this period") if team.nil? && permission == "added_by_team_member"
-    errors.add(:team_id, "can't be associated with a period that contains non-team member punches in this period (unlink them first)") if team.present? && TimeClockPunch.all.where(time_clock_period: self).any? { |punch| punch.person.teams.exclude? team }
+    errors.add(:team_id, "can't be associated with a period that contains non-team member punches in this period (unlink them first)") if team.present? && TimeClockPunch.all.where(time_clock_period: self).any? { |punch| punch.person.all_teams.exclude? team }
   end
 end
