@@ -11,6 +11,7 @@ export default class extends Controller {
     showEvents: Boolean,
     showNotes: Boolean,
     personId: String, // for personal calendars
+    inlineEvents: String, // pre-serialized JSON events array (skips fetch)
   }
 
   connect() {
@@ -52,7 +53,9 @@ export default class extends Controller {
         info.el.querySelector(query).prepend(span)
       },
 
-      events: async (info, successfulCallback, failureCallback) => {
+      events: this.inlineEventsValue
+        ? JSON.parse(this.inlineEventsValue)
+        : async (info, successfulCallback, failureCallback) => {
         await fetch("/calendar/calendar.json", {
           method: "POST",
           headers: {

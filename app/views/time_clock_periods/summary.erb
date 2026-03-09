@@ -1,0 +1,26 @@
+<div class="card mb-3">
+  <div class="card-header d-flex justify-content-between align-items-center">
+    <h1 class="mb-0"><%= @time_clock_period.name %> — Daily Summary</h1>
+    <span class="text-muted small">
+      <%= @time_clock_period.start_time.to_date.strftime("%b %-d, %Y") %> –
+      <%= @time_clock_period.end_time.to_date.strftime("%b %-d, %Y") %>
+    </span>
+  </div>
+  <div class="card-body py-2">
+    <span class="me-3"><strong>Total hours:</strong> <%= @total_hours %></span>
+    <span><strong>Total people:</strong> <%= @total_people %></span>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-body">
+    <div data-controller="calendar"
+         data-calendar-timezone-value="<%= Settings[:time_zone].presence || 'UTC' %>"
+         data-calendar-default-view-value="dayGridMonth"
+         data-calendar-start-time-value="<%= @time_clock_period.start_time.iso8601 %>"
+         data-calendar-inline-events-value="<%= @calendar_events.to_json %>">
+      <div id="calendar" data-turbo="false">
+      </div>
+    </div>
+  </div>
+</div>
