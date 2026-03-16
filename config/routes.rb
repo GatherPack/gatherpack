@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :budgets
+  resources :budget_periods
   resources :shortcuts
   resources :ledger_payments, only: [ :new, :create ]
   resources :gateways do

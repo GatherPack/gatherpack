@@ -1,0 +1,16 @@
+<% breadcrumb @budget_period %>
+
+<%= simple_form_for(@budget_period) do |f| %>
+  <div class="card">
+    <div class="card-header">
+      <h1>New budget period</h1>
+    </div>
+    <div class="card-body">
+      <%= render "form", f: f %>
+    </div>
+    <div class="card-footer">
+      <%= link_to "Cancel", budget_periods_path, class: 'btn btn-warning' %>
+      <%= f.button :submit, class: 'btn btn-primary' %>
+    </div>
+  </div>
+<% end %>

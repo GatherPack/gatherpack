@@ -1,0 +1,8 @@
+<div class="card" id="<%= dom_id budget_period %>">
+  <div class="card-header">
+    <%= as_badge budget_period.team, small: true %> <%= link_to budget_period.identifier_name, budget_period, 'data-turbo': false %>
+  </div>
+  <div class="card-body">
+    <small><%= nice_datetime_range budget_period.starts_at, budget_period.ends_at %></small>
+  </div>
+</div>
