@@ -9,7 +9,9 @@
     <% if @has_editable_punches %>
       <td class="align-middle">
         <%= link_to 'Edit', edit_time_clock_punch_path(time_clock_punch), class: 'btn btn-sm btn-warning', 'data-turbo': false if policy(time_clock_punch).edit? %>
-        <%= link_to 'Delete', time_clock_punch, class: 'btn btn-sm btn-danger', data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } if policy(time_clock_punch).destroy? %>
+        <%= link_to 'Delete', time_clock_punch_path(time_clock_punch), class: 'btn btn-sm btn-danger',
+              data: { controller: "confirm-delete", action: "click->confirm-delete#open",
+                      confirm_delete_redirect_to_value: time_clock_punches_path } if policy(time_clock_punch).destroy? %>
         <%#= TODO DUPLICATE A PUNCH %>
       </td>
     <% end %>

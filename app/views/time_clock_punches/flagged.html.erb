@@ -1,0 +1,215 @@
+<% breadcrumb :flagged_time_clock_punches %>
+
+<div class="card">
+  <div class="card-header">
+    <h1>Flag Review</h1>
+  </div>
+  <div class="card-body">
+    <p class="mb-0">Review punches that may have data issues. Use the individual or bulk delete buttons to clean up problem records.</p>
+  </div>
+  <div class="card-footer">
+    <%= link_to "Back to Time Clock", time_clock_punches_path, class: "btn btn-secondary" %>
+  </div>
+</div>
+
+<%# ── Section: Still Clocked In ─────────────────────────────────────────── %>
+<div class="card mt-3">
+  <div class="card-header d-flex justify-content-between align-items-center">
+    <h2 class="mb-0">
+      Still Clocked In
+      <span class="badge bg-secondary ms-1"><%= @still_clocked_in.size %></span>
+    </h2>
+    <div class="d-flex gap-2 align-items-center">
+      <button class="btn btn-outline-secondary btn-sm" type="button"
+              data-bs-toggle="collapse" data-bs-target="#still-clocked-in-body"
+              aria-expanded="true">Toggle</button>
+      <% if @still_clocked_in.any? %>
+        <button type="button" class="btn btn-danger btn-sm"
+                data-controller="confirm-delete"
+                data-confirm-delete-url-value="<%= bulk_destroy_time_clock_punches_path(violation: 'still_clocked_in') %>"
+                data-confirm-delete-message-value="Delete all <%= @still_clocked_in.size %> open punches? This cannot be undone."
+                data-action="click->confirm-delete#open">
+          Delete All (<%= @still_clocked_in.size %>)
+        </button>
+      <% end %>
+    </div>
+  </div>
+  <div class="collapse show" id="still-clocked-in-body">
+    <div class="card-body p-0">
+      <% if @still_clocked_in.any? %>
+        <div class="table-responsive">
+          <table class="table mb-0">
+            <thead>
+              <tr>
+                <th>Person</th>
+                <th>Clocked In At</th>
+                <th>Time So Far</th>
+                <th>Period</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @still_clocked_in.each do |punch| %>
+                <tr id="<%= dom_id punch %>">
+                  <td class="align-middle"><%= as_badge punch.person, true %></td>
+                  <td class="align-middle"><%= punch.start_time.strftime('%m/%d/%Y %I:%M%p') %></td>
+                  <td class="align-middle"><%= punch.hours_so_far %> hrs</td>
+                  <td class="align-middle"><%= as_badge punch.time_clock_period, true unless punch.time_clock_period.nil? %></td>
+                  <td class="align-middle">
+                    <%= link_to 'Edit', edit_time_clock_punch_path(punch), class: 'btn btn-sm btn-warning', 'data-turbo': false if policy(punch).edit? %>
+                    <%= link_to 'Delete', time_clock_punch_path(punch), class: 'btn btn-sm btn-danger',
+                          data: { controller: "confirm-delete", action: "click->confirm-delete#open",
+                      confirm_delete_redirect_to_value: flagged_time_clock_punches_path } if policy(punch).destroy? %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      <% else %>
+        <div class="p-3 text-muted">No open punches found.</div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<%# ── Section: Too Long ──────────────────────────────────────────────────── %>
+<% current_max_hours = (Settings[:time_clock_max_hours] || TimeClockPunch::TOO_LONG_HOURS).to_i %>
+<div class="card mt-3">
+  <div class="card-header d-flex justify-content-between align-items-center flex-wrap gap-2">
+    <h2 class="mb-0">
+      Too Long <small class="text-muted fs-6">(over <%= current_max_hours %> hours)</small>
+      <span class="badge bg-secondary ms-1"><%= @too_long.size %></span>
+    </h2>
+    <div class="d-flex gap-2 align-items-center flex-wrap">
+      <% if current_user.admin? %>
+        <%= form_with url: update_max_hours_time_clock_punches_path, method: :patch,
+                      class: "d-inline-flex align-items-center gap-1" do %>
+          <label class="form-label mb-0 small fw-normal">Max hrs:</label>
+          <input type="number" name="max_hours" value="<%= current_max_hours %>"
+                 min="1" max="72" step="1"
+                 class="form-control form-control-sm" style="width: 4.5rem">
+          <button type="submit" class="btn btn-sm btn-secondary">Save</button>
+        <% end %>
+      <% end %>
+      <button class="btn btn-outline-secondary btn-sm" type="button"
+              data-bs-toggle="collapse" data-bs-target="#too-long-body"
+              aria-expanded="true">Toggle</button>
+      <% if @too_long.any? %>
+        <button type="button" class="btn btn-danger btn-sm"
+                data-controller="confirm-delete"
+                data-confirm-delete-url-value="<%= bulk_destroy_time_clock_punches_path(violation: 'too_long') %>"
+                data-confirm-delete-message-value="Delete all <%= @too_long.size %> over-long punches? This cannot be undone."
+                data-action="click->confirm-delete#open">
+          Delete All (<%= @too_long.size %>)
+        </button>
+      <% end %>
+    </div>
+  </div>
+  <div class="collapse show" id="too-long-body">
+    <div class="card-body p-0">
+      <% if @too_long.any? %>
+        <div class="table-responsive">
+          <table class="table mb-0">
+            <thead>
+              <tr>
+                <th>Person</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th>Duration</th>
+                <th>Period</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @too_long.each do |punch| %>
+                <tr id="<%= dom_id punch %>">
+                  <td class="align-middle"><%= as_badge punch.person, true %></td>
+                  <td class="align-middle"><%= punch.start_time.strftime('%m/%d/%Y %I:%M%p') %></td>
+                  <td class="align-middle"><%= punch.end_time.strftime('%m/%d/%Y %I:%M%p') %></td>
+                  <td class="align-middle"><%= punch.hours %> hrs</td>
+                  <td class="align-middle"><%= as_badge punch.time_clock_period, true unless punch.time_clock_period.nil? %></td>
+                  <td class="align-middle">
+                    <%= link_to 'Edit', edit_time_clock_punch_path(punch), class: 'btn btn-sm btn-warning', 'data-turbo': false if policy(punch).edit? %>
+                    <%= link_to 'Delete', time_clock_punch_path(punch), class: 'btn btn-sm btn-danger',
+                          data: { controller: "confirm-delete", action: "click->confirm-delete#open",
+                      confirm_delete_redirect_to_value: flagged_time_clock_punches_path } if policy(punch).destroy? %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      <% else %>
+        <div class="p-3 text-muted">No over-long punches found.</div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<%# ── Section: Overlapping Shifts ───────────────────────────────────────── %>
+<div class="card mt-3">
+  <div class="card-header d-flex justify-content-between align-items-center">
+    <h2 class="mb-0">
+      Overlapping Shifts
+      <span class="badge bg-secondary ms-1"><%= @near_duplicates.size %></span>
+    </h2>
+    <div class="d-flex gap-2 align-items-center">
+      <button class="btn btn-outline-secondary btn-sm" type="button"
+              data-bs-toggle="collapse" data-bs-target="#overlapping-body"
+              aria-expanded="true">Toggle</button>
+      <% if @near_duplicates.any? %>
+        <button type="button" class="btn btn-danger btn-sm"
+                data-controller="confirm-delete"
+                data-confirm-delete-url-value="<%= bulk_destroy_time_clock_punches_path(violation: 'near_duplicates') %>"
+                data-confirm-delete-message-value="Delete all <%= @near_duplicates.size %> overlapping punches? This cannot be undone."
+                data-action="click->confirm-delete#open">
+          Delete All (<%= @near_duplicates.size %>)
+        </button>
+      <% end %>
+    </div>
+  </div>
+  <div class="collapse show" id="overlapping-body">
+    <div class="card-body p-0">
+      <% if @near_duplicates.any? %>
+        <p class="px-3 pt-3 mb-0 text-muted small">
+          These punches overlap with another shift for the same person.
+          Sorted by person then start time so pairs appear together.
+        </p>
+        <div class="table-responsive">
+          <table class="table mb-0">
+            <thead>
+              <tr>
+                <th>Person</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th>Hours</th>
+                <th>Period</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @near_duplicates.each do |punch| %>
+                <tr id="<%= dom_id punch %>">
+                  <td class="align-middle"><%= as_badge punch.person, true %></td>
+                  <td class="align-middle"><%= punch.start_time.strftime('%m/%d/%Y %I:%M%p') %></td>
+                  <td class="align-middle"><%= punch.end_time ? punch.end_time.strftime('%m/%d/%Y %I:%M%p') : "Still Clocked In" %></td>
+                  <td class="align-middle"><%= punch.complete? ? punch.hours : '-' %></td>
+                  <td class="align-middle"><%= as_badge punch.time_clock_period, true unless punch.time_clock_period.nil? %></td>
+                  <td class="align-middle">
+                    <%= link_to 'Edit', edit_time_clock_punch_path(punch), class: 'btn btn-sm btn-warning', 'data-turbo': false if policy(punch).edit? %>
+                    <%= link_to 'Delete', time_clock_punch_path(punch), class: 'btn btn-sm btn-danger',
+                          data: { controller: "confirm-delete", action: "click->confirm-delete#open",
+                      confirm_delete_redirect_to_value: flagged_time_clock_punches_path } if policy(punch).destroy? %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      <% else %>
+        <div class="p-3 text-muted">No overlapping shifts found.</div>
+      <% end %>
+    </div>
+  </div>
+</div>
