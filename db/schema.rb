@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_03_17_000010) do
+ActiveRecord::Schema[8.1].define(version: 2025_12_29_210052) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -154,114 +154,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_17_000010) do
     t.datetime "created_at", null: false
     t.uuid "event_id", null: false
     t.string "notes"
-    t.date "occurrence_date"
     t.uuid "person_id", null: false
     t.datetime "updated_at", null: false
-    t.index ["event_id", "person_id", "occurrence_date"], name: "index_checkins_on_event_person_occurrence", unique: true, where: "(occurrence_date IS NOT NULL)"
-    t.index ["event_id", "person_id"], name: "index_checkins_on_event_person_no_occurrence", unique: true, where: "(occurrence_date IS NULL)"
     t.index ["event_id"], name: "index_checkins_on_event_id"
     t.index ["person_id"], name: "index_checkins_on_person_id"
-  end
-
-  create_table "event_applications", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.uuid "event_id", null: false
-    t.text "notes"
-    t.date "occurrence_date"
-    t.uuid "person_id", null: false
-    t.datetime "reviewed_at"
-    t.uuid "reviewed_by_id"
-    t.text "reviewer_notes"
-    t.integer "status", default: 0, null: false
-    t.datetime "updated_at", null: false
-    t.index ["event_id", "person_id", "occurrence_date"], name: "idx_event_applications_uniqueness", unique: true
-    t.index ["event_id"], name: "index_event_applications_on_event_id"
-    t.index ["person_id"], name: "index_event_applications_on_person_id"
-    t.index ["reviewed_by_id"], name: "index_event_applications_on_reviewed_by_id"
-  end
-
-  create_table "event_attendance_rules", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.uuid "event_id", null: false
-    t.integer "mode", default: 0, null: false
-    t.uuid "team_id"
-    t.datetime "updated_at", null: false
-    t.index ["event_id", "team_id"], name: "index_event_attendance_rules_on_event_id_and_team_id", unique: true
-    t.index ["event_id"], name: "index_event_attendance_rules_on_event_id"
-    t.index ["team_id"], name: "index_event_attendance_rules_on_team_id"
-  end
-
-  create_table "event_exceptions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.boolean "cancelled", default: false, null: false
-    t.datetime "created_at", null: false
-    t.uuid "event_id", null: false
-    t.date "occurrence_date", null: false
-    t.datetime "override_end_time"
-    t.string "override_location"
-    t.text "override_notes"
-    t.datetime "override_start_time"
-    t.datetime "updated_at", null: false
-    t.index ["event_id", "occurrence_date"], name: "index_event_exceptions_on_event_id_and_occurrence_date", unique: true
-    t.index ["event_id"], name: "index_event_exceptions_on_event_id"
-  end
-
-  create_table "event_invitations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.uuid "event_id", null: false
-    t.date "occurrence_date"
-    t.uuid "person_id", null: false
-    t.datetime "responded_at"
-    t.integer "status", default: 0, null: false
-    t.datetime "updated_at", null: false
-    t.index ["event_id", "person_id", "occurrence_date"], name: "idx_event_invitations_uniqueness", unique: true
-    t.index ["event_id"], name: "index_event_invitations_on_event_id"
-    t.index ["person_id"], name: "index_event_invitations_on_person_id"
-  end
-
-  create_table "event_minimum_requirements", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.integer "alert_days_before", default: 7, null: false
-    t.datetime "created_at", null: false
-    t.uuid "event_id", null: false
-    t.integer "minimum_count", default: 1, null: false
-    t.uuid "team_id"
-    t.datetime "updated_at", null: false
-    t.index ["event_id", "team_id"], name: "index_event_minimum_requirements_on_event_id_and_team_id", unique: true
-    t.index ["event_id"], name: "index_event_minimum_requirements_on_event_id"
-    t.index ["team_id"], name: "index_event_minimum_requirements_on_team_id"
-  end
-
-  create_table "event_task_assignments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.datetime "completed_at"
-    t.datetime "created_at", null: false
-    t.uuid "event_task_id", null: false
-    t.date "occurrence_date"
-    t.uuid "person_id", null: false
-    t.jsonb "response", default: {}
-    t.datetime "updated_at", null: false
-    t.index ["event_task_id", "person_id", "occurrence_date"], name: "idx_event_task_assignments_uniqueness", unique: true
-    t.index ["event_task_id"], name: "index_event_task_assignments_on_event_task_id"
-    t.index ["person_id"], name: "index_event_task_assignments_on_person_id"
-  end
-
-  create_table "event_task_teams", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.uuid "event_task_id", null: false
-    t.uuid "team_id", null: false
-    t.datetime "updated_at", null: false
-    t.index ["event_task_id", "team_id"], name: "index_event_task_teams_on_event_task_id_and_team_id", unique: true
-    t.index ["event_task_id"], name: "index_event_task_teams_on_event_task_id"
-    t.index ["team_id"], name: "index_event_task_teams_on_team_id"
-  end
-
-  create_table "event_tasks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.text "description"
-    t.integer "due_days_before"
-    t.uuid "event_id", null: false
-    t.integer "task_type", default: 0, null: false
-    t.string "title", null: false
-    t.datetime "updated_at", null: false
-    t.index ["event_id"], name: "index_event_tasks_on_event_id"
   end
 
   create_table "event_types", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -275,15 +171,11 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_17_000010) do
     t.datetime "created_at", null: false
     t.text "description"
     t.datetime "end_time"
-    t.uuid "event_type_id"
+    t.uuid "event_type_id", null: false
     t.string "location"
     t.boolean "locked"
     t.string "name"
-    t.jsonb "recurrence_rule"
-    t.boolean "recurring", default: false, null: false
-    t.date "series_ends_on"
     t.datetime "start_time"
-    t.integer "status", default: 0, null: false
     t.uuid "team_id"
     t.uuid "time_clock_period_id"
     t.datetime "updated_at", null: false
@@ -405,10 +297,12 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_17_000010) do
 
   create_table "memberships", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", null: false
+    t.uuid "inherited_id"
     t.boolean "manager", default: false
     t.uuid "person_id", null: false
     t.uuid "team_id", null: false
     t.datetime "updated_at", null: false
+    t.index ["inherited_id"], name: "index_memberships_on_inherited_id"
     t.index ["person_id"], name: "index_memberships_on_person_id"
     t.index ["team_id"], name: "index_memberships_on_team_id"
   end
@@ -623,9 +517,11 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_17_000010) do
     t.integer "join_permission", default: 0
     t.string "name"
     t.uuid "parent_id"
+    t.uuid "parent_team_id"
     t.uuid "team_type_id", null: false
     t.datetime "updated_at", null: false
     t.index ["parent_id"], name: "index_teams_on_parent_id"
+    t.index ["parent_team_id"], name: "index_teams_on_parent_team_id"
     t.index ["team_type_id"], name: "index_teams_on_team_type_id"
   end
 
@@ -708,21 +604,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_17_000010) do
   add_foreign_key "checkin_fields", "event_types"
   add_foreign_key "checkins", "events"
   add_foreign_key "checkins", "people"
-  add_foreign_key "event_applications", "events"
-  add_foreign_key "event_applications", "people"
-  add_foreign_key "event_applications", "people", column: "reviewed_by_id"
-  add_foreign_key "event_attendance_rules", "events"
-  add_foreign_key "event_attendance_rules", "teams"
-  add_foreign_key "event_exceptions", "events"
-  add_foreign_key "event_invitations", "events"
-  add_foreign_key "event_invitations", "people"
-  add_foreign_key "event_minimum_requirements", "events"
-  add_foreign_key "event_minimum_requirements", "teams"
-  add_foreign_key "event_task_assignments", "event_tasks"
-  add_foreign_key "event_task_assignments", "people"
-  add_foreign_key "event_task_teams", "event_tasks"
-  add_foreign_key "event_task_teams", "teams"
-  add_foreign_key "event_tasks", "events"
   add_foreign_key "events", "event_types"
   add_foreign_key "events", "time_clock_periods"
   add_foreign_key "ledger_entries", "ledgers"
@@ -736,6 +617,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_17_000010) do
   add_foreign_key "mailbox_messages", "mailboxes"
   add_foreign_key "memberships", "people"
   add_foreign_key "memberships", "teams"
+  add_foreign_key "memberships", "teams", column: "inherited_id"
   add_foreign_key "relationships", "people", column: "child_id"
   add_foreign_key "relationships", "people", column: "parent_id"
   add_foreign_key "relationships", "relationship_types"
@@ -748,6 +630,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_17_000010) do
   add_foreign_key "solid_queue_scheduled_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
   add_foreign_key "teams", "team_types"
   add_foreign_key "teams", "teams", column: "parent_id"
+  add_foreign_key "teams", "teams", column: "parent_team_id"
   add_foreign_key "time_clock_periods", "teams"
   add_foreign_key "time_clock_punches", "people"
   add_foreign_key "time_clock_punches", "time_clock_periods"
