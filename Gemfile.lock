@@ -16,12 +16,6 @@ GIT
       actionview (>= 6.1)
       railties (>= 6.1)
 
-PATH
-  remote: ../westside_robotics_receipt_printer
-  specs:
-    westside_robotics_receipt_printer (0.1.0)
-      rails (>= 8.1.0)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -666,7 +660,6 @@ DEPENDENCIES
   turbo-rails
   tzinfo-data
   web-console
-  westside_robotics_receipt_printer!
 
 BUNDLED WITH
   4.0.7

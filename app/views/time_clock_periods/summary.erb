@@ -1,14 +1,43 @@
 <div class="card mb-3">
+  <div class="card-header">
+    <h5 class="mb-0">Filter Time Clock Punches</h5>
+  </div>
+  <div class="card-body">
+    <%= form_with url: summary_time_clock_period_path(@time_clock_period), method: :get, class: "row g-3" do |f| %>
+      <div class="col-md-4">
+        <%= f.label :starts_at, "Starts At", class: "form-label" %>
+        <%= f.datetime_local_field :starts_at, value: @start_date.strftime("%Y-%m-%dT%H:%M"), class: "form-control" %>
+      </div>
+      <div class="col-md-4">
+        <%= f.label :ends_at, "Ends At", class: "form-label" %>
+        <%= f.datetime_local_field :ends_at, value: @end_date.strftime("%Y-%m-%dT%H:%M"), class: "form-control" %>
+      </div>
+      <div class="col-md-4 d-flex align-items-end">
+        <%= f.submit "Filter", class: "btn btn-primary me-2" %>
+        <%= link_to "Clear", summary_time_clock_period_path(@time_clock_period), class: "btn btn-secondary" %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<div class="card mb-3">
   <div class="card-header d-flex justify-content-between align-items-center">
     <h1 class="mb-0"><%= @time_clock_period.name %> — Daily Summary</h1>
     <span class="text-muted small">
-      <%= @time_clock_period.start_time.to_date.strftime("%b %-d, %Y") %> –
-      <%= @time_clock_period.end_time.to_date.strftime("%b %-d, %Y") %>
+      <%= @start_date.to_date.strftime("%b %-d, %Y") %> –
+      <%= @end_date.to_date.strftime("%b %-d, %Y") %>
     </span>
   </div>
   <div class="card-body py-2">
-    <span class="me-3"><strong>Total hours:</strong> <%= @total_hours %></span>
-    <span><strong>Total people:</strong> <%= @total_people %></span>
+    <div>
+      <span class="me-3"><strong>Total hours:</strong> <%= @total_hours %></span>
+      <span><strong>Total people:</strong> <%= @total_people %></span>
+    </div>
+    <div>
+      <% @people.each do |person| %>
+        <%= link_to(image_tag(get_avatar_url(person.avatar), class: 'person-img'), person) %>
+      <% end %>
+    </div>
   </div>
 </div>
 

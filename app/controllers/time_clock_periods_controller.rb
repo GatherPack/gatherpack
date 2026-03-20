@@ -29,10 +29,23 @@ class TimeClockPeriodsController < InternalController
       .where(time_clock_period: @time_clock_period)
       .where.not(end_time: nil)
 
-    start_date = @time_clock_period.start_time.in_time_zone(time_zone).to_date
-    end_date   = @time_clock_period.end_time.in_time_zone(time_zone).to_date
+    starts_at = params[:starts_at].presence || @time_clock_period.start_time.in_time_zone(time_zone).to_date.beginning_of_day.iso8601
+    ends_at   = params[:ends_at].presence || @time_clock_period.end_time.in_time_zone(time_zone).to_date.end_of_day.iso8601
 
-    @daily_stats = (start_date..end_date).each_with_object({}) do |date, h|
+    if params[:starts_at].present?
+      starts_at = Time.zone.parse(params[:starts_at])
+      punches = punches.where("start_time >= ?", starts_at)
+    end
+
+    if params[:ends_at].present?
+      ends_at = Time.zone.parse(params[:ends_at])
+      punches = punches.where("start_time <= ?", ends_at)
+    end
+
+    @start_date = starts_at.to_date
+    @end_date   = ends_at.to_date
+
+    @daily_stats = (@start_date..@end_date).each_with_object({}) do |date, h|
       h[date] = { hours: 0.0, people: Set.new }
     end
 
@@ -46,7 +59,8 @@ class TimeClockPeriodsController < InternalController
     @daily_stats.transform_values! { |v| { hours: v[:hours].round(2), people: v[:people].size } }
 
     @total_hours  = @daily_stats.sum { |_, v| v[:hours] }.round(2)
-    @total_people = punches.distinct.count(:person_id)
+    @people = punches.includes(:person).map(&:person).uniq
+    @total_people = @people.size
 
     @calendar_events = @daily_stats.filter_map do |date, stats|
       next if stats[:hours].zero?
