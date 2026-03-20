@@ -100,6 +100,8 @@ class Settings
     add_setting(:google_oauth_client_id, :string, "Google OAuth Client ID", "", "OAuth - Google", "Client ID for Sign In via Google")
     add_setting(:google_oauth_client_secret, :string, "Google OAuth Client Secret", "", "OAuth - Google", "Client ID for Sign In via Google")
 
+    add_setting(:time_clock_max_hours, :int, "Time Clock Max Shift Hours", "12", "Time Clock", "Shifts longer than this many hours are flagged for review")
+
     add_setting(:shirt_sizes, :string, "Shirt Sizes", "Youth S, Youth M, Youth L, S, M, L, XL, XXL, 3XL, 4XL", "People", "Comma-separated list of valid shirt sizes")
     add_setting(:gender_options, :string, "Gender Options", "M, F, X", "People", "Comma-separated list of valid gender options")
   end

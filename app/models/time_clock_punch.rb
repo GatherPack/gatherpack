@@ -11,6 +11,28 @@ class TimeClockPunch < ApplicationRecord
 
   attr_accessor :created_by
 
+  TOO_LONG_HOURS = 12
+
+  scope :too_long, -> {
+    max_hours = (Settings[:time_clock_max_hours] || TOO_LONG_HOURS).to_i
+    max_hours = TOO_LONG_HOURS unless max_hours > 0
+    where.not(end_time: nil)
+         .where("EXTRACT(EPOCH FROM (end_time - start_time)) > ?", max_hours * 3600)
+  }
+
+  scope :still_clocked_in, -> { where(end_time: nil) }
+
+  def self.near_duplicates
+    where(
+      "id IN (
+        SELECT DISTINCT p1.id FROM time_clock_punches p1
+        JOIN time_clock_punches p2 ON p1.person_id = p2.person_id AND p1.id != p2.id
+        WHERE p1.start_time < COALESCE(p2.end_time, 'infinity'::timestamptz)
+          AND p2.start_time < COALESCE(p1.end_time, 'infinity'::timestamptz)
+      )"
+    )
+  end
+
   def self.ransackable_attributes(auth_object = nil)
     %w[ person.display_name start_time end_time time_clock_period_id updated_at ]
   end

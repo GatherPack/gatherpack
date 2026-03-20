@@ -31,7 +31,13 @@ Rails.application.routes.draw do
       get "summary"
     end
   end
-  resources :time_clock_punches, except: :show
+  resources :time_clock_punches, except: :show do
+    collection do
+      get "flagged"
+      delete "bulk_destroy"
+      patch "update_max_hours"
+    end
+  end
   resources :audit_logs, only: %i[ index show destroy ] do
     post "revert", to: "audit_logs#revert", on: :member
   end
