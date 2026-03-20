@@ -33,9 +33,11 @@
       <span class="me-3"><strong>Total hours:</strong> <%= @total_hours %></span>
       <span><strong>Total people:</strong> <%= @total_people %></span>
     </div>
-    <div>
+    <div class="row">
       <% @people.each do |person| %>
+      <div class="col-2 col-lg-1">
         <%= link_to(image_tag(get_avatar_url(person.avatar), class: 'person-img'), person) %>
+      </div>
       <% end %>
     </div>
   </div>
