@@ -16,6 +16,40 @@ class TimeClockPunchesController < InternalController
     @has_editable_punches ||= false
   end
 
+  # GET /time_clock_punches/flagged
+  def flagged
+    authorize TimeClockPunch, :flagged?
+    scoped = policy_scope(TimeClockPunch).includes(:person, :time_clock_period)
+    @too_long         = scoped.too_long.order(start_time: :desc).to_a
+    @still_clocked_in = scoped.still_clocked_in.order(start_time: :asc).to_a
+    @near_duplicates  = scoped.near_duplicates.order(:person_id, :start_time).to_a
+    @has_editable_punches = true
+  end
+
+  # DELETE /time_clock_punches/bulk_destroy
+  def bulk_destroy
+    authorize TimeClockPunch, :bulk_destroy?
+    scoped = policy_scope(TimeClockPunch)
+    punches = case params[:violation]
+              when "too_long"         then scoped.too_long
+              when "still_clocked_in" then scoped.still_clocked_in
+              when "near_duplicates"  then scoped.near_duplicates
+              else
+                return redirect_to flagged_time_clock_punches_path, alert: "Unknown violation type."
+              end
+    count = punches.count
+    punches.destroy_all
+    redirect_to flagged_time_clock_punches_path, notice: "Deleted #{count} #{count == 1 ? 'punch' : 'punches'}."
+  end
+
+  # PATCH /time_clock_punches/update_max_hours
+  def update_max_hours
+    head :forbidden and return unless current_user.admin?
+    hours = params[:max_hours].to_i
+    Settings[:time_clock_max_hours] = hours.to_s if hours > 0
+    redirect_to flagged_time_clock_punches_path
+  end
+
   # GET /time_clock_punches/new
   def new
     @time_clock_punch = authorize TimeClockPunch.new
@@ -50,7 +84,13 @@ class TimeClockPunchesController < InternalController
   # DELETE /time_clock_punches/1
   def destroy
     @time_clock_punch.destroy!
-    redirect_to time_clock_punches_url, notice: "Time clock punch was successfully destroyed.", status: :see_other
+    redirect_target = params[:redirect_to].presence
+    # Only follow relative paths to prevent open redirect
+    if redirect_target&.start_with?("/") && !redirect_target.start_with?("//")
+      redirect_to redirect_target, notice: "Time clock punch was successfully destroyed.", status: :see_other
+    else
+      redirect_to time_clock_punches_path, notice: "Time clock punch was successfully destroyed.", status: :see_other
+    end
   end
 
   private

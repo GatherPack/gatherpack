@@ -29,8 +29,8 @@
           <%= render partial: 'layouts/sidebar' %>
         <% end %>
 
-        <main class="<%= "col-md-9 ms-sm-auto col-lg-10" if (current_user.present? rescue false) %> px-md-4">
-          <div class="card breadcrumb-container">
+        <div class="<%= "col-md-9 ms-sm-auto col-lg-10" if (current_user.present? rescue false) %> px-md-4">
+          <div class="card breadcrumb-container no-print">
             <%= breadcrumbs display_single_fragment: true, separator: "&nbsp&rsaquo;&nbsp", style: :inline, class: "breadcrumb", link_class: "breadcrumb-link", current_class: "breadcrumb-current" %>
           </div>
 
@@ -46,8 +46,33 @@
 
           <% breadcrumb :root %>
 
-          <%= yield %>
-        </main>
+          <main>
+            <%= yield %>
+          </main>
+        </div>
+      </div>
+    </div>
+    <button id="confirm-delete-trigger" type="button" class="d-none"
+            data-bs-toggle="modal" data-bs-target="#confirm-delete-modal"></button>
+    <div class="modal fade" id="confirm-delete-modal" tabindex="-1" aria-labelledby="confirm-delete-modal-label" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="confirm-delete-modal-label">Confirm Delete</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body" id="confirm-delete-modal-message">
+            Are you sure you want to delete this?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <form id="confirm-delete-form" method="post">
+              <input type="hidden" name="_method" value="delete">
+              <input type="hidden" id="confirm-delete-redirect-to" name="redirect_to" value="">
+              <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
+          </div>
+        </div>
       </div>
     </div>
   </body>

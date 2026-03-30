@@ -28,8 +28,18 @@ Rails.application.routes.draw do
   resources :mailboxes do
     resources :mailbox_messages, except: %i[ index ]
   end
-  resources :time_clock_periods
-  resources :time_clock_punches, except: :show
+  resources :time_clock_periods do
+    member do
+      get "summary"
+    end
+  end
+  resources :time_clock_punches, except: :show do
+    collection do
+      get "flagged"
+      delete "bulk_destroy"
+      patch "update_max_hours"
+    end
+  end
   resources :audit_logs, only: %i[ index show destroy ] do
     post "revert", to: "audit_logs#revert", on: :member
   end

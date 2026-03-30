@@ -19,6 +19,9 @@ $card-bg: $greige-light;
 
 $form-feedback-valid-color: inherit;
 
+$table-bg: $greige-lightest;
+$table-striped-bg: desaturate(darken($greige-lightest, 5%), 20%);
+
 @import "bootstrap/scss/variables";
 @import "bootstrap/scss/variables-dark";
 @import "bootstrap/scss/maps";
@@ -157,4 +160,10 @@ a.undecorated {
   > :is(h1, h2, h3, h4, h5, h6):last-child {
     margin-bottom: 0 !important;
   }
+}
+
+table.table th {
+  vertical-align: middle !important;
+  background-color: $greige-dark;
+  color: $greige-lightest
 }

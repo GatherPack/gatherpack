@@ -7,6 +7,10 @@
   page-break-inside: avoid;
 }
 
+.card {
+  page-break-inside: avoid;
+}
+
 @media print {
   .no-print {
     display: none;
@@ -16,5 +20,13 @@
     border: none;
     margin: 0;
     padding: 0;
+  }
+
+  main {
+    min-height: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
   }
 }

@@ -24,4 +24,8 @@ class TimeClockPeriodPolicy < ApplicationPolicy
   def destroy?
     update?
   end
+
+  def summary?
+    show?
+  end
 end

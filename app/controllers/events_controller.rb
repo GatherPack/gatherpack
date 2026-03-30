@@ -25,7 +25,12 @@ class EventsController < InternalController
   end
 
   def print
+    @event.checkins.each(&:refresh_fields)
     @field = CheckinField.find(params[:field_id]) rescue nil
+    @possible_values = @event.checkin_field_responses.where(checkin_field: @field).distinct.pluck(:response).compact.sort_by { |v| v || "zzzzz" }
+    @values = params[:values].present? ? @possible_values & params[:values] : @possible_values
+    @values = @possible_values if @values.empty?
+    @paged = params[:paged] == "true"
     @responses = CheckinFieldResponse
       .includes(checkin: :person)
       .joins(:checkin)
