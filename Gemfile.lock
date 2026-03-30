@@ -609,50 +609,50 @@ PLATFORMS
 DEPENDENCIES
   brakeman
   capybara
-  color (~> 2.0)
+  color (~> 2)
   cssbundling-rails
   debug
-  devise (~> 5.0)
-  dotenv (~> 3.1)
+  devise (~> 5)
+  dotenv (~> 3)
   erb_lint
   gretel!
   hotwire_combobox (~> 0.4.0)!
-  http (~> 5.2)
+  http (~> 5)
   image_processing (~> 1.2)
   importmap-rails
-  jbuilder (~> 2.13)
+  jbuilder (~> 2)
   kamal
-  kaminari (~> 1.2)
+  kaminari (~> 1)
   mission_control-jobs
-  money (~> 6.19)
-  money-rails (~> 1.15)
+  money (~> 6)
+  money-rails (~> 1)
   neat_ids
-  omniauth (~> 2.1)
-  omniauth-discord (~> 1.2)
-  omniauth-github (~> 2.0)
-  omniauth-google-oauth2 (~> 1.2)
+  omniauth (~> 2)
+  omniauth-discord (~> 1)
+  omniauth-github (~> 2)
+  omniauth-google-oauth2 (~> 1)
   omniauth-rails_csrf_protection (~> 2)
-  overmind (~> 2.5)
-  paper_trail (~> 17.0)
+  overmind (~> 2)
+  paper_trail (~> 17)
   pg (~> 1.1)
-  pmap (~> 1.1)
+  pmap (~> 1)
   postmark-rails (~> 0.22.1)
-  pretender (~> 0.6.0)
+  pretender (~> 0.6)
   propshaft
   pstore
   puma (~> 7)
-  pundit (~> 2.3)
+  pundit (~> 2)
   rails (~> 8.1)
-  ransack (~> 4.1)
-  redcarpet (~> 3.6)
+  ransack (~> 4)
+  redcarpet (~> 3)
   rubocop
   rubocop-rails-omakase
   selenium-webdriver
-  simple_form (~> 5.3)
+  simple_form (~> 5)
   solid_cable
   solid_cache
   solid_queue
-  spicy-proton (~> 2.1)
+  spicy-proton (~> 2)
   standard
   stimulus-rails
   stripe (~> 18)

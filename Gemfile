@@ -81,58 +81,58 @@ end
 # to add back in once he gets it updated for rails 8
 # gem "solid_errors", github: "fractaledmind/solid_errors", branch: "main"
 
-gem "devise", "~> 5.0"
+gem "devise", "~> 5"
 
-gem "simple_form", "~> 5.3"
+gem "simple_form", "~> 5"
 
-gem "omniauth", "~> 2.1"
+gem "omniauth", "~> 2"
 
 gem "omniauth-rails_csrf_protection", "~> 2"
 
-gem "ransack", "~> 4.1"
+gem "ransack", "~> 4"
 
-gem "kaminari", "~> 1.2"
+gem "kaminari", "~> 1"
 
-gem "color", "~> 2.0"
+gem "color", "~> 2"
 
-gem "pundit", "~> 2.3"
+gem "pundit", "~> 2"
 
 gem "gretel", github: "wobschalli/gretel" # change to main gem once it has support for rails 8
 
-gem "money", "~> 6.19"
+gem "money", "~> 6"
 
-gem "money-rails", "~> 1.15"
+gem "money-rails", "~> 1"
 
-gem "spicy-proton", "~> 2.1"
+gem "spicy-proton", "~> 2"
 
-gem "paper_trail", "~> 17.0"
+gem "paper_trail", "~> 17"
 
 gem "postmark-rails", "~> 0.22.1"
 
 gem "pstore"
 
-gem "omniauth-google-oauth2", "~> 1.2"
+gem "omniauth-google-oauth2", "~> 1"
 
-gem "omniauth-discord", "~> 1.2"
+gem "omniauth-discord", "~> 1"
 
-gem "omniauth-github", "~> 2.0"
+gem "omniauth-github", "~> 2"
 
-gem "http", "~> 5.2"
+gem "http", "~> 5"
 
-gem "pmap", "~> 1.1"
+gem "pmap", "~> 1"
 
-gem "jbuilder", "~> 2.13"
+gem "jbuilder", "~> 2"
 
 gem "hotwire_combobox", "~> 0.4.0", github: "braddoeswebdev/hotwire_combobox"
 
 gem "stripe", "~> 18"
 
-gem "dotenv", "~> 3.1"
+gem "dotenv", "~> 3"
 
-gem "pretender", "~> 0.6.0"
+gem "pretender", "~> 0.6"
 
 gem "neat_ids"
 
-gem "redcarpet", "~> 3.6"
+gem "redcarpet", "~> 3"
 
-gem "overmind", "~> 2.5"
+gem "overmind", "~> 2"
