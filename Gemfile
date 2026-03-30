@@ -81,7 +81,7 @@ end
 # to add back in once he gets it updated for rails 8
 # gem "solid_errors", github: "fractaledmind/solid_errors", branch: "main"
 
-gem "devise", "~> 4.9"
+gem "devise", "~> 5.0"
 
 gem "simple_form", "~> 5.3"
 
