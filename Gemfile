@@ -99,9 +99,9 @@ gem "pundit", "~> 2"
 
 gem "gretel", github: "wobschalli/gretel" # change to main gem once it has support for rails 8
 
-gem "money", "~> 6"
+gem "money", "~> 7"
 
-gem "money-rails", "~> 1"
+gem "money-rails", "~> 3"
 
 gem "spicy-proton", "~> 2"
 
