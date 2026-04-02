@@ -129,7 +129,7 @@ gem "stripe", "~> 18"
 
 gem "dotenv", "~> 3"
 
-gem "pretender", "~> 0.6"
+gem "pretender", "~> 1.0"
 
 gem "neat_ids"
 
