@@ -16,6 +16,12 @@ GIT
       actionview (>= 6.1)
       railties (>= 6.1)
 
+PATH
+  remote: ../westside_robotics_receipt_printer
+  specs:
+    westside_robotics_receipt_printer (0.1.0)
+      rails (>= 8.1.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -93,7 +99,7 @@ GEM
       securerandom (>= 0.3)
       tzinfo (~> 2.0, >= 2.0.5)
       uri (>= 0.13.1)
-    addressable (2.8.9)
+    addressable (2.9.0)
       public_suffix (>= 2.0.2, < 8.0)
     ast (2.4.3)
     base64 (0.3.0)
@@ -109,7 +115,7 @@ GEM
       erubi (~> 1.4)
       parser (>= 2.4)
       smart_properties
-    bigdecimal (4.1.0)
+    bigdecimal (4.1.1)
     bindata (2.5.1)
     bindex (0.8.1)
     brakeman (8.0.4)
@@ -187,7 +193,7 @@ GEM
       http-cookie (~> 1.0)
       http-form_data (~> 2.2)
       llhttp-ffi (~> 0.5.0)
-    http-cookie (1.1.0)
+    http-cookie (1.1.4)
       domain_name (~> 0.5)
     http-form_data (2.3.0)
     i18n (1.14.8)
@@ -255,7 +261,7 @@ GEM
       logger
     mini_mime (1.1.5)
     mini_portile2 (2.8.9)
-    minitest (6.0.2)
+    minitest (6.0.3)
       drb (~> 2.0)
       prism (~> 1.5)
     mission_control-jobs (1.1.0)
@@ -360,7 +366,7 @@ GEM
     paper_trail (17.0.0)
       activerecord (>= 7.1)
       request_store (~> 1.4)
-    parallel (1.27.0)
+    parallel (1.28.0)
     parser (3.3.11.1)
       ast (~> 2.4.1)
       racc
@@ -402,12 +408,12 @@ GEM
       activesupport (>= 3.0.0)
     raabro (1.4.0)
     racc (1.8.1)
-    rack (3.2.5)
+    rack (3.2.6)
     rack-protection (4.2.1)
       base64 (>= 0.1.0)
       logger (>= 1.6.0)
       rack (>= 3.0.0, < 4)
-    rack-session (2.1.1)
+    rack-session (2.1.2)
       base64 (>= 0.1.0)
       rack (>= 3.0.0)
     rack-test (2.2.0)
@@ -455,7 +461,7 @@ GEM
       psych (>= 4.0.0)
       tsort
     redcarpet (3.6.1)
-    regexp_parser (2.11.3)
+    regexp_parser (2.12.0)
     reline (0.6.3)
       io-console (~> 0.5)
     request_store (1.7.0)
@@ -660,6 +666,7 @@ DEPENDENCIES
   turbo-rails
   tzinfo-data
   web-console
+  westside_robotics_receipt_printer!
 
 BUNDLED WITH
   4.0.9
