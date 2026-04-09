@@ -2,7 +2,9 @@ require_relative "boot"
 ENV["RANSACK_FORM_BUILDER"] = "::SimpleForm::FormBuilder"
 require "rails/all"
 
-require_relative "../lib/settings.rb"
+require_relative "../lib/settings"
+require_relative "../lib/gatherpack/feature"
+require_relative "../lib/gatherpack/features"
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -16,7 +18,7 @@ module Gatherpack
     # Please, add to the `ignore` list any other `lib` subdirectories that do
     # not contain `.rb` files, or that should not be reloaded or eager loaded.
     # Common ones are `templates`, `generators`, or `middleware`, for example.
-    config.autoload_lib(ignore: %w[assets tasks generators templates middleware])
+    config.autoload_lib(ignore: %w[assets tasks generators templates middleware gatherpack])
 
     # required for gatway registry to load properly in workers
     config.rake_eager_load = true

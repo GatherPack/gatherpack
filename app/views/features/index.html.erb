@@ -1,0 +1,48 @@
+<% breadcrumb :features %>
+
+<%= form_with url: update_features_path, method: :post do |f| %>
+  <div class="card">
+    <div class="card-header">
+      <h2>Features</h2>
+    </div>
+    <div class="card-body">
+      <p class="text-muted mb-4">
+        Enable or disable site features. Changing these settings requires a
+        <strong>server restart</strong> for route changes to take effect.
+        Nav items update immediately after saving.
+      </p>
+
+      <% @features.each do |feature| %>
+        <div class="card mb-3">
+          <div class="card-body">
+            <div class="row align-items-center">
+              <div class="col">
+                <h5 class="mb-1"><%= feature.label %></h5>
+                <% if feature.description.present? %>
+                  <p class="text-muted mb-0 small"><%= feature.description %></p>
+                <% end %>
+              </div>
+              <div class="col-auto">
+                <div class="form-check form-switch fs-4">
+                  <%= check_box_tag "features[#{feature.key}]",
+                                    "true",
+                                    feature.enabled?,
+                                    class: "form-check-input",
+                                    id: "feature_#{feature.key}",
+                                    role: "switch" %>
+                  <label class="form-check-label" for="feature_<%= feature.key %>">
+                    <%= feature.enabled? ? "Enabled" : "Disabled" %>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+    <div class="card-footer">
+      <%= f.submit "Save Features", class: "btn btn-lg btn-success" %>
+      <%= link_to "Cancel", setup_path, class: "btn btn-lg btn-secondary" %>
+    </div>
+  </div>
+<% end %>

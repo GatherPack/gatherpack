@@ -28,35 +28,15 @@
 
         <%= nav_link 'Dashboard', root_path, 'flag' %>
         <%= nav_link 'Sign Out', destroy_user_session_path, 'person-through-window', method: 'delete' %>
-      
+
         <hr class="my-2">
 
-        <%= nav_heading 'People' %>
-
-        <%= nav_link 'People', people_path, 'users' %>
-        <%= nav_link 'Teams', teams_path, 'people-group' %>
-        <%= nav_link 'Badges', badges_path, 'certificate' %>
-        <%= nav_link 'Tokens', tokens_path, 'id-badge' %>
-
-        <%= nav_heading 'Time' %>
-
-        <%= nav_link 'Calendar', calendar_index_path, 'calendar' %>
-        <%= nav_link 'Time Clock', time_clock_punches_path, 'business-time' %>
-        
-        <%= nav_heading 'Finance' %>
-
-        <%= nav_link 'Ledgers', ledgers_path, 'receipt' %>
-        <%= nav_link 'Budgets', budgets_path, 'wallet' %>
-
-        <%= nav_heading 'Communication' %>
-        
-        <%= nav_link 'Mailboxes', mailboxes_path, 'inbox' %>
-
-        <%= nav_heading 'Content' %>
-
-        <%= nav_link 'Announcements', announcements_path, 'comment' %>
-        <%= nav_link 'Pages', pages_path, 'file-lines' %>
-        <%= nav_link 'Shortcuts', shortcuts_path, 'link' %>
+        <% GatherPack::Features.nav_sections.each do |section_name, items| %>
+          <%= nav_heading section_name %>
+          <% items.each do |item| %>
+            <%= nav_link item.label, resolve_nav_path(item), item.icon %>
+          <% end %>
+        <% end %>
 
         <% if admin? %>
           <hr class="my-2">
