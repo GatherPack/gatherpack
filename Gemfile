@@ -117,7 +117,7 @@ gem "omniauth-discord", "~> 1"
 
 gem "omniauth-github", "~> 2"
 
-gem "http", "~> 5"
+gem "http", "~> 6"
 
 gem "pmap", "~> 1"
 
