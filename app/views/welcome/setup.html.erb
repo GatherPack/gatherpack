@@ -5,33 +5,31 @@
     <h2>Setup Tools</h2>
   </div>
   <div class="card-body">
-    <div class="row">
-      <div class="col-md-3">
-        <%= link_to 'Team Types', team_types_path, class: 'btn btn-lg btn-primary my-3' %>
-      </div>
-      <div class="col-md-3">
-        <%= link_to 'Badge Types', badge_types_path, class: 'btn btn-lg btn-primary my-3' %>
-      </div>
-      <div class="col-md-3">
-        <%= link_to 'Event Types', event_types_path, class: 'btn btn-lg btn-primary my-3' %>
-      </div>
-      <div class="col-md-3">
-        <%= link_to 'Relationship Types', relationship_types_path, class: 'btn btn-lg btn-primary my-3' %>
-      </div>
-      <div class="col-md-3">
-        <%= link_to 'Checkin Fields', checkin_fields_path, class: 'btn btn-lg btn-primary my-3' %>
-      </div>
-      <div class="col-md-3">
-        <%= link_to 'Ledger Tags', ledger_tags_path, class: 'btn btn-lg btn-primary my-3' %>
-      </div>
-      <div class="col-md-3">
-        <% if policy(Gateway).create? %>
-          <%= link_to 'Gateways', gateways_path, class: 'btn btn-lg btn-primary my-3' %>
+    <%# Feature-contributed setup items, grouped by section %>
+    <% GatherPack::Features.setup_sections.each do |section_name, items| %>
+      <h5 class="text-muted mt-3 mb-2"><%= section_name %></h5>
+      <div class="row">
+        <% items.each do |item| %>
+          <% if setup_item_visible?(item) %>
+            <div class="col-md-3">
+              <%= link_to item.label, resolve_nav_path(item), class: "btn btn-lg btn-primary my-3" %>
+            </div>
+          <% end %>
         <% end %>
       </div>
+    <% end %>
+
+    <%# Always-on system items %>
+    <h5 class="text-muted mt-3 mb-2">System</h5>
+    <div class="row">
       <div class="col-md-3">
-        <%= link_to 'Settings', settings_path, class: 'btn btn-lg btn-primary my-3' %>
+        <%= link_to "Settings", settings_path, class: "btn btn-lg btn-primary my-3" %>
       </div>
+      <% if architect? || admin? %>
+        <div class="col-md-3">
+          <%= link_to "Features", features_path, class: "btn btn-lg btn-primary my-3" %>
+        </div>
+      <% end %>
     </div>
   </div>
 </div>

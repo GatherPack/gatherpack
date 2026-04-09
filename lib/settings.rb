@@ -45,7 +45,7 @@ class Settings
     end
   end
 
-  class <<self
+  class << self
     def [](setting)
       get(setting)&.value
     end
@@ -69,9 +69,24 @@ class Settings
     def groups
       instance.settings.values.map(&:group).uniq
     end
+
+    def register_feature(feature)
+      instance.send(:add_feature_setting, feature)
+    end
   end
 
   private
+
+  def add_feature_setting(feature)
+    add_setting(
+      feature.setting_key,
+      :boolean,
+      feature.label,
+      feature.default_enabled.to_s,
+      "Features",
+      feature.description || "Enable or disable the #{feature.label} feature"
+    )
+  end
 
   def add_setting(setting_key, *args)
     @settings[setting_key] = Setting.new(@store, setting_key, *args)
@@ -80,7 +95,7 @@ class Settings
   def initialize
     @store = PStore.new("storage/settings.pstore")
 
-    @settings = Hash.new
+    @settings = {}
     add_setting(:title, :string, "Site Name", "GatherPack", nil, "The name of the site")
     add_setting(:time_zone, :time_zone, "Time Zone", "Etc/UTC", nil, "The default time zone")
     add_setting(:infodump_day, :string, "Infodump Day", "Monday", nil, "The day of the week for the infodump to go out")
