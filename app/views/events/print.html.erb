@@ -53,7 +53,7 @@
           <div class="row align-items-center">
             <% @responses.where(response: v).order('person.last_name ASC, person.first_name ASC').each do |r| %>
               <div class="col-2 fs-6">
-                <%= render "people/person", person: r.checkin.person, footer: r.checkin.notes %>
+                <%= render "people/person", person: r.checkin.person, footer: (r.checkin.notes if @notes) %>
               </div>
             <% end %>
           </div>
