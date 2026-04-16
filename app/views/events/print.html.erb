@@ -15,6 +15,11 @@
         </div>
         <div class="col-12 col-md-6">
           <div class="form-check form-switch">
+            <%= f.check_box :notes, { class: 'form-check-input', id: 'notes', checked: @notes }, "true", "false" %>
+            <%= f.label :notes, "Include notes", class: 'form-check-label', for: 'notes' %>
+          </div>
+          <hr>
+          <div class="form-check form-switch">
             <%= f.check_box :paged, { class: 'form-check-input', id: 'paged', checked: @paged }, "true", "false" %>
             <%= f.label :paged, "Print each group on a separate page", class: 'form-check-label', for: 'paged' %>
           </div>
@@ -47,8 +52,8 @@
         <div class="card-body" id="responseContainer">
           <div class="row align-items-center">
             <% @responses.where(response: v).order('person.last_name ASC, person.first_name ASC').each do |r| %>
-              <div class="col-3 col-sm-2 fs-6">
-                <%= render "people/person", person: r.checkin.person %>
+              <div class="col-2 fs-6">
+                <%= render "people/person", person: r.checkin.person, footer: r.checkin.notes %>
               </div>
             <% end %>
           </div>
