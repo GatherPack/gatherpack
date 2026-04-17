@@ -36,6 +36,7 @@ class EventsController < InternalController
       .includes(checkin: :person)
       .joins(:checkin)
       .where(checkin_field: @field, checkins: { event_id: @event.id })
+    @last_updated = @responses.maximum(:updated_at)
   end
 
   # GET /events/new
