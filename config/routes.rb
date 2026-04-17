@@ -56,6 +56,7 @@ Rails.application.routes.draw do
       get "arrange"
       get "print"
       patch "field_update", to: "checkins#field_update"
+      patch "rename_response", to: "checkins#rename_response"
     end
   end
   resources :calendar, only: %i[ index ] do
