@@ -1,5 +1,5 @@
 class CheckinsController < InternalController
-  before_action :set_event, except: [ :field_update ]
+  before_action :set_event, except: [ :field_update, :rename_response ]
   before_action :set_checkin, only: %i[ show edit update destroy ]
 
   # GET /checkins/1
@@ -56,6 +56,22 @@ class CheckinsController < InternalController
       end
     else
       redirect_to [ @checkin_field_response.checkin.event, @checkin_field_response.checkin ], notice: "Checkin field failed to update.", status: :see_other
+    end
+  end
+
+  def rename_response
+    @event = policy_scope(Event).find(params[:id])
+    field = @event.event_type.checkin_fields.find(params[:field_id])
+    old_response = params[:old_response].presence
+    new_response = params[:new_response].presence
+
+    CheckinFieldResponse
+      .joins(checkin: :event)
+      .where(checkins: { event_id: @event.id }, checkin_field: field, response: old_response)
+      .update_all(response: new_response)
+
+    respond_to do |res|
+      res.json { head :no_content }
     end
   end
 

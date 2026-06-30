@@ -31,10 +31,12 @@ class EventsController < InternalController
     @values = params[:values].present? ? @possible_values & params[:values] : @possible_values
     @values = @possible_values if @values.empty?
     @paged = params[:paged] == "true"
+    @notes = params[:notes] == "true"
     @responses = CheckinFieldResponse
       .includes(checkin: :person)
       .joins(:checkin)
       .where(checkin_field: @field, checkins: { event_id: @event.id })
+    @last_updated = @responses.maximum(:updated_at)
   end
 
   # GET /events/new

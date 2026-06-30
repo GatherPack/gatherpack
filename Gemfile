@@ -15,7 +15,7 @@ gem "propshaft"
 # Use postgresql as the database for Active Record
 gem "pg", "~> 1.1"
 # Use the Puma web server [https://github.com/puma/puma]
-gem "puma", "~> 7"
+gem "puma", "~> 8"
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
 gem "importmap-rails"
 # Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
@@ -117,7 +117,7 @@ gem "omniauth-discord", "~> 1"
 
 gem "omniauth-github", "~> 2"
 
-gem "http", "~> 5"
+gem "http", "~> 6"
 
 gem "pmap", "~> 1"
 

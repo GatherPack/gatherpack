@@ -57,9 +57,6 @@ Rails.application.routes.draw do
     post "update", on: :collection, as: "update"
   end
 
-  # ---------------------------------------------------------------------------
-  # Badges feature
-  # ---------------------------------------------------------------------------
   if GatherPack::Features.enabled?(:badges)
     resources :badges do
       resources :badge_assignments
@@ -67,16 +64,10 @@ Rails.application.routes.draw do
     resources :badge_types
   end
 
-  # ---------------------------------------------------------------------------
-  # Tokens feature
-  # ---------------------------------------------------------------------------
   if GatherPack::Features.enabled?(:tokens)
     resources :tokens
   end
 
-  # ---------------------------------------------------------------------------
-  # Events & Calendar feature
-  # ---------------------------------------------------------------------------
   if GatherPack::Features.enabled?(:events)
     resources :events do
       resources :checkins, except: %i[index]
@@ -96,9 +87,6 @@ Rails.application.routes.draw do
     resources :event_types
   end
 
-  # ---------------------------------------------------------------------------
-  # Time Tracking feature
-  # ---------------------------------------------------------------------------
   if GatherPack::Features.enabled?(:time_tracking)
     get "time_kiosk", to: "time_kiosk#index"
     post "time_kiosk", to: "time_kiosk#index"
@@ -118,9 +106,6 @@ Rails.application.routes.draw do
     end
   end
 
-  # ---------------------------------------------------------------------------
-  # Ledger feature
-  # ---------------------------------------------------------------------------
   if GatherPack::Features.enabled?(:ledger)
     resources :ledger_payments, only: %i[new create]
     resources :ledger_transfers, only: %i[new create]
@@ -137,50 +122,32 @@ Rails.application.routes.draw do
     end
   end
 
-  # ---------------------------------------------------------------------------
-  # Budgets feature
-  # ---------------------------------------------------------------------------
   if GatherPack::Features.enabled?(:budgets)
     resources :budgets
     resources :budget_periods
   end
 
-  # ---------------------------------------------------------------------------
-  # Mailboxes feature
-  # ---------------------------------------------------------------------------
   if GatherPack::Features.enabled?(:mailboxes)
     resources :mailboxes do
       resources :mailbox_messages, except: %i[index]
     end
   end
 
-  # ---------------------------------------------------------------------------
-  # Pages feature
-  # ---------------------------------------------------------------------------
   if GatherPack::Features.enabled?(:pages)
     resources :pages
   end
 
-  # ---------------------------------------------------------------------------
-  # Plugin-contributed routes
-  # Each plugin feature may declare a routes_proc that is instance_exec'd here.
-  # ---------------------------------------------------------------------------
-  GatherPack::Features.all.select { |f| f.enabled? && f.routes_proc }.each do |feature|
-    instance_exec(&feature.routes_proc)
-  end
+  # Handle plugin routes - was suggested, don't know that we actually need this or if plugins can just manage this themselves
+  # GatherPack::Features.all.select { |f| f.enabled? && f.routes_proc }.each do |feature|
+  #   instance_exec(&feature.routes_proc)
+  # end
 
-  # ---------------------------------------------------------------------------
-  # Auth
-  # ---------------------------------------------------------------------------
   if Settings[:local_signup]
     devise_for :users, controllers: { omniauth_callbacks: "omniauth", registrations: "users/registrations" }
   else
     devise_for :users, controllers: { omniauth_callbacks: "omniauth" }, skip: :registrations
   end
 
-  # ---------------------------------------------------------------------------
-  # Misc
-  # ---------------------------------------------------------------------------
   get "/setup" => "welcome#setup", :as => :setup
   get "search" => "search#index", :as => :search
   get "search/combo" => "search#combo", :as => :combo_search

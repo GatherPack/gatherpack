@@ -37,7 +37,13 @@
       <% @responses.pluck(:response).uniq.sort_by { |v| v || 'zzzzz' }.each do |v| %>
         <div class="row align-items-center">
           <div class="col-12 col-md-4 col-xl-2">
-            <h3><%= v.presence || 'unassigned' %> [<span data-arranging-count="<%= URI.encode_uri_component v %>"><%= @responses.where(response: v).count %></span>]</h3>
+            <h3 class="d-flex align-items-center gap-2">
+              <span class="arranging-label" data-arranging-label="<%= URI.encode_uri_component v %>"><%= v.presence || 'unassigned' %></span>
+              [<span data-arranging-count="<%= URI.encode_uri_component v %>"><%= @responses.where(response: v).count %></span>]
+              <button class="btn btn-sm btn-outline-secondary rename-btn" title="Rename"
+                data-arranging-label="<%= URI.encode_uri_component v %>"
+                data-current-value="<%= v.presence || '' %>">&#9998;</button>
+            </h3>
           </div>
           <div class="col-12 col-md-8 col-xl-10">
             <div class="badge-container arranging-container" data-arranging-container="<%= URI.encode_uri_component v %>">
@@ -51,6 +57,26 @@
     </div>
   </div>
 <% end %>
+
+<div class="modal fade" id="renameModal" tabindex="-1" aria-labelledby="renameModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="renameModalLabel">Rename</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-danger d-none" id="renameError"></div>
+        <label for="renameInput" class="form-label">New name</label>
+        <input type="text" id="renameInput" class="form-control">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" id="renameSave">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <script>
   function dragstartHandler(ev) {
@@ -101,12 +127,18 @@
 
   function addNewFieldHandler(ev) {
     const val = document.getElementById("newField").value;
+    const encoded = encodeURIComponent(val);
     const template = `<div class="row align-items-center">
           <div class="col-12 col-md-4 col-xl-2">
-            <h3>${val} [<span data-arranging-count="${encodeURIComponent(val)}">0</span>]</h3>
+            <h3 class="d-flex align-items-center gap-2">
+              <span class="arranging-label" data-arranging-label="${encoded}">${val}</span>
+              [<span data-arranging-count="${encoded}">0</span>]
+              <button class="btn btn-sm btn-outline-secondary rename-btn" title="Rename"
+                data-arranging-label="${encoded}" data-current-value="${val}">&#9998;</button>
+            </h3>
           </div>
           <div class="col-12 col-md-8 col-xl-10">
-            <div class="badge-container arranging-container" data-arranging-container="${encodeURIComponent(val)}">
+            <div class="badge-container arranging-container" data-arranging-container="${encoded}">
             </div>
           </div>
         </div>`;
@@ -114,7 +146,11 @@
     const zones = document.querySelectorAll(".arranging-container");
     zones.forEach( (e) => { e.addEventListener("drop", dropHandler) });
     zones.forEach( (e) => { e.addEventListener("dragover", dragoverHandler) });
+    bindRenameButtons();
   }
+
+  let renameModal;
+  let renamePendingEncoded = null;
 
   window.addEventListener("turbo:load", () => {
     const element = document.querySelectorAll(".arranging-badge");
@@ -124,6 +160,79 @@
     zones.forEach( (e) => { e.addEventListener("drop", dropHandler) });
     zones.forEach( (e) => { e.addEventListener("dragover", dragoverHandler) });
 
-    document.getElementById("addNewField").addEventListener("click", addNewFieldHandler)
+    document.getElementById("addNewField").addEventListener("click", addNewFieldHandler);
+
+    renameModal = new bootstrap.Modal(document.getElementById("renameModal"));
+
+    document.getElementById("renameSave").addEventListener("click", renameSubmitHandler);
+    document.getElementById("renameInput").addEventListener("keydown", (ev) => {
+      if (ev.key === "Enter") renameSubmitHandler();
+    });
+
+    bindRenameButtons();
   });
+
+  function bindRenameButtons() {
+    document.querySelectorAll(".rename-btn").forEach((btn) => {
+      if (btn.dataset.renameBound) return;
+      btn.dataset.renameBound = "1";
+      btn.addEventListener("click", () => {
+        renamePendingEncoded = btn.dataset.arrangingLabel;
+        document.getElementById("renameInput").value = btn.dataset.currentValue;
+        document.getElementById("renameError").classList.add("d-none");
+        renameModal.show();
+        setTimeout(() => document.getElementById("renameInput").select(), 300); 
+      });
+    });
+  }
+
+  function renameSubmitHandler() {
+    if (!renamePendingEncoded) return;
+    const oldEncoded = renamePendingEncoded;
+    const newVal = document.getElementById("renameInput").value.trim();
+    const newEncoded = encodeURIComponent(newVal);
+    const csrfToken = document.querySelector("[name='csrf-token']").content;
+    const saveBtn = document.getElementById("renameSave");
+    const errorEl = document.getElementById("renameError");
+
+    saveBtn.disabled = true;
+
+    fetch("/events/<%= @event.id %>/rename_response", {
+      method: "PATCH",
+      headers: {
+        "X-CSRF-Token": csrfToken,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        field_id: "<%= params[:field_id] %>",
+        old_response: decodeURIComponent(oldEncoded),
+        new_response: newVal
+      })
+    }).then((response) => {
+      if (!response.ok) { throw new Error(`Server error ${response.status}`); }
+
+      // Update label text & data attributes
+      const label = document.querySelector(`.arranging-label[data-arranging-label="${oldEncoded}"]`);
+      label.textContent = newVal || "unassigned";
+      label.dataset.arrangingLabel = newEncoded;
+
+      const counter = document.querySelector(`[data-arranging-count="${oldEncoded}"]`);
+      counter.dataset.arrangingCount = newEncoded;
+
+      const container = document.querySelector(`.arranging-container[data-arranging-container="${oldEncoded}"]`);
+      container.dataset.arrangingContainer = newEncoded;
+
+      const renameBtn = document.querySelector(`.rename-btn[data-arranging-label="${oldEncoded}"]`);
+      renameBtn.dataset.arrangingLabel = newEncoded;
+      renameBtn.dataset.currentValue = newVal;
+
+      renamePendingEncoded = null;
+      renameModal.hide();
+    }).catch((error) => {
+      errorEl.textContent = `Rename failed: ${error.message}`;
+      errorEl.classList.remove("d-none");
+    }).finally(() => {
+      saveBtn.disabled = false;
+    });
+  }
 </script>
