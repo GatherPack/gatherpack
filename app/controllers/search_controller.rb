@@ -20,14 +20,22 @@ class SearchController < ApplicationController
   private
 
   def search(q, scope)
+    feature_scope_map = {
+      "events" => :events,
+      "badges" => :badges,
+      "tokens" => :tokens,
+      "time_clock_periods" => :time_tracking,
+      "ledgers" => :ledger
+    }
     scope = scope.split(" ").map(&:strip).uniq
+    scope.reject! { |s| feature_scope_map.key?(s) && !GatherPack::Features.enabled?(feature_scope_map[s]) }
     results = []
     results += policy_scope(Person).ransack(first_name_or_last_name_or_display_name_cont: params[:q]).result(distinct: true) if scope.include?("people")
     if scope.include?("managed_people")
-      if current_user.admin?
-        results += policy_scope(Person).ransack(first_name_or_last_name_or_display_name_cont: params[:q]).result(distinct: true)
+      results += if current_user.admin?
+        policy_scope(Person).ransack(first_name_or_last_name_or_display_name_cont: params[:q]).result(distinct: true)
       else
-        results += current_user.person.all_managed_people.ransack(first_name_or_last_name_or_display_name_cont: params[:q]).result(distinct: true)
+        current_user.person.all_managed_people.ransack(first_name_or_last_name_or_display_name_cont: params[:q]).result(distinct: true)
       end
     end
     team_people_ids = scope.select { |s| s.start_with?("team_people:") }.map { |s| s.split(":").last }

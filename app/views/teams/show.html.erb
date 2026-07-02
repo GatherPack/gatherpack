@@ -68,28 +68,32 @@
     </div>
     <div class="row">
       <div class="col">
-        <div class="mb-3">
-          <h2>Badges</h2>
-          <div class="row">
-            <% @team.badges.order(name: :asc).first(16).each do |badge| %>
-              <div class="col-sm-3 mb-3">
-                <%= link_to badge do %>
-                  <%= as_badge badge %> <%= badge.identifier_name %>
-                <% end %>
-              </div>
-            <% end %>
+        <% if GatherPack::Features.enabled?(:badges) %>
+          <div class="mb-3">
+            <h2>Badges</h2>
+            <div class="row">
+              <% @team.badges.order(name: :asc).first(16).each do |badge| %>
+                <div class="col-sm-3 mb-3">
+                  <%= link_to badge do %>
+                    <%= as_badge badge %> <%= badge.identifier_name %>
+                  <% end %>
+                </div>
+              <% end %>
+            </div>
+            <%= link_to 'Show All Team Badges', badges_path(q: { team_id_eq: @team.id }) %>
           </div>
-          <%= link_to 'Show All Team Badges', badges_path(q: { team_id_eq: @team.id }) %>
-        </div>
-        <div class="mb-3">
-          <h2>Pages</h2>
-          <ul>
-            <% @team.pages.order(created_at: :asc).last(5).each do |page| %>
-              <li><%= link_to page.title, page %></li>
-            <% end %>
-          </ul>
-          <%= link_to 'Show All Team Pages', pages_path(q: { team_id_eq: @team.id }) %>
-        </div>
+        <% end %>
+        <% if GatherPack::Features.enabled?(:pages) %>
+          <div class="mb-3">
+            <h2>Pages</h2>
+            <ul>
+              <% @team.pages.order(created_at: :asc).last(5).each do |page| %>
+                <li><%= link_to page.title, page %></li>
+              <% end %>
+            </ul>
+            <%= link_to 'Show All Team Pages', pages_path(q: { team_id_eq: @team.id }) %>
+          </div>
+        <% end %>
       </div>
       <div class="col">
         <h2>Recent Activities</h2>
@@ -102,15 +106,17 @@
           </ul>
           <%= link_to 'Show All Team Announcements', announcements_path(q: { team_id_eq: @team.id }) %>
         </div>
-        <div class="mb-3">
-          <h3>Events</h3>
-          <ul>
-            <% @team.events.order(created_at: :asc).last(5).each do |event| %>
-              <li><%= link_to event.name, event %></li>
-            <% end %>
-          </ul>
-          <%= link_to 'Show All Team Events', events_path(q: { team_id_eq: @team.id }) %>
-        </div>
+        <% if GatherPack::Features.enabled?(:events) %>
+          <div class="mb-3">
+            <h3>Events</h3>
+            <ul>
+              <% @team.events.order(created_at: :asc).last(5).each do |event| %>
+                <li><%= link_to event.name, event %></li>
+              <% end %>
+            </ul>
+            <%= link_to 'Show All Team Events', events_path(q: { team_id_eq: @team.id }) %>
+          </div>
+        <% end %>
       </div>
     </div>
   </div>

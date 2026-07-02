@@ -7,9 +7,13 @@
   <div class="card-body">
     <h2>General Statistics</h2>
     <p>Joined <%= time_ago_in_words(@person.created_at) %> ago</p>
-    <p>Punched in <%= pluralize @person.time_clock_punches.map(&:hours).sum, "hour" %></p>
-    <p>Checked in <%= pluralize @person.checkins.count, "event" %></p>
-    <% if @person.current_time_clock_periods.any? %>
+    <% if GatherPack::Features.enabled?(:time_tracking) %>
+      <p>Punched in <%= pluralize @person.time_clock_punches.map(&:hours).sum, "hour" %></p>
+    <% end %>
+    <% if GatherPack::Features.enabled?(:events) %>
+      <p>Checked in <%= pluralize @person.checkins.count, "event" %></p>
+    <% end %>
+    <% if GatherPack::Features.enabled?(:time_tracking) && @person.current_time_clock_periods.any? %>
       <hr>
       <div class="row">
         <% @person.current_time_clock_periods.each do |period| %>
