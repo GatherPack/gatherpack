@@ -1,2 +1,0 @@
-class FeaturesPolicy < ArchitectPolicy
-end

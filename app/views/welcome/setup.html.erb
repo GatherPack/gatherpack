@@ -19,17 +19,13 @@
       </div>
     <% end %>
 
-    <%# Always-on system items %>
-    <h5 class="text-muted mt-3 mb-2">System</h5>
-    <div class="row">
-      <div class="col-md-3">
-        <%= link_to "Settings", settings_path, class: "btn btn-lg btn-primary my-3" %>
-      </div>
-      <% if architect? || admin? %>
+    <% if admin? %>
+      <h5 class="text-muted mt-3 mb-2">System</h5>
+      <div class="row">
         <div class="col-md-3">
-          <%= link_to "Features", features_path, class: "btn btn-lg btn-primary my-3" %>
+          <%= link_to "Settings", settings_path, class: "btn btn-lg btn-primary my-3" %>
         </div>
-      <% end %>
-    </div>
+      </div>
+    <% end %>
   </div>
 </div>

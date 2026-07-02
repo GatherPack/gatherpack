@@ -53,10 +53,6 @@ Rails.application.routes.draw do
     post "update", on: :collection, as: "update"
   end
 
-  resources :features, only: %i[index] do
-    post "update", on: :collection, as: "update"
-  end
-
   if GatherPack::Features.enabled?(:badges)
     resources :badges do
       resources :badge_assignments
