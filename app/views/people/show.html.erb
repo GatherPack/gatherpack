@@ -8,6 +8,15 @@
     <div class="row">
       <div class="col-12 col-sm-6 col-lg-4">
         <%= image_tag get_avatar_url(@person.avatar), class: 'person-img' %>
+        <% if @person.user&.architect? %>
+          <div class="mb-3 mx-auto justify-content-center d-flex">
+            <span class="badge mx-auto" style="background-color: black; color: #d52; border: thick solid #b21;"><%= i 'screwdriver-wrench' %> Architect</span>
+          </div>
+        <% elsif @person.user&.admin? %>
+          <div class="mb-3 mx-auto justify-content-center d-flex">
+            <span class="badge mx-auto" title="Site Admin" style="background-color: black; color: #dd2; border: thick solid #bb1;"><%= i 'crown' %> Admin</span>
+          </div>
+        <% end %>
       </div>
       <div class="col-12 col-sm-6 col-lg-4">
         <p><b>Email: </b><%= if @person.user.nil? then "This person doesn't have a user attached." else @person.user.email end %></p>
@@ -32,20 +41,10 @@
           </div>
         <% end %>
 
-        <% if @badges.any? || @person.user&.admin? %>
+        <% if GatherPack::Features.enabled?(:badges) && (@badges.any? || @person.user&.admin?) %>
           <div class="mb-3">
             <h3>Badges</h3>
             <div class="row">
-              <% if @person.user&.architect? %>
-                <div class="col-4 col-xl-2 mb-3 fs-3 justify-content-center">
-                  <span class="badge" title="Site Architect" style="background-color: black; color: #d52; border: thick solid #b21;"><%= i 'screwdriver-wrench' %></span>
-                </div>
-              <% elsif @person.user&.admin? %>
-                <div class="col-4 col-xl-2 mb-3 fs-3 justify-content-center">
-                  <span class="badge" title="Site Admin" style="background-color: black; color: #dd2; border: thick solid #bb1;"><%= i 'crown' %></span>
-                </div>
-              <% end %>
-
               <% @badges.each do |badge| %>
                 <div class="col-4 col-xl-2 mb-3 fs-3 justify-content-center">
                   <%= link_to as_badge(badge), badge, class: 'undecorated' %>
@@ -55,7 +54,7 @@
           </div>
         <% end %>
 
-        <% if @tokens.any? %>
+        <% if GatherPack::Features.enabled?(:tokens) && @tokens.any? %>
           <div class="mb-3">
             <h3>Tokens</h3>
             <% policy_scope(@person.tokens).each do |token| %>
@@ -64,7 +63,7 @@
           </div>
         <% end %>
 
-        <% if @ledgers.any? %>
+        <% if GatherPack::Features.enabled?(:ledger) && @ledgers.any? %>
           <div class="mb-3">
             <h3>Ledgers</h3>
             <% @ledgers.each do |ledger| %>
@@ -82,7 +81,7 @@
           </div>
         <% end %>
 
-        <% if @time_clocks %>
+        <% if GatherPack::Features.enabled?(:time_tracking) && @time_clocks %>
           <div class="mb-3">
             <h3>Time Clock Punches</h3>
             <% @time_clocks.each do |period, hours| %>

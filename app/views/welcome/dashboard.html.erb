@@ -43,34 +43,38 @@
     <% end %>
   </div>
   <div class="col-12 col-lg-6">
-    <div class="card">
-      <div class="card-header">
-        <h2>Calendar</h2>
-      </div>
-      <div class="card-body">
-        <div data-controller="calendar" data-calendar-default-view-value="listMonth" data-calendar-timezone-value="<%= Settings[:time_zone].presence || 'UTC' %>" data-calendar-start-time-value="<%= Date.today.iso8601 %>">
-          <div id="calendar" data-turbo="false">
+    <% if GatherPack::Features.enabled?(:events) %>
+      <div class="card">
+        <div class="card-header">
+          <h2>Calendar</h2>
+        </div>
+        <div class="card-body">
+          <div data-controller="calendar" data-calendar-default-view-value="listMonth" data-calendar-timezone-value="<%= Settings[:time_zone].presence || 'UTC' %>" data-calendar-start-time-value="<%= Date.today.iso8601 %>">
+            <div id="calendar" data-turbo="false">
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    <% end %>
 
-    <div class="card">
-      <div class="card-header">
-        <h2>Ledgers</h2>
-      </div>
-      <div class="card-body">
-        <% current_user.person.ledgers.each do |ledger| %>
-          <div class="row">
-            <div class="col-9">
-              <%= link_to ledger.name, ledger %>
+    <% if GatherPack::Features.enabled?(:ledger) %>
+      <div class="card">
+        <div class="card-header">
+          <h2>Ledgers</h2>
+        </div>
+        <div class="card-body">
+          <% current_user.person.ledgers.each do |ledger| %>
+            <div class="row">
+              <div class="col-9">
+                <%= link_to ledger.name, ledger %>
+              </div>
+              <div class="col-3 text-end">
+                <%= as_currency ledger.balance %>
+              </div>
             </div>
-            <div class="col-3 text-end">
-              <%= as_currency ledger.balance %>
-            </div>
-          </div>
-        <% end %>
+          <% end %>
+        </div>
       </div>
-    </div>
+    <% end %>
   </div>
 </div>

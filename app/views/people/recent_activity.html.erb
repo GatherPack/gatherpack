@@ -6,24 +6,28 @@
   </div>
   <div class="card-body">
     <div class="row">
-      <div class="col-md-4">
-        <h2>Upcoming Events</h2>
-        <% if @upcoming_events.count == 0 %>
-          <p><%= @person.identifier_name %> has not checked in to any upcoming events.</p>
-        <% end %>
-        <% @upcoming_events.each do |event| %>
-          <%= as_badge event %>
-        <% end %>
-      </div>
-      <div class="col-md-4">
-        <h2>Recent Punches</h2>
-        <% if @recent_punches.count == 0 %>
-          <p><%= @person.identifier_name %> has no recent punches.</p>
-        <% end %>
-        <% @recent_punches.each do |punch| %>
-          <%= as_badge punch %>
-        <% end %>
-      </div>
+      <% if GatherPack::Features.enabled?(:events) %>
+        <div class="col-md-4">
+          <h2>Upcoming Events</h2>
+          <% if @upcoming_events.count == 0 %>
+            <p><%= @person.identifier_name %> has not checked in to any upcoming events.</p>
+          <% end %>
+          <% @upcoming_events.each do |event| %>
+            <%= as_badge event %>
+          <% end %>
+        </div>
+      <% end %>
+      <% if GatherPack::Features.enabled?(:time_tracking) %>
+        <div class="col-md-4">
+          <h2>Recent Punches</h2>
+          <% if @recent_punches.count == 0 %>
+            <p><%= @person.identifier_name %> has no recent punches.</p>
+          <% end %>
+          <% @recent_punches.each do |punch| %>
+            <%= as_badge punch %>
+          <% end %>
+        </div>
+      <% end %>
       <div class="col-md-4">
         <h2>Recent Notes</h2>
         <% if @recent_notes.count == 0 %>
