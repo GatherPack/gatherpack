@@ -1,26 +1,30 @@
 <header class="navbar navbar-expand-lg bg-dark no-print">
   <div class="container-fluid">
     <a class="navbar-brand" href="/">
-      <%= image_tag 'logo.svg' %>
-      <%= Settings[:title] %>
+      <% if Theme.instance.logo.attached? %>
+        <%= image_tag Theme.instance.logo, alt: Settings[:title] %>
+      <% else %>
+        <%= image_tag "logo.svg" %>
+      <% end %>
+      &nbsp; <%= Settings[:title] %>
     </a>
 
       <% if !kiosk_page? && (current_user.present? rescue false) %>
       <div class="navbar-toggler" style="outline: none; border: none;">
         <button class="navbar-toggler text-white-50" type="button" data-bs-toggle="dropdown">
-          <%= i 'magnifying-glass' %>
+          <%= i "magnifying-glass" %>
         </button>
         <div class="dropdown-menu shadow-lg justify-content-center">
           <form class="d-flex" role="search" action="<%= search_path %>" style="width: 95%;">
             <input class="form-control me-1" type="search" name="q" placeholder="Search for anything..." aria-label="Search">
             <button class="btn btn-success" type="submit">
-              <%= i 'magnifying-glass' %>
+              <%= i "magnifying-glass" %>
             </button>
           </form>
         </div>
 
         <button class="navbar-toggler text-white-50" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
-          <%= i 'bars' %>
+          <%= i "bars" %>
         </button>
       </div>
     <% end %>

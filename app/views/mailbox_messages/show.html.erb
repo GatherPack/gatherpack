@@ -20,10 +20,9 @@
         <% end %>
       </div>
     </div>
-    
-    
+
   </div>
   <div class="card-footer">
-    <%= link_to 'Delete', [@mailbox, @mailbox_message], class: 'btn btn-danger', data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %>
+    <%= link_to "Delete", [ @mailbox, @mailbox_message ], class: "btn btn-danger", data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } %>
   </div>
 </div>

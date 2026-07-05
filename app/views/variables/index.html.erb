@@ -8,17 +8,17 @@
   <div class="card-body">
     <div class="row">
       <div class="col-md">
-        <%= f.input :name_cont, label: 'Name' %>
+        <%= f.input :name_cont, label: "Name" %>
       </div>
       <div class="col-md">
-        <%= f.input :raw_value_cont, label: 'Value' %>
+        <%= f.input :raw_value_cont, label: "Value" %>
       </div>
     </div>
   </div>
   <div class="card-footer">
-    <%= link_to "New Variable", new_variable_path, class: 'btn btn-success' if policy(Variable).create? %>
-    <%= f.submit 'Search', class: 'btn btn-primary', data: { action: "turbo_search#search" } %>
-    <%= link_to 'Clear Search', request.path, class: "btn btn-dark", data: { action: "turbo_search#clear" } %>
+    <%= link_to "New Variable", new_variable_path, class: "btn btn-success" if policy(Variable).create? %>
+    <%= f.submit "Search", class: "btn btn-primary", data: { action: "turbo_search#search" } %>
+    <%= link_to "Clear Search", request.path, class: "btn btn-dark", data: { action: "turbo_search#clear" } %>
   </div>
 </div>
 <% end %>

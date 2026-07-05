@@ -62,9 +62,9 @@ class MembershipsController < InternalController
   def destroy
     target = if @team
         team_memberships_path(@team)
-      else
+    else
         person_memberships_path(@person)
-      end
+    end
     @membership.destroy!
     redirect_to target, notice: "Membership was successfully destroyed.", status: :see_other
   end

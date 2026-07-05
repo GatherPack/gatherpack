@@ -1,7 +1,7 @@
 .page {
   margin: 1rem;
   padding: 1rem;
-  border: 1px solid $greige-darkest;
+  border: 1px solid var(--pair-a-fg);
   page-break-before: always;
   page-break-after: always;
   page-break-inside: avoid;

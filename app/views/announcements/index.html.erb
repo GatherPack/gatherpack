@@ -8,20 +8,20 @@
   <div class="card-body">
     <div class="row">
       <div class="col-md">
-        <%= f.input :title_i_cont, label: 'Title' %>
+        <%= f.input :title_i_cont, label: "Title" %>
       </div>
       <div class="col-md">
-        <%= f.input :content_i_cont, label: 'Content' %>
+        <%= f.input :content_i_cont, label: "Content" %>
       </div>
       <div class="col-md">
-        <%= f.input :team_id_eq, label: 'Team', as: :select, collection: policy_scope(Team) %>
+        <%= f.input :team_id_eq, label: "Team", as: :select, collection: policy_scope(Team) %>
       </div>
     </div>
   </div>
   <div class="card-footer">
-    <%= link_to "New Announcement", new_announcement_path, class: 'btn btn-success' if policy(Announcement).create? %>
-    <%= f.submit 'Search', class: 'btn btn-primary', data: { action: "turbo_search#search" } %>
-    <%= link_to 'Clear Search', request.path, class: "btn btn-dark", data: { action: "turbo_search#clear" } %>
+    <%= link_to "New Announcement", new_announcement_path, class: "btn btn-success" if policy(Announcement).create? %>
+    <%= f.submit "Search", class: "btn btn-primary", data: { action: "turbo_search#search" } %>
+    <%= link_to "Clear Search", request.path, class: "btn btn-dark", data: { action: "turbo_search#clear" } %>
   </div>
 </div>
 <% end %>

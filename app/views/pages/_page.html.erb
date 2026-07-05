@@ -6,7 +6,7 @@
     <% if page.dynamic %>
       <div class="badge" style="font-variant: small-caps;">DYNAMIC</div>
     <% else %>
-      <%= strip_tags(format_page_content(page)).truncate(50, separator: ' ') rescue "ERROR" %>
+      <%= strip_tags(format_page_content(page)).truncate(50, separator: " ") rescue "ERROR" %>
     <% end %>
   </div>
 </div>

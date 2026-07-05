@@ -6,9 +6,8 @@
     <%= f.input :name %>
   </div>
   <div class="col-md-6">
-    <%= f.input :klass, as: :select, collection: Variable::TYPES, label: 'Type' %>
+    <%= f.input :klass, as: :select, collection: Variable::TYPES, label: "Type" %>
   </div>
 </div>
 
-<%= f.input :raw_value, label: 'Value', wrapper_html: { class: 'code-editor' }, input_html: { rows: 12, data: { lang: "json" } } %>
-
+<%= f.input :raw_value, label: "Value", wrapper_html: { class: "code-editor" }, input_html: { rows: 12, data: { lang: "json" } } %>

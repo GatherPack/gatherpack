@@ -30,13 +30,13 @@
     </div>
   </div>
   <div class="card-footer">
-    <%= link_to "New Event", new_event_path, class: 'btn btn-success' if policy(Event).new? %>
-    <%= link_to "New Note", new_calendar_note_path, class: 'btn btn-success' if policy(CalendarNote).new? %>
-    <%= submit_tag 'Search', class: 'btn btn-primary', data: { action: "turbo_search#search" } %>
-    <%= link_to 'Clear Search', request.path, class: "btn btn-dark", data: { action: "turbo_search#clear" } %>
+    <%= link_to "New Event", new_event_path, class: "btn btn-success" if policy(Event).new? %>
+    <%= link_to "New Note", new_calendar_note_path, class: "btn btn-success" if policy(CalendarNote).new? %>
+    <%= submit_tag "Search", class: "btn btn-primary", data: { action: "turbo_search#search" } %>
+    <%= link_to "Clear Search", request.path, class: "btn btn-dark", data: { action: "turbo_search#clear" } %>
     <div class="float-end">
-      <%= link_to "All Events", events_path, class: 'btn btn-info' %>
-      <%= link_to "All Notes", calendar_notes_path, class: 'btn btn-info' %>
+      <%= link_to "All Events", events_path, class: "btn btn-info" %>
+      <%= link_to "All Notes", calendar_notes_path, class: "btn btn-info" %>
       <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#calendarViewModal">
         Calendar View Settings
       </button>
@@ -70,7 +70,7 @@
 <%= turbo_frame_tag "results" do %>
   <div class="card">
     <div class="card-body">
-      <div data-controller="calendar" data-calendar-timezone-value="<%= Settings[:time_zone].presence || 'UTC' %>">
+      <div data-controller="calendar" data-calendar-timezone-value="<%= Settings[:time_zone].presence || "UTC" %>">
         <div id="calendar" data-turbo="false">
         </div>
       </div>

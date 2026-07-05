@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_12_29_210052) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_05_161347) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -73,10 +73,11 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_29_210052) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
-  create_table "active_storage_variant_records", force: :cascade do |t|
+  create_table "active_storage_variant_records", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+    t.index ["blob_id"], name: "index_active_storage_variant_records_on_blob_id"
   end
 
   create_table "announcements", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -550,6 +551,15 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_29_210052) do
     t.index ["parent_id"], name: "index_teams_on_parent_id"
     t.index ["parent_team_id"], name: "index_teams_on_parent_team_id"
     t.index ["team_type_id"], name: "index_teams_on_team_type_id"
+  end
+
+  create_table "themes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.text "css_variables"
+    t.text "custom_css"
+    t.string "pwa_background_color", default: "#ffffff"
+    t.string "pwa_theme_color", default: "#ffffff"
+    t.datetime "updated_at", null: false
   end
 
   create_table "time_clock_periods", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

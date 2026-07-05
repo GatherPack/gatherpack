@@ -145,6 +145,8 @@ Rails.application.routes.draw do
   end
 
   get "/setup" => "welcome#setup", :as => :setup
+  resource :theme, only: [ :show, :edit, :update ], controller: "theme"
+
   get "search" => "search#index", :as => :search
   get "search/combo" => "search#combo", :as => :combo_search
 

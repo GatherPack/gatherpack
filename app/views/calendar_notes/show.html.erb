@@ -12,7 +12,7 @@
     <% end %>
   </div>
   <div class="card-footer">
-    <%= link_to 'Edit', edit_calendar_note_path(@calendar_note), class: 'btn btn-warning' %>
-    <%= link_to 'Delete', @calendar_note, class: 'btn btn-danger', data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %>
+    <%= link_to "Edit", edit_calendar_note_path(@calendar_note), class: "btn btn-warning" %>
+    <%= link_to "Delete", @calendar_note, class: "btn btn-danger", data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } %>
   </div>
 </div>

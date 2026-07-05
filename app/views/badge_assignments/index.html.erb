@@ -1,6 +1,6 @@
 <% breadcrumb :badge_assignments, @badge %>
 
-<%= search_form_for [@badge, @q], data: { "controller": "turbo_search", "turbo-frame": "results" } do |f| %>
+<%= search_form_for [ @badge, @q ], data: { "controller": "turbo_search", "turbo-frame": "results" } do |f| %>
 <div class="card">
   <div class="card-header">
     <h1>Badge assignments</h1>
@@ -8,9 +8,9 @@
   <div class="card-body">
   </div>
   <div class="card-footer">
-    <%= link_to "New badge assignment", new_badge_badge_assignment_path(@badge), class: 'btn btn-success' %>
-    <%= f.submit 'Search', class: 'btn btn-primary', data: { action: "turbo_search#search" } %>
-    <%= link_to 'Clear Search', request.path, class: "btn btn-dark", data: { action: "turbo_search#clear" } %>
+    <%= link_to "New badge assignment", new_badge_badge_assignment_path(@badge), class: "btn btn-success" %>
+    <%= f.submit "Search", class: "btn btn-primary", data: { action: "turbo_search#search" } %>
+    <%= link_to "Clear Search", request.path, class: "btn btn-dark", data: { action: "turbo_search#clear" } %>
   </div>
 </div>
 <% end %>

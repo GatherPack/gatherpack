@@ -10,12 +10,20 @@
     <%= yield :head %>
 
     <link rel="manifest" href="/manifest.json">
-    <link rel="icon" href="/icon.png" type="image/png">
-    <link rel="icon" href="/icon.svg" type="image/svg+xml">
-    <link rel="apple-touch-icon" href="/icon.png">
+    <% if (favicon = Theme.instance.favicon_32) %>
+      <link rel="icon" href="<%= url_for(favicon) %>" type="image/png">
+    <% else %>
+      <link rel="icon" href="/apple-touch-icon.png" type="image/png">
+    <% end %>
+    <% if (apple_touch = Theme.instance.apple_touch_icon) %>
+      <link rel="apple-touch-icon" href="<%= url_for(apple_touch) %>">
+    <% else %>
+      <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <% end %>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bubblegum+Sans&family=Fira+Code:wght@300..700&family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= render "layouts/theme_styles" %>
     <%= javascript_importmap_tags %>
     <%= font_awesome_tag %>
   </head>
@@ -29,7 +37,17 @@
           </div>
         <% end %>
 
-        <%= yield %>
+        <div class="row fullscreen">
+          <div class="col-12">
+            <div class="logoline">Get Together with <%= image_tag("logo.svg", alt: "GatherPack", class: "logo") %> GatherPack</a></div>
+          </div>
+
+          <%= yield %>
+
+          <footer class="col-12 footer-ad">
+            <a href="https://gatherpack.com" target="_blank">powered by <%= image_tag "logo.svg", alt: "GatherPack" %> GatherPack</a>
+          </footer>
+        </div>
       </main>
     </div>
   </body>

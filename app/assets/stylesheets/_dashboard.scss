@@ -85,6 +85,10 @@
  * Sidebar
  */
 
+.sidebar, .sidebar .offcanvas-md {
+  background-color: var(--pair-a-bg);
+}
+
 @media (min-width: 768px) {
   .sidebar .offcanvas-lg {
     position: -webkit-sticky;
@@ -115,12 +119,12 @@
       @extend .align-items-center;
       @extend .gap-1;
       @extend .py-1;
+      color: var(--pair-a-fg);
       font-size: .875rem;
       font-weight: 500;
 
       &.active {
         font-weight: 700;
-        color: $greige-darkest;
       }
     }
   }
@@ -134,6 +138,10 @@
  * Navbar
  */
 
+header.navbar.bg-dark {
+  background-color: var(--pair-b-bg) !important;
+}
+
 .navbar {
   .form-control {
     @extend .my-1;
@@ -144,7 +152,7 @@
   }
 
   .navbar-brand {
-    color: $greige-lightest;
+    color: var(--pair-b-fg);
     line-height: 1.0;
     display: flex;
     align-items: center;
@@ -157,10 +165,35 @@
   transform: translate(0em, 0.5em);
   display: flex;
   width: calc(100% - 1rem); 
-  background-color: $greige-light;
+  background-color: var(--pair-a-bg);
   border-color: black;
   border-radius: 0.5em;
   border-width: 1px;
   margin-left: 0.5rem;
   margin-right: 0.5rem;
+}
+
+.footer-ad {
+  @extend .mt-auto;
+  @extend .py-2;
+  @extend .small;
+  @extend .text-muted;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+  background-color: var(--pair-a-bg);
+  color: var(--pair-a-fg);
+
+  img {
+    @extend .px-1;
+    width: 20px;
+    height: 20px;
+  }
+
+  a {
+    text-decoration: none;
+    color: var(--pair-a-fg);
+  }
 }

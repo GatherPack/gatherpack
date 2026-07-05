@@ -26,7 +26,7 @@
       <% if @still_clocked_in.any? %>
         <button type="button" class="btn btn-danger btn-sm"
                 data-controller="confirm-delete"
-                data-confirm-delete-url-value="<%= bulk_destroy_time_clock_punches_path(violation: 'still_clocked_in') %>"
+                data-confirm-delete-url-value="<%= bulk_destroy_time_clock_punches_path(violation: "still_clocked_in") %>"
                 data-confirm-delete-message-value="Delete all <%= @still_clocked_in.size %> open punches? This cannot be undone."
                 data-action="click->confirm-delete#open">
           Delete All (<%= @still_clocked_in.size %>)
@@ -52,12 +52,12 @@
               <% @still_clocked_in.each do |punch| %>
                 <tr id="<%= dom_id punch %>">
                   <td class="align-middle"><%= as_badge punch.person, true %></td>
-                  <td class="align-middle"><%= punch.start_time.strftime('%m/%d/%Y %I:%M%p') %></td>
+                  <td class="align-middle"><%= punch.start_time.strftime("%m/%d/%Y %I:%M%p") %></td>
                   <td class="align-middle"><%= punch.hours_so_far %> hrs</td>
                   <td class="align-middle"><%= as_badge punch.time_clock_period, true unless punch.time_clock_period.nil? %></td>
                   <td class="align-middle">
-                    <%= link_to 'Edit', edit_time_clock_punch_path(punch), class: 'btn btn-sm btn-warning', 'data-turbo': false if policy(punch).edit? %>
-                    <%= link_to 'Delete', time_clock_punch_path(punch), class: 'btn btn-sm btn-danger',
+                    <%= link_to "Edit", edit_time_clock_punch_path(punch), class: "btn btn-sm btn-warning", 'data-turbo': false if policy(punch).edit? %>
+                    <%= link_to "Delete", time_clock_punch_path(punch), class: "btn btn-sm btn-danger",
                           data: { controller: "confirm-delete", action: "click->confirm-delete#open",
                       confirm_delete_redirect_to_value: flagged_time_clock_punches_path } if policy(punch).destroy? %>
                   </td>
@@ -98,7 +98,7 @@
       <% if @too_long.any? %>
         <button type="button" class="btn btn-danger btn-sm"
                 data-controller="confirm-delete"
-                data-confirm-delete-url-value="<%= bulk_destroy_time_clock_punches_path(violation: 'too_long') %>"
+                data-confirm-delete-url-value="<%= bulk_destroy_time_clock_punches_path(violation: "too_long") %>"
                 data-confirm-delete-message-value="Delete all <%= @too_long.size %> over-long punches? This cannot be undone."
                 data-action="click->confirm-delete#open">
           Delete All (<%= @too_long.size %>)
@@ -125,13 +125,13 @@
               <% @too_long.each do |punch| %>
                 <tr id="<%= dom_id punch %>">
                   <td class="align-middle"><%= as_badge punch.person, true %></td>
-                  <td class="align-middle"><%= punch.start_time.strftime('%m/%d/%Y %I:%M%p') %></td>
-                  <td class="align-middle"><%= punch.end_time.strftime('%m/%d/%Y %I:%M%p') %></td>
+                  <td class="align-middle"><%= punch.start_time.strftime("%m/%d/%Y %I:%M%p") %></td>
+                  <td class="align-middle"><%= punch.end_time.strftime("%m/%d/%Y %I:%M%p") %></td>
                   <td class="align-middle"><%= punch.hours %> hrs</td>
                   <td class="align-middle"><%= as_badge punch.time_clock_period, true unless punch.time_clock_period.nil? %></td>
                   <td class="align-middle">
-                    <%= link_to 'Edit', edit_time_clock_punch_path(punch), class: 'btn btn-sm btn-warning', 'data-turbo': false if policy(punch).edit? %>
-                    <%= link_to 'Delete', time_clock_punch_path(punch), class: 'btn btn-sm btn-danger',
+                    <%= link_to "Edit", edit_time_clock_punch_path(punch), class: "btn btn-sm btn-warning", 'data-turbo': false if policy(punch).edit? %>
+                    <%= link_to "Delete", time_clock_punch_path(punch), class: "btn btn-sm btn-danger",
                           data: { controller: "confirm-delete", action: "click->confirm-delete#open",
                       confirm_delete_redirect_to_value: flagged_time_clock_punches_path } if policy(punch).destroy? %>
                   </td>
@@ -161,7 +161,7 @@
       <% if @near_duplicates.any? %>
         <button type="button" class="btn btn-danger btn-sm"
                 data-controller="confirm-delete"
-                data-confirm-delete-url-value="<%= bulk_destroy_time_clock_punches_path(violation: 'near_duplicates') %>"
+                data-confirm-delete-url-value="<%= bulk_destroy_time_clock_punches_path(violation: "near_duplicates") %>"
                 data-confirm-delete-message-value="Delete all <%= @near_duplicates.size %> overlapping punches? This cannot be undone."
                 data-action="click->confirm-delete#open">
           Delete All (<%= @near_duplicates.size %>)
@@ -192,13 +192,13 @@
               <% @near_duplicates.each do |punch| %>
                 <tr id="<%= dom_id punch %>">
                   <td class="align-middle"><%= as_badge punch.person, true %></td>
-                  <td class="align-middle"><%= punch.start_time.strftime('%m/%d/%Y %I:%M%p') %></td>
-                  <td class="align-middle"><%= punch.end_time ? punch.end_time.strftime('%m/%d/%Y %I:%M%p') : "Still Clocked In" %></td>
-                  <td class="align-middle"><%= punch.complete? ? punch.hours : '-' %></td>
+                  <td class="align-middle"><%= punch.start_time.strftime("%m/%d/%Y %I:%M%p") %></td>
+                  <td class="align-middle"><%= punch.end_time ? punch.end_time.strftime("%m/%d/%Y %I:%M%p") : "Still Clocked In" %></td>
+                  <td class="align-middle"><%= punch.complete? ? punch.hours : "-" %></td>
                   <td class="align-middle"><%= as_badge punch.time_clock_period, true unless punch.time_clock_period.nil? %></td>
                   <td class="align-middle">
-                    <%= link_to 'Edit', edit_time_clock_punch_path(punch), class: 'btn btn-sm btn-warning', 'data-turbo': false if policy(punch).edit? %>
-                    <%= link_to 'Delete', time_clock_punch_path(punch), class: 'btn btn-sm btn-danger',
+                    <%= link_to "Edit", edit_time_clock_punch_path(punch), class: "btn btn-sm btn-warning", 'data-turbo': false if policy(punch).edit? %>
+                    <%= link_to "Delete", time_clock_punch_path(punch), class: "btn btn-sm btn-danger",
                           data: { controller: "confirm-delete", action: "click->confirm-delete#open",
                       confirm_delete_redirect_to_value: flagged_time_clock_punches_path } if policy(punch).destroy? %>
                   </td>

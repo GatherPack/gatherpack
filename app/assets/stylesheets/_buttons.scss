@@ -18,3 +18,16 @@
   flex-wrap: wrap;
   gap: 0.5rem;
 }
+
+@each $color in (primary, secondary, success, danger, warning, info, light, dark) {
+  .btn-#{$color} {
+    --bs-btn-bg: var(--bs-#{$color});
+    --bs-btn-border-color: var(--bs-#{$color});
+    --bs-btn-hover-bg: color-mix(in srgb, var(--bs-#{$color}), black 15%);
+    --bs-btn-hover-border-color: color-mix(in srgb, var(--bs-#{$color}), black 15%);
+    --bs-btn-active-bg: color-mix(in srgb, var(--bs-#{$color}), black 20%);
+    --bs-btn-active-border-color: color-mix(in srgb, var(--bs-#{$color}), black 20%);
+    --bs-btn-disabled-bg: var(--bs-#{$color});
+    --bs-btn-disabled-border-color: var(--bs-#{$color});
+  }
+}

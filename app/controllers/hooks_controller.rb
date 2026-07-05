@@ -27,7 +27,7 @@ class HooksController < InternalController
     @hook = authorize Hook.new(hook_params)
 
     if @hook.save
-      redirect_to @hook, notice: 'Hook was successfully created.'
+      redirect_to @hook, notice: "Hook was successfully created."
     else
       render :new, status: :unprocessable_entity
     end
@@ -36,7 +36,7 @@ class HooksController < InternalController
   # PATCH/PUT /hooks/1
   def update
     if @hook.update(hook_params)
-      redirect_to @hook, notice: 'Hook was successfully updated.', status: :see_other
+      redirect_to @hook, notice: "Hook was successfully updated.", status: :see_other
     else
       render :edit, status: :unprocessable_entity
     end
@@ -45,7 +45,7 @@ class HooksController < InternalController
   # DELETE /hooks/1
   def destroy
     @hook.destroy!
-    redirect_to hooks_url, notice: 'Hook was successfully destroyed.', status: :see_other
+    redirect_to hooks_url, notice: "Hook was successfully destroyed.", status: :see_other
   end
 
   private

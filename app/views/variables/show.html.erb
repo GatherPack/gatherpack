@@ -12,7 +12,7 @@
     <% end %>
   </div>
   <div class="card-footer">
-    <%= link_to 'Edit', edit_variable_path(@variable), class: 'btn btn-warning' %>
-    <%= link_to 'Delete', @variable, class: 'btn btn-danger', data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %>
+    <%= link_to "Edit", edit_variable_path(@variable), class: "btn btn-warning" %>
+    <%= link_to "Delete", @variable, class: "btn btn-danger", data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } %>
   </div>
 </div>

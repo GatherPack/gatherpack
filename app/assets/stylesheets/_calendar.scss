@@ -4,11 +4,12 @@
 
 .fc-popover-header {
   @extend .card-header;
-  background-color: lighten($card-bg, 10%);
-  border-bottom-color: $greige;
+  background-color: var(--pair-c-bg);
+  color: var(pair-c-fg);
+  border-bottom-color: var(--pair-a-fg);
 }
 
 .fc-popover-body {
   @extend .card-body;
-  background-color: $greige-light;
+  background-color: var(--pair-a-bg);
 }

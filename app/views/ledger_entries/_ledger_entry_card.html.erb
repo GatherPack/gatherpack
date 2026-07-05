@@ -19,15 +19,15 @@
 
         <div>
           <% if ledger_entry.approved %>
-            <%= i 'check-to-slot' %> Approved
+            <%= i "check-to-slot" %> Approved
           <% else %>
-            <%= i 'eye' %> Needs Approved
+            <%= i "eye" %> Needs Approved
           <% end %>
         </div>
 
         <% if ledger_entry.split? %>
           <% if !ledger_entry.fully_split? %>
-            <%= i 'triangle-exclamation' %> Split off by <%= as_currency ledger_entry.split_difference %>!
+            <%= i "triangle-exclamation" %> Split off by <%= as_currency ledger_entry.split_difference %>!
           <% end %>
         <% end %>
       </div>
@@ -44,7 +44,7 @@
             <dd><%= as_badge ledger_entry.created_by %></dd>
           <% end %>
 
-          <% if (ledger_entry.updated_at - ledger_entry.created_at) > 60  %>
+          <% if (ledger_entry.updated_at - ledger_entry.created_at) > 60 %>
             <dt>Last Updated At</dt>
             <dd><%= nice_datetime ledger_entry.updated_at %></dd>
           <% end %>
@@ -63,13 +63,13 @@
   <div class="card-footer">
     <% if !ledger_entry.parent.present? %>
       <% if ledger_entry.split? %>
-        <%= link_to "Unsplit", unsplit_ledger_ledger_entry_path(ledger_entry.ledger, ledger_entry), class: 'btn btn-dark', data: { turbo_method: 'POST' } if policy(ledger_entry).edit? %>
+        <%= link_to "Unsplit", unsplit_ledger_ledger_entry_path(ledger_entry.ledger, ledger_entry), class: "btn btn-dark", data: { turbo_method: "POST" } if policy(ledger_entry).edit? %>
       <% else %>
-        <%= link_to "Split", split_ledger_ledger_entry_path(ledger_entry.ledger, ledger_entry), class: 'btn btn-dark', data: { turbo_method: 'POST' } if policy(ledger_entry).edit? %>
+        <%= link_to "Split", split_ledger_ledger_entry_path(ledger_entry.ledger, ledger_entry), class: "btn btn-dark", data: { turbo_method: "POST" } if policy(ledger_entry).edit? %>
       <% end %>
-      <%= link_to 'Edit', edit_ledger_ledger_entry_path(ledger_entry.ledger, ledger_entry), class: 'btn btn-warning' if policy(ledger_entry).update? %>
+      <%= link_to "Edit", edit_ledger_ledger_entry_path(ledger_entry.ledger, ledger_entry), class: "btn btn-warning" if policy(ledger_entry).update? %>
     <% end %>
-    
-    <%= link_to 'Delete', [ledger_entry.ledger, ledger_entry], class: 'btn btn-danger', data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } if policy(ledger_entry).destroy? %>
+
+    <%= link_to "Delete", [ ledger_entry.ledger, ledger_entry ], class: "btn btn-danger", data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } if policy(ledger_entry).destroy? %>
   </div>
 </div>

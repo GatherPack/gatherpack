@@ -1,41 +1,45 @@
 .form-check-input, input.form-control, .form-select, select.form-control, textarea.form-control {
-  border-color: $greige-darkest;
-  background-color: $greige-lightest;
+  border-color: var(--pair-a-fg);
+  background-color: var(--pair-a-bg);
+  color: var(--pair-a-fg);
 
   &:focus {
-    background-color: white;
+    border-color: var(--pair-a-fg);
+    background-color: var(--pair-a-bg);
+    color: var(--pair-a-fg);
   }
 
   &.disabled {
-    background-color: $greige-light;
+    background-color: var(--pair-b-bg);
+    color: var(--pair-b-fg);
   }
 }
 
 .form-control:disabled, .hw-combobox:disabled, .form-select:disabled, select.form-control:disabled, textarea.form-control:disabled {
-  background-color: darken($greige-light, 5%);
-  color: $greige-darkest;
-  border-color: $greige-darkest;
+  background-color: var(--app-input-disabled-bg);
+  color: var(--pair-a-fg);
+  border-color: var(--pair-a-fg);
 }
 
 .code-editor textarea.form-control {
   font-family: $font-family-monospace;
-  background-color: $greige-darkest;
-  color: $greige-lightest;
+  background-color: var(--pair-b-bg);
+  color: var(--pair-b-fg);
 }
 
 .form-check-input {
   float: none;
   margin-left: 0;
   margin-right: 0.33rem;
-  border-color: $greige-darkest;
-  background-color: $greige-light;
+  border-color: var(--pair-a-fg);
+  background-color: var(--pair-a-bg);
 
   &:checked {
-    background-color: $greige-darkest;
+    background-color: var(--pair-b-bg);
   }
 
   &:focus {
-    background-color: $greige-dark !important;
+    background-color: var(--pair-b-bg) !important;
   }
 }
 
@@ -44,7 +48,7 @@
 }
 
 .was-validated .form-check-input:valid:checked, .form-check-input.is-valid:checked {
-  background-color: $greige-darkest;
+  background-color: var(--pair-b-bg);
   border-color: $success;
 }
 
@@ -57,13 +61,13 @@
 .fancy-color-container {
   display: flex;
   padding: 0;
-  border-color: $greige-darkest;
-  background-color: $greige-lightest;
+  border-color: var(--pair-a-fg);
+  background-color: var(--pair-a-bg);
   --bs-gutter-x: 0;
   align-items: center;
 }
 .fancy-color-picker-col {
-  border-right: 1px solid $greige-darkest;
+  border-right: 1px solid var(--pair-a-fg);
 }
 
 #capture-video {
@@ -71,8 +75,8 @@
 }
 
 .icon-select-wrapper {
-  border-color: $greige-darkest;
-  background-color: $greige-lightest;
+  border-color: var(--pair-a-fg);
+  background-color: var(--pair-a-bg);
   padding: 0;
 }
 
@@ -95,7 +99,7 @@
 }
 
 .icon-select-list {
-  border-top: solid $greige-darkest 1px;
+  border-top: solid var(--pair-a-fg) 1px;
 }
 
 .icon-select-list div {
@@ -113,29 +117,29 @@
 
 
 .icon-select-list div:hover {
-  background-color: $greige-light;
+  background-color: color-mix(in srgb, var(--pair-a-bg), black 10%);
 }
 
 input.datetime {
-  border-color: $greige-darkest;
-  background-color: $greige-lightest;
+  border-color: var(--pair-a-fg);
+  background-color: var(--pair-a-bg);
 }
 
 .cm-editor {
-  background-color: $greige-darkest;
+  background-color: var(--pair-b-bg);
 }
 .cm-editor .cm-gutters {
-  background-color: $greige-lightest;
+  background-color: var(--pair-a-bg);
 }
 .cm-editor .cm-activeLineGutter {
-  background-color: $greige-light;
+  background-color: color-mix(in srgb, var(--pair-a-bg), black 10%);
 }
 .cm-editor .cm-activeLine {
-  background-color: scale-color($greige-dark, $alpha: -85%);
+  background-color: var(--app-code-active-line-bg);
 }
 
 .cm-editor .cm-selectionBackground {
-  background-color: scale-color($greige-dark, $alpha: -65%);
+  background-color: var(--app-code-selection-bg);
 }
 
 .cm-editor .cm-content {
@@ -143,7 +147,7 @@ input.datetime {
 }
 
 .cm-editor.cm-focused .cm-selectionBackground {
-  background-color: scale-color($greige-dark, $alpha: -50%) !important;
+  background-color: var(--app-code-focused-selection-bg) !important;
 }
 
 fieldset:last-child {
@@ -151,6 +155,6 @@ fieldset:last-child {
 }
 
 .input-group-text {
-  border: thin solid $greige-darkest;
-  background-color: $greige-lightest;
+  border: thin solid var(--pair-a-fg);
+  background-color: var(--pair-a-bg);
 }

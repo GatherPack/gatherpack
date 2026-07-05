@@ -26,7 +26,7 @@ class VariablesController < InternalController
     @variable = Variable.new(variable_params)
 
     if @variable.save
-      redirect_to @variable, notice: 'Variable was successfully created.'
+      redirect_to @variable, notice: "Variable was successfully created."
     else
       render :new, status: :unprocessable_entity
     end
@@ -35,7 +35,7 @@ class VariablesController < InternalController
   # PATCH/PUT /variables/1
   def update
     if @variable.update(variable_params)
-      redirect_to @variable, notice: 'Variable was successfully updated.', status: :see_other
+      redirect_to @variable, notice: "Variable was successfully updated.", status: :see_other
     else
       render :edit, status: :unprocessable_entity
     end
@@ -44,7 +44,7 @@ class VariablesController < InternalController
   # DELETE /variables/1
   def destroy
     @variable.destroy!
-    redirect_to variables_url, notice: 'Variable was successfully destroyed.', status: :see_other
+    redirect_to variables_url, notice: "Variable was successfully destroyed.", status: :see_other
   end
 
   private

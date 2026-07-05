@@ -15,10 +15,10 @@
     <canvas id="capture-canvas" style="display: none" data-photo-capture-target="captureCanvas"></canvas>
     <img id="avatar-img" src="<%= get_avatar_url(@person.avatar) %>" data-photo-capture-target="avatarImg">
     <video id="capture-video" data-photo-capture-target="captureVideo"></video>
-    
+
     <div class="row mt-2">
       <div class="col">
-        <%= f.input :avatar, label: false, input_html: { id: 'person_avatar', 'data-photo-capture-target': 'personAvatar' } %>
+        <%= f.input :avatar, label: false, input_html: { id: "person_avatar", 'data-photo-capture-target': "personAvatar" } %>
       </div>
     </div>
   </div>
@@ -37,13 +37,13 @@
 
     <div class="row">
       <div class="col-3">
-        <%= f.input :gender, as: :select, collection: Settings[:gender_options].split(',').map(&:strip) %>
+        <%= f.input :gender, as: :select, collection: Settings[:gender_options].split(",").map(&:strip) %>
       </div>
       <div class="col-3">
-        <%= f.input :shirt_size, as: :select, collection: Settings[:shirt_sizes].split(',').map(&:strip) %>
+        <%= f.input :shirt_size, as: :select, collection: Settings[:shirt_sizes].split(",").map(&:strip) %>
       </div>
       <div class="col-6">
-        
+
         <%= f.input :birthday, as: :string, input_html: { type: :date } %>
       </div>
     </div>

@@ -8,17 +8,17 @@
   <div class="card-body">
     <div class="row">
       <div class="col-md">
-        <%= f.input :person_display_name_cont, label: 'Name' %>
+        <%= f.input :person_display_name_cont, label: "Name" %>
       </div>
       <div class="col-md">
-        <%= f.input :manager_eq, label: 'Manager?', as: :select, collection: [['Yes', true], ['No', false]], include_blank: true %>
+        <%= f.input :manager_eq, label: "Manager?", as: :select, collection: [ [ "Yes", true ], [ "No", false ] ], include_blank: true %>
       </div>
     </div>
   </div>
   <div class="card-footer">
-    <%= link_to 'Add Member', new_team_membership_path(@team), class: 'btn btn-success' %>
-    <%= f.submit 'Search', class: 'btn btn-primary', data: { action: "turbo_search#search" } %>
-    <%= link_to 'Clear Search', request.path, class: "btn btn-dark", data: { action: "turbo_search#clear" } %>
+    <%= link_to "Add Member", new_team_membership_path(@team), class: "btn btn-success" %>
+    <%= f.submit "Search", class: "btn btn-primary", data: { action: "turbo_search#search" } %>
+    <%= link_to "Clear Search", request.path, class: "btn btn-dark", data: { action: "turbo_search#clear" } %>
   </div>
 </div>
 <% end %>
