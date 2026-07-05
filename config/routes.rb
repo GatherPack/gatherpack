@@ -24,6 +24,11 @@ Rails.application.routes.draw do
 
   resources :teams do
     resources :memberships
+    member do
+      get :badges if GatherPack::Features.enabled?(:badges)
+      get :pages if GatherPack::Features.enabled?(:pages)
+      get :events if GatherPack::Features.enabled?(:events)
+    end
   end
 
   resources :team_types

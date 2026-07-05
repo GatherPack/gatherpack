@@ -1,0 +1,17 @@
+<%= render "show_shared" %>
+
+<div class="card">
+  <div class="card-header">
+    <h1>Badges</h1>
+  </div>
+  <div class="card-body">
+    <div id="badges" class="row">
+      <% @badges.each do |badge| %>
+        <div class="col-md-3">
+          <%= render badge %>
+        </div>
+      <% end %>
+    </div>
+    <%= paginate @badges %>
+  </div>
+</div>

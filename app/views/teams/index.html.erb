@@ -16,6 +16,12 @@
       <div class="col-md">
         <%= f.input :top_level, label: "Top Level", as: :select, collection: [ [ "Only Top Level Teams", true ] ], include_blank: true %>
       </div>
+      <div class="col-md">
+        <div class="mb-3">
+          <%= label_tag :filter, "Filter", class: "form-label" %>
+          <%= select_tag :filter, options_for_select([ [ "My Teams", "my" ], [ "All Teams", "all" ] ], params[:filter] || "my"), class: "form-select" %>
+        </div>
+      </div>
     </div>
   </div>
   <div class="card-footer">
@@ -37,11 +43,9 @@
     </ul>
   </div>
 
-  <div id="teams" class="row">
+  <div id="teams">
     <% @teams.each do |team| %>
-      <div class="col-md-3">
-        <%= render team %>
-      </div>
+      <%= render team %>
     <% end %>
   </div>
 

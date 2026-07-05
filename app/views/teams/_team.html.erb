@@ -1,10 +1,31 @@
 <div class="card" id="<%= dom_id team %>">
-  <div class="card-header" style="background-color: <%= team.color %>;">
+  <div class="card-header fs-4" style="background-color: <%= team.color %>;">
     <%= link_to team, style: "color: #{contrasting_color(team.color)}", "data-turbo": "false" do %>
       <%= i team.team_type.icon %> <%= team.name %>
     <% end %>
   </div>
   <div class="card-body">
-    <%= pluralize team.descendant_people.count, "member" %>
+    <div class="row align-items-center">
+      <div class="col-4 col-md-1 text-end">
+        <div><%= i "users" %> <%= team.descendant_people.count %></div>
+        <div><%= i "user-tie" %> <%= team.all_managers_and_admins.count %></div>
+      </div>
+
+      <div class="col-8 col-md-6">
+        <%= md team.description %>
+      </div>
+
+      <div class="col-4 col-md-2">
+        <div class="row">
+          <% team.managers.order(display_name: :asc).each do |person| %>
+            <div class="col-6 col-md-3">
+              <%= link_to person, title: person.display_name do %>
+                <%= image_tag get_avatar_url(person.avatar), class: "person-img" %>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

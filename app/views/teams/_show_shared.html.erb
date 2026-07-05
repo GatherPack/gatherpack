@@ -1,0 +1,27 @@
+<% breadcrumb @team %>
+
+<div class="card navtab">
+  <ul class="nav nav-underline">
+    <li class="nav-item">
+      <a href="<%= team_path(@team) %>" class="nav-link <%= "active" if current_page?(team_path(@team)) %>">Overview</a>
+    </li>
+    <li class="nav-item">
+      <a href="<%= team_memberships_path(@team) %>" class="nav-link <%= "active" if current_page?(team_memberships_path(@team)) %>">Members</a>
+    </li>
+    <% if GatherPack::Features.enabled?(:badges) %>
+      <li class="nav-item">
+        <a href="<%= badges_team_path(@team) %>" class="nav-link <%= "active" if current_page?(badges_team_path(@team)) %>">Badges</a>
+      </li>
+    <% end %>
+    <% if GatherPack::Features.enabled?(:pages) %>
+      <li class="nav-item">
+        <a href="<%= pages_team_path(@team) %>" class="nav-link <%= "active" if current_page?(pages_team_path(@team)) %>">Pages</a>
+      </li>
+    <% end %>
+    <% if GatherPack::Features.enabled?(:events) %>
+      <li class="nav-item">
+        <a href="<%= events_team_path(@team) %>" class="nav-link <%= "active" if current_page?(events_team_path(@team)) %>">Events</a>
+      </li>
+    <% end %>
+  </ul>
+</div>

@@ -1,141 +1,154 @@
-<% breadcrumb @team %>
+<%= render "show_shared" %>
 
-<div class="card mb-3">
-  <div class="card-header">
-    <h1><%= i @team.team_type.icon %> <%= @team.identifier_name %></h1>
-  </div>
-  <div class="card-body">
-    <div class="row mb-3">
-      <div class="col-4">
+<div class="row">
+  <div class="col-12 col-lg-6">
+    <div class="card mb-3">
+      <div class="card-header">
+        <h1><%= i @team.team_type.icon %> <%= @team.identifier_name %></h1>
+      </div>
+      <div class="card-body">
         <div class="mb-3"><%= md @team.description %></div>
-        <h2>Managers</h2>
-        <div class="d-flex flex-row align-items-center flex-wrap">
-          <% @team.managers.order(display_name: :asc).each do |person| %>
-            <div class="p-1 w-10">
-              <%= link_to person, title: person.display_name do %>
-                <%= image_tag get_avatar_url(person.avatar), class: "person-img" %>
-              <% end %>
+      </div>
+    </div>
+
+    <% if @team.announcements.visible.any? %>
+      <div class="card mb-3">
+        <div class="card-header">
+          <h2>Announcements</h2>
+        </div>
+        <div class="card-body">
+          <% @team.announcements.visible.each do |announcement| %>
+            <div class="card mb-3" id="<%= dom_id announcement %>">
+              <div class="card-header">
+                <h3>
+                  <%= link_to i(@team.team_type.icon), @team, class: "badge rounded-pill", style: "background-color:#{@team.color};color:#{contrasting_color(@team.color)}", "data-turbo": "false", title: "Posted in #{@team.name}" %>
+                  <%= link_to announcement.title, announcement %>
+                </h3>
+              </div>
+              <div class="card-body">
+                <%= md announcement.content %>
+              </div>
             </div>
           <% end %>
-          <% if @team.all_managers.count > @team.managers.count %>
-            <div class="p-1 w-10">
-                <%= link_to i("plus", size: "fa-2x"), "#", class: "badge bg-secondary", data: { bs_toggle: "modal", bs_target: "#ancestorManagersModal" }, title: "Show Parent Team Managers" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
 
-                <div class="modal fade" id="ancestorManagersModal" tabindex="-1" aria-labelledby="ancestorManagersModalLabel" aria-hidden="true">
-                  <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h3 class="modal-title" id="ancestorManagersModalLabel">Indirect Managers</h3>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                      </div>
-                      <div class="modal-body">
-                        <% @team.all_ancestors.each do |ancestor| %>
-                          <div class="mb-3">
-                          <h4><%= as_badge ancestor %></h4>
-                          <div class="d-flex flex-row align-items-center flex-wrap">
-                            <% ancestor.managers.order(display_name: :asc).each do |person| %>
-                            <div class="p-1 w-10">
-                              <%= link_to person, title: person.display_name do %>
-                              <%= image_tag get_avatar_url(person.avatar), class: "person-img" %>
-                              <% end %>
+  <div class="col-12 col-lg-6">
+    <div class="card mb-3">
+      <div class="card-header">
+        <h2>About <%= @team.name %></h2>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-12 col-md-6">
+            <h3>Managers</h3>
+            <div class="d-flex flex-row align-items-center flex-wrap mb-3">
+              <% @team.managers.order(display_name: :asc).each do |person| %>
+                <div class="p-1 w-10">
+                  <%= link_to person, title: person.display_name do %>
+                    <%= image_tag get_avatar_url(person.avatar), class: "person-img" %>
+                  <% end %>
+                </div>
+              <% end %>
+              <% if @team.all_managers.count > @team.managers.count %>
+                <div class="p-1 w-10">
+                  <%= link_to i("plus", size: "fa-2x"), "#", class: "badge bg-secondary", data: { bs_toggle: "modal", bs_target: "#ancestorManagersModal" }, title: "Show Parent Team Managers" %>
+
+                  <div class="modal fade" id="ancestorManagersModal" tabindex="-1" aria-labelledby="ancestorManagersModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h3 class="modal-title" id="ancestorManagersModalLabel">Indirect Managers</h3>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                          <% @team.all_ancestors.each do |ancestor| %>
+                            <div class="mb-3">
+                              <h4><%= as_badge ancestor %></h4>
+                              <div class="d-flex flex-row align-items-center flex-wrap">
+                                <% ancestor.managers.order(display_name: :asc).each do |person| %>
+                                  <div class="p-1 w-10">
+                                    <%= link_to person, title: person.display_name do %>
+                                      <%= image_tag get_avatar_url(person.avatar), class: "person-img" %>
+                                    <% end %>
+                                  </div>
+                                <% end %>
+                              </div>
                             </div>
-                            <% end %>
-                          </div>
-                          </div>
-                        <% end %>
+                          <% end %>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
+              <% end %>
             </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <h3>Details</h3>
+            <% if @team.parent.present? %>
+              <p class="mb-1"><b>Part Of:</b> <%= link_to as_badge(@team.parent), @team.parent %></p>
+            <% end %>
+            <% if @team.siblings.any? %>
+              <p class="mb-1"><b>Sibling Teams:</b></p>
+              <div class="badge-container mb-2">
+                <% @team.siblings.order(name: :asc).each do |sibling| %>
+                  <%= link_to as_badge(sibling), sibling %>
+                <% end %>
+              </div>
+            <% end %>
+            <% if policy_scope(@team.children).any? %>
+              <p class="mb-1"><b>Sub-Teams:</b></p>
+              <div class="badge-container">
+                <% @team.children.order(name: :asc).each do |child| %>
+                  <%= link_to as_badge(child), child %>
+                <% end %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <% if @team.join_permission == "has_account" && !@team.people.include?(current_user.person) %>
+          <%= link_to team_memberships_path(@team, membership: { person_id: current_user.person.id, manager: false }), class: "btn btn-success", data: { turbo_method: :post } do %>
+            <%= i "user-plus" %> Join
           <% end %>
-        </div>
-      </div>
-      <div class="col-8">
-        <% if @team.parent.present? %>
-          <h2>Part Of</h2>
-          <%= link_to as_badge(@team.parent), @team.parent %>
         <% end %>
-        <% if policy_scope(@team.children).any? %>
-          <h2>Sub-Teams</h2>
-          <div class="badge-container">
-            <% @team.children.order(name: :asc).each do |child_team| %>
-              <%= link_to as_badge(child_team), child_team %>
-            <% end %>
-          </div>
-        <% end %>
+        <%= link_to "Edit", edit_team_path(@team), class: "btn btn-warning" if policy(@team).edit? %>
+        <%= link_to "Delete", @team, class: "btn btn-danger", data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } if policy(@team).destroy? %>
       </div>
     </div>
-    <div class="row">
-      <div class="col">
-        <% if GatherPack::Features.enabled?(:badges) %>
-          <div class="mb-3">
-            <h2>Badges</h2>
-            <div class="row">
-              <% @team.badges.order(name: :asc).first(16).each do |badge| %>
-                <div class="col-sm-3 mb-3">
-                  <%= link_to badge do %>
-                    <%= as_badge badge %> <%= badge.identifier_name %>
-                  <% end %>
-                </div>
-              <% end %>
-            </div>
-            <%= link_to "Show All Team Badges", badges_path(q: { team_id_eq: @team.id }) %>
-          </div>
-        <% end %>
-        <% if GatherPack::Features.enabled?(:pages) %>
-          <div class="mb-3">
-            <h2>Pages</h2>
-            <ul>
-              <% @team.pages.order(created_at: :asc).last(5).each do |page| %>
-                <li><%= link_to page.title, page %></li>
-              <% end %>
-            </ul>
-            <%= link_to "Show All Team Pages", pages_path(q: { team_id_eq: @team.id }) %>
-          </div>
-        <% end %>
-      </div>
-      <div class="col">
-        <h2>Recent Activities</h2>
-        <div class="mb-3">
-          <h3>Announcements</h3>
-          <ul>
-            <% @team.announcements.visible.each do |announcement| %>
-              <li><%= link_to announcement.title, announcement %></li>
-            <% end %>
-          </ul>
-          <%= link_to "Show All Team Announcements", announcements_path(q: { team_id_eq: @team.id }) %>
-        </div>
-        <% if GatherPack::Features.enabled?(:events) %>
-          <div class="mb-3">
-            <h3>Events</h3>
-            <ul>
-              <% @team.events.order(created_at: :asc).last(5).each do |event| %>
-                <li><%= link_to event.name, event %></li>
-              <% end %>
-            </ul>
-            <%= link_to "Show All Team Events", events_path(q: { team_id_eq: @team.id }) %>
-          </div>
-        <% end %>
-      </div>
-    </div>
-  </div>
-  <div class="card-footer">
-    <%= link_to "Memberships", team_memberships_path(@team), class: "btn btn-info" if policy(@team).edit? %>
-    <%= link_to "Edit", edit_team_path(@team), class: "btn btn-warning" if policy(@team).edit? %>
-    <%= link_to "Delete", @team, class: "btn btn-danger", data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } if policy(@team).destroy? %>
-  </div>
-</div>
 
-<%= turbo_frame_tag "results" do %>
-  <h2>People</h2>
-  <div class="row mb-3">
-    <% @people.each do |person| %>
-      <div class="col-6 col-md-2">
-        <%= render person %>
+    <% if GatherPack::Features.enabled?(:events) %>
+      <div class="card mb-3">
+        <div class="card-header">
+          <h2>Calendar</h2>
+        </div>
+        <div class="card-body">
+          <div data-controller="calendar"
+               data-calendar-default-view-value="listMonth"
+               data-calendar-timezone-value="<%= Settings[:time_zone].presence || "UTC" %>"
+               data-calendar-start-time-value="<%= Date.today.iso8601 %>"
+               data-calendar-inline-events-value="<%= @team.events.map { |event|
+                 bg = event.team&.color || "#3788d8"
+                 {
+                   id: event.id,
+                   title: event.name,
+                   allDay: false,
+                   start: event.start_time,
+                   end: event.end_time,
+                   url: event_path(event),
+                   backgroundColor: bg,
+                   textColor: Color::RGB.by_hex(bg).brightness > 0.5 ? "#6d6753" : "#fffdf6",
+                   extendedProps: { icon: "fa-" + (event.team&.team_type&.icon || "star") }
+                 }
+               }.to_json %>">
+            <div id="calendar" data-turbo="false"></div>
+          </div>
+        </div>
       </div>
     <% end %>
-
-    <%= paginate @people %>
   </div>
-<% end %>
+</div>

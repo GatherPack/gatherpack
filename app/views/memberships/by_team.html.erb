@@ -1,49 +1,39 @@
-<% breadcrumb :memberships, @team %>
+<%= render "teams/show_shared" %>
 
-<%= search_form_for @q, url: team_memberships_path(@team), data: {"controller": "turbo_search", "turbo_frame": "results"} do |f| %>
+<h2>All People</h2>
+<%= search_form_for @people_q, url: team_memberships_path(@team), data: {"controller": "turbo_search", "turbo_frame": "people_results"} do |f| %>
 <div class="card">
-  <div class="card-header">
-    <h1>Direct Memberships</h1>
-  </div>
   <div class="card-body">
     <div class="row">
       <div class="col-md">
-        <%= f.input :person_display_name_cont, label: "Name" %>
+        <%= f.input :display_name_cont, label: "Name" %>
       </div>
       <div class="col-md">
-        <%= f.input :manager_eq, label: "Manager?", as: :select, collection: [ [ "Yes", true ], [ "No", false ] ], include_blank: true %>
+        <label class="form-label" for="member_type">Membership Type</label>
+        <select name="member_type" id="member_type" class="form-select">
+          <option value="">All</option>
+          <option value="direct" <%= "selected" if params[:member_type] == "direct" %>>Direct Members</option>
+          <option value="parent_manager" <%= "selected" if params[:member_type] == "parent_manager" %>>Parent Managers</option>
+          <option value="child_member" <%= "selected" if params[:member_type] == "child_member" %>>Child Team Members</option>
+        </select>
       </div>
     </div>
   </div>
   <div class="card-footer">
     <%= link_to "Add Member", new_team_membership_path(@team), class: "btn btn-success" %>
     <%= f.submit "Search", class: "btn btn-primary", data: { action: "turbo_search#search" } %>
-    <%= link_to "Clear Search", request.path, class: "btn btn-dark", data: { action: "turbo_search#clear" } %>
+    <%= link_to "Clear Search", team_memberships_path(@team), class: "btn btn-dark", data: { action: "turbo_search#clear" } %>
   </div>
 </div>
 <% end %>
 
-<%= turbo_frame_tag "results" do %>
-  <div class="dropdown">
-    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-      Sort By
-    </button>
-    <ul class="dropdown-menu">
-      <li><%= sort_link @q, :manager, "Manager Status", class: "dropdown-item", default_order: :desc %></li>
-      <li><%= sort_link @q, :last_name, "Last Name", class: "dropdown-item" %></li>
-      <li><%= sort_link @q, :first_name, "First Name", class: "dropdown-item" %></li>
-      <li><%= sort_link @q, :birthday, "Age", class: "dropdown-item" %></li>
-      <li><%= sort_link @q, :updated_at, "Last Updated", class: "dropdown-item" %></li>
-    </ul>
-  </div>
-
-  <div id="people" class="row">
-    <% @memberships.each do |membership| %>
+<%= turbo_frame_tag "people_results" do %>
+  <div id="people_grid" class="row">
+    <% @people.each do |person| %>
       <div class="col-6 col-md-2">
-        <%= render membership %>
+        <%= render person %>
       </div>
     <% end %>
   </div>
-
-  <%= paginate @memberships %>
+  <%= paginate @people, param_name: :people_page %>
 <% end %>

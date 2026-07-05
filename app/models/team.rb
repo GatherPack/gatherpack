@@ -1,6 +1,7 @@
 class Team < ApplicationRecord
   has_neat_id :tm
   include CanBeHooked
+
   has_paper_trail versions: { class_name: "AuditLog" }
   belongs_to :team_type
   has_many :announcements
@@ -35,6 +36,10 @@ class Team < ApplicationRecord
 
   def self.ransackable_associations(auth_object = nil)
     [ "team_type", "parent" ]
+  end
+
+  def siblings
+    Team.where(parent_id: parent_id).where.not(id: id)
   end
 
   def all_descendant_ids

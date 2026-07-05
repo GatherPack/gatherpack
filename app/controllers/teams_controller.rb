@@ -1,16 +1,37 @@
 class TeamsController < InternalController
-  before_action :set_team, only: %i[ show edit update destroy ]
+  before_action :set_team, only: %i[show edit update destroy badges pages events]
 
   # GET /teams
   def index
     @q = policy_scope(Team).ransack(params[:q])
     @q.sorts = "team_types.name asc" if @q.sorts.empty?
-    @teams = @q.result(distinct: true).includes(:team_type).order('team_type.name': :asc, name: :asc).page(params[:page]).includes(:team_type, :people)
+
+    teams = @q.result(distinct: true).includes(:team_type).order("team_type.name": :asc, name: :asc)
+
+    unless params[:filter] == "all"
+      teams = teams.where(id: current_user.person.teams.select(:id))
+    end
+
+    @teams = teams.page(params[:page]).includes(:team_type, :people)
   end
 
   # GET /teams/1
   def show
-    @people = @team.descendant_people.order(last_name: :asc, first_name: :asc).page(params[:page])
+  end
+
+  # GET /teams/1/badges
+  def badges
+    @badges = policy_scope(@team.badges).order(name: :asc).page(params[:page])
+  end
+
+  # GET /teams/1/pages
+  def pages
+    @pages = policy_scope(@team.pages).order(created_at: :desc).page(params[:page])
+  end
+
+  # GET /teams/1/events
+  def events
+    @events = policy_scope(@team.events).order(start_time: :desc).page(params[:page])
   end
 
   # GET /teams/new
@@ -49,17 +70,16 @@ class TeamsController < InternalController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_team
-      begin
-        @team = policy_scope(Team).find(params[:id])
-      rescue ActiveRecord::RecordNotFound
-        raise Pundit::NotAuthorizedError
-      end
-    end
 
-    # Only allow a list of trusted parameters through.
-    def team_params
-      params.require(:team).permit(:name, :parent_id, :color, :description, :team_type_id, :join_permission, person_ids: [])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_team
+    @team = policy_scope(Team).find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    raise Pundit::NotAuthorizedError
+  end
+
+  # Only allow a list of trusted parameters through.
+  def team_params
+    params.require(:team).permit(:name, :parent_id, :color, :description, :team_type_id, :join_permission, person_ids: [])
+  end
 end
