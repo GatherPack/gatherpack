@@ -54,4 +54,4 @@ port ENV.fetch("PORT", 3000)
 plugin :tmp_restart
 
 # Only use a pidfile when requested
-pidfile ENV["PIDFILE"] if ENV["PIDFILE"]
+pidfile "#{ENV['PIDFILE']}.#{ENV['PORT']}.pid" if ENV["PIDFILE"]
