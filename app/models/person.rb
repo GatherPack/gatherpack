@@ -138,6 +138,14 @@ class Person < ApplicationRecord
     "user"
   end
 
+  def avatar_512
+    avatar.variant(resize_to_fill: [ 512, 512 ], format: :jpg) if avatar.attached?
+  end
+
+  def avatar_64
+    avatar.variant(resize_to_fill: [ 64, 64 ], format: :jpg) if avatar.attached?
+  end
+
   private
 
   def check_display_name

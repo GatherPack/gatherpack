@@ -7,7 +7,7 @@
   <div class="card-body">
     <div class="row">
       <div class="col-3">
-        <img src="<%= get_avatar_url(@checkin.person.avatar) %>">
+        <img src="<%= get_avatar_url_512(@checkin.person.avatar) %>">
       </div>
       <div class="col">
         <%= render "notes", notes: @checkin.notes %>

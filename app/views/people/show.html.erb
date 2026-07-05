@@ -7,7 +7,7 @@
   <div class="card-body">
     <div class="row">
       <div class="col-12 col-sm-6 col-lg-4">
-        <%= image_tag get_avatar_url(@person.avatar), class: "person-img" %>
+        <%= image_tag get_avatar_url_512(@person.avatar), class: "person-img" %>
         <% if @person.user&.architect? %>
           <div class="mb-3 mx-auto justify-content-center d-flex">
             <span class="badge mx-auto" style="background-color: black; color: #d52; border: thick solid #b21;"><%= i "screwdriver-wrench" %> Architect</span>
