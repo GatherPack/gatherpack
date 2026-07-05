@@ -1,6 +1,6 @@
-
 class ApplicationController < ActionController::Base
   include Pundit::Authorization
+
   impersonates :user
 
   around_action :set_time_zone
@@ -19,7 +19,11 @@ class ApplicationController < ActionController::Base
     current_user&.person&.manager?
   end
 
-  helper_method :admin?, :architect?, :manager?
+  def kiosk_page?
+    false
+  end
+
+  helper_method :admin?, :architect?, :manager?, :kiosk_page?
 
   rescue_from Pundit::NotAuthorizedError, with: :pundit_not_authorized
 
