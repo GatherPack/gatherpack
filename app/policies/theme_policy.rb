@@ -1,0 +1,2 @@
+class ThemePolicy < ApplicationPolicy
+end

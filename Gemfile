@@ -51,6 +51,7 @@ gem "thruster", require: false
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 gem "image_processing", "~> 2.0.1"
+gem "ruby-vips"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
@@ -136,3 +137,5 @@ gem "neat_ids"
 gem "redcarpet", "~> 3"
 
 gem "overmind", "~> 2"
+
+gem "herb", "~> 0.10.1"

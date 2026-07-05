@@ -8,10 +8,10 @@
   <div class="card-body">
   </div>
   <div class="card-footer">
-    <%= link_to "Budget Periods", budget_periods_path, class: 'btn btn-secondary' %>
-    <%= link_to "New Budget", new_budget_path, class: 'btn btn-success' if policy(:budget).create? %>
-    <%= f.submit 'Search', class: 'btn btn-primary', data: { action: "turbo_search#search" } %>
-    <%= link_to 'Clear Search', request.path, class: "btn btn-dark", data: { action: "turbo_search#clear" } %>
+    <%= link_to "Budget Periods", budget_periods_path, class: "btn btn-secondary" %>
+    <%= link_to "New Budget", new_budget_path, class: "btn btn-success" if policy(:budget).create? %>
+    <%= f.submit "Search", class: "btn btn-primary", data: { action: "turbo_search#search" } %>
+    <%= link_to "Clear Search", request.path, class: "btn btn-dark", data: { action: "turbo_search#clear" } %>
   </div>
 </div>
 <% end %>

@@ -61,7 +61,7 @@ class Relationship < ApplicationRecord
                when "added_by_team_member"
       created_by_team_member? || created_by_manager? || created_by_admin?
                when "added_by_participant"
-      created_by_participant? || created_by_manager? || created_by_admin?  
+      created_by_participant? || created_by_manager? || created_by_admin?
                when "added_by_user"
       true
                end

@@ -7,8 +7,8 @@
       @extend .mb-2;
       font-size: 1.25rem;
       font-weight: bold;
-      border-top: thin solid $greige-darkest;
-      border-bottom: thin solid $greige-darkest;
+      border-top: thin solid var(--pair-a-fg);
+      border-bottom: thin solid var(--pair-a-fg);
     }
 
     &.entry:nth-child(even) {

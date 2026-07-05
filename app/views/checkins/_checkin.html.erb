@@ -1,17 +1,17 @@
 <div class="card" id="<%= dom_id checkin %>">
   <div class="card-header">
-    <%= link_to checkin.person.identifier_name, [checkin.event, checkin], "data-turbo": "false" %>
+    <%= link_to checkin.person.identifier_name, [ checkin.event, checkin ], "data-turbo": "false" %>
   </div>
   <div class="card-body">
-    <%= image_tag get_avatar_url(checkin.person.avatar), class: 'person-img' %>
+    <%= image_tag get_avatar_url(checkin.person.avatar), class: "person-img" %>
     <div class="mt-2">
       <%= render "checkins/notes", notes: checkin.notes %>
     </div>
   </div>
   <% if policy(checkin).update? || policy(checkin).destroy? %>
     <div class="card-footer">
-      <%= link_to 'Edit', edit_event_checkin_path(checkin.event, checkin), "data-turbo": "false", class: 'btn btn-warning' if policy(checkin).update? %>
-      <%= link_to 'Checkout', [checkin.event, checkin], class: 'btn btn-danger', data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } if policy(checkin).destroy? %>
+      <%= link_to "Edit", edit_event_checkin_path(checkin.event, checkin), "data-turbo": "false", class: "btn btn-warning" if policy(checkin).update? %>
+      <%= link_to "Checkout", [ checkin.event, checkin ], class: "btn btn-danger", data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } if policy(checkin).destroy? %>
     </div>
-  <% end%>
+  <% end %>
 </div>

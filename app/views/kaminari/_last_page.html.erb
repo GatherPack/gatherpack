@@ -4,11 +4,10 @@
     current_page:  a page object for the currently displayed page
     total_pages:   total number of pages
     per_page:      number of items to fetch per page
-    remote:        data-remote
--%>
+    remote:        data-remote -%>
 <span class="last d-none d-sm-block">
-  <%= link_to t('views.pagination.last').html_safe, url, remote: remote, class: ['btn', 'btn-primary', current_page.last? ? 'disabled' : ''], disabled: current_page.last? %>
+  <%= link_to t("views.pagination.last").html_safe, url, remote: remote, class: [ "btn", "btn-primary", current_page.last? ? "disabled" : "" ], disabled: current_page.last? %>
 </span>
 <span class="last d-block d-sm-none">
-  <%= link_to "»", url, remote: remote, class: ['btn', 'btn-primary', current_page.last? ? 'disabled' : ''], disabled: current_page.last? %>
+  <%= link_to "»", url, remote: remote, class: [ "btn", "btn-primary", current_page.last? ? "disabled" : "" ], disabled: current_page.last? %>
 </span>

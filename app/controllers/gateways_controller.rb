@@ -28,7 +28,7 @@ class GatewaysController < InternalController
     @gateway.attributes = gateway_params
 
     if @gateway.save
-      redirect_to gateway_path(@gateway), notice: 'Gateway was successfully created.'
+      redirect_to gateway_path(@gateway), notice: "Gateway was successfully created."
     else
       render :new, status: :unprocessable_entity
     end
@@ -37,7 +37,7 @@ class GatewaysController < InternalController
   # PATCH/PUT /gateways/1
   def update
     if @gateway.update(gateway_params)
-      redirect_to gateway_path(@gateway), notice: 'Gateway was successfully updated.', status: :see_other
+      redirect_to gateway_path(@gateway), notice: "Gateway was successfully updated.", status: :see_other
     else
       render :edit, status: :unprocessable_entity
     end
@@ -46,11 +46,11 @@ class GatewaysController < InternalController
   # DELETE /gateways/1
   def destroy
     @gateway.destroy!
-    redirect_to gateways_url, notice: 'Gateway was successfully destroyed.', status: :see_other
+    redirect_to gateways_url, notice: "Gateway was successfully destroyed.", status: :see_other
   end
 
   def webhook
-    ProcessGatewayWebhookJob.perform_later @gateway, request.body.read, request.env['HTTP_STRIPE_SIGNATURE']
+    ProcessGatewayWebhookJob.perform_later @gateway, request.body.read, request.env["HTTP_STRIPE_SIGNATURE"]
     # @gateway.handle_webhook(request.body.read, request.env['HTTP_STRIPE_SIGNATURE'])
     head :no_content
   end
@@ -63,7 +63,7 @@ class GatewaysController < InternalController
 
     # Only allow a list of trusted parameters through.
     def gateway_params
-      fields = @gateway.fields + [:name]
+      fields = @gateway.fields + [ :name ]
       params.require(:gateway).permit(fields)
     end
 end

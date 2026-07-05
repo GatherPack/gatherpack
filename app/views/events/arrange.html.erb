@@ -8,12 +8,12 @@
     <div class="row">
       <div class="col-12 col-md-6">
         <%= form_with url: arrange_event_path(@event), method: "GET" do |f| %>
-          <%= f.label :field_id, "Arrange By", class: 'form-label' %>
-          <%= f.collection_select :field_id, @event.event_type.checkin_fields, :id, :name, { }, selected: params[:field_id], class: 'form-control mb-3' %>
+          <%= f.label :field_id, "Arrange By", class: "form-label" %>
+          <%= f.collection_select :field_id, @event.event_type.checkin_fields, :id, :name, { }, selected: params[:field_id], class: "form-control mb-3" %>
 
           <div class="d-flex flex-row">
-            <%= f.submit 'Start Arranging', class: 'btn btn-primary' %>
-            <%= link_to 'Print', print_event_path(@event, field_id: params[:field_id]), class: 'btn btn-dark ms-2' if @field.present? %>
+            <%= f.submit "Start Arranging", class: "btn btn-primary" %>
+            <%= link_to "Print", print_event_path(@event, field_id: params[:field_id]), class: "btn btn-dark ms-2" if @field.present? %>
           </div>
         <% end %>
       </div>
@@ -34,20 +34,20 @@
       <h2>Arranging by <%= @field.name %></h2>
     </div>
     <div class="card-body" id="responseContainer">
-      <% @responses.pluck(:response).uniq.sort_by { |v| v || 'zzzzz' }.each do |v| %>
+      <% @responses.pluck(:response).uniq.sort_by { |v| v || "zzzzz" }.each do |v| %>
         <div class="row align-items-center">
           <div class="col-12 col-md-4 col-xl-2">
             <h3 class="d-flex align-items-center gap-2">
-              <span class="arranging-label" data-arranging-label="<%= URI.encode_uri_component v %>"><%= v.presence || 'unassigned' %></span>
+              <span class="arranging-label" data-arranging-label="<%= URI.encode_uri_component v %>"><%= v.presence || "unassigned" %></span>
               [<span data-arranging-count="<%= URI.encode_uri_component v %>"><%= @responses.where(response: v).count %></span>]
               <button class="btn btn-sm btn-outline-secondary rename-btn" title="Rename"
                 data-arranging-label="<%= URI.encode_uri_component v %>"
-                data-current-value="<%= v.presence || '' %>">&#9998;</button>
+                data-current-value="<%= v.presence || "" %>">&#9998;</button>
             </h3>
           </div>
           <div class="col-12 col-md-8 col-xl-10">
             <div class="badge-container arranging-container" data-arranging-container="<%= URI.encode_uri_component v %>">
-              <% @responses.where(response: v).order('person.last_name ASC, person.first_name ASC').each do |r| %>
+              <% @responses.where(response: v).order("person.last_name ASC, person.first_name ASC").each do |r| %>
                 <div class="badge arranging-badge" draggable="true" id="<%= r.id %>"><%= r.checkin.person.identifier_name %></div>
               <% end %>
             </div>
@@ -95,13 +95,13 @@
     const sourceContainer = draggedElement.parentElement;
     const sourceContainerName = sourceContainer.dataset.arrangingContainer;
     const targetContainerName = ev.target.dataset.arrangingContainer;
-    
+
     ev.target.appendChild(draggedElement);
 
     // Update counters
     const sourceCounter = document.querySelector(`[data-arranging-count="${sourceContainerName}"]`);
     const targetCounter = document.querySelector(`[data-arranging-count="${targetContainerName}"]`);
-    
+
     if (sourceCounter) {
       sourceCounter.textContent = parseInt(sourceCounter.textContent) - 1;
     }
@@ -181,7 +181,7 @@
         document.getElementById("renameInput").value = btn.dataset.currentValue;
         document.getElementById("renameError").classList.add("d-none");
         renameModal.show();
-        setTimeout(() => document.getElementById("renameInput").select(), 300); 
+        setTimeout(() => document.getElementById("renameInput").select(), 300);
       });
     });
   }

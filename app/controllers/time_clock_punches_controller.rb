@@ -31,12 +31,12 @@ class TimeClockPunchesController < InternalController
     authorize TimeClockPunch, :bulk_destroy?
     scoped = policy_scope(TimeClockPunch)
     punches = case params[:violation]
-              when "too_long"         then scoped.too_long
-              when "still_clocked_in" then scoped.still_clocked_in
-              when "near_duplicates"  then scoped.near_duplicates
-              else
+    when "too_long"         then scoped.too_long
+    when "still_clocked_in" then scoped.still_clocked_in
+    when "near_duplicates"  then scoped.near_duplicates
+    else
                 return redirect_to flagged_time_clock_punches_path, alert: "Unknown violation type."
-              end
+    end
     count = punches.count
     punches.destroy_all
     redirect_to flagged_time_clock_punches_path, notice: "Deleted #{count} #{count == 1 ? 'punch' : 'punches'}."

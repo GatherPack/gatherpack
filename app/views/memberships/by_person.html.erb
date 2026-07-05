@@ -9,12 +9,12 @@
 
     <% if @person&.user&.architect %>
       <div class="alert alert-danger">
-        <span class="badge fs-3" title="Site Architect" style="background-color: black; color: #d52; border: thick solid #b21;"><%= i 'screwdriver-wrench' %></span>
+        <span class="badge fs-3" title="Site Architect" style="background-color: black; color: #d52; border: thick solid #b21;"><%= i "screwdriver-wrench" %></span>
         This person is an architect and has full manager access to all teams.
       </div>
     <% elsif @person&.user&.admin %>
       <div class="alert alert-warning">
-        <span class="badge fs-3" title="Site Admin" style="background-color: black; color: #dd2; border: thick solid #bb1;"><%= i 'crown' %></span>
+        <span class="badge fs-3" title="Site Admin" style="background-color: black; color: #dd2; border: thick solid #bb1;"><%= i "crown" %></span>
         This person is an admin and has full manager access to all teams.
       </div>
     <% end %>
@@ -50,12 +50,12 @@
         </div>
 
         <div class="col">
-          <%= link_to 'Delete', [@person, m], class: 'btn btn-danger', data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } if policy(m).destroy? %>
+          <%= link_to "Delete", [ @person, m ], class: "btn btn-danger", data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } if policy(m).destroy? %>
         </div>
       </div>
     <% end %>
   </div>
   <div class="card-footer">
-    <%= link_to 'Add Membership', new_person_membership_path(@person), class: 'btn btn-info' %>
+    <%= link_to "Add Membership", new_person_membership_path(@person), class: "btn btn-info" %>
   </div>
 </div>

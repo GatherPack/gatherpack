@@ -7,14 +7,14 @@
   <div class="card-body">
     <div class="row">
       <div class="col-12 col-sm-6 col-lg-4">
-        <%= image_tag get_avatar_url(@person.avatar), class: 'person-img' %>
+        <%= image_tag get_avatar_url(@person.avatar), class: "person-img" %>
         <% if @person.user&.architect? %>
           <div class="mb-3 mx-auto justify-content-center d-flex">
-            <span class="badge mx-auto" style="background-color: black; color: #d52; border: thick solid #b21;"><%= i 'screwdriver-wrench' %> Architect</span>
+            <span class="badge mx-auto" style="background-color: black; color: #d52; border: thick solid #b21;"><%= i "screwdriver-wrench" %> Architect</span>
           </div>
         <% elsif @person.user&.admin? %>
           <div class="mb-3 mx-auto justify-content-center d-flex">
-            <span class="badge mx-auto" title="Site Admin" style="background-color: black; color: #dd2; border: thick solid #bb1;"><%= i 'crown' %> Admin</span>
+            <span class="badge mx-auto" title="Site Admin" style="background-color: black; color: #dd2; border: thick solid #bb1;"><%= i "crown" %> Admin</span>
           </div>
         <% end %>
       </div>
@@ -47,7 +47,7 @@
             <div class="row">
               <% @badges.each do |badge| %>
                 <div class="col-4 col-xl-2 mb-3 fs-3 justify-content-center">
-                  <%= link_to as_badge(badge), badge, class: 'undecorated' %>
+                  <%= link_to as_badge(badge), badge, class: "undecorated" %>
                 </div>
               <% end %>
             </div>
@@ -58,7 +58,7 @@
           <div class="mb-3">
             <h3>Tokens</h3>
             <% policy_scope(@person.tokens).each do |token| %>
-              <%= link_to as_badge(token), token, class: 'undecorated' %>
+              <%= link_to as_badge(token), token, class: "undecorated" %>
             <% end %>
           </div>
         <% end %>
@@ -67,7 +67,7 @@
           <div class="mb-3">
             <h3>Ledgers</h3>
             <% @ledgers.each do |ledger| %>
-              <%= link_to as_badge(ledger), ledger, class: 'undecorated' %>
+              <%= link_to as_badge(ledger), ledger, class: "undecorated" %>
             <% end %>
           </div>
         <% end %>
@@ -93,13 +93,13 @@
     </div>
   </div>
   <div class="card-footer">
-    <%= link_to "Impersonate", impersonate_person_path(@person), data: { turbo_method: :post }, class: 'btn btn-dark' if @person.user.present? && policy(@person).impersonate? %>
-    <%= link_to 'Edit Profile', edit_person_path(@person), class: 'btn btn-warning' if policy(@person).update? %>
+    <%= link_to "Impersonate", impersonate_person_path(@person), data: { turbo_method: :post }, class: "btn btn-dark" if @person.user.present? && policy(@person).impersonate? %>
+    <%= link_to "Edit Profile", edit_person_path(@person), class: "btn btn-warning" if policy(@person).update? %>
     <% if @person.user&.id %>
       <%= link_to "Change Email/Password", edit_person_user_path(@person), class: "btn btn-primary" %>
     <% else %>
       <%= link_to "Create Email/Password", new_person_user_path(@person), class: "btn btn-primary" %>
     <% end %>
-    <%= link_to 'Delete', @person, class: 'btn btn-danger', data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } if policy(@person).destroy? %>
+    <%= link_to "Delete", @person, class: "btn btn-danger", data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } if policy(@person).destroy? %>
   </div>
 </div>

@@ -6,7 +6,7 @@
   </div>
   <div class="card-body">
     <% if GatherPack::Features.enabled?(:events) %>
-      <div data-controller="calendar" data-calendar-timezone-value="<%= Settings[:time_zone].presence || 'UTC' %>" data-calendar-show-birthdays-value="true" data-calendar-show-events-value="true" data-calendar-show-notes-value="true" data-calendar-person-id-value="<%= @person.id %>">
+      <div data-controller="calendar" data-calendar-timezone-value="<%= Settings[:time_zone].presence || "UTC" %>" data-calendar-show-birthdays-value="true" data-calendar-show-events-value="true" data-calendar-show-notes-value="true" data-calendar-person-id-value="<%= @person.id %>">
         <div id="calendar" data-turbo="false">
         </div>
       </div>

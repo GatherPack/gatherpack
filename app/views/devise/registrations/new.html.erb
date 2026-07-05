@@ -1,6 +1,6 @@
 <div class="row fullscreen">
   <div class="col-12">
-    <div class="logoline">Get Together with <%= image_tag( 'logo.svg', alt: 'GatherPack', class: 'logo') %> GatherPack</a></div>
+    <div class="logoline">Get Together with <%= image_tag("logo.svg", alt: "GatherPack", class: "logo") %> GatherPack</a></div>
   </div>
   <div class="col-md-6 m-auto">
     <div class="card">
@@ -17,13 +17,13 @@
           <%= f.input :password_confirmation %>
 
           <div class="actions">
-            <%= link_to 'Cancel', root_path, class: 'btn btn-danger' %>
-            <%= f.submit "Sign up", class: 'btn btn-primary' %>
+            <%= link_to "Cancel", root_path, class: "btn btn-danger" %>
+            <%= f.submit "Sign up", class: "btn btn-primary" %>
           </div>
         <% end %>
       </div>
     </div>
   </div>
 
-  <%= render partial: 'devise/shared/omniauth' %>
+  <%= render partial: "devise/shared/omniauth" %>
 </div>

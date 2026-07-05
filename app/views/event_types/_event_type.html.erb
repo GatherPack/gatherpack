@@ -3,6 +3,6 @@
     <%= link_to event_type.identifier_name, event_type, "data-turbo": "false" %>
   </div>
   <div class="card-body">
-    <%= pluralize event_type.events.count, 'event' %>
+    <%= pluralize event_type.events.count, "event" %>
   </div>
 </div>

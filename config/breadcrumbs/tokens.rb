@@ -1,5 +1,5 @@
 crumb :tokens do
-  link 'Tokens', tokens_path
+  link "Tokens", tokens_path
 end
 
 crumb :token do |token|

@@ -8,7 +8,7 @@
   <div class="card-body">
     <div class="row">
       <div class="col-md">
-        <%= f.input :tokenable_id_eq, label: "Tokenable Person", as: :select, collection: policy_scope(Person).map { |p| [p.display_name, p.id] }  %>
+        <%= f.input :tokenable_id_eq, label: "Tokenable Person", as: :select, collection: policy_scope(Person).map { |p| [ p.display_name, p.id ] } %>
       </div>
       <div class="col-md">
         <%= f.input :value_cont, label: "Value" %>
@@ -16,9 +16,9 @@
     </div>
   </div>
   <div class="card-footer">
-    <%= link_to "New Token", new_token_path, class: 'btn btn-success' if policy(Token).new? %>
-    <%= f.submit 'Search', class: 'btn btn-primary', data: { action: "turbo_search#search" } %>
-    <%= link_to 'Clear Search', request.path, class: "btn btn-dark", data: { action: "turbo_search#clear" } %>
+    <%= link_to "New Token", new_token_path, class: "btn btn-success" if policy(Token).new? %>
+    <%= f.submit "Search", class: "btn btn-primary", data: { action: "turbo_search#search" } %>
+    <%= link_to "Clear Search", request.path, class: "btn btn-dark", data: { action: "turbo_search#clear" } %>
   </div>
 </div>
 <% end %>

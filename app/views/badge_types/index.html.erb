@@ -6,12 +6,12 @@
     <h1>Badge Types</h1>
   </div>
   <div class="card-body">
-    <%= f.input :name_cont, label: 'Name' %>
+    <%= f.input :name_cont, label: "Name" %>
   </div>
   <div class="card-footer">
-    <%= link_to "New Badge Type", new_badge_type_path, class: 'btn btn-success' if policy(BadgeType).new? %>
-    <%= f.submit 'Search', class: 'btn btn-primary', data: { action: "turbo_search#search" } %>
-    <%= link_to 'Clear Search', request.path, data: { action: "turbo_search#clear" }, class: "btn btn-dark" %>
+    <%= link_to "New Badge Type", new_badge_type_path, class: "btn btn-success" if policy(BadgeType).new? %>
+    <%= f.submit "Search", class: "btn btn-primary", data: { action: "turbo_search#search" } %>
+    <%= link_to "Clear Search", request.path, data: { action: "turbo_search#clear" }, class: "btn btn-dark" %>
   </div>
 </div>
 <% end %>

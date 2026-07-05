@@ -11,7 +11,7 @@
           <%= as_badge @budget.budget_period.team, small: true %>
           <%= link_to @budget.budget_period.identifier_name, @budget.budget_period, 'data-turbo': false %>
         </div>
-        <div><%= @budget.ledger_tags.map { |tag| as_badge tag }.join(' ').html_safe %></div>
+        <div><%= @budget.ledger_tags.map { |tag| as_badge tag }.join(" ").html_safe %></div>
       </div>
       <div class="col">
         <div class="progress my-1" role="progressbar" aria-label="Basic example" aria-valuenow="<%= @budget.percentage %>" aria-valuemin="0" aria-valuemax="100">
@@ -32,8 +32,8 @@
     </div>
   </div>
   <div class="card-footer">
-    <%= link_to 'Edit', edit_budget_path(@budget), class: 'btn btn-warning' if policy(@budget).edit? %>
-    <%= link_to 'Delete', @budget, class: 'btn btn-danger', data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } if policy(@budget).destroy? %>
+    <%= link_to "Edit", edit_budget_path(@budget), class: "btn btn-warning" if policy(@budget).edit? %>
+    <%= link_to "Delete", @budget, class: "btn btn-danger", data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } if policy(@budget).destroy? %>
   </div>
 </div>
 
@@ -49,7 +49,7 @@
       <div class="col-12 col-lg-3">Tags</div>
       <div class="col-6 col-lg-2">Actions</div>
     </div>
-    <% @budget.ledger_entries.order('created_at DESC').each do |e| %>
+    <% @budget.ledger_entries.order("created_at DESC").each do |e| %>
       <div class="row entry">
         <div class="col-4 col-lg-1">
           <%= nice_date e.created_at %>
@@ -60,19 +60,19 @@
         <div class="col-8 col-lg-3">
           <%= e.remark %>
           <% if e.ledger_entry_links.any? %>
-            <%= i 'link' %>
+            <%= i "link" %>
           <% end %>
           <% if e.parent.present? %>
-            <%= i 'arrows-split-up-and-left' %>
+            <%= i "arrows-split-up-and-left" %>
           <% end %>
           <% if e.split? %>
-            <%= i 'code-fork' %>
+            <%= i "code-fork" %>
             <% if !e.fully_split? %>
-              <%= i 'triangle-exclamation' %>
+              <%= i "triangle-exclamation" %>
             <% end %>
           <% end %>
           <% e.receipts.each do |r| %>
-            <%= link_to i('file-invoice-dollar'), r, target: '_blank' %>
+            <%= link_to i("file-invoice-dollar"), r, target: "_blank" %>
           <% end %>
         </div>
         <div class="col-12 col-lg-3">
@@ -84,13 +84,13 @@
         </div>
         <div class="col-6 col-lg-2">
           <% if e.parent.present? %>
-            <%= link_to i('arrows-split-up-and-left'), ledger_ledger_entry_path(e.ledger, e.parent), class: 'btn btn-sm btn-dark' if policy(e).show? %>
-            <%= link_to i('pen-to-square'), edit_ledger_ledger_entry_path(e.ledger, e.parent), class: 'btn btn-sm btn-warning' if policy(e).edit? %>
+            <%= link_to i("arrows-split-up-and-left"), ledger_ledger_entry_path(e.ledger, e.parent), class: "btn btn-sm btn-dark" if policy(e).show? %>
+            <%= link_to i("pen-to-square"), edit_ledger_ledger_entry_path(e.ledger, e.parent), class: "btn btn-sm btn-warning" if policy(e).edit? %>
           <% else %>
-            <%= link_to i('magnifying-glass'), ledger_ledger_entry_path(e.ledger, e), class: 'btn btn-sm btn-info' if policy(e).show? %>
-            <%= link_to i('pen-to-square'), edit_ledger_ledger_entry_path(e.ledger, e), class: 'btn btn-sm btn-warning' if policy(e).edit? %>
+            <%= link_to i("magnifying-glass"), ledger_ledger_entry_path(e.ledger, e), class: "btn btn-sm btn-info" if policy(e).show? %>
+            <%= link_to i("pen-to-square"), edit_ledger_ledger_entry_path(e.ledger, e), class: "btn btn-sm btn-warning" if policy(e).edit? %>
           <% end %>
-          <%= link_to i('trash'), ledger_ledger_entry_path(e.ledger, e), data: { turbo_method: 'DELETE', turbo_confirm: 'Really delete entry?'}, class: 'btn btn-sm btn-danger' if policy(e).destroy? %>
+          <%= link_to i("trash"), ledger_ledger_entry_path(e.ledger, e), data: { turbo_method: "DELETE", turbo_confirm: "Really delete entry?"}, class: "btn btn-sm btn-danger" if policy(e).destroy? %>
         </div>
       </div>
     <% end %>

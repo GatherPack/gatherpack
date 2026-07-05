@@ -1,5 +1,5 @@
 crumb :people do
-  link 'People', people_path
+  link "People", people_path
 end
 
 crumb :person do |person|
@@ -8,11 +8,11 @@ crumb :person do |person|
 end
 
 crumb :relationship do |person, relationship|
-  link 'New Relationship'
+  link "New Relationship"
   parent :person, person
 end
 
 crumb :user do |person|
-  link 'User Information'
+  link "User Information"
   parent :person, person
 end

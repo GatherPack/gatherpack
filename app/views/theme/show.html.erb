@@ -1,0 +1,56 @@
+<% breadcrumb :theme %>
+
+<div class="card">
+  <div class="card-header">
+    <h1>Theme</h1>
+  </div>
+  <div class="card-body">
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <h5>Logo</h5>
+        <% if @theme.logo.attached? %>
+          <%= image_tag @theme.logo, style: "max-height: 80px; max-width: 80px;", class: "mb-2 d-block" %>
+        <% else %>
+          <p class="text-muted">Using default logo</p>
+          <%= image_tag "logo.svg", style: "max-height: 80px; max-width: 80px;", class: "mb-2 d-block" %>
+        <% end %>
+      </div>
+      <div class="col-md-6">
+        <h5>PWA Icon</h5>
+        <% if @theme.pwa_icon.attached? %>
+          <%= image_tag @theme.pwa_icon, style: "max-height: 80px; max-width: 80px;", class: "mb-2 d-block" %>
+        <% else %>
+          <p class="text-muted">Using default PWA icons</p>
+        <% end %>
+      </div>
+    </div>
+
+    <% if @theme.css_variables.present? %>
+      <div class="mb-3">
+        <h5>CSS Variables</h5>
+        <pre class="bg-body-tertiary p-3 rounded"><%= @theme.css_variables %></pre>
+      </div>
+    <% end %>
+
+    <% if @theme.custom_css.present? %>
+      <div class="mb-3">
+        <h5>Custom CSS</h5>
+        <pre class="bg-body-tertiary p-3 rounded"><%= @theme.custom_css %></pre>
+      </div>
+    <% end %>
+
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <h5>PWA Theme Color</h5>
+        <p><span class="badge" style="background-color: <%= @theme.pwa_theme_color %>; color: <%= contrasting_color(@theme.pwa_theme_color) %>;"><%= @theme.pwa_theme_color %></span></p>
+      </div>
+      <div class="col-md-6">
+        <h5>PWA Background Color</h5>
+        <p><span class="badge" style="background-color: <%= @theme.pwa_background_color %>; color: <%= contrasting_color(@theme.pwa_background_color) %>;"><%= @theme.pwa_background_color %></span></p>
+      </div>
+    </div>
+  </div>
+  <div class="card-footer">
+    <%= link_to "Edit Theme", edit_theme_path, class: "btn btn-lg btn-primary" %>
+  </div>
+</div>

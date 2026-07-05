@@ -12,7 +12,7 @@
     </p>
   </div>
   <div class="card-footer">
-    <%= link_to 'Edit', edit_shortcut_path(@shortcut), class: 'btn btn-warning' %>
-    <%= link_to 'Delete', @shortcut, class: 'btn btn-danger', data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %>
+    <%= link_to "Edit", edit_shortcut_path(@shortcut), class: "btn btn-warning" %>
+    <%= link_to "Delete", @shortcut, class: "btn btn-danger", data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } %>
   </div>
 </div>

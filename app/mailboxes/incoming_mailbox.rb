@@ -1,6 +1,6 @@
 class IncomingMailbox < ApplicationMailbox
   def process
-    box = Mailbox.where(address: mail.header_fields.select { |x| x.name.downcase == 'x-original-to' }.first.value.split('@').first.split('+').first).first
+    box = Mailbox.where(address: mail.header_fields.select { |x| x.name.downcase == "x-original-to" }.first.value.split("@").first.split("+").first).first
 
     body_content = if mail.multipart?
       mail.text_part ? mail.text_part.decoded : mail.html_part&.decoded
@@ -22,6 +22,5 @@ class IncomingMailbox < ApplicationMailbox
         content_type: attachment.content_type
       )
     end
-
   end
 end

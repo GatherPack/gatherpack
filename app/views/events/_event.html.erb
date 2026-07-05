@@ -6,7 +6,7 @@
       </div>
       <div class="col-md-2">
         <% if !event.team %>
-          <span class="badge rounded-pill bg-info"><%= i('star', family: 'solid') %></span>
+          <span class="badge rounded-pill bg-info"><%= i("star", family: "solid") %></span>
         <% else %>
           <%= link_to i(event.team.team_type.icon), team_path(event.team), class: "badge rounded-pill", style: "background-color:#{event.team.color};color:#{contrasting_color(event.team.color)}", "data-turbo": "false" %></span>
         <% end %>

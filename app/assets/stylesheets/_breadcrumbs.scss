@@ -5,18 +5,18 @@
 }
 
 .breadcrumb-link {
-  color: $greige-darkest;
+  color: var(--pair-c-fg);
 }
 
 .breadcrumb-current {
-  color: $greige-dark;
+  color: var(--pair-c-fg);
 }
 
 .breadcrumb-container {
   display: flex;
   align-items: start;
   justify-content: end; 
-  background-color: rgb(239, 236, 227);
+  background-color: color-mix(in srgb, var(--pair-c-bg), white 20%);
   padding-left: 1rem;
   padding-top: 1rem;
 }

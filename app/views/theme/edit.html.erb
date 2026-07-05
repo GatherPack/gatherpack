@@ -1,0 +1,216 @@
+<% breadcrumb :edit_theme %>
+
+<%= simple_form_for @theme, url: theme_path, method: :patch, html: { multipart: true } do |f| %>
+  <%= f.error_notification %>
+
+<div class="row">
+  <div class="col-md-6">
+    <div class="card mb-3">
+      <div class="card-header">
+        <h2>Logo</h2>
+      </div>
+      <div class="card-body">
+        <p class="text-muted">
+          Upload a single square image at least 128x128px.
+        </p>
+        <% if @theme.logo.attached? %>
+          <div class="mb-2">
+            <%= image_tag @theme.logo, style: "max-height: 80px; max-width: 80px;", class: "d-block mb-2" %>
+            <div class="form-check">
+              <%= check_box_tag "theme[remove_logo]", "1", false, class: "form-check-input" %>
+              <%= label_tag "theme_remove_logo", "Remove logo", class: "form-check-label text-danger" %>
+            </div>
+          </div>
+        <% end %>
+        <%= f.input :logo, as: :file, label: "Upload logo (SVG or PNG)", input_html: { accept: "image/svg+xml,image/png,image/jpeg" } %>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="card mb-3">
+      <div class="card-header">
+        <h2>PWA Icon</h2>
+      </div>
+      <div class="card-body">
+        <p class="text-muted">
+          Upload a single square image at least 512x512px.
+        </p>
+        <% if @theme.pwa_icon.attached? %>
+          <div class="mb-2">
+            <%= image_tag @theme.pwa_icon, style: "max-height: 80px; max-width: 80px;", class: "d-block mb-2" %>
+            <div class="form-check">
+              <%= check_box_tag "theme[remove_pwa_icon]", "1", false, class: "form-check-input" %>
+              <%= label_tag "theme_remove_pwa_icon", "Remove PWA icon", class: "form-check-label text-danger" %>
+            </div>
+          </div>
+        <% end %>
+        <%= f.input :pwa_icon, as: :file, label: "Upload PWA icon (PNG, ≥512×512)", input_html: { accept: "image/png,image/jpeg" } %>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <div class="card mb-3">
+    <div class="card-header">
+      <h2>PWA Colors</h2>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-6">
+          <%= f.input :pwa_theme_color, label: "Theme Color", input_html: { type: "color", value: @theme.pwa_theme_color } %>
+        </div>
+        <div class="col-md-6">
+          <%= f.input :pwa_background_color, label: "Background Color", input_html: { type: "color", value: @theme.pwa_background_color } %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card mb-3">
+    <div class="card-header">
+      <h2>CSS Variables</h2>
+    </div>
+    <div class="card-body">
+      <p class="text-muted">
+        One CSS custom property per line.
+        <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#css-vars-modal">
+          <%= i 'palette' %> View available variables
+        </button>
+      </p>
+      <%= f.input :css_variables, as: :text, label: false,
+                  placeholder: "# One CSS custom property per line, e.g.:\n# --bs-primary: #6d6753\n# --bs-body-bg: #a59e86\n# Leave empty to use the compiled theme defaults.",
+                  input_html: { rows: 8, class: "text-monospace" } %>
+    </div>
+  </div>
+
+  <div class="card mb-3">
+    <div class="card-header">
+      <h2>Custom CSS</h2>
+    </div>
+    <div class="card-body">
+      <%= f.input :custom_css, as: :text, label: false,
+                  placeholder: "/* Add any custom CSS rules here */",
+                  input_html: { rows: 12, class: "text-monospace" } %>
+    </div>
+  </div>
+
+  <div class="card mb-3">
+    <div class="card-footer">
+      <%= f.submit "Save Theme", class: "btn btn-lg btn-success" %>
+      <%= link_to "Cancel", theme_path, class: "btn btn-lg btn-primary" %>
+    </div>
+  </div>
+<% end %>
+
+<div class="modal fade" id="css-vars-modal" tabindex="-1" aria-labelledby="css-vars-modal-label" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title fs-5" id="css-vars-modal-label">CSS Variable Reference</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <h3>Page &amp; Background</h3>
+        <table class="table table-sm">
+          <thead>
+            <tr><th>Variable</th><th>Affects</th><th>Default</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><tt>--bs-body-bg</tt></td><td>Main page background</td><td><tt>#a59e86</tt></td></tr>
+            <tr><td><tt>--bs-body-color</tt></td><td>Default text color</td><td><tt>#212529</tt></td></tr>
+            <tr><td><tt>--bs-secondary-bg</tt></td><td>Dark background areas</td><td><tt>#403a22</tt></td></tr>
+            <tr><td><tt>--bs-secondary-color</tt></td><td>Muted / secondary text</td><td><tt>rgba(33,37,41,0.75)</tt></td></tr>
+            <tr><td><tt>--bs-tertiary-bg</tt></td><td>Lightest background</td><td><tt>#fffdf6</tt></td></tr>
+            <tr><td><tt>--bs-emphasis-color</tt></td><td>Highly emphasized text</td><td><tt>#000</tt></td></tr>
+            <tr><td><tt>--bs-primary</tt></td><td>Primary accent — buttons, links, active elements</td><td><tt>#6d6753</tt></td></tr>
+            <tr><td><tt>--bs-heading-color</tt></td><td>Heading (h1–h6) text color</td><td><tt>inherit</tt></td></tr>
+          </tbody>
+        </table>
+
+        <h3 class="mt-4">Pair A — Light Content Surfaces</h3>
+        <table class="table table-sm">
+          <thead>
+            <tr><th>Variable</th><th>Affects</th><th>Default</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><tt>--pair-a-bg</tt></td><td>Input fields, form backgrounds, code gutter, dropdowns, sidebar, calendar popover body</td><td><tt>#fffdf6</tt></td></tr>
+            <tr><td><tt>--pair-a-fg</tt></td><td>Form borders, sidebar active link, ledger row borders, print page borders, combo-box border, table <tt>th</tt> text, code <tt>pre</tt> text</td><td><tt>#403a22</tt></td></tr>
+          </tbody>
+        </table>
+
+        <h3 class="mt-4">Pair B — Dark Accent Surfaces</h3>
+        <table class="table table-sm">
+          <thead>
+            <tr><th>Variable</th><th>Affects</th><th>Default</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><tt>--pair-b-bg</tt></td><td>Table header, checked checkbox, code editor (<tt>.cm-editor</tt>) background, combo-box highlighted item</td><td><tt>#6d6753</tt></td></tr>
+            <tr><td><tt>--pair-b-fg</tt></td><td>Text on Pair B backgrounds — navbar brand, table headers, checkbox checkmark, code editor text</td><td><tt>#fffdf6</tt></td></tr>
+          </tbody>
+        </table>
+
+        <h3 class="mt-4">Pair C — Card Headers &amp; Breadcrumbs</h3>
+        <table class="table table-sm">
+          <thead>
+            <tr><th>Variable</th><th>Affects</th><th>Default</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><tt>--pair-c-bg</tt></td><td>Card header background, breadcrumb container background</td><td><tt>#ddd7c2</tt></td></tr>
+            <tr><td><tt>--pair-c-fg</tt></td><td>Card header text, breadcrumb links/text</td><td><tt>#212529</tt></td></tr>
+          </tbody>
+        </table>
+
+        <h3 class="mt-4">Typography &amp; Links</h3>
+        <table class="table table-sm">
+          <thead>
+            <tr><th>Variable</th><th>Affects</th><th>Default</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><tt>--bs-font-sans-serif</tt></td><td>Body font stack</td><td><tt>"Fira Sans", sans-serif</tt></td></tr>
+            <tr><td><tt>--bs-font-monospace</tt></td><td>Monospace font stack (code)</td><td><tt>"Fira Code", monospace</tt></td></tr>
+            <tr><td><tt>--bs-code-color</tt></td><td>Inline <tt>&lt;code&gt;</tt> text color</td><td><tt>#d63384</tt></td></tr>
+            <tr><td><tt>--bs-link-color</tt></td><td>Link text color</td><td><tt>#6d6753</tt></td></tr>
+            <tr><td><tt>--bs-link-hover-color</tt></td><td>Link hover color</td><td><tt>#57523a</tt></td></tr>
+          </tbody>
+        </table>
+
+        <h3 class="mt-4">Cards</h3>
+        <table class="table table-sm">
+          <thead>
+            <tr><th>Variable</th><th>Affects</th><th>Default</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><tt>--bs-card-bg</tt></td><td>Card body background</td><td><tt>#ddd7c2</tt></td></tr>
+            <tr><td><tt>--bs-card-color</tt></td><td>Card body text color</td><td><tt>#212529</tt> (inherits from <tt>--bs-body-color</tt>)</td></tr>
+          </tbody>
+        </table>
+
+        <h3 class="mt-4">Tables</h3>
+        <table class="table table-sm">
+          <thead>
+            <tr><th>Variable</th><th>Affects</th><th>Default</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><tt>--bs-table-bg</tt></td><td>Table cell background</td><td><tt>#fffdf6</tt></td></tr>
+            <tr><td><tt>--bs-table-color</tt></td><td>Table text color</td><td><tt>var(--bs-emphasis-color)</tt></td></tr>
+          </tbody>
+        </table>
+
+        <h3 class="mt-4">Borders</h3>
+        <table class="table table-sm">
+          <thead>
+            <tr><th>Variable</th><th>Affects</th><th>Default</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><tt>--bs-border-color</tt></td><td>Default border for tables, cards, inputs, etc.</td><td><tt>#dee2e6</tt></td></tr>
+          </tbody>
+        </table>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

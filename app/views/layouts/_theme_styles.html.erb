@@ -1,0 +1,15 @@
+<% theme = Theme.instance %>
+<% if theme.persisted? %>
+  <% if theme.css_variables.present? %>
+  <style id="theme-css-variables">
+    :root {
+<%= theme.css_variables %>
+    }
+  </style>
+  <% end %>
+  <% if theme.custom_css.present? %>
+  <style id="theme-custom-css">
+<%= theme.custom_css %>
+  </style>
+  <% end %>
+<% end %>

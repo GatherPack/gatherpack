@@ -6,13 +6,13 @@
       </div>
       <div class="card-body">
         <%= simple_form_for TimeKiosk.new, url: time_kiosk_path do |f| %>
-          <%= f.hidden_field :tool, value: 'find_token' %>
+          <%= f.hidden_field :tool, value: "find_token" %>
           <div class="row align-items-center">
             <div class="col-8">
-              <%= f.input :token_value, label: "Token", input_html: { autocomplete: 'off', autofocus: true } %>
+              <%= f.input :token_value, label: "Token", input_html: { autocomplete: "off", autofocus: true } %>
             </div>
             <div class="col-4">
-              <%= f.submit 'Search', class: 'btn btn-lg w-100 btn-primary' %>
+              <%= f.submit "Search", class: "btn btn-lg w-100 btn-primary" %>
             </div>
           </div>
         <% end %>

@@ -25,7 +25,7 @@ class CheckinFieldsController < InternalController
     @checkin_field = authorize CheckinField.new(checkin_field_params)
 
     if @checkin_field.save
-      redirect_to @checkin_field, notice: 'Checkin field was successfully created.'
+      redirect_to @checkin_field, notice: "Checkin field was successfully created."
     else
       render :new, status: :unprocessable_entity
     end
@@ -34,7 +34,7 @@ class CheckinFieldsController < InternalController
   # PATCH/PUT /checkin_fields/1
   def update
     if @checkin_field.update(checkin_field_params)
-      redirect_to @checkin_field, notice: 'Checkin field was successfully updated.', status: :see_other
+      redirect_to @checkin_field, notice: "Checkin field was successfully updated.", status: :see_other
     else
       render :edit, status: :unprocessable_entity
     end
@@ -43,7 +43,7 @@ class CheckinFieldsController < InternalController
   # DELETE /checkin_fields/1
   def destroy
     @checkin_field.destroy!
-    redirect_to checkin_fields_url, notice: 'Checkin field was successfully destroyed.', status: :see_other
+    redirect_to checkin_fields_url, notice: "Checkin field was successfully destroyed.", status: :see_other
   end
 
   private

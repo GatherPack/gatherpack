@@ -68,6 +68,34 @@ $table-striped-bg: desaturate(darken($greige-lightest, 5%), 20%);
 @import "bootstrap/scss/utilities/api";
 // scss-docs-end import-stack
 
+:root {
+  --pair-a-bg: #fffdf6;
+  --pair-a-fg: #403a22;
+  --pair-b-bg: #403a22;
+  --pair-b-fg: #fffdf6;
+  --pair-c-bg: #ddd7c2;
+  --pair-c-fg: #212529;
+  --card-bg: var(--bs-card-bg);
+  --card-fg: var(--bs-card-color, var(--bs-body-color));
+  --app-input-disabled-bg: color-mix(in srgb, var(--pair-a-bg), black 5%);
+  --app-code-active-line-bg: color-mix(in srgb, var(--pair-b-bg), transparent 85%);
+  --app-code-selection-bg: color-mix(in srgb, var(--pair-b-bg), transparent 65%);
+  --app-code-focused-selection-bg: color-mix(in srgb, var(--pair-b-bg), transparent 50%);
+  --bs-body-bg: #6d6753;
+  --bs-body-color: #212529;
+  --bs-card-bg: #ddd7c2;
+  --bs-card-color: #212529;
+
+  --bs-primary: #6d6753;
+  --bs-secondary: #6c757d;
+  --bs-success: #198754;
+  --bs-danger: #dc3545;
+  --bs-warning: #ffc107;
+  --bs-info: #0dcaf0;
+  --bs-light: #f8f9fa;
+  --bs-dark: #212529;
+}
+
 @import 'dashboard';
 @import 'forms';
 @import 'cards';
@@ -114,8 +142,8 @@ main {
 }
 
 code pre {
-  color: $greige-lightest;
-  background-color: $greige-darkest;
+  color: var(--pair-b-fg);
+  background-color: var(--pair-b-bg);
   padding: 0.5rem;
 }
 
@@ -137,7 +165,7 @@ a.undecorated {
 
 .hw-combobox {
   @extend .form-control;
-  border-color: $greige-darkest;
+  border-color: var(--pair-a-fg);
 
   .hw-combobox__main__wrapper {
     @extend .w-100;
@@ -164,6 +192,12 @@ a.undecorated {
 
 table.table th {
   vertical-align: middle !important;
-  background-color: $greige-dark;
-  color: $greige-lightest
+  background-color: var(--pair-b-bg);
+  color: var(--pair-b-fg)
 }
+
+.modal-content {
+  background-color: var(--pair-a-bg);
+  color: var(--pair-a-fg);
+}
+

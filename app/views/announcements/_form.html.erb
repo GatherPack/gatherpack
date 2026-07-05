@@ -7,7 +7,7 @@
       <%= f.input :title %>
     </div>
     <div class="col-12 col-md-6">
-      <%= f.input :team_id, as: :searching_combobox, label: 'Team', scope: "managed_teams", include_blank: admin?, required: !admin? %>
+      <%= f.input :team_id, as: :searching_combobox, label: "Team", scope: "managed_teams", include_blank: admin?, required: !admin? %>
     </div>
   </div>
   <div class="row">
@@ -21,8 +21,7 @@
       <%= f.input :notify_now, as: :boolean %>
     </div>
   </div>
-  
-  <%= f.input :content, wrapper_html: { class: 'code-editor' }, input_html: { rows: 6, data: { lang: "markdown" } } %>
-  
-  
+
+  <%= f.input :content, wrapper_html: { class: "code-editor" }, input_html: { rows: 6, data: { lang: "markdown" } } %>
+
 </div>
