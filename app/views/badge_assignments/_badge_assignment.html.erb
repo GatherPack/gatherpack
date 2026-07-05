@@ -3,6 +3,6 @@
     <%= link_to badge_assignment.person.identifier_name, [ badge_assignment.badge, badge_assignment ], 'data-turbo': false %>
   </div>
   <div class="card-body">
-    <%= image_tag get_avatar_url(badge_assignment.person.avatar), class: "person-img" %>
+    <%= image_tag get_avatar_url_512(badge_assignment.person.avatar), class: "person-img" %>
   </div>
 </div>

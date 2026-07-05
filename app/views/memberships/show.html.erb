@@ -7,7 +7,7 @@
   <div class="card-body">
     <div class="row align-items-center">
       <div class="col-md-2">
-        <%= link_to image_tag(get_avatar_url(@membership.person.avatar), class: "person-img"), person_path(@membership.person) %>
+        <%= link_to image_tag(get_avatar_url_512(@membership.person.avatar), class: "person-img"), person_path(@membership.person) %>
       </div>
       <div class="col-md-6">
         <p>

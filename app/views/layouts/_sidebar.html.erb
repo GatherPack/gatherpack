@@ -7,7 +7,7 @@
       <div class="nav flex-column me-auto">
         <% if current_user != true_user %>
           <div class="nav-item d-flex align-items-center px-3 impersonator">
-            <%= image_tag(get_avatar_url(true_user.person.avatar), class: "person-img", style: "height: 2em; width: auto;") %>
+            <%= image_tag(get_avatar_url_64(true_user.person.avatar), class: "person-img", style: "height: 2em; width: auto;") %>
             <%= link_to true_user.person.identifier_name, true_user.person %>
           </div>
           <div class="nav-item px-3 text-center w-100 impersonator-label">
@@ -15,7 +15,7 @@
           </div>
         <% end %>
         <div class="nav-item d-flex align-items-center px-3 <%= "impersonator" if current_user != true_user %>">
-          <%= image_tag(get_avatar_url(current_user.person.avatar), class: "person-img", style: "height: 2em; width: auto;") %>
+          <%= image_tag(get_avatar_url_64(current_user.person.avatar), class: "person-img", style: "height: 2em; width: auto;") %>
           <%= link_to current_user.person.identifier_name, current_user.person %>
         </div>
         <% if current_user != true_user %>

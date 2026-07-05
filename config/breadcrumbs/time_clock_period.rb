@@ -6,3 +6,8 @@ crumb :time_clock_period do |time_clock_period|
   link time_clock_period.new_record? ? "New time clock period" : time_clock_period.identifier_name, time_clock_period
   parent :time_clock_periods
 end
+
+crumb :summary do |time_clock_period|
+  link "Summary"
+  parent :time_clock_period, time_clock_period
+end

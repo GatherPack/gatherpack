@@ -5,7 +5,7 @@
   <div class="card-body">
     <div class="row align-items-center mb-3">
       <div class="col-3">
-        <%= image_tag get_avatar_url(@person.avatar), class: "person-img" %>
+        <%= image_tag get_avatar_url_512(@person.avatar), class: "person-img" %>
       </div>
       <div class="col-6">
         <h3 class="display-3"><%= @person.identifier_name %></h3>
@@ -30,7 +30,7 @@
                       <div class="col-7">
                         <div class="d-flex flex-row flex-wrap">
                           <% period.open_punches.includes(:person).each do |punch| %>
-                            <%= image_tag get_avatar_url(punch.person.avatar), class: "person-img p-1", style: "width: 3rem; height: 3rem;" %>
+                            <%= image_tag get_avatar_url_512(punch.person.avatar), class: "person-img p-1", style: "width: 3rem; height: 3rem;" %>
                           <% end %>
                         </div>
                       </div>

@@ -49,7 +49,7 @@
 
 .was-validated .form-check-input:valid:checked, .form-check-input.is-valid:checked {
   background-color: var(--pair-b-bg);
-  border-color: $success;
+  border-color: var(--bs-success);
 }
 
 .form-control.fancy_color {

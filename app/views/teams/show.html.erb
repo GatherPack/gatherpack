@@ -48,7 +48,7 @@
               <% @team.managers.order(display_name: :asc).each do |person| %>
                 <div class="p-1 w-10">
                   <%= link_to person, title: person.display_name do %>
-                    <%= image_tag get_avatar_url(person.avatar), class: "person-img" %>
+                    <%= image_tag get_avatar_url_64(person.avatar), class: "person-img" %>
                   <% end %>
                 </div>
               <% end %>
@@ -69,9 +69,9 @@
                               <h4><%= as_badge ancestor %></h4>
                               <div class="d-flex flex-row align-items-center flex-wrap">
                                 <% ancestor.managers.order(display_name: :asc).each do |person| %>
-                                  <div class="p-1 w-10">
+                                  <div class="p-2 w-10">
                                     <%= link_to person, title: person.display_name do %>
-                                      <%= image_tag get_avatar_url(person.avatar), class: "person-img" %>
+                                      <%= image_tag get_avatar_url_128(person.avatar), class: "person-img" %>
                                     <% end %>
                                   </div>
                                 <% end %>
