@@ -11,16 +11,16 @@
         <div><%= i "user-tie" %> <%= team.all_managers_and_admins.count %></div>
       </div>
 
-      <div class="col-8 col-md-6">
+      <div class="col-8 col-md-7">
         <%= md team.description %>
       </div>
 
-      <div class="col-4 col-md-2">
+      <div class="col-4 col-md-4">
         <div class="row">
           <% team.managers.order(display_name: :asc).each do |person| %>
-            <div class="col-6 col-md-3">
+            <div class="col-6 col-md-2">
               <%= link_to person, title: person.display_name do %>
-                <%= image_tag get_avatar_url(person.avatar), class: "person-img" %>
+                <%= image_tag get_avatar_url(person.avatar), class: "person-img my-1" %>
               <% end %>
             </div>
           <% end %>

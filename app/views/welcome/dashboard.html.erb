@@ -17,8 +17,9 @@
       </div>
     <% end %>
 
-    <% if @announcements.any? %>
-      <div class="card">
+    <div class="card">
+      <% if @announcements.any? %>
+
         <div class="card-header">
           <h2>Announcements</h2>
         </div>
@@ -39,8 +40,14 @@
             </div>
           <% end %>
         </div>
-      </div>
-    <% end %>
+      <% else %>
+        <div class="card">
+          <div class="card-body">
+            <div class="text-muted text-center">You have no announcements right now.</div>
+          </div>
+        </div>
+      <% end %>
+    </div>
   </div>
   <div class="col-12 col-lg-6">
     <% if GatherPack::Features.enabled?(:events) %>

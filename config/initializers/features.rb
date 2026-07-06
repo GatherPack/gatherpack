@@ -145,7 +145,7 @@ Rails.application.config.to_prepare do
     GatherPack::Feature.new(
       key: :ledger,
       label: "Ledger",
-      description: "Financial ledgers, transactions, and payment gateways",
+      description: "Financial ledgers and transactions",
       default_enabled: true,
       nav_section: "Finance",
       nav_position: 10,
@@ -154,9 +154,7 @@ Rails.application.config.to_prepare do
       ],
       setup_section: "Finance",
       setup_items: [
-        GatherPack::Feature::SetupItem.new(label: "Ledger Tags", path: :ledger_tags_path),
-        GatherPack::Feature::SetupItem.new(label: "Gateways", path: :gateways_path,
-          policy_check: ->(view) { view.policy(Gateway).create? })
+        GatherPack::Feature::SetupItem.new(label: "Ledger Tags", path: :ledger_tags_path)
       ]
     )
   )

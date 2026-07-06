@@ -39,7 +39,11 @@ class Team < ApplicationRecord
   end
 
   def siblings
-    Team.where(parent_id: parent_id).where.not(id: id)
+    if parent
+      Team.where(parent_id: parent_id).where.not(id: id)
+    else
+      []
+    end
   end
 
   def all_descendant_ids

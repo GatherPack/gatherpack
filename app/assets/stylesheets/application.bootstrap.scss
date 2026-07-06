@@ -141,6 +141,10 @@ main {
   min-height: 100vh;
 }
 
+p:last-child {
+  margin-bottom: 0;
+}
+
 code pre {
   color: var(--pair-b-fg);
   background-color: var(--pair-b-bg);
