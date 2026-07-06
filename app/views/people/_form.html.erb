@@ -13,7 +13,7 @@
     </div>
 
     <canvas id="capture-canvas" style="display: none" data-photo-capture-target="captureCanvas"></canvas>
-    <img id="avatar-img" src="<%= get_avatar_url(@person.avatar) %>" data-photo-capture-target="avatarImg">
+    <img id="avatar-img" src="<%= get_avatar_url_512(@person.avatar) %>" data-photo-capture-target="avatarImg">
     <video id="capture-video" data-photo-capture-target="captureVideo"></video>
 
     <div class="row mt-2">

@@ -48,7 +48,7 @@
             <%= true_user.person.identifier_name %>
           </div>
           <div class="nav-item d-flex align-items-center px-1">
-            <%= image_tag(get_avatar_url(true_user.person.avatar), class: "person-img", style: "height: 2em; width: auto;") %>
+            <%= image_tag(get_avatar_url_512(true_user.person.avatar), class: "person-img", style: "height: 2em; width: auto;") %>
           </div>
           <div class="nav-item px-1 text-center w-100 text-white">
             impersonating
@@ -58,7 +58,7 @@
           <%= current_user.person.identifier_name %>
         </div>
         <div class="nav-item d-flex align-items-center px-1 pe-3">
-          <%= image_tag(get_avatar_url(current_user.person.avatar), class: "person-img", style: "height: 2em; width: auto;") %>
+          <%= image_tag(get_avatar_url_512(current_user.person.avatar), class: "person-img", style: "height: 2em; width: auto;") %>
         </div>
       </ul>
     </div>

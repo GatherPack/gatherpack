@@ -3,7 +3,7 @@
     <%= link_to person.identifier_name, person, "data-turbo": "false" %>
   </div>
   <div class="card-body">
-    <%= image_tag get_avatar_url(person.avatar), class: "person-img" %>
+    <%= image_tag get_avatar_url_512(person.avatar), class: "person-img" %>
   </div>
   <% if local_assigns[:footer] %>
     <div class="card-footer">

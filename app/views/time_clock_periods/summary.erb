@@ -1,3 +1,5 @@
+<% breadcrumb :summary, @time_clock_period %>
+
 <div class="card mb-3">
   <div class="card-header">
     <h5 class="mb-0">Filter Time Clock Punches</h5>
@@ -36,7 +38,7 @@
     <div class="row">
       <% @people.each do |person| %>
       <div class="col-2 col-lg-1">
-        <%= link_to(image_tag(get_avatar_url(person.avatar), class: 'person-img'), person) %>
+        <%= link_to(image_tag(get_avatar_url_128(person.avatar), class: 'person-img my-1'), person) %>
       </div>
       <% end %>
     </div>
