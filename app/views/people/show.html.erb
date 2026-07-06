@@ -19,6 +19,8 @@
         <% end %>
       </div>
       <div class="col-12 col-sm-6 col-lg-4">
+        <%= md @person.bio %>
+        <hr>
         <p><b>Email: </b><%= if @person.user.nil? then "This person doesn't have a user attached." else @person.user.email end %></p>
         <p><b>Phone: </b><%= @person.phone_number %></p>
         <p><b>Birthday: </b><%= nice_date(@person.birthday) %></p>

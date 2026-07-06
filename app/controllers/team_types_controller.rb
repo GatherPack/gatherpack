@@ -56,6 +56,6 @@ class TeamTypesController < InternalController
 
     # Only allow a list of trusted parameters through.
     def team_type_params
-      params.require(:team_type).permit(:name, :icon)
+      params.require(:team_type).permit(:name, :icon, :manager_title)
     end
 end

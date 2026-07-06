@@ -16,6 +16,7 @@
       </div>
 
       <div class="col-4 col-md-4">
+        <small class="fw-bold"><%= pluralize team.managers.count, team.team_type.manager_title %></small>
         <div class="row">
           <% team.managers.order(display_name: :asc).each do |person| %>
             <div class="col-6 col-md-2">

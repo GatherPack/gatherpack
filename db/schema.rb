@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_05_161347) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_06_153859) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -349,6 +349,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_05_161347) do
 
   create_table "people", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "address"
+    t.text "bio"
     t.date "birthday"
     t.datetime "created_at", null: false
     t.string "dietary_restrictions"
@@ -534,6 +535,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_05_161347) do
   create_table "team_types", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "icon"
+    t.string "manager_title", default: "Manager", null: false
     t.string "name"
     t.datetime "updated_at", null: false
   end

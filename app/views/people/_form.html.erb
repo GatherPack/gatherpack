@@ -71,6 +71,9 @@
           <% end %>
         <% end %>
       </div>
+      <div class="col-12">
+        <%= f.input :bio, wrapper_html: { class: "code-editor" }, input_html: { rows: 8, data: { lang: "markdown" } } %>
+      </div>
     </div>
   </div>
 </div>
