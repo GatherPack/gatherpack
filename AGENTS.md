@@ -2,6 +2,16 @@
 
 Rails 8.1 monolith (PostgreSQL, Hotwire, Bootstrap 5, SolidQueue). No Redis.
 
+## Data model overview
+
+- **User** — authentication & admin powers only (Devise, OAuth). Has `admin` and `architect` boolean flags. No personal info.
+- **Person** — real human record with all personal info (name, address, phone, bio, birthday, dietary restrictions, etc.). Optionally belongs to a User (`user_id` nullable). This is the hub most features connect to (memberships, badges, checkins, time punches, ledgers, relationships).
+- **Team** — hierarchical tree of organizational units (typed via `TeamType`). People join teams through `Membership` (with a `manager` flag). Teams own events, pages, announcements, badges, time clock periods, ledgers, shortcuts, and calendar notes. Permissions cascade up and down the tree.
+- **Finance** — `Ledger` per team, entries & transfers, budgets per period tagged via `LedgerTag`.
+- **Content** — `Page` (CMS with granular permissions), `Announcement` (time-bounded), `Shortcut` (team quick links).
+- **Communication** — `Gateway` STI (Stripe, Postmark), `Mailbox` for inbound email routing.
+- **System** — `Theme` (singleton), `Variable` (typed KV store), `Hook` (event-driven eval), `Report` (named scripts), `AuditLog` (PaperTrail in separate DB).
+
 ## Dev setup
 
 ```bash

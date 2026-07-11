@@ -1,0 +1,41 @@
+<div class="card mb-3" id="<%= dom_id membership_application %>">
+  <div class="card-header d-flex justify-content-between align-items-center">
+    <div>
+      <% case membership_application.status %>
+      <% when "pending" %>
+        <span class="badge bg-warning text-dark">Pending</span>
+      <% when "approved" %>
+        <span class="badge bg-success">Approved</span>
+      <% when "denied" %>
+        <span class="badge bg-danger">Denied</span>
+      <% end %>
+      <strong><%= link_to membership_application.person.display_name, person_path(membership_application.person) %></strong>
+      →
+      <%= as_badge membership_application.team %>
+    </div>
+    <div>
+      <small class="text-muted"><%= membership_application.created_at.strftime("%b %d, %Y") %></small>
+    </div>
+  </div>
+  <% if membership_application.message.present? %>
+    <div class="card-body">
+      <p class="mb-0"><%= truncate(membership_application.message, length: 200) %></p>
+    </div>
+  <% end %>
+  <div class="card-footer d-flex justify-content-between align-items-center">
+    <div>
+      <%= link_to "View Details", team_membership_application_path(membership_application.team, membership_application), class: "btn btn-sm btn-outline-primary" %>
+    </div>
+    <% if membership_application.pending? %>
+      <div class="d-flex gap-2">
+        <% if policy(membership_application).update? %>
+          <%= link_to "Approve", team_membership_application_path(membership_application.team, membership_application, status: "approved"), class: "btn btn-sm btn-success", data: { turbo_method: :patch } %>
+          <%= link_to "Deny", team_membership_application_path(membership_application.team, membership_application, status: "denied"), class: "btn btn-sm btn-danger", data: { turbo_method: :patch } %>
+        <% end %>
+        <% if policy(membership_application).destroy? %>
+          <%= link_to "Withdraw", person_membership_application_path(membership_application.person, membership_application), class: "btn btn-sm btn-outline-secondary", data: { turbo_method: :delete, turbo_confirm: "Withdraw this application?" } %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>

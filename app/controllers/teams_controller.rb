@@ -1,5 +1,5 @@
 class TeamsController < InternalController
-  before_action :set_team, only: %i[show edit update destroy badges pages events]
+  before_action :set_team, only: %i[show edit update destroy badges pages events applications]
 
   # GET /teams
   def index
@@ -17,6 +17,8 @@ class TeamsController < InternalController
 
   # GET /teams/1
   def show
+    @is_member = current_user.admin? || current_user.architect? || @team.people.include?(current_user.person)
+    render "show_public" unless @is_member
   end
 
   # GET /teams/1/badges
@@ -32,6 +34,11 @@ class TeamsController < InternalController
   # GET /teams/1/events
   def events
     @events = policy_scope(@team.events).order(start_time: :desc).page(params[:page])
+  end
+
+  # GET /teams/1/applications
+  def applications
+    @pending_applications = @team.membership_applications.pending.includes(:person).order(created_at: :desc)
   end
 
   # GET /teams/new

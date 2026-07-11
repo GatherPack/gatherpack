@@ -1,0 +1,68 @@
+<% breadcrumb :membership_application, @membership_application, @team || @person %>
+
+<div class="card">
+  <div class="card-header">
+    <h1><%= @membership_application.identifier_name %></h1>
+  </div>
+  <div class="card-body">
+    <div class="row align-items-center">
+      <div class="col-md-2">
+        <%= link_to person_path(@membership_application.person) do %>
+          <%= image_tag get_avatar_url_512(@membership_application.person.avatar), class: "person-img" %>
+        <% end %>
+      </div>
+      <div class="col-md-5">
+        <p>
+          <strong>Applicant:</strong>
+          <%= link_to @membership_application.person.display_name, person_path(@membership_application.person) %>
+        </p>
+        <p>
+          <strong>Team:</strong>
+          <%= as_badge @membership_application.team %>
+        </p>
+        <% if @membership_application.message.present? %>
+          <p>
+            <strong>Message:</strong>
+          </p>
+          <div class="border rounded p-3 bg-light">
+            <%= md @membership_application.message %>
+          </div>
+        <% end %>
+      </div>
+      <div class="col-md-5">
+        <p>
+          <strong>Status:</strong>
+          <% case @membership_application.status %>
+          <% when "pending" %>
+            <span class="badge bg-warning text-dark">Pending</span>
+          <% when "approved" %>
+            <span class="badge bg-success">Approved</span>
+          <% when "denied" %>
+            <span class="badge bg-danger">Denied</span>
+          <% end %>
+        </p>
+        <p><strong>Applied:</strong> <%= @membership_application.created_at.strftime("%B %d, %Y at %l:%M %p") %></p>
+        <% if @membership_application.reviewed_at.present? %>
+          <p><strong>Reviewed:</strong> <%= @membership_application.reviewed_at.strftime("%B %d, %Y at %l:%M %p") %></p>
+        <% end %>
+        <% if @membership_application.reviewer_notes.present? %>
+          <p><strong>Reviewer Notes:</strong> <%= @membership_application.reviewer_notes %></p>
+        <% end %>
+
+        <% if @membership_application.pending? %>
+          <% if policy(@membership_application).update? %>
+            <div class="d-flex gap-2 mt-3">
+              <%= link_to "Approve", team_membership_application_path(@team, @membership_application, status: "approved"), class: "btn btn-success", data: { turbo_method: :patch } %>
+              <%= link_to "Deny", team_membership_application_path(@team, @membership_application, status: "denied"), class: "btn btn-danger", data: { turbo_method: :patch } %>
+            </div>
+          <% end %>
+          <% if policy(@membership_application).destroy? %>
+            <div class="mt-3">
+              <%= link_to "Withdraw Application", person_membership_application_path(@membership_application.person, @membership_application), class: "btn btn-outline-secondary", data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to withdraw this application?" } %>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

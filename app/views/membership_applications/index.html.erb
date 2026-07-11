@@ -1,0 +1,19 @@
+<% if @team %>
+  <%= render "teams/show_shared" %>
+  <h2>Pending Applications for <%= as_badge @team %></h2>
+<% elsif @person %>
+  <%= render "people/show_shared" %>
+  <h2>Applications by <%= @person.identifier_name %></h2>
+<% end %>
+
+<% if @membership_applications.any? %>
+  <% @membership_applications.each do |application| %>
+    <%= render "membership_applications/application", membership_application: application %>
+  <% end %>
+<% else %>
+  <div class="card">
+    <div class="card-body text-center text-muted py-4">
+      No applications found.
+    </div>
+  </div>
+<% end %>

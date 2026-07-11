@@ -24,10 +24,12 @@ Rails.application.routes.draw do
 
   resources :teams do
     resources :memberships
+    resources :membership_applications, only: %i[index show update]
     member do
       get :badges if GatherPack::Features.enabled?(:badges)
       get :pages if GatherPack::Features.enabled?(:pages)
       get :events if GatherPack::Features.enabled?(:events)
+      get :applications
     end
   end
 
@@ -36,6 +38,7 @@ Rails.application.routes.draw do
 
   resources :people do
     resources :memberships, only: %i[index new create destroy]
+    resources :membership_applications, only: %i[index show create destroy]
     resources :relationships, only: %i[new create destroy] do
       member do
         post "reverse"

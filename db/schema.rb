@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_06_153859) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_11_175709) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -321,6 +321,20 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_06_153859) do
     t.string "address"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "membership_applications", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.text "message"
+    t.uuid "person_id", null: false
+    t.datetime "reviewed_at"
+    t.text "reviewer_notes"
+    t.integer "status", default: 0, null: false
+    t.uuid "team_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["person_id", "team_id"], name: "index_membership_applications_on_person_id_and_team_id_pending", unique: true, where: "(status = 0)"
+    t.index ["person_id"], name: "index_membership_applications_on_person_id"
+    t.index ["team_id"], name: "index_membership_applications_on_team_id"
   end
 
   create_table "memberships", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -658,6 +672,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_06_153859) do
   add_foreign_key "ledgers", "teams"
   add_foreign_key "mailbox_assignments", "mailboxes"
   add_foreign_key "mailbox_messages", "mailboxes"
+  add_foreign_key "membership_applications", "people"
+  add_foreign_key "membership_applications", "teams"
   add_foreign_key "memberships", "people"
   add_foreign_key "memberships", "teams"
   add_foreign_key "memberships", "teams", column: "inherited_id"

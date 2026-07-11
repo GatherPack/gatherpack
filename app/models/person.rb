@@ -1,9 +1,11 @@
 class Person < ApplicationRecord
   has_neat_id :per
   include CanBeHooked
+
   has_paper_trail versions: { class_name: "AuditLog" }
   belongs_to :user, optional: true
   has_many :memberships, dependent: :destroy
+  has_many :membership_applications, dependent: :destroy
   has_many :teams, through: :memberships
   has_many :badge_assignments, dependent: :destroy
   has_many :badges, through: :badge_assignments
@@ -77,8 +79,8 @@ class Person < ApplicationRecord
 
   def all_managed_people
     Person.joins(:memberships)
-    .where(memberships: { team_id: all_managed_teams.select(:id) })
-    .distinct
+      .where(memberships: { team_id: all_managed_teams.select(:id) })
+      .distinct
   end
 
   def relationships
@@ -94,7 +96,7 @@ class Person < ApplicationRecord
 
   def distant_relatives(relationship_type = nil)
     visited = Set.new([ id ])
-    to_visit = relatives().to_a
+    to_visit = relatives.to_a
     matching_relatives = []
 
     while to_visit.any?

@@ -116,9 +116,41 @@
             <%= i "user-plus" %> Join
           <% end %>
         <% end %>
+        <% if @team.requires_approval? && !@team.people.include?(current_user.person) %>
+          <% pending_app = @team.membership_applications.pending.find_by(person: current_user.person) %>
+          <% if pending_app %>
+            <span class="badge bg-warning text-dark fs-6"><%= i "clock" %> Application Pending</span>
+          <% elsif policy(MembershipApplication.new(team: @team, person: current_user.person)).create? %>
+            <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#applyToJoinModal">
+              <%= i "paper-plane" %> Apply to Join
+            </button>
+          <% end %>
+        <% end %>
         <%= link_to "Edit", edit_team_path(@team), class: "btn btn-warning" if policy(@team).edit? %>
         <%= link_to "Delete", @team, class: "btn btn-danger", data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } if policy(@team).destroy? %>
       </div>
+
+      <% if @team.requires_approval? && !@team.people.include?(current_user.person) && !@team.membership_applications.pending.exists?(person: current_user.person) && policy(MembershipApplication.new(team: @team, person: current_user.person)).create? %>
+        <div class="modal fade" id="applyToJoinModal" tabindex="-1" aria-labelledby="applyToJoinModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <%= simple_form_for [ current_user.person, MembershipApplication.new ], url: person_membership_applications_path(current_user.person, team_id: @team.id) do |f| %>
+                <div class="modal-header">
+                  <h3 class="modal-title" id="applyToJoinModalLabel">Apply to Join <%= @team.name %></h3>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <%= f.input :message, as: :text, input_html: { rows: 4 }, label: "Message (optional)", hint: "Tell the team managers why you'd like to join." %>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                  <%= f.submit "Submit Application", class: "btn btn-info" %>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      <% end %>
     </div>
 
     <% if GatherPack::Features.enabled?(:events) %>

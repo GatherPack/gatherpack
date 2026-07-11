@@ -8,6 +8,16 @@
     <li class="nav-item">
       <a href="<%= team_memberships_path(@team) %>" class="nav-link <%= "active" if current_page?(team_memberships_path(@team)) %>">Members</a>
     </li>
+    <% if policy(@team).edit? %>
+      <li class="nav-item">
+        <a href="<%= applications_team_path(@team) %>" class="nav-link <%= "active" if current_page?(applications_team_path(@team)) %>">Applications
+          <% pending_count = @team.membership_applications.pending.count %>
+          <% if pending_count > 0 %>
+            <span class="badge bg-danger"><%= pending_count %></span>
+          <% end %>
+        </a>
+      </li>
+    <% end %>
     <% if GatherPack::Features.enabled?(:badges) %>
       <li class="nav-item">
         <a href="<%= badges_team_path(@team) %>" class="nav-link <%= "active" if current_page?(badges_team_path(@team)) %>">Badges</a>

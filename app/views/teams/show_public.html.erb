@@ -1,0 +1,119 @@
+<% breadcrumb @team %>
+
+<div class="row">
+  <div class="col-12 col-lg-6">
+    <div class="card mb-3">
+      <div class="card-header">
+        <h1><%= i @team.team_type.icon %> <%= @team.identifier_name %></h1>
+      </div>
+      <div class="card-body">
+        <div class="mb-3"><%= md @team.description %></div>
+      </div>
+      <% if @team.join_permission == "has_account" %>
+        <div class="card-footer">
+          <%= link_to team_memberships_path(@team, membership: { person_id: current_user.person.id, manager: false }), class: "btn btn-success", data: { turbo_method: :post } do %>
+            <%= i "user-plus" %> Join
+          <% end %>
+        </div>
+      <% elsif @team.requires_approval? %>
+        <div class="card-footer">
+          <% pending_app = @team.membership_applications.pending.find_by(person: current_user.person) %>
+          <% if pending_app %>
+            <span class="badge bg-warning text-dark fs-6"><%= i "clock" %> Application Pending</span>
+          <% elsif policy(MembershipApplication.new(team: @team, person: current_user.person)).create? %>
+            <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#applyToJoinModal">
+              <%= i "paper-plane" %> Apply to Join
+            </button>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+
+    <% if @team.announcements.visible.any? %>
+      <div class="card mb-3">
+        <div class="card-header">
+          <h2>Announcements</h2>
+        </div>
+        <div class="card-body">
+          <% @team.announcements.visible.each do |announcement| %>
+            <div class="card mb-3" id="<%= dom_id announcement %>">
+              <div class="card-header">
+                <h3>
+                  <%= link_to i(@team.team_type.icon), @team, class: "badge rounded-pill", style: "background-color:#{@team.color};color:#{contrasting_color(@team.color)}", "data-turbo": "false", title: "Posted in #{@team.name}" %>
+                  <%= announcement.title %>
+                </h3>
+              </div>
+              <div class="card-body">
+                <%= md announcement.content %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="col-12 col-lg-6">
+    <div class="card mb-3">
+      <div class="card-header">
+        <h2><%= @team.team_type.manager_title.pluralize(@team.managers.count) %></h2>
+      </div>
+      <div class="card-body">
+        <div class="d-flex flex-row align-items-center flex-wrap">
+          <% @team.managers.order(display_name: :asc).each do |person| %>
+            <div class="p-1 w-10">
+              <%= link_to person, title: person.display_name do %>
+                <%= image_tag get_avatar_url_64(person.avatar), class: "person-img" %>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <% if GatherPack::Features.enabled?(:events) %>
+      <% upcoming_events = @team.events.where("start_time >= ?", Time.current).order(start_time: :asc).limit(3) %>
+      <% if upcoming_events.any? %>
+        <div class="card mb-3">
+          <div class="card-header">
+            <h2>Upcoming Events</h2>
+          </div>
+          <div class="card-body">
+            <% upcoming_events.each do |event| %>
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <div>
+                  <%= link_to event.name, event %>
+                </div>
+                <div>
+                  <small class="text-muted"><%= nice_datetime event.start_time %></small>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>
+
+<% if @team.requires_approval? && !@team.membership_applications.pending.exists?(person: current_user.person) && policy(MembershipApplication.new(team: @team, person: current_user.person)).create? %>
+  <div class="modal fade" id="applyToJoinModal" tabindex="-1" aria-labelledby="applyToJoinModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <%= simple_form_for [ current_user.person, MembershipApplication.new ], url: person_membership_applications_path(current_user.person, team_id: @team.id) do |f| %>
+          <div class="modal-header">
+            <h3 class="modal-title" id="applyToJoinModalLabel">Apply to Join <%= @team.name %></h3>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <%= f.input :message, as: :text, input_html: { rows: 4 }, label: "Message (optional)", hint: "Tell the team managers why you'd like to join." %>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <%= f.submit "Submit Application", class: "btn btn-info" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>
