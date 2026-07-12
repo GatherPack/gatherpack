@@ -214,4 +214,14 @@ Rails.application.config.to_prepare do
       ]
     )
   )
+
+  GatherPack::Features.register_built_in(
+    GatherPack::Feature.new(
+      key: :oauth_provider,
+      label: "OAuth Provider",
+      description: "Allow third-party apps to authenticate users via OAuth2",
+      default_enabled: true,
+      toggleable: true
+    )
+  )
 end

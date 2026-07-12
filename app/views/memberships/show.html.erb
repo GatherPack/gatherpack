@@ -15,9 +15,9 @@
         </p>
 
         <% if @membership.team.parent.present? %>
-            <p>
-              That means <%= @membership.person.display_name %> is also a member of:
-            </p>
+          <p>
+            That means <%= @membership.person.display_name %> is also a member of:
+          </p>
           <% p = @membership.team %>
           <div class="badge-container">
             <% while p = p.parent %>

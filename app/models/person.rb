@@ -40,6 +40,14 @@ class Person < ApplicationRecord
     user&.admin || memberships.where(manager: true).any?
   end
 
+  def roles
+    roles = []
+    roles << "admin" if user&.admin
+    roles << "architect" if user&.architect
+    roles << "manager" if memberships.where(manager: true).any?
+    roles
+  end
+
   def managed_teams
     user&.admin? ? Team.all : Team.joins(:memberships).where(memberships: { person_id: id, manager: true })
   end

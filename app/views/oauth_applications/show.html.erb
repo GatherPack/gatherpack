@@ -1,0 +1,39 @@
+<% breadcrumb @oauth_application %>
+
+<div class="card">
+  <div class="card-header">
+    <h1><%= @oauth_application.identifier_name %></h1>
+  </div>
+  <div class="card-body">
+    <dl class="row">
+      <dt class="col-sm-3">Name</dt>
+      <dd class="col-sm-9"><%= @oauth_application.name %></dd>
+
+      <dt class="col-sm-3">Client ID</dt>
+      <dd class="col-sm-9"><tt><%= @oauth_application.uid %></tt></dd>
+
+      <% if flash[:client_secret] %>
+        <dt class="col-sm-3">Client Secret</dt>
+        <dd class="col-sm-9">
+          <tt><%= flash[:client_secret] %></tt>
+          <button class="btn btn-sm btn-secondary ms-2" data-controller="clipboard" data-action="clipboard#copy" data-clipboard-text-value="<%= flash[:client_secret] %>">Copy</button>
+          <div class="text-warning mt-1"><small>This secret will not be shown again. Copy it now.</small></div>
+        </dd>
+      <% end %>
+
+      <dt class="col-sm-3">Scopes</dt>
+      <dd class="col-sm-9"><%= @oauth_application.scopes.presence || "—" %></dd>
+
+      <dt class="col-sm-3">Redirect URI</dt>
+      <dd class="col-sm-9"><tt><%= @oauth_application.redirect_uri %></tt></dd>
+
+      <dt class="col-sm-3">Confidential</dt>
+      <dd class="col-sm-9"><%= @oauth_application.confidential ? "Yes" : "No" %></dd>
+    </dl>
+  </div>
+  <div class="card-footer">
+    <%= link_to "Edit", edit_oauth_application_path(@oauth_application), class: 'btn btn-warning' %>
+    <%= link_to "Delete", @oauth_application, class: 'btn btn-danger', data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %>
+    <%= link_to "Back to OAuth Applications", oauth_applications_path, class: 'btn btn-dark' %>
+  </div>
+</div>
