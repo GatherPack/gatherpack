@@ -15,10 +15,10 @@
     <% end %>
   </div>
   <div class="card-footer">
-    <%= link_to 'Back to Time Clock', time_clock_punches_path, class: 'btn btn-success' %>
-    <%= link_to 'Period Summary', summary_time_clock_period_path(@time_clock_period), class: 'btn btn-info' %>
-    <%= link_to 'Edit', edit_time_clock_period_path(@time_clock_period), class: 'btn btn-warning' if policy(@time_clock_period).edit? %>
-    <%= link_to 'Delete', @time_clock_period, class: 'btn btn-danger', data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } if policy(@time_clock_period).destroy? %>
+    <%= link_to "Back to Time Clock", time_clock_punches_path, class: "btn btn-success" %>
+    <%= link_to "Period Summary", summary_time_clock_period_path(@time_clock_period), class: "btn btn-info" %>
+    <%= link_to "Edit", edit_time_clock_period_path(@time_clock_period), class: "btn btn-warning" if policy(@time_clock_period).edit? %>
+    <%= link_to "Delete", @time_clock_period, class: "btn btn-danger", data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } if policy(@time_clock_period).destroy? %>
   </div>
 </div>
 
@@ -31,22 +31,22 @@
       <div class="row">
         <div class="col-md">
           <% if params['q']&.has_key?('person_id_eq') %>
-            <%= f.input :person_id_eq, label: 'Person', as: :select, collection: policy_scope(Person), label_method: :identifier_name %>
+            <%= f.input :person_id_eq, label: "Person", as: :select, collection: policy_scope(Person), label_method: :identifier_name %>
           <% else %>
-            <%= f.input :person_display_name_cont, label: 'Person' %>
+            <%= f.input :person_display_name_cont, label: "Person" %>
           <% end %>
         </div>
         <div class="col-md">
-          <%= f.input :start_time_gteq, label: 'Starting After', input_html: { type: "datetime-local" } %>
+          <%= f.input :start_time_gteq, label: "Starting After", input_html: { type: "datetime-local" } %>
         </div>
         <div class="col-md">
-          <%= f.input :end_time_lteq, label: 'Ending Before', input_html: { type: "datetime-local" } %>
+          <%= f.input :end_time_lteq, label: "Ending Before", input_html: { type: "datetime-local" } %>
         </div>
       </div>
     </div>
     <div class="card-footer">
-      <%= f.submit 'Search', class: 'btn btn-primary', data: { action: "turbo_search#search" } %>
-      <%= link_to 'Clear Search', request.path, class: "btn btn-dark", data: { action: "turbo_search#clear" } %>
+      <%= f.submit "Search", class: "btn btn-primary", data: { action: "turbo_search#search" } %>
+      <%= link_to "Clear Search", request.path, class: "btn btn-dark", data: { action: "turbo_search#clear" } %>
     </div>
   </div>
 <% end %>

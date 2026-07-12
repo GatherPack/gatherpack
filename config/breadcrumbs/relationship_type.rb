@@ -1,5 +1,5 @@
 crumb :relationship_types do
-  link 'Relationship Types', relationship_types_path
+  link "Relationship Types", relationship_types_path
   parent :setup
 end
 

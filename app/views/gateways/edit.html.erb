@@ -1,6 +1,6 @@
 <% breadcrumb @gateway %>
 
-<%= form_with(model: @gateway, url: gateway_path(@gateway), method: 'PATCH') do |f| %>
+<%= form_with(model: @gateway, url: gateway_path(@gateway), method: "PATCH") do |f| %>
 <div class="card">
   <div class="card-header">
     <h1>Editing <%= @gateway.identifier_name %></h1>
@@ -9,8 +9,8 @@
     <%= render "form", f: f %>
   </div>
   <div class="card-footer">
-    <%= link_to "Cancel", gateway_path(@gateway), class: 'btn btn-warning' %>
-    <%= f.button :submit, class: 'btn btn-primary' %>
+    <%= link_to "Cancel", gateway_path(@gateway), class: "btn btn-warning" %>
+    <%= f.button :submit, class: "btn btn-primary" %>
   </div>
 </div>
 <% end %>

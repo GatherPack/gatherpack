@@ -26,7 +26,7 @@ class CalendarNotesController < InternalController
     @calendar_note = authorize CalendarNote.new(calendar_note_params)
 
     if @calendar_note.save
-      redirect_to @calendar_note, notice: 'Calendar note was successfully created.'
+      redirect_to @calendar_note, notice: "Calendar note was successfully created."
     else
       render :new, status: :unprocessable_entity
     end
@@ -35,7 +35,7 @@ class CalendarNotesController < InternalController
   # PATCH/PUT /calendar_notes/1
   def update
     if @calendar_note.update(calendar_note_params)
-      redirect_to @calendar_note, notice: 'Calendar note was successfully updated.', status: :see_other
+      redirect_to @calendar_note, notice: "Calendar note was successfully updated.", status: :see_other
     else
       render :edit, status: :unprocessable_entity
     end
@@ -44,7 +44,7 @@ class CalendarNotesController < InternalController
   # DELETE /calendar_notes/1
   def destroy
     @calendar_note.destroy!
-    redirect_to calendar_index_url, notice: 'Calendar note was successfully destroyed.', status: :see_other
+    redirect_to calendar_index_url, notice: "Calendar note was successfully destroyed.", status: :see_other
   end
 
   private

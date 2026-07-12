@@ -1,0 +1,50 @@
+<% breadcrumb :oauth_applications %>
+
+<%= search_form_for @q, data: { "controller": "turbo_search", "turbo-frame": "results" } do |f| %>
+<div class="card">
+  <div class="card-header">
+    <h1>OAuth Applications</h1>
+  </div>
+  <div class="card-body">
+  </div>
+  <div class="card-footer">
+    <%= link_to "New OAuth Application", new_oauth_application_path, class: 'btn btn-success' %>
+    <%= f.submit 'Search', class: 'btn btn-primary', data: { action: "turbo_search#search" } %>
+    <%= link_to 'Clear Search', request.path, class: "btn btn-dark", data: { action: "turbo_search#clear" } %>
+  </div>
+</div>
+<% end %>
+
+<%= turbo_frame_tag "results" do %>
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th><%= sort_link @q, :name, "Name" %></th>
+          <th>Client ID</th>
+          <th>Scopes</th>
+          <th>Redirect URI</th>
+          <th><%= sort_link @q, :updated_at, "Last Updated" %></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @oauth_applications.each do |app| %>
+          <tr>
+            <td><%= link_to app.name, app %></td>
+            <td><code><%= truncate app.uid, length: 20 %></code></td>
+            <td><%= app.scopes.presence || "—" %></td>
+            <td><code><%= truncate app.redirect_uri, length: 30 %></code></td>
+            <td><%= time_ago_in_words app.updated_at %> ago</td>
+            <td>
+              <%= link_to "Edit", edit_oauth_application_path(app), class: "btn btn-sm btn-warning" %>
+              <%= link_to "Delete", app, class: "btn btn-sm btn-danger", data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+  <%= paginate @oauth_applications %>
+<% end %>

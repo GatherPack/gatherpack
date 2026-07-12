@@ -7,7 +7,7 @@
       <div class="nav flex-column me-auto">
         <% if current_user != true_user %>
           <div class="nav-item d-flex align-items-center px-3 impersonator">
-            <%= image_tag(get_avatar_url(true_user.person.avatar), class: 'person-img', style: 'height: 2em; width: auto;') %>
+            <%= image_tag(get_avatar_url(true_user.person.avatar), class: "person-img", style: "height: 2em; width: auto;") %>
             <%= link_to true_user.person.identifier_name, true_user.person %>
           </div>
           <div class="nav-item px-3 text-center w-100 impersonator-label">
@@ -15,19 +15,19 @@
           </div>
         <% end %>
         <div class="nav-item d-flex align-items-center px-3 <%= "impersonator" if current_user != true_user %>">
-          <%= image_tag(get_avatar_url(current_user.person.avatar), class: 'person-img', style: 'height: 2em; width: auto;') %>
+          <%= image_tag(get_avatar_url(current_user.person.avatar), class: "person-img", style: "height: 2em; width: auto;") %>
           <%= link_to current_user.person.identifier_name, current_user.person %>
         </div>
         <% if current_user != true_user %>
           <div class="nav-item d-flex align-items-center px-3 pt-1 impersonator">
-            <%= button_to "Stop Impersonating", stop_impersonating_people_path, data: {turbo: false}, class: 'btn btn-danger btn-sm w-100' %>
+            <%= button_to "Stop Impersonating", stop_impersonating_people_path, data: {turbo: false}, class: "btn btn-danger btn-sm w-100" %>
           </div>
         <% end %>
 
         <hr class="my-2">
 
-        <%= nav_link 'Dashboard', root_path, 'flag' %>
-        <%= nav_link 'Sign Out', destroy_user_session_path, 'person-through-window', method: 'delete' %>
+        <%= nav_link "Dashboard", root_path, "flag" %>
+        <%= nav_link "Sign Out", destroy_user_session_path, "person-through-window", method: "delete" %>
 
         <hr class="my-2">
 
@@ -41,19 +41,19 @@
         <% if admin? %>
           <hr class="my-2">
 
-          <%= nav_heading 'Automation' %>
+          <%= nav_heading "Automation" %>
 
-          <%= nav_link 'Variables', variables_path, 'database' %>
-          <%= nav_link 'Reports', reports_path, 'file-code' %>
-          <%= nav_link 'Hooks', hooks_path, 'timeline' %>
+          <%= nav_link "Variables", variables_path, "database" %>
+          <%= nav_link "Reports", reports_path, "file-code" %>
+          <%= nav_link "Hooks", hooks_path, "timeline" %>
 
-          <%= nav_heading 'Setup' %>
+          <%= nav_heading "Setup" %>
 
-          <%= nav_link 'Setup', setup_path, 'cogs' %>
+          <%= nav_link "Setup", setup_path, "cogs" %>
 
-          <%= nav_heading 'Logs' %>
+          <%= nav_heading "Logs" %>
 
-          <%= nav_link 'Audit Log', audit_logs_path, 'file-circle-check' %>
+          <%= nav_link "Audit Log", audit_logs_path, "file-circle-check" %>
         <% end %>
       </div>
     </div>

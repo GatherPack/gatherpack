@@ -83,6 +83,8 @@ end
 
 gem "devise", "~> 5"
 
+gem "doorkeeper"
+
 gem "simple_form", "~> 5"
 
 gem "omniauth", "~> 2"

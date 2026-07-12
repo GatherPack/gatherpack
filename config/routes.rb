@@ -133,6 +133,20 @@ Rails.application.routes.draw do
     resources :pages
   end
 
+  if GatherPack::Features.enabled?(:oauth_provider)
+    use_doorkeeper do
+      skip_controllers :applications, :authorized_applications
+    end
+
+    namespace :api do
+      namespace :v1 do
+        get "userinfo", to: "user_info#show"
+      end
+    end
+
+    resources :oauth_applications
+  end
+
   # Handle plugin routes - was suggested, don't know that we actually need this or if plugins can just manage this themselves
   # GatherPack::Features.all.select { |f| f.enabled? && f.routes_proc }.each do |feature|
   #   instance_exec(&feature.routes_proc)

@@ -27,7 +27,7 @@ class TeamTypesController < InternalController
     @team_type = TeamType.new(team_type_params)
 
     if @team_type.save
-      redirect_to @team_type, notice: 'Team type was successfully created.'
+      redirect_to @team_type, notice: "Team type was successfully created."
     else
       render :new, status: :unprocessable_entity
     end
@@ -36,7 +36,7 @@ class TeamTypesController < InternalController
   # PATCH/PUT /team_types/1
   def update
     if @team_type.update(team_type_params)
-      redirect_to @team_type, notice: 'Team type was successfully updated.', status: :see_other
+      redirect_to @team_type, notice: "Team type was successfully updated.", status: :see_other
     else
       render :edit, status: :unprocessable_entity
     end
@@ -45,7 +45,7 @@ class TeamTypesController < InternalController
   # DELETE /team_types/1
   def destroy
     @team_type.destroy!
-    redirect_to team_types_url, notice: 'Team type was successfully destroyed.', status: :see_other
+    redirect_to team_types_url, notice: "Team type was successfully destroyed.", status: :see_other
   end
 
   private

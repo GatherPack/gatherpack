@@ -1,6 +1,6 @@
 <% breadcrumb :user, @person %>
 
-<%= simple_form_for([@person, @user], url: person_user_path) do |f| %>
+<%= simple_form_for([ @person, @user ], url: person_user_path) do |f| %>
   <div class="card">
     <div class="card-header">
       <h1>Editing user information</h1>
@@ -9,8 +9,8 @@
       <%= render "form", f: f %>
     </div>
     <div class="card-footer">
-      <%= link_to "Cancel", edit_person_path(@person), class: 'btn btn-warning' %>
-      <%= f.button :submit, class: 'btn btn-primary' %>
+      <%= link_to "Cancel", edit_person_path(@person), class: "btn btn-warning" %>
+      <%= f.button :submit, class: "btn btn-primary" %>
     </div>
   </div>
 <% end %>

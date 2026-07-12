@@ -10,11 +10,11 @@ class Ledger < ApplicationRecord
   after_save :refresh_balance
 
   def self.ransackable_attributes(auth_object = nil)
-    ["name", "team_id"]
+    [ "name", "team_id" ]
   end
 
   def self.ransackable_associations(auth_object = nil)
-    ["ledger_entries", "ledger_ownerships", "team"]
+    [ "ledger_entries", "ledger_ownerships", "team" ]
   end
 
   def owners

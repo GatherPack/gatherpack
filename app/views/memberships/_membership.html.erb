@@ -1,11 +1,11 @@
 <div class="card" id="<%= dom_id membership %>">
   <div class="card-header">
     <% if membership.manager %>
-      <span title="Manager"><%= i 'user-tie'%></span>
+      <span title="Manager"><%= i "user-tie" %></span>
     <% end %>
-    <%= link_to membership.person.identifier_name, [membership.team, membership], "data-turbo": "false" %>
+    <%= link_to membership.person.identifier_name, [ membership.team, membership ], "data-turbo": "false" %>
   </div>
   <div class="card-body">
-    <%= image_tag get_avatar_url(membership.person.avatar), class: 'person-img' %>
+    <%= image_tag get_avatar_url(membership.person.avatar), class: "person-img" %>
   </div>
 </div>

@@ -26,7 +26,7 @@ class MailboxMessagesController < InternalController
     @mailbox_message = authorize MailboxMessage.new(mailbox_message_params)
 
     if @mailbox_message.save
-      redirect_to @mailbox_message, notice: 'Mailbox message was successfully created.'
+      redirect_to @mailbox_message, notice: "Mailbox message was successfully created."
     else
       render :new, status: :unprocessable_entity
     end
@@ -35,7 +35,7 @@ class MailboxMessagesController < InternalController
   # PATCH/PUT /mailbox_messages/1
   def update
     if @mailbox_message.update(mailbox_message_params)
-      redirect_to @mailbox_message, notice: 'Mailbox message was successfully updated.', status: :see_other
+      redirect_to @mailbox_message, notice: "Mailbox message was successfully updated.", status: :see_other
     else
       render :edit, status: :unprocessable_entity
     end
@@ -44,7 +44,7 @@ class MailboxMessagesController < InternalController
   # DELETE /mailbox_messages/1
   def destroy
     @mailbox_message.destroy!
-    redirect_to @mailbox, notice: 'Mailbox message was successfully destroyed.', status: :see_other
+    redirect_to @mailbox, notice: "Mailbox message was successfully destroyed.", status: :see_other
   end
 
   private

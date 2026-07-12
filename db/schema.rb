@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_12_29_210052) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_07_182349) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -296,6 +296,28 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_29_210052) do
     t.index ["team_id"], name: "index_ledgers_on_team_id"
   end
 
+  create_table "lego_lottery_drawing_tickets", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.uuid "lego_lottery_drawing_id", null: false
+    t.uuid "person_id", null: false
+    t.jsonb "selections", default: {}, null: false
+    t.datetime "updated_at", null: false
+    t.integer "weight"
+    t.index ["lego_lottery_drawing_id"], name: "index_lego_lottery_drawing_tickets_on_lego_lottery_drawing_id"
+    t.index ["person_id"], name: "index_lego_lottery_drawing_tickets_on_person_id"
+  end
+
+  create_table "lego_lottery_drawings", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.boolean "active", default: true
+    t.datetime "created_at", null: false
+    t.text "description"
+    t.uuid "eligible_team_ids", default: [], array: true
+    t.string "name"
+    t.boolean "open", default: false
+    t.uuid "target_team_ids", default: [], array: true
+    t.datetime "updated_at", null: false
+  end
+
   create_table "mailbox_assignments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.uuid "mailbox_id", null: false
@@ -332,6 +354,61 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_29_210052) do
     t.index ["inherited_id"], name: "index_memberships_on_inherited_id"
     t.index ["person_id"], name: "index_memberships_on_person_id"
     t.index ["team_id"], name: "index_memberships_on_team_id"
+  end
+
+  create_table "oauth_access_grants", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "application_id", null: false
+    t.datetime "created_at", null: false
+    t.integer "expires_in", null: false
+    t.text "redirect_uri", null: false
+    t.uuid "resource_owner_id", null: false
+    t.datetime "revoked_at"
+    t.string "scopes", default: "", null: false
+    t.string "token", null: false
+    t.index ["application_id"], name: "index_oauth_access_grants_on_application_id"
+    t.index ["resource_owner_id"], name: "index_oauth_access_grants_on_resource_owner_id"
+    t.index ["token"], name: "index_oauth_access_grants_on_token", unique: true
+  end
+
+  create_table "oauth_access_tokens", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "application_id", null: false
+    t.datetime "created_at", null: false
+    t.integer "expires_in"
+    t.string "previous_refresh_token", default: "", null: false
+    t.string "refresh_token"
+    t.uuid "resource_owner_id"
+    t.datetime "revoked_at"
+    t.string "scopes"
+    t.string "token", null: false
+    t.index ["application_id"], name: "index_oauth_access_tokens_on_application_id"
+    t.index ["refresh_token"], name: "index_oauth_access_tokens_on_refresh_token", unique: true
+    t.index ["resource_owner_id"], name: "index_oauth_access_tokens_on_resource_owner_id"
+    t.index ["token"], name: "index_oauth_access_tokens_on_token", unique: true
+  end
+
+  create_table "oauth_applications", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.boolean "confidential", default: true, null: false
+    t.datetime "created_at", null: false
+    t.string "name", null: false
+    t.text "redirect_uri", null: false
+    t.string "scopes", default: "", null: false
+    t.string "secret", null: false
+    t.string "uid", null: false
+    t.datetime "updated_at", null: false
+    t.index ["uid"], name: "index_oauth_applications_on_uid", unique: true
+  end
+
+  create_table "operations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.text "code"
+    t.string "color"
+    t.datetime "created_at", null: false
+    t.string "icon"
+    t.string "model"
+    t.string "name"
+    t.string "permission"
+    t.string "scope"
+    t.datetime "updated_at", null: false
+    t.text "view"
   end
 
   create_table "pages", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -644,11 +721,17 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_29_210052) do
   add_foreign_key "ledger_taggings", "ledger_entries"
   add_foreign_key "ledger_taggings", "ledger_tags"
   add_foreign_key "ledgers", "teams"
+  add_foreign_key "lego_lottery_drawing_tickets", "lego_lottery_drawings"
+  add_foreign_key "lego_lottery_drawing_tickets", "people"
   add_foreign_key "mailbox_assignments", "mailboxes"
   add_foreign_key "mailbox_messages", "mailboxes"
   add_foreign_key "memberships", "people"
   add_foreign_key "memberships", "teams"
   add_foreign_key "memberships", "teams", column: "inherited_id"
+  add_foreign_key "oauth_access_grants", "oauth_applications", column: "application_id"
+  add_foreign_key "oauth_access_grants", "users", column: "resource_owner_id"
+  add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"
+  add_foreign_key "oauth_access_tokens", "users", column: "resource_owner_id"
   add_foreign_key "relationships", "people", column: "child_id"
   add_foreign_key "relationships", "people", column: "parent_id"
   add_foreign_key "relationships", "relationship_types"

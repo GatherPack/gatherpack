@@ -1,6 +1,6 @@
 <div class="row fullscreen">
   <div class="col-12">
-    <div class="logoline">Get Together with <%= image_tag( 'logo.svg', alt: 'GatherPack', class: 'logo') %> GatherPack</a></div>
+    <div class="logoline">Get Together with <%= image_tag("logo.svg", alt: "GatherPack", class: "logo") %> GatherPack</a></div>
   </div>
   <%- if Settings[:local_auth] %>
     <div class="col-md-6 m-auto">
@@ -22,10 +22,10 @@
               <div class="mb-3">
                 <%= link_to "Forgot your password?", new_password_path(resource_name) %>
               </div>
-            <% end %> 
+            <% end %>
 
             <div class="actions">
-              <%= f.submit "Sign in", class: 'btn btn-primary' %>
+              <%= f.submit "Sign in", class: "btn btn-primary" %>
             </div>
           <% end %>
         </div>
@@ -37,12 +37,12 @@
             <h2>Create an Account with Email &amp; Password</h2>
           </div>
           <div class="card-body">
-            <%= link_to 'Sign Up', new_registration_path(resource_name), class: 'btn btn-primary' %>
+            <%= link_to "Sign Up", new_registration_path(resource_name), class: "btn btn-primary" %>
           </div>
         </div>
       <% end %>
     </div>
   <% end %>
 
-  <%= render partial: 'devise/shared/omniauth' %>
+  <%= render partial: "devise/shared/omniauth" %>
 </div>

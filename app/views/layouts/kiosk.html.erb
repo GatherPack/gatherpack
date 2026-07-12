@@ -23,7 +23,7 @@
     <header class="navbar navbar-expand-lg bg-dark">
       <div class="container-fluid">
         <a class="navbar-brand" href="/">
-          <%= image_tag 'logo.svg' %>
+          <%= image_tag "logo.svg" %>
           <%= Settings[:title] %>
         </a>
       </div>
@@ -35,7 +35,7 @@
             <%= true_user.person.identifier_name %>
           </div>
           <div class="nav-item d-flex align-items-center px-1">
-            <%= image_tag(get_avatar_url(true_user.person.avatar), class: 'person-img', style: 'height: 2em; width: auto;') %>
+            <%= image_tag(get_avatar_url(true_user.person.avatar), class: "person-img", style: "height: 2em; width: auto;") %>
           </div>
           <div class="nav-item px-1 text-center w-100 text-white">
             impersonating
@@ -45,12 +45,11 @@
           <%= current_user.person.identifier_name %>
         </div>
         <div class="nav-item d-flex align-items-center px-1 pe-3">
-          <%= image_tag(get_avatar_url(current_user.person.avatar), class: 'person-img', style: 'height: 2em; width: auto;') %>
+          <%= image_tag(get_avatar_url(current_user.person.avatar), class: "person-img", style: "height: 2em; width: auto;") %>
         </div>
       </ul>
     </div>
     </header>
-
 
     <div class="kiosk-container">
       <div class="row">

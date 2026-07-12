@@ -25,7 +25,7 @@ class ShortcutsController < InternalController
     @shortcut = authorize Shortcut.new(shortcut_params)
 
     if @shortcut.save
-      redirect_to @shortcut, notice: 'Shortcut was successfully created.'
+      redirect_to @shortcut, notice: "Shortcut was successfully created."
     else
       render :new, status: :unprocessable_entity
     end
@@ -34,7 +34,7 @@ class ShortcutsController < InternalController
   # PATCH/PUT /shortcuts/1
   def update
     if @shortcut.update(shortcut_params)
-      redirect_to @shortcut, notice: 'Shortcut was successfully updated.', status: :see_other
+      redirect_to @shortcut, notice: "Shortcut was successfully updated.", status: :see_other
     else
       render :edit, status: :unprocessable_entity
     end
@@ -43,7 +43,7 @@ class ShortcutsController < InternalController
   # DELETE /shortcuts/1
   def destroy
     @shortcut.destroy!
-    redirect_to shortcuts_url, notice: 'Shortcut was successfully destroyed.', status: :see_other
+    redirect_to shortcuts_url, notice: "Shortcut was successfully destroyed.", status: :see_other
   end
 
   private

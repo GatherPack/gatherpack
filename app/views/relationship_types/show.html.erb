@@ -23,10 +23,10 @@
         <% end %>
       </tbody>
     </table>
-    
+
   </div>
   <div class="card-footer">
-    <%= link_to 'Edit', edit_relationship_type_path(@relationship_type), class: 'btn btn-warning' %>
-    <%= link_to 'Delete', @relationship_type, class: 'btn btn-danger', data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %>
+    <%= link_to "Edit", edit_relationship_type_path(@relationship_type), class: "btn btn-warning" %>
+    <%= link_to "Delete", @relationship_type, class: "btn btn-danger", data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } %>
   </div>
 </div>

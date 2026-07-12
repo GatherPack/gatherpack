@@ -26,7 +26,7 @@ class RelationshipTypesController < InternalController
     @relationship_type = authorize RelationshipType.new(relationship_type_params)
 
     if @relationship_type.save
-      redirect_to @relationship_type, notice: 'Relationship type was successfully created.'
+      redirect_to @relationship_type, notice: "Relationship type was successfully created."
     else
       render :new, status: :unprocessable_entity
     end
@@ -35,7 +35,7 @@ class RelationshipTypesController < InternalController
   # PATCH/PUT /relationship_types/1
   def update
     if @relationship_type.update(relationship_type_params)
-      redirect_to @relationship_type, notice: 'Relationship type was successfully updated.', status: :see_other
+      redirect_to @relationship_type, notice: "Relationship type was successfully updated.", status: :see_other
     else
       render :edit, status: :unprocessable_entity
     end
@@ -44,7 +44,7 @@ class RelationshipTypesController < InternalController
   # DELETE /relationship_types/1
   def destroy
     @relationship_type.destroy!
-    redirect_to relationship_types_url, notice: 'Relationship type was successfully destroyed.', status: :see_other
+    redirect_to relationship_types_url, notice: "Relationship type was successfully destroyed.", status: :see_other
   end
 
   private

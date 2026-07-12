@@ -1,6 +1,6 @@
 <% breadcrumb @gateway %>
 
-<%= form_with(url: gateways_path, method: 'POST') do |f| %>
+<%= form_with(url: gateways_path, method: "POST") do |f| %>
   <div class="card">
     <div class="card-header">
       <h1>New <%= @gateway.gateway_name %></h1>
@@ -9,8 +9,8 @@
       <%= render "form", f: f %>
     </div>
     <div class="card-footer">
-      <%= link_to "Cancel", gateways_path, class: 'btn btn-warning' %>
-      <%= f.submit class: 'btn btn-primary' %>
+      <%= link_to "Cancel", gateways_path, class: "btn btn-warning" %>
+      <%= f.submit class: "btn btn-primary" %>
     </div>
   </div>
 <% end %>

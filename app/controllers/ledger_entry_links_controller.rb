@@ -25,7 +25,7 @@ class LedgerEntryLinksController < InternalController
     @ledger_entry_link = authorize LedgerEntryLink.new(ledger_entry_link_params)
 
     if @ledger_entry_link.save
-      redirect_to @ledger_entry_link, notice: 'Ledger entry link was successfully created.'
+      redirect_to @ledger_entry_link, notice: "Ledger entry link was successfully created."
     else
       render :new, status: :unprocessable_entity
     end
@@ -34,7 +34,7 @@ class LedgerEntryLinksController < InternalController
   # PATCH/PUT /ledger_entry_links/1
   def update
     if @ledger_entry_link.update(ledger_entry_link_params)
-      redirect_to @ledger_entry_link, notice: 'Ledger entry link was successfully updated.', status: :see_other
+      redirect_to @ledger_entry_link, notice: "Ledger entry link was successfully updated.", status: :see_other
     else
       render :edit, status: :unprocessable_entity
     end
@@ -43,7 +43,7 @@ class LedgerEntryLinksController < InternalController
   # DELETE /ledger_entry_links/1
   def destroy
     @ledger_entry_link.destroy!
-    redirect_to ledger_entry_links_url, notice: 'Ledger entry link was successfully destroyed.', status: :see_other
+    redirect_to ledger_entry_links_url, notice: "Ledger entry link was successfully destroyed.", status: :see_other
   end
 
   private

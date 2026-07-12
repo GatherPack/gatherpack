@@ -8,8 +8,8 @@
     <%= nice_datetime_range @budget_period.starts_at, @budget_period.ends_at %>
   </div>
   <div class="card-footer">
-    <%= link_to 'Edit', edit_budget_period_path(@budget_period), class: 'btn btn-warning' if policy(@budget_period).edit? %>
-    <%= link_to 'Delete', @budget_period, class: 'btn btn-danger', data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } if policy(@budget_period).destroy? %>
+    <%= link_to "Edit", edit_budget_period_path(@budget_period), class: "btn btn-warning" if policy(@budget_period).edit? %>
+    <%= link_to "Delete", @budget_period, class: "btn btn-danger", data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } if policy(@budget_period).destroy? %>
   </div>
 </div>
 
@@ -17,7 +17,7 @@
 <div class="row g-3">
   <% @budget_period.budgets.each do |budget| %>
     <div class="col-12 col-md-6 col-lg-3">
-      <%= render partial: 'budgets/budget', locals: { budget: budget } %>
+      <%= render partial: "budgets/budget", locals: { budget: budget } %>
     </div>
   <% end %>
 </div>

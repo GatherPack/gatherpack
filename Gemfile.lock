@@ -145,6 +145,8 @@ GEM
       responders
       warden (~> 1.2.3)
     domain_name (0.6.20240107)
+    doorkeeper (5.9.3)
+      railties (>= 5)
     dotenv (3.2.0)
     drb (2.2.3)
     ed25519 (1.4.0)
@@ -597,6 +599,7 @@ DEPENDENCIES
   cssbundling-rails
   debug
   devise (~> 5)
+  doorkeeper
   dotenv (~> 3)
   erb_lint
   gretel!

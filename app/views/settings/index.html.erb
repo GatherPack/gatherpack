@@ -6,29 +6,29 @@
         <div class="card-header">
           <h1><%= group %></h1>
         </div>
-        <div class="card-body">  
+        <div class="card-body">
           <% Settings.settings(group).each do |setting| %>
             <div class="row align-items-end">
               <% case setting.setting_type %>
               <% when :boolean %>
-                <%= f.input setting.setting_key, as: "select", 
-                                                label: setting.name, 
+                <%= f.input setting.setting_key, as: "select",
+                                                label: setting.name,
                                                 placeholder: setting.default_value,
                                                 collection: { "true": true, "false": false },
                                                 selected: setting.value,
-                                                wrapper_html: { class: 'col' } %>
+                                                wrapper_html: { class: "col" } %>
               <% when :time_zone %>
-                <%= f.input setting.setting_key, as: "select", 
-                                                label: setting.name, 
-                                                collection: ActiveSupport::TimeZone.all.map { |zone| [zone.to_s, zone.tzinfo.name] },
+                <%= f.input setting.setting_key, as: "select",
+                                                label: setting.name,
+                                                collection: ActiveSupport::TimeZone.all.map { |zone| [ zone.to_s, zone.tzinfo.name ] },
                                                 selected: setting.value,
-                                                wrapper_html: { class: 'col' } %>
+                                                wrapper_html: { class: "col" } %>
               <% else %>
-                <%= f.input setting.setting_key, as: setting.setting_type, 
-                                                label: setting.name, 
+                <%= f.input setting.setting_key, as: setting.setting_type,
+                                                label: setting.name,
                                                 placeholder: setting.default_value,
-                                                input_html: { value: setting.value }, 
-                                                wrapper_html: { class: 'col' } %>
+                                                input_html: { value: setting.value },
+                                                wrapper_html: { class: "col" } %>
               <% end %>
               <div class="col mb-3">
                 <%= setting.description %>
@@ -42,8 +42,8 @@
     <% end %>
     <div class="card mt-3">
       <div class="card-footer">
-        <%= f.submit 'Save', class: 'btn btn-lg btn-success' %>
-        <%= link_to 'Cancel', :back, class: 'btn btn-lg btn-primary' %>
+        <%= f.submit "Save", class: "btn btn-lg btn-success" %>
+        <%= link_to "Cancel", :back, class: "btn btn-lg btn-primary" %>
       </div>
     </div>
   <% end %>

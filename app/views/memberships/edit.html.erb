@@ -1,6 +1,6 @@
 <% breadcrumb @membership, (@team || @person) %>
 
-<%= simple_form_for([(@team || @person), @membership]) do |f| %>
+<%= simple_form_for([ (@team || @person), @membership ]) do |f| %>
 <div class="card">
   <div class="card-header">
     <h1>Editing <%= @membership.identifier_name %></h1>
@@ -9,8 +9,8 @@
     <%= render "form", f: f %>
   </div>
   <div class="card-footer">
-    <%= link_to "Cancel", [(@team || @person), @membership], class: 'btn btn-warning' %>
-    <%= f.button :submit, class: 'btn btn-primary' %>
+    <%= link_to "Cancel", [ (@team || @person), @membership ], class: "btn btn-warning" %>
+    <%= f.button :submit, class: "btn btn-primary" %>
   </div>
 </div>
 <% end %>

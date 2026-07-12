@@ -1,6 +1,6 @@
 <div class="row fullscreen">
   <div class="col-12">
-    <div class="logoline">Get Together with <%= image_tag( 'logo.svg', alt: 'GatherPack', class: 'logo') %> GatherPack</a></div>
+    <div class="logoline">Get Together with <%= image_tag("logo.svg", alt: "GatherPack", class: "logo") %> GatherPack</a></div>
   </div>
   <div class="col-md-6">
     <div class="card">
@@ -14,7 +14,7 @@
           </div>
 
           <div class="actions">
-            <%= f.submit "Send me reset password instructions", class: 'btn btn-secondary' %>
+            <%= f.submit "Send me reset password instructions", class: "btn btn-secondary" %>
           </div>
         <% end %>
       </div>
@@ -25,10 +25,10 @@
         <h2>Create an Account with Email &amp; Password</h2>
       </div>
       <div class="card-body">
-        <%= link_to 'Sign Up', new_registration_path(resource_name), class: 'btn btn-primary' %>
+        <%= link_to "Sign Up", new_registration_path(resource_name), class: "btn btn-primary" %>
       </div>
     </div>
   </div>
 
-  <%= render partial: 'devise/shared/omniauth' %>
+  <%= render partial: "devise/shared/omniauth" %>
 </div>

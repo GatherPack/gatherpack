@@ -8,9 +8,9 @@
     <code><pre><%= @results %></pre></code>
   </div>
   <div class="card-footer">
-    <%= link_to 'Show Code', @report, class: 'btn btn-info' %>
-    <%= link_to 'Run', run_report_path(@report), class: 'btn btn-success' %>
-    <%= link_to 'Edit', edit_report_path(@report), class: 'btn btn-warning' %>
-    <%= link_to 'Delete', @report, class: 'btn btn-danger', data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %>
+    <%= link_to "Show Code", @report, class: "btn btn-info" %>
+    <%= link_to "Run", run_report_path(@report), class: "btn btn-success" %>
+    <%= link_to "Edit", edit_report_path(@report), class: "btn btn-warning" %>
+    <%= link_to "Delete", @report, class: "btn btn-danger", data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } %>
   </div>
 </div>
