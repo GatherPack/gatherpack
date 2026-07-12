@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_11_175709) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_12_133754) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -378,6 +378,19 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_11_175709) do
     t.index ["user_id"], name: "index_people_on_user_id"
   end
 
+  create_table "questions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.boolean "closed", default: false, null: false
+    t.text "content", null: false
+    t.datetime "created_at", null: false
+    t.uuid "person_id", null: false
+    t.uuid "team_id", null: false
+    t.string "title", null: false
+    t.datetime "updated_at", null: false
+    t.index ["created_at"], name: "index_questions_on_created_at"
+    t.index ["person_id"], name: "index_questions_on_person_id"
+    t.index ["team_id"], name: "index_questions_on_team_id"
+  end
+
   create_table "relationship_types", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "child_label"
     t.datetime "created_at", null: false
@@ -395,6 +408,31 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_11_175709) do
     t.index ["child_id"], name: "index_relationships_on_child_id"
     t.index ["parent_id"], name: "index_relationships_on_parent_id"
     t.index ["relationship_type_id"], name: "index_relationships_on_relationship_type_id"
+  end
+
+  create_table "replies", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.text "content", null: false
+    t.datetime "created_at", null: false
+    t.uuid "parent_id"
+    t.uuid "person_id", null: false
+    t.uuid "question_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["created_at"], name: "index_replies_on_created_at"
+    t.index ["parent_id"], name: "index_replies_on_parent_id"
+    t.index ["person_id"], name: "index_replies_on_person_id"
+    t.index ["question_id"], name: "index_replies_on_question_id"
+  end
+
+  create_table "reply_votes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.uuid "person_id", null: false
+    t.uuid "question_id", null: false
+    t.uuid "reply_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["person_id", "question_id"], name: "index_reply_votes_on_person_id_and_question_id", unique: true
+    t.index ["person_id"], name: "index_reply_votes_on_person_id"
+    t.index ["question_id"], name: "index_reply_votes_on_question_id"
+    t.index ["reply_id"], name: "index_reply_votes_on_reply_id"
   end
 
   create_table "reports", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -677,9 +715,16 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_11_175709) do
   add_foreign_key "memberships", "people"
   add_foreign_key "memberships", "teams"
   add_foreign_key "memberships", "teams", column: "inherited_id"
+  add_foreign_key "questions", "people"
+  add_foreign_key "questions", "teams"
   add_foreign_key "relationships", "people", column: "child_id"
   add_foreign_key "relationships", "people", column: "parent_id"
   add_foreign_key "relationships", "relationship_types"
+  add_foreign_key "replies", "people"
+  add_foreign_key "replies", "questions"
+  add_foreign_key "reply_votes", "people"
+  add_foreign_key "reply_votes", "questions"
+  add_foreign_key "reply_votes", "replies"
   add_foreign_key "shortcuts", "teams"
   add_foreign_key "solid_queue_blocked_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
   add_foreign_key "solid_queue_claimed_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade

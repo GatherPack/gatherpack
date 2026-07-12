@@ -16,6 +16,7 @@ class Team < ApplicationRecord
   belongs_to :parent, class_name: "Team", optional: true
   has_many :children, class_name: "Team", foreign_key: :parent_id, dependent: :nullify
   has_many :calendar_notes, as: :noteable
+  has_many :questions
   enum :join_permission, { added_by_admin: 0, added_by_manager: 1, added_by_current_member: 2, has_account: 3, requires_approval: 4 }
 
   validates :name, presence: true

@@ -19,6 +19,9 @@ class TeamsController < InternalController
   def show
     @is_member = current_user.admin? || current_user.architect? || @team.people.include?(current_user.person)
     render "show_public" unless @is_member
+    if GatherPack::Features.enabled?(:qa)
+      @recent_questions = @team.questions.where(closed: false).order(created_at: :desc).limit(5)
+    end
   end
 
   # GET /teams/1/badges

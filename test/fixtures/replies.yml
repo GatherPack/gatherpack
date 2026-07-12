@@ -1,0 +1,17 @@
+one:
+  question: one
+  person: one
+  content: "Go to settings and click reset password."
+  parent: nil
+
+two:
+  question: one
+  person: two
+  content: "You can also use the forgot password link on the login page."
+  parent: nil
+
+three:
+  question: one
+  person: one
+  content: "Thanks, that worked!"
+  parent: one

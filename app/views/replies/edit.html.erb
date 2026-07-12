@@ -1,0 +1,16 @@
+<% breadcrumb @question %>
+
+<div class="card">
+  <div class="card-header">
+    <h5 class="mb-0">Edit Reply</h5>
+  </div>
+  <div class="card-body">
+    <%= simple_form_for [@question, @reply] do |f| %>
+      <%= f.input :content, label: false, wrapper_html: { class: "code-editor" }, input_html: { rows: 4, data: { lang: "markdown" } } %>
+      <div class="d-flex gap-2">
+        <%= f.button :submit, "Save", class: "btn btn-primary" %>
+        <%= link_to "Cancel", @question, class: "btn btn-secondary" %>
+      </div>
+    <% end %>
+  </div>
+</div>

@@ -141,6 +141,22 @@ Rails.application.routes.draw do
     resources :pages
   end
 
+  if GatherPack::Features.enabled?(:qa)
+    resources :questions do
+      member do
+        post :close
+        post :reopen
+        post :move
+      end
+      resources :replies, only: %i[create edit update destroy] do
+        member do
+          post :upvote, controller: "reply_votes"
+          delete :unvote, controller: "reply_votes"
+        end
+      end
+    end
+  end
+
   # Handle plugin routes - was suggested, don't know that we actually need this or if plugins can just manage this themselves
   # GatherPack::Features.all.select { |f| f.enabled? && f.routes_proc }.each do |feature|
   #   instance_exec(&feature.routes_proc)

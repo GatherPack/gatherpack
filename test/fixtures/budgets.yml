@@ -3,9 +3,7 @@
 one:
   amount_cents: 1
   budget_period: one
-  parent: one
 
 two:
   amount_cents: 1
   budget_period: two
-  parent: two

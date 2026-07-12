@@ -1,0 +1,97 @@
+<% breadcrumb @question %>
+
+<div class="card mb-3">
+  <div class="card-header d-flex justify-content-between align-items-start">
+    <div>
+      <h1 class="h3 mb-0">
+        <% if @question.team %>
+          <%= link_to i(@question.team.team_type.icon), team_path(@question.team), class: "badge rounded-pill", style: "background-color:#{@question.team.color};color:#{contrasting_color(@question.team.color)}", "data-turbo": "false", title: @question.team.name %>&nbsp;
+        <% end %>
+        <%= @question.title %>
+        <% if @question.closed? %>
+          <span class="badge bg-secondary">Closed</span>
+        <% end %>
+      </h1>
+    </div>
+    <div class="text-end">
+      <small class="text-muted">
+        Asked by <strong><%= @question.person.display_name %></strong><br>
+        <%= nice_datetime @question.created_at %>
+      </small>
+    </div>
+  </div>
+  <div class="card-body">
+    <%= md @question.content %>
+
+    <% if @promoted_replies.any? %>
+      <hr>
+      <h6 class="text-muted mb-3"><i class="fa-solid fa-star"></i> Top Replies</h6>
+      <% @promoted_replies.each do |reply| %>
+        <%= render "replies/reply", reply: reply, voted_reply: @voted_reply, summary: true %>
+      <% end %>
+    <% end %>
+  </div>
+  <div class="card-footer d-flex gap-2">
+    <% if @question.closed? && policy(@question).reopen? %>
+      <%= link_to "Reopen", reopen_question_path(@question), data: { turbo_method: :post }, class: "btn btn-success btn-sm" %>
+    <% elsif !@question.closed? && policy(@question).close? %>
+      <%= link_to "Close", close_question_path(@question), data: { turbo_method: :post }, class: "btn btn-dark btn-sm" %>
+    <% end %>
+    <% if policy(@question).edit? %>
+      <%= link_to "Edit", edit_question_path(@question), class: "btn btn-warning btn-sm" %>
+    <% end %>
+    <% if policy(@question).move? %>
+      <button type="button" class="btn btn-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#moveQuestionModal">Move</button>
+
+      <div class="modal fade" id="moveQuestionModal" tabindex="-1" aria-labelledby="moveQuestionModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <%= simple_form_for @question, method: :patch do |f| %>
+              <div class="modal-header">
+                <h5 class="modal-title" id="moveQuestionModalLabel">Move Question</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <%= f.input :team_id, as: :searching_combobox, label: "Team", scope: "managed_teams", include_blank: false %>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <%= f.button :submit, "Move", class: "btn btn-primary" %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+    <% if policy(@question).destroy? %>
+      <%= link_to "Delete", @question, class: "btn btn-danger btn-sm", data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } %>
+    <% end %>
+  </div>
+</div>
+
+<% if @top_level_replies.any? %>
+  <div class="mb-3">
+    <% promoted_ids = @promoted_replies.map(&:id) %>
+    <% @top_level_replies.each do |reply| %>
+      <%= render "replies/reply", reply: reply, voted_reply: @voted_reply, promoted: promoted_ids.include?(reply.id) %>
+    <% end %>
+  </div>
+<% end %>
+
+<% unless @question.closed? %>
+  <div class="card">
+    <div class="card-header">
+      <h5 class="mb-0">Post a Reply</h5>
+    </div>
+    <div class="card-body">
+      <%= simple_form_for [@question, @reply] do |f| %>
+        <%= f.input :content, label: false, wrapper_html: { class: "code-editor" }, input_html: { rows: 4, data: { lang: "markdown" } } %>
+        <%= f.button :submit, "Post Reply", class: "btn btn-primary" %>
+      <% end %>
+    </div>
+  </div>
+<% else %>
+  <div class="alert alert-secondary">
+    This question is closed. No new replies can be posted.
+  </div>
+<% end %>
