@@ -1,0 +1,13 @@
+one:
+  team: one
+  person: one
+  title: "How do I reset my password?"
+  content: "I forgot my password and need help resetting it."
+  closed: false
+
+two:
+  team: one
+  person: two
+  title: "When is the next meeting?"
+  content: "I want to know the schedule for the next team meeting."
+  closed: false

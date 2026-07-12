@@ -1,0 +1,64 @@
+<% is_voted = voted_reply&.id == reply.id %>
+<% promoted ||= false %>
+<% summary ||= false %>
+
+<div class="border-start border-3 text-bg-light py-1 <%= 'border-success' if promoted %> ps-3 mb-3" id="<%= dom_id reply %>" data-controller="reply-form">
+  <div class="d-flex gap-3 align-items-center">
+    <div class="text-center" style="min-width: 50px;">
+      <%= form_with url: upvote_question_reply_path(reply.question, reply), method: :post, class: "d-inline" do |f| %>
+        <button type="submit" class="btn btn-sm <%= is_voted ? 'btn-success' : 'btn-outline-success' %>">
+          <i class="fa-solid fa-check"></i>
+        </button>
+      <% end %>
+    </div>
+    <div class="flex-grow-1">
+      <div class="mb-1">
+        <small class="text-muted">
+          <strong><%= reply.person.display_name %></strong>
+          &middot; <%= time_ago_in_words(reply.created_at) %> ago
+          <% if promoted %>
+            <span class="badge bg-success"><i class="fa-solid fa-star"></i> Top Reply</span>
+          <% end %>
+        </small>
+      </div>
+      <div class="reply-content mb-2">
+        <%= md reply.content %>
+      </div>
+      <% unless summary %>
+        <div class="d-flex gap-2">
+          <% unless reply.question.closed? %>
+            <button class="btn btn-link btn-sm p-0 text-decoration-none" data-action="click->reply-form#toggle" data-reply-form-id-param="<%= reply.id %>">
+              <i class="fa-solid fa-reply"></i> Reply
+            </button>
+          <% end %>
+          <% if policy(reply).edit? %>
+            <%= link_to "Edit", edit_question_reply_path(reply.question, reply), class: "btn btn-link btn-sm p-0 text-decoration-none" %>
+          <% end %>
+          <% if policy(reply).destroy? %>
+            <%= link_to "Delete", question_reply_path(reply.question, reply), class: "btn btn-link btn-sm p-0 text-decoration-none text-danger", data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } %>
+          <% end %>
+        </div>
+
+        <% unless reply.question.closed? %>
+          <div class="mt-2" data-reply-form-target="form" data-reply-form-id="<%= reply.id %>" style="display: none;">
+            <%= simple_form_for [reply.question, Reply.new(parent_id: reply.id)] do |f| %>
+              <%= f.input :parent_id, as: :hidden, input_html: { value: reply.id } %>
+              <%= f.input :content, label: false, input_html: { rows: 3, class: "form-control-sm" } %>
+              <%= f.button :submit, "Reply", class: "btn btn-primary btn-sm" %>
+            <% end %>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<% unless summary %>
+  <% if reply.children.any? %>
+    <div class="ms-5">
+      <% reply.children.order(created_at: :asc).each do |child| %>
+        <%= render "replies/reply", reply: child, voted_reply: voted_reply, promoted: false %>
+      <% end %>
+    </div>
+  <% end %>
+<% end %>

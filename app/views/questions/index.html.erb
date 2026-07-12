@@ -1,0 +1,72 @@
+<% breadcrumb :questions %>
+
+<%= search_form_for @q, data: {"controller": "turbo_search", "turbo-frame": "results"} do |f| %>
+<div class="card">
+  <div class="card-header">
+    <h1>Questions</h1>
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md">
+        <%= f.input :title_i_cont, label: "Title" %>
+      </div>
+      <div class="col-md">
+        <%= f.input :team_id_eq, label: "Team", as: :select, collection: policy_scope(Team) %>
+      </div>
+      <div class="col-md">
+        <%= f.input :closed_eq, label: "Status", as: :select, collection: [["Open", false], ["Closed", true]], include_blank: "All" %>
+      </div>
+    </div>
+  </div>
+  <div class="card-footer">
+    <%= link_to "New Question", new_question_path, class: "btn btn-success" if policy(Question).create? %>
+    <%= f.submit "Search", class: "btn btn-primary", data: { action: "turbo_search#search" } %>
+    <%= link_to "Clear Search", request.path, class: "btn btn-dark", data: { action: "turbo_search#clear" } %>
+  </div>
+</div>
+<% end %>
+
+<%= turbo_frame_tag "results" do %>
+  <div class="dropdown">
+    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+      Sort By
+    </button>
+    <ul class="dropdown-menu">
+      <li><%= sort_link @q, :created_at, "Newest", class: "dropdown-item" %></li>
+      <li><%= sort_link @q, :updated_at, "Most Active", class: "dropdown-item" %></li>
+    </ul>
+  </div>
+
+  <div id="questions">
+    <% @questions.each do |question| %>
+      <div class="card mb-3" id="<%= dom_id question %>">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <div>
+            <% if question.team %>
+              <%= link_to i(question.team.team_type.icon), team_path(question.team), class: "badge rounded-pill", style: "background-color:#{question.team.color};color:#{contrasting_color(question.team.color)}", "data-turbo": "false", title: question.team.name %>&nbsp;
+            <% end %>
+            <%= link_to question.title, question, "data-turbo": "false" %>
+            <% if question.closed? %>
+              <span class="badge bg-secondary">Closed</span>
+            <% end %>
+          </div>
+          <div class="text-muted small">
+            <i class="fa-regular fa-comment"></i> <%= question.replies.size %>
+            &middot;
+            <%= time_ago_in_words(question.created_at) %> ago
+          </div>
+        </div>
+        <div class="card-body">
+          <small class="text-muted">
+            Asked by <%= question.person.display_name %>
+            <% if question.team %>
+              in <%= question.team.name %>
+            <% end %>
+          </small>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <%= paginate @questions %>
+<% end %>

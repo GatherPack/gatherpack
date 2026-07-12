@@ -17,6 +17,9 @@ class TeamsController < InternalController
 
   # GET /teams/1
   def show
+    if GatherPack::Features.enabled?(:qa)
+      @recent_questions = @team.questions.where(closed: false).order(created_at: :desc).limit(5)
+    end
   end
 
   # GET /teams/1/badges
