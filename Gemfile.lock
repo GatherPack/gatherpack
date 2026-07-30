@@ -275,7 +275,7 @@ GEM
       turbo-rails
     monetize (2.0.0)
       money (~> 7.0)
-    money (7.0.2)
+    money (7.1.0)
       bigdecimal
       i18n (~> 1.9)
     money-rails (3.0.0)
