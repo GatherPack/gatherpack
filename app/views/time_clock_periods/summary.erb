@@ -36,7 +36,7 @@
     <div class="row">
       <% @people.each do |person| %>
       <div class="col-2 col-lg-1">
-        <%= link_to(image_tag(get_avatar_url(person.avatar), class: 'person-img'), person) %>
+        <%= link_to(image_tag(get_avatar_url(person.avatar), class: 'person-img'), person, title: "#{person.name} | #{pluralize @punches.where(person: person).sum(:hours), 'hour'}") %>
       </div>
       <% end %>
     </div>

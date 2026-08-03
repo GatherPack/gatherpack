@@ -34,12 +34,12 @@ class TimeClockPeriodsController < InternalController
 
     if params[:starts_at].present?
       starts_at = Time.zone.parse(params[:starts_at])
-      punches = punches.where("start_time >= ?", starts_at)
+      @punches = punches.where("start_time >= ?", starts_at)
     end
 
     if params[:ends_at].present?
       ends_at = Time.zone.parse(params[:ends_at])
-      punches = punches.where("start_time <= ?", ends_at)
+      @punches = punches.where("start_time <= ?", ends_at)
     end
 
     @start_date = starts_at.to_date
@@ -49,7 +49,7 @@ class TimeClockPeriodsController < InternalController
       h[date] = { hours: 0.0, people: Set.new }
     end
 
-    punches.each do |punch|
+    @punches.each do |punch|
       day = punch.start_time.in_time_zone(time_zone).to_date
       @daily_stats[day] ||= { hours: 0.0, people: Set.new }
       @daily_stats[day][:hours] += punch.hours
@@ -59,7 +59,7 @@ class TimeClockPeriodsController < InternalController
     @daily_stats.transform_values! { |v| { hours: v[:hours].round(2), people: v[:people].size } }
 
     @total_hours  = @daily_stats.sum { |_, v| v[:hours] }.round(2)
-    @people = punches.includes(:person).map(&:person).uniq
+    @people = @punches.includes(:person).map(&:person).uniq
     @total_people = @people.size
 
     @calendar_events = @daily_stats.filter_map do |date, stats|
