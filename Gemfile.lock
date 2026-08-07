@@ -150,7 +150,7 @@ GEM
     dotenv (3.2.0)
     drb (2.2.3)
     ed25519 (1.4.0)
-    erb (6.0.6)
+    erb (6.0.7)
     erb_lint (0.9.0)
       activesupport
       better_html (>= 2.0.1)
@@ -203,7 +203,7 @@ GEM
       domain_name (~> 0.5)
     i18n (1.15.2)
       concurrent-ruby (~> 1.0)
-    image_processing (2.0.2)
+    image_processing (2.0.3)
     importmap-rails (2.2.3)
       actionpack (>= 6.0.0)
       activesupport (>= 6.0.0)
@@ -285,7 +285,7 @@ GEM
       railties (>= 7.0)
     multi_xml (0.9.1)
       bigdecimal (>= 3.1, < 5)
-    neat_ids (1.0.1)
+    neat_ids (1.1.0)
       rails (>= 6.0.0)
       sqids (~> 0.2.0)
     net-http (0.9.1)
@@ -455,7 +455,7 @@ GEM
       activerecord (>= 7.2)
       activesupport (>= 7.2)
       i18n
-    rbs (4.1.1)
+    rbs (4.1.2)
       logger
       prism (>= 1.6.0)
       tsort
@@ -676,4 +676,4 @@ DEPENDENCIES
   web-console
 
 BUNDLED WITH
-  4.0.17
+  4.0.18
