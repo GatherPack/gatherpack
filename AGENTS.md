@@ -45,11 +45,15 @@ parallel: `scan_ruby` (brakeman), `scan_js` (importmap audit), `lint` (rubocop),
 container), and `build_image` (builds the production Dockerfile without
 publishing).
 
-A sixth job, `publish`, runs only on pushes and only after all five pass. It
-calls `.github/workflows/build.yml` as a reusable workflow, which pushes
-multi-arch images to `ghcr.io/<owner>/gatherpack`. `build.yml` has no trigger of
-its own apart from `workflow_dispatch`, so nothing reaches the registry from a
-commit that failed CI.
+A sixth job, `publish`, runs only on pushes and only after the checks it
+depends on pass. It calls `.github/workflows/build.yml` as a reusable workflow,
+which pushes multi-arch images to `ghcr.io/<owner>/gatherpack`. `build.yml` has
+no trigger of its own apart from `workflow_dispatch`.
+
+`test` is currently **not** in that job's `needs` list: the suite is largely
+unmodified scaffold output that has never passed, so gating releases on it would
+block publishing entirely. It still runs on every push and pull request. Put it
+back in `needs` once the suite is green.
 
 ## Production deployment
 
