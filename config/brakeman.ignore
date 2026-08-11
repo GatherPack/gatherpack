@@ -1,0 +1,60 @@
+{
+  "ignored_warnings": [
+    {
+      "fingerprint": "d03330ed853fe1b2a9007c2393874d813b0aa962b284cca979f88d19494a894d",
+      "check_name": "PermitAttributes",
+      "warning_type": "Mass Assignment",
+      "message": "Potentially dangerous key allowed for mass assignment",
+      "file": "app/controllers/users_controller.rb",
+      "line": 54,
+      "link": "https://brakemanscanner.org/docs/warning_types/mass_assignment/",
+      "confidence": "High",
+      "note": "False positive. user_params builds the permitted list conditionally: :admin is added only when current_user.admin? and :architect only when current_user.architect?. Brakeman reports the flattened permit call and cannot see the guards. A user can never grant themselves a privilege they do not already hold."
+    },
+    {
+      "fingerprint": "7782a502a504730e01e033a49e5857937439ee72e823de54718981222d197035",
+      "check_name": "Evaluation",
+      "warning_type": "Dangerous Eval",
+      "message": "Dynamic code evaluation",
+      "file": "app/models/hook.rb",
+      "line": 26,
+      "link": "https://brakemanscanner.org/docs/warning_types/dangerous_eval/",
+      "confidence": "Weak",
+      "note": "By design. Hooks are an event-driven scripting feature whose whole purpose is evaluating stored Ruby. The security boundary is who may author a Hook, not this call site."
+    },
+    {
+      "fingerprint": "6b45da96a183f789ae7b27f1c357bfc801cb305f4a89087bf1f57d46b7dc8841",
+      "check_name": "CrossSiteScripting",
+      "warning_type": "Cross-Site Scripting",
+      "message": "Unescaped parameter value",
+      "file": "app/views/budgets/show.html.erb",
+      "line": 14,
+      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
+      "confidence": "Weak",
+      "note": "False positive. params[:id] is only used to look the Budget up; it is never rendered. What is rendered is markup built by the as_badge helper from the budget's ledger tags."
+    },
+    {
+      "fingerprint": "4c116cf8fa77a59ee370845143fa96b6cc63873ca40d9624dcfa25154b427cfa",
+      "check_name": "Evaluation",
+      "warning_type": "Dangerous Eval",
+      "message": "Model attribute evaluated as code",
+      "file": "app/controllers/reports_controller.rb",
+      "line": 17,
+      "link": "https://brakemanscanner.org/docs/warning_types/dangerous_eval/",
+      "confidence": "High",
+      "note": "By design, and the access hole this sat behind is fixed. Reports are stored Ruby scripts, so running one evaluates code by definition; brakeman flags the call for existing at all. Authoring is architect-only via ReportPolicy#create?/#update?, and running is now admin-only: set_report calls authorize, and ReportPolicy#run? delegates to show?. Before that fix neither #run, #show nor #destroy authorized at all. Note the fingerprint covers this exact expression, so it will need regenerating if the line changes."
+    },
+    {
+      "fingerprint": "534a8c2cf729b895543321b3f2acb94d485aea22fcbe5e0a4fab4c15d2aa112e",
+      "check_name": "Redirect",
+      "warning_type": "Redirect",
+      "message": "Possible unprotected redirect",
+      "file": "app/controllers/ledger_payments_controller.rb",
+      "line": 12,
+      "link": "https://brakemanscanner.org/docs/warning_types/redirect/",
+      "confidence": "Weak",
+      "note": "Intentional. Starting a payment hands the user off to the configured gateway, so the destination is an external URL supplied by the Gateway record and allow_other_host is required. Not attacker-controlled: it comes from gateway configuration, not request parameters."
+    }
+  ],
+  "brakeman_version": "7.1.0"
+}

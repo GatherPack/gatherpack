@@ -48,11 +48,28 @@ module Gatherpack
       config.action_mailbox.ingress = :postmark
     end
 
-    config.action_controller.default_url_options = { host: ENV["ROOT_URL"] || "localhost" }
-    config.action_mailer.default_url_options = { host: ENV["ROOT_URL"] || "localhost" }
-    Rails.application.routes.default_url_options[:host] = ENV["ROOT_URL"] || "localhost"
+    # ROOT_URL is the full public URL of the instance (e.g. https://gather.example.com).
+    # A bare hostname is accepted too, in which case the scheme/port are left alone.
+    root_url = ENV["ROOT_URL"].presence
+    root_uri = URI.parse(root_url) if root_url&.match?(%r{\A[a-z][a-z0-9+.-]*://}i)
 
-    config.hosts << URI.parse(ENV["ROOT_URL"] || "localhost").host
+    url_options =
+      if root_uri
+        { host: root_uri.host, protocol: root_uri.scheme }.tap do |options|
+          options[:port] = root_uri.port unless root_uri.port == root_uri.default_port
+        end
+      else
+        { host: root_url || "localhost" }
+      end
+
+    config.action_controller.default_url_options = url_options
+    config.action_mailer.default_url_options = url_options
+    Rails.application.routes.default_url_options.merge!(url_options)
+
+    # Only restrict the Host header when ROOT_URL says what the host should be —
+    # a non-empty config.hosts turns on DNS rebinding protection everywhere,
+    # including tests, which reach the app over 127.0.0.1.
+    config.hosts << url_options[:host] if root_url
   end
 end
 
