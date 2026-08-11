@@ -24,7 +24,11 @@ Two named volumes hold everything that must survive a redeploy:
 
 Images are published to the GitHub Container Registry by
 [`.github/workflows/build.yml`](../.github/workflows/build.yml) for `linux/amd64`
-and `linux/arm64`, and only after the full CI suite passes on that commit:
+and `linux/arm64`. Publishing is gated on the security scans, the linter, and a
+clean image build passing on that commit. It is **not** gated on the test suite,
+which currently fails for pre-existing reasons — see the note in
+[`.github/workflows/ci.yml`](../.github/workflows/ci.yml). Treat a published
+image as "builds and passes static analysis", not "passes tests".
 
 ```
 ghcr.io/gatherpack/gatherpack:latest    # newest tagged release

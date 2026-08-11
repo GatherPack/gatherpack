@@ -2,10 +2,18 @@
 # check=error=true
 
 # This Dockerfile is designed for production, not development. Images are built and
-# published by .github/workflows/build.yml; see docs/self-hosting.md for running one.
-# To build and run by hand:
+# published by .github/workflows/build.yml. To run one, use
+# docker-compose.production.yml — see docs/self-hosting.md.
+#
+# The entrypoint runs db:prepare on boot, so a container started by hand still
+# needs a reachable PostgreSQL server; there is no standalone mode.
+#
 # docker build -t gatherpack .
-# docker run -d -p 3000:3000 -e SECRET_KEY_BASE=<random> -e ROOT_URL=<url> --name gatherpack gatherpack
+# docker run -d -p 3000:3000 --name gatherpack \
+#   -e SECRET_KEY_BASE=<openssl rand -hex 64> \
+#   -e ROOT_URL=http://localhost:3000 \
+#   -e DATABASE_HOST=<host> -e DATABASE_USERNAME=<user> -e DATABASE_PASSWORD=<password> \
+#   gatherpack
 
 # For a containerized dev environment, see Dev Containers: https://guides.rubyonrails.org/getting_started_with_devcontainer.html
 
