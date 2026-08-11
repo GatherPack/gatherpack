@@ -34,6 +34,17 @@
       "note": "False positive. params[:id] is only used to look the Budget up; it is never rendered. What is rendered is markup built by the as_badge helper from the budget's ledger tags."
     },
     {
+      "fingerprint": "4c116cf8fa77a59ee370845143fa96b6cc63873ca40d9624dcfa25154b427cfa",
+      "check_name": "Evaluation",
+      "warning_type": "Dangerous Eval",
+      "message": "Model attribute evaluated as code",
+      "file": "app/controllers/reports_controller.rb",
+      "line": 17,
+      "link": "https://brakemanscanner.org/docs/warning_types/dangerous_eval/",
+      "confidence": "High",
+      "note": "By design, and the access hole this sat behind is fixed. Reports are stored Ruby scripts, so running one evaluates code by definition; brakeman flags the call for existing at all. Authoring is architect-only via ReportPolicy#create?/#update?, and running is now admin-only: set_report calls authorize, and ReportPolicy#run? delegates to show?. Before that fix neither #run, #show nor #destroy authorized at all. Note the fingerprint covers this exact expression, so it will need regenerating if the line changes."
+    },
+    {
       "fingerprint": "534a8c2cf729b895543321b3f2acb94d485aea22fcbe5e0a4fab4c15d2aa112e",
       "check_name": "Redirect",
       "warning_type": "Redirect",
