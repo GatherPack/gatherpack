@@ -13,6 +13,7 @@ Pluginfile
 /.env*
 !/.env*.erb
 !/.env.development
+!/.env.production.example
 
 # Ignore all logfiles and tempfiles.
 /log/*

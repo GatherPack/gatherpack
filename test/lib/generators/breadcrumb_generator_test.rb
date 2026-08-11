@@ -2,7 +2,7 @@ require "test_helper"
 require "generators/breadcrumb/breadcrumb_generator"
 
 class BreadcrumbGeneratorTest < Rails::Generators::TestCase
-  tests BreadcrumbGenerator
+  tests Breadcrumb::BreadcrumbGenerator
   destination Rails.root.join("tmp/generators")
   setup :prepare_destination
 

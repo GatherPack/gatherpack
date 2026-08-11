@@ -38,7 +38,11 @@ when "production"
   workers_count = Integer(ENV.fetch("WEB_CONCURRENCY", 1))
   workers workers_count if workers_count > 1
 
-  plugin :solid_queue
+  # Run SolidQueue inside the web process by default, so a single-container
+  # deploy still processes background jobs. Set SOLID_QUEUE_IN_PUMA=false when a
+  # dedicated worker runs `bin/jobs` (see docker-compose.production.yml).
+  jobs_in_puma = !%w[false 0 no off].include?(ENV.fetch("SOLID_QUEUE_IN_PUMA", "true").downcase)
+  plugin :solid_queue if jobs_in_puma
 
   preload_app!
 when "development"
