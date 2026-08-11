@@ -61,9 +61,10 @@ The `web` container applies migrations on boot (`bin/docker-entrypoint` runs
 `db:prepare`) and the `worker` container runs `bin/jobs`. SolidQueue only runs
 inside Puma when `SOLID_QUEUE_IN_PUMA` is not set to `false`.
 
-## Dual-database (critical)
+## Multiple databases (critical)
 
-Every migration command must be run for **both** databases:
+In development and test there are two databases, and every migration command
+must be run for **both**:
 
 ```bash
 bin/rails db:migrate:primary    # main app DB
@@ -72,6 +73,14 @@ bin/rails db:migrate:versions   # PaperTrail audit log DB (separate PostgreSQL D
 
 `db:migrate` alone only hits the primary. The versions DB has its own migrations in
 `db/versions_migrate/` and its own schema at `db/versions_schema.rb`.
+
+Production adds a third, `cable`, backing Solid Cable (`config/cable.yml`).
+It is production-only — development uses the `async` adapter and test uses
+`test` — so it has no bearing on local migrations. It is schema-only in
+practice: `db/cable_schema.rb` defines the single `solid_cable_messages` table
+and `db/cable_migrate/` is empty, so `db:prepare` creates it from the schema.
+If a Solid Cable upgrade ever ships a migration, it goes in `db/cable_migrate/`
+and runs with `bin/rails db:migrate:cable` against `RAILS_ENV=production`.
 
 ## JavaScript (importmap, no bundler)
 

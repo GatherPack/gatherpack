@@ -28,7 +28,9 @@ x-app-environment: &app-environment
   MISSION_CONTROL_JOBS_HTTP_BASIC_AUTH_PASSWORD: "${JOBS_DASHBOARD_PASSWORD:?required - password for the /jobs dashboard}"
 
   # --- Database ---------------------------------------------------------------
-  # Point DATABASE_HOST at an external server to skip the bundled `db` service.
+  # To use an external PostgreSQL server, point DATABASE_HOST at it *and* delete
+  # the `db` service below along with the `depends_on` entries referencing it —
+  # setting this alone leaves the bundled database running and depended on.
   DATABASE_HOST: "${DATABASE_HOST:-db}"
   DATABASE_USERNAME: "${DATABASE_USERNAME:-gatherpack}"
 
@@ -88,6 +90,11 @@ services:
   worker:
     <<: *app
     command: ["./bin/jobs"]
+    # bin/jobs serves no HTTP, so the image's HEALTHCHECK (which probes Puma on
+    # /up) would mark this container unhealthy forever. Nothing depends on the
+    # worker's health, so turn the inherited check off rather than fake one.
+    healthcheck:
+      disable: true
     stop_grace_period: 30s
     depends_on:
       db:
