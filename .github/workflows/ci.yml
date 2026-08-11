@@ -20,6 +20,11 @@ jobs:
           ruby-version: .ruby-version
           bundler-cache: true
 
+      # TEMPORARY: emits warning fingerprints so config/brakeman.ignore can be
+      # written. Removed in the follow-up commit.
+      - name: Dump brakeman fingerprints
+        run: bin/brakeman --no-pager -f json | jq -c '.warnings[] | {fingerprint, check_name, warning_type, message, file, line, confidence, code, link}' || true
+
       - name: Scan for security vulnerabilities in Ruby dependencies
         run: bin/brakeman --no-pager
 
