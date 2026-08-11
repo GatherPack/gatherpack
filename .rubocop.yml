@@ -1,2 +1,14 @@
+# Merge rather than replace inherited arrays, so this Exclude adds to RuboCop's
+# defaults (vendor, node_modules, db/schema.rb, …) instead of overriding them.
+inherit_mode:
+  merge:
+    - Exclude
+
 inherit_gem:
   rubocop-rails-omakase: rubocop.yml
+
+AllCops:
+  Exclude:
+    # Generator templates. These carry .rb extensions but contain ERB, so they
+    # are not parseable as Ruby.
+    - lib/templates/**/*
