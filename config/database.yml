@@ -35,3 +35,7 @@ production:
     <<: *default
     database: gatherpack_production_versions
     migrations_paths: db/versions_migrate
+  cable:
+    <<: *default
+    database: gatherpack_production_cable
+    migrations_paths: db/cable_migrate

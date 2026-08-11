@@ -22,14 +22,23 @@ docker-compose up
 bin/dev
 ```
 
-## Deploy with Docker
+## Self-Hosting
 
-There's a `docker-compose-app.yml` available as a base for running a production-ready-ish instance of GatherPack.
+`docker-compose.production.yml` runs a full production instance — the app, a
+background job worker, and PostgreSQL — from a published container image. No
+Redis or other services required.
 
 ```bash
-docker compose -f docker-compose-app.yml build
-docker compose -f docker-compose-app.yml up
+cp .env.production.example .env   # then fill in the four required values
+docker compose -f docker-compose.production.yml up -d
 ```
+
+Images are published to `ghcr.io/gatherpack/gatherpack` for amd64 and arm64 on
+every release.
+
+See [docs/self-hosting.md](docs/self-hosting.md) for the full guide, including
+deploying with [Komodo](https://komo.do), TLS and reverse proxy setup, backups,
+and running against an external PostgreSQL server.
 
 ## Developer Hints
 

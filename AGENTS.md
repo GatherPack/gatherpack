@@ -39,8 +39,27 @@ yarn build:css                  # compile SCSS → autoprefixed CSS (one-shot)
 yarn watch:css                  # watch mode (already in Procfile.dev)
 ```
 
-CI runs 4 parallel jobs: `scan_ruby` (brakeman), `scan_js` (importmap audit),
-`lint` (rubocop), `test` (db:test:prepare + test + test:system).
+CI runs on pull requests, pushes to `main`, and `v*.*.*` tags. Five jobs run in
+parallel: `scan_ruby` (brakeman), `scan_js` (importmap audit), `lint` (rubocop),
+`test` (db:test:prepare + test + test:system, against a `postgres:16` service
+container), and `build_image` (builds the production Dockerfile without
+publishing).
+
+A sixth job, `publish`, runs only on pushes and only after all five pass. It
+calls `.github/workflows/build.yml` as a reusable workflow, which pushes
+multi-arch images to `ghcr.io/<owner>/gatherpack`. `build.yml` has no trigger of
+its own apart from `workflow_dispatch`, so nothing reaches the registry from a
+commit that failed CI.
+
+## Production deployment
+
+`docker-compose.production.yml` runs web + worker + PostgreSQL from a published
+image; `docker-compose.yml` is development dependencies only. Configuration is
+documented in `.env.production.example` and `docs/self-hosting.md`.
+
+The `web` container applies migrations on boot (`bin/docker-entrypoint` runs
+`db:prepare`) and the `worker` container runs `bin/jobs`. SolidQueue only runs
+inside Puma when `SOLID_QUEUE_IN_PUMA` is not set to `false`.
 
 ## Dual-database (critical)
 
