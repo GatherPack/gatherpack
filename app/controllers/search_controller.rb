@@ -6,14 +6,9 @@ class SearchController < ApplicationController
 
   def combo
     scope = params[:scope].presence || "people events teams badges tokens announcements time_clock_periods hooks"
-    attr = case params[:attribute]
-    when /_nid$/
-      :neat_id
-    when /_id$/
-      :id
-    else
-      params[:attribute].to_sym
-    end
+    # This value is sent to each result, so it must never be derived from the
+    # request: the combobox only ever needs one of the two identifiers.
+    attr = params[:attribute].to_s.end_with?("_nid") ? :neat_id : :id
     @results = search(params[:q], scope).map { |e| { record: e, display: e.identifier_name, value: e.send(attr) } }
   end
 
