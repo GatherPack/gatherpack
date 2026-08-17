@@ -18,3 +18,11 @@
   font-size: 0.875rem;
   text-transform: uppercase;
 }
+
+.member-manage-footer {
+  display: none;
+}
+
+.manage-mode .member-manage-footer {
+  display: block;
+}

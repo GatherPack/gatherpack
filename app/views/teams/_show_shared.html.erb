@@ -8,7 +8,7 @@
     <li class="nav-item">
       <a href="<%= team_memberships_path(@team) %>" class="nav-link <%= "active" if current_page?(team_memberships_path(@team)) %>">Members</a>
     </li>
-    <% if policy(@team).edit? %>
+    <% if policy(@team).edit? && @team.requires_approval? %>
       <li class="nav-item">
         <a href="<%= applications_team_path(@team) %>" class="nav-link <%= "active" if current_page?(applications_team_path(@team)) %>">Applications
           <% pending_count = @team.membership_applications.pending.count %>

@@ -1,0 +1,8 @@
+<div class="d-flex flex-column gap-1">
+  <% if policy(membership).update? %>
+    <%= button_to (membership.manager? ? "Remove as Manager" : "Make Manager"), team_membership_path(@team, membership), method: :patch, params: { membership: { manager: !membership.manager? } }, form: { data: { turbo_frame: "_top" } }, class: "btn btn-sm btn-warning w-100" %>
+  <% end %>
+  <% if policy(membership).destroy? %>
+    <%= link_to "Remove", team_membership_path(@team, membership), class: "btn btn-sm btn-danger", data: { turbo_method: :delete, turbo_confirm: "Are you sure?", turbo_frame: "_top" } %>
+  <% end %>
+</div>

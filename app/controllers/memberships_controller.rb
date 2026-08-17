@@ -9,7 +9,7 @@ class MembershipsController < InternalController
       @q = policy_scope(Membership).where(team: @team).ransack(params[:q])
       @memberships = @q.result(distinct: true).includes(:person, :team).order("person.last_name" => "desc", "team.name" => "asc").page(params[:page])
 
-      @people_q = @team.descendant_people.ransack(params[:people_q])
+      @people_q = @team.descendant_people.includes(:memberships).ransack(params[:people_q])
       @people = @people_q.result(distinct: true)
       @people = case params[:member_type]
       when "direct"
@@ -68,7 +68,12 @@ class MembershipsController < InternalController
       person_memberships_path(@person)
     end
     if @membership.update(membership_params)
-      redirect_to target, notice: "Membership was successfully updated.", status: :see_other
+      respond_to do |format|
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.replace(@membership.person, render_to_string(partial: "memberships/card", locals: { membership: @membership }))
+        end
+        format.html { redirect_to target, notice: "Membership was successfully updated.", status: :see_other }
+      end
     else
       render :edit, status: :unprocessable_entity
     end
@@ -82,7 +87,10 @@ class MembershipsController < InternalController
       person_memberships_path(@person)
     end
     @membership.destroy!
-    redirect_to target, notice: "Membership was successfully destroyed.", status: :see_other
+    respond_to do |format|
+      format.turbo_stream { render turbo_stream: turbo_stream.remove(@membership) }
+      format.html { redirect_to target, notice: "Membership was successfully destroyed.", status: :see_other }
+    end
   end
 
   private

@@ -23,8 +23,10 @@ class Gateway::SmtpSendingGateway < Gateway
   end
 
   def send_message(address, subject, body)
+    from = sender
+
     mail = Mail.new do
-      from    sender
+      from    from
       to      address
       subject subject
       html_part do
@@ -36,7 +38,7 @@ class Gateway::SmtpSendingGateway < Gateway
     smtp_options = {
       address:              host,
       port:                 (port || 587).to_i,
-      enable_starttls_auto: true,
+      enable_starttls_auto: false,
       user_name:            username.presence,
       password:             password.presence,
       authentication:       (authentication.presence || "plain").to_sym
@@ -46,6 +48,7 @@ class Gateway::SmtpSendingGateway < Gateway
     smtp_options.delete(:password) if password.blank?
     smtp_options.delete(:authentication) if username.blank?
 
-    mail.deliver_net_smtp(smtp_options)
+    mail.delivery_method :smtp, smtp_options
+    mail.deliver
   end
 end
