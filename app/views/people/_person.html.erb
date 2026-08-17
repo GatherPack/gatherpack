@@ -6,7 +6,7 @@
     <%= image_tag get_avatar_url_512(person.avatar), class: "person-img" %>
   </div>
   <% if local_assigns[:footer] %>
-    <div class="card-footer">
+    <div class="card-footer <%= local_assigns[:footer_class] %>">
       <%= local_assigns[:footer] %>
     </div>
   <% end %>

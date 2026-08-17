@@ -23,6 +23,10 @@ class TeamPolicy < ApplicationPolicy
     has_perms
   end
 
+  def manage_members?
+    has_perms
+  end
+
   def permitted_attributes_for_update
     [ :name, :color, :team_type_id, :description ] + if user.admin?
       [ :join_permission, :parent_id, person_ids: [] ]
