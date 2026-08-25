@@ -75,7 +75,7 @@ jobs:
       # before a merge, or main ends up unable to publish an image.
       # Layer caching from main keeps a code-only change to a couple of minutes.
       - name: Build production image
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           context: .
           platforms: linux/amd64
