@@ -1,8 +1,8 @@
 require "test_helper"
-require "generators/rails/breadcrumb/breadcrumb_generator"
+require "generators/policy/policy_generator"
 
-class Rails::BreadcrumbGeneratorTest < Rails::Generators::TestCase
-  tests Rails::BreadcrumbGenerator
+class PolicyGeneratorTest < Rails::Generators::TestCase
+  tests Policy::PolicyGenerator
   destination Rails.root.join("tmp/generators")
   setup :prepare_destination
 

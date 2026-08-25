@@ -39,12 +39,36 @@ yarn build:css                  # compile SCSS → autoprefixed CSS (one-shot)
 yarn watch:css                  # watch mode (already in Procfile.dev)
 ```
 
-CI runs 4 parallel jobs: `scan_ruby` (brakeman), `scan_js` (importmap audit),
-`lint` (rubocop), `test` (db:test:prepare + test + test:system).
+CI runs on pull requests, pushes to `main`, and `v*.*.*` tags. Five jobs run in
+parallel: `scan_ruby` (brakeman), `scan_js` (importmap audit), `lint` (rubocop),
+`test` (db:test:prepare + test + test:system, against a `postgres:16` service
+container), and `build_image` (builds the production Dockerfile without
+publishing).
 
-## Dual-database (critical)
+A sixth job, `publish`, runs only on pushes and only after the checks it
+depends on pass. It calls `.github/workflows/build.yml` as a reusable workflow,
+which pushes multi-arch images to `ghcr.io/<owner>/gatherpack`. `build.yml` has
+no trigger of its own apart from `workflow_dispatch`.
 
-Every migration command must be run for **both** databases:
+`test` is currently **not** in that job's `needs` list: the suite is largely
+unmodified scaffold output that has never passed, so gating releases on it would
+block publishing entirely. It still runs on every push and pull request. Put it
+back in `needs` once the suite is green.
+
+## Production deployment
+
+`docker-compose.production.yml` runs web + worker + PostgreSQL from a published
+image; `docker-compose.yml` is development dependencies only. Configuration is
+documented in `.env.production.example` and `docs/self-hosting.md`.
+
+The `web` container applies migrations on boot (`bin/docker-entrypoint` runs
+`db:prepare`) and the `worker` container runs `bin/jobs`. SolidQueue only runs
+inside Puma when `SOLID_QUEUE_IN_PUMA` is not set to `false`.
+
+## Multiple databases (critical)
+
+In development and test there are two databases, and every migration command
+must be run for **both**:
 
 ```bash
 bin/rails db:migrate:primary    # main app DB
@@ -53,6 +77,14 @@ bin/rails db:migrate:versions   # PaperTrail audit log DB (separate PostgreSQL D
 
 `db:migrate` alone only hits the primary. The versions DB has its own migrations in
 `db/versions_migrate/` and its own schema at `db/versions_schema.rb`.
+
+Production adds a third, `cable`, backing Solid Cable (`config/cable.yml`).
+It is production-only — development uses the `async` adapter and test uses
+`test` — so it has no bearing on local migrations. It is schema-only in
+practice: `db/cable_schema.rb` defines the single `solid_cable_messages` table
+and `db/cable_migrate/` is empty, so `db:prepare` creates it from the schema.
+If a Solid Cable upgrade ever ships a migration, it goes in `db/cable_migrate/`
+and runs with `bin/rails db:migrate:cable` against `RAILS_ENV=production`.
 
 ## JavaScript (importmap, no bundler)
 
