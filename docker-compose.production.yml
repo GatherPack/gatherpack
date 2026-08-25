@@ -1,0 +1,131 @@
+# GatherPack — production stack
+#
+# Runs a published image from the container registry (see
+# .github/workflows/build.yml), a PostgreSQL 16 database, and a dedicated
+# SolidQueue worker.
+#
+#   cp .env.production.example .env   # then edit it
+#   docker compose -f docker-compose.production.yml up -d
+
+name: gatherpack
+
+x-logging: &logging
+  driver: json-file
+  options:
+    max-size: "10m"
+    max-file: "5"
+
+x-app-environment: &app-environment
+  RAILS_ENV: production
+
+  # --- Required -------------------------------------------------------------
+  # Generate with: openssl rand -hex 64
+  SECRET_KEY_BASE: "${SECRET_KEY_BASE:?required - generate one with openssl rand -hex 64}"
+  # Full public URL of the instance, e.g. https://gather.example.com
+  ROOT_URL: "${ROOT_URL:?required - the full public URL, e.g. https://gather.example.com}"
+  DATABASE_PASSWORD: "${DATABASE_PASSWORD:?required - password for the PostgreSQL user}"
+  # Protects the /jobs (Mission Control) dashboard with HTTP basic auth.
+  MISSION_CONTROL_JOBS_HTTP_BASIC_AUTH_PASSWORD: "${JOBS_DASHBOARD_PASSWORD:?required - password for the /jobs dashboard}"
+
+  # --- Database ---------------------------------------------------------------
+  # To use an external PostgreSQL server, point DATABASE_HOST at it *and* delete
+  # the `db` service below along with the `depends_on` entries referencing it —
+  # setting this alone leaves the bundled database running and depended on.
+  DATABASE_HOST: "${DATABASE_HOST:-db}"
+  DATABASE_USERNAME: "${DATABASE_USERNAME:-gatherpack}"
+
+  # --- TLS --------------------------------------------------------------------
+  # Behind an HTTPS reverse proxy (Traefik, Caddy, nginx) set BOTH to true.
+  # Leave both false while you are still reaching the app over plain HTTP —
+  # turning them on without TLS in front will break sign-in.
+  FORCE_SSL: "${FORCE_SSL:-false}"
+  ASSUME_SSL: "${ASSUME_SSL:-false}"
+
+  # --- Tuning -----------------------------------------------------------------
+  RAILS_MAX_THREADS: "${RAILS_MAX_THREADS:-5}"
+  WEB_CONCURRENCY: "${WEB_CONCURRENCY:-2}"
+  RAILS_LOG_LEVEL: "${RAILS_LOG_LEVEL:-info}"
+  TZ: "${TZ:-UTC}"
+  MISSION_CONTROL_JOBS_HTTP_BASIC_AUTH_USER: "${JOBS_DASHBOARD_USER:-gatherpack}"
+
+# Shared configuration for every container that runs the app image.
+x-app: &app
+  image: "${GATHERPACK_IMAGE:-ghcr.io/gatherpack/gatherpack}:${GATHERPACK_TAG:-latest}"
+  restart: unless-stopped
+  init: true
+  logging: *logging
+  security_opt:
+    - no-new-privileges:true
+  environment: *app-environment
+  volumes:
+    # Active Storage uploads *and* the runtime settings store
+    # (storage/settings.pstore). Both web and worker need it.
+    - storage:/rails/storage
+  depends_on:
+    db:
+      condition: service_healthy
+
+services:
+  # Puma. Runs `db:prepare` on boot (see bin/docker-entrypoint), so migrations
+  # are applied automatically on every deploy before it reports healthy.
+  web:
+    <<: *app
+    command: ["./bin/rails", "server"]
+    environment:
+      <<: *app-environment
+      # Jobs run in the dedicated `worker` service below, not inside Puma.
+      SOLID_QUEUE_IN_PUMA: "false"
+    ports:
+      - "${GATHERPACK_PORT:-3000}:3000"
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://127.0.0.1:3000/up"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 120s
+    stop_grace_period: 30s
+
+  # SolidQueue: background jobs plus the recurring schedule in
+  # config/recurring.yml. Waits for `web` so it never races the migrations.
+  worker:
+    <<: *app
+    command: ["./bin/jobs"]
+    # bin/jobs serves no HTTP, so the image's HEALTHCHECK (which probes Puma on
+    # /up) would mark this container unhealthy forever. Nothing depends on the
+    # worker's health, so turn the inherited check off rather than fake one.
+    healthcheck:
+      disable: true
+    stop_grace_period: 30s
+    depends_on:
+      db:
+        condition: service_healthy
+      web:
+        condition: service_healthy
+
+  db:
+    image: "postgres:${POSTGRES_VERSION:-16-alpine}"
+    restart: unless-stopped
+    logging: *logging
+    security_opt:
+      - no-new-privileges:true
+    shm_size: 256mb
+    environment:
+      POSTGRES_USER: "${DATABASE_USERNAME:-gatherpack}"
+      POSTGRES_PASSWORD: "${DATABASE_PASSWORD:?required - password for the PostgreSQL user}"
+      POSTGRES_DB: gatherpack_production
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+    # Uncomment to reach the database from outside the stack (backups, psql).
+    # ports:
+    #   - "127.0.0.1:5432:5432"
+
+volumes:
+  db_data:
+  storage:

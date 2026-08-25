@@ -47,3 +47,9 @@
 # Ignore Docker-related files
 /.dockerignore
 /Dockerfile*
+/docker-compose*.yml
+
+# Ignore documentation
+/docs
+/*.md
+!/README.md

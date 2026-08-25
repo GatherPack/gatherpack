@@ -5,8 +5,11 @@ if [ -z "${LD_PRELOAD+x}" ] && [ -f /usr/lib/*/libjemalloc.so.2 ]; then
   export LD_PRELOAD="$(echo /usr/lib/*/libjemalloc.so.2)"
 fi
 
-# If running the rails server then create or migrate existing database
-if [ "${1}" == "./bin/rails" ] && [ "${2}" == "server" ]; then
+# If running the rails server then create or migrate existing databases.
+# db:prepare covers every database in config/database.yml: primary, versions
+# (PaperTrail) and cable (SolidCable). Set SKIP_DB_PREPARE=true to opt out when
+# migrations are run as a separate step.
+if [ "${@: -2:1}" == "./bin/rails" ] && [ "${@: -1:1}" == "server" ] && [ -z "${SKIP_DB_PREPARE}" ]; then
   ./bin/rails db:prepare
 fi
 
