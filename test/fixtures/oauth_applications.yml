@@ -5,9 +5,13 @@ one:
   redirect_uri: MyText
   scopes: MyString
   confidential: false
+  uid: MyString1
+  secret: MySecret1
 
 two:
   name: MyString
   redirect_uri: MyText
   scopes: MyString
   confidential: false
+  uid: MyString2
+  secret: MySecret2

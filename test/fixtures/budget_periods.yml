@@ -4,8 +4,10 @@ one:
   name: MyString
   starts_at: 2025-12-22 13:34:12
   ends_at: 2025-12-22 13:34:12
+  team: one
 
 two:
   name: MyString
   starts_at: 2025-12-22 13:34:12
   ends_at: 2025-12-22 13:34:12
+  team: two
