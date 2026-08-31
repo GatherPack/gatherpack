@@ -134,6 +134,7 @@ GEM
     crass (1.0.7)
     cssbundling-rails (1.4.3)
       railties (>= 6.0.0)
+    csv (3.3.6)
     date (3.5.1)
     debug (1.11.1)
       irb (~> 1.10)
@@ -201,6 +202,10 @@ GEM
       llhttp (~> 0.6.1)
     http-cookie (1.1.6)
       domain_name (~> 0.5)
+    httparty (0.24.2)
+      csv
+      mini_mime (>= 1.0.0)
+      multi_xml (>= 0.5.2)
     i18n (1.15.2)
       concurrent-ruby (~> 1.0)
     image_processing (2.0.3)
@@ -470,6 +475,9 @@ GEM
       io-console (~> 0.5)
     request_store (1.7.0)
       rack (>= 1.4)
+    resend (1.13.0)
+      base64
+      httparty (>= 0.22.0)
     responders (3.2.0)
       actionpack (>= 7.0)
       railties (>= 7.0)
@@ -564,6 +572,9 @@ GEM
     stripe (19.5.0)
       bigdecimal
       logger
+    svix (2.1.0)
+      base64 (~> 0.3.0)
+      logger (~> 1.0)
     thor (1.5.0)
     thruster (0.1.26)
     thruster (0.1.26-aarch64-linux)
@@ -658,6 +669,7 @@ DEPENDENCIES
   rails (~> 8.1)
   ransack (~> 4)
   redcarpet (~> 3)
+  resend
   rubocop
   rubocop-rails-omakase
   ruby-vips
@@ -670,6 +682,7 @@ DEPENDENCIES
   standard
   stimulus-rails
   stripe (~> 19)
+  svix
   thruster
   turbo-rails
   tzinfo-data

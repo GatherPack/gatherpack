@@ -40,12 +40,16 @@ class Gateway::StripeGateway < Gateway
     ledger_entry
   end
 
-  def handle_webhook(payload, signature)
+  def self.webhook_headers
+    [ "HTTP_STRIPE_SIGNATURE" ]
+  end
+
+  def handle_webhook(payload, headers)
     event = Stripe::Event.construct_from(JSON.parse(payload))
 
     if secret.present?
       begin
-        event = Stripe::Webhook.construct_event(payload, signature, secret)
+        event = Stripe::Webhook.construct_event(payload, headers["HTTP_STRIPE_SIGNATURE"], secret)
       rescue Stripe::SignatureVerificationError => e
         raise "Stripe webhook signature verification failed. #{e.message}"
       end

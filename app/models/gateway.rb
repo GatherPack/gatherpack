@@ -46,6 +46,10 @@ class Gateway < ApplicationRecord
     []
   end
 
-  def handle_webhook(payload, signature)
+  def handle_webhook(payload, headers)
+  end
+
+  def self.webhook_headers
+    []
   end
 end
