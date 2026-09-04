@@ -1,7 +1,7 @@
 require "test_helper"
 
 class UsersControllerTest < ActionDispatch::IntegrationTest
-  # test "the truth" do
-  #   assert true
-  # end
+  # TODO: Add tests for UsersController.
+  # Scaffold-generated tests were removed to provide a clean foundation.
+  # See test/controllers/api/v1/user_info_controller_test.rb for a hand-written example.
 end

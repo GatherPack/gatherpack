@@ -141,6 +141,20 @@ Rails.application.routes.draw do
     resources :pages
   end
 
+  if GatherPack::Features.enabled?(:oauth_provider)
+    use_doorkeeper do
+      skip_controllers :applications, :authorized_applications
+    end
+
+    namespace :api do
+      namespace :v1 do
+        get "userinfo", to: "user_info#show"
+      end
+    end
+
+    resources :oauth_applications
+  end
+
   if GatherPack::Features.enabled?(:qa)
     resources :questions do
       member do

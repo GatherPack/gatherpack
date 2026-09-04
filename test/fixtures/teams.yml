@@ -1,11 +1,9 @@
-# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
 one:
-  name: MyString
-  color: MyString
+  name: Alpha Team
+  color: blue
   team_type: one
 
 two:
-  name: MyString
-  color: MyString
+  name: Beta Team
+  color: red
   team_type: two

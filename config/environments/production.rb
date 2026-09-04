@@ -73,6 +73,10 @@ Rails.application.configure do
 
   # config.active_job.queue_name_prefix = "gatherpack_production"
 
+  # HTTP Basic Auth for the /jobs (Mission Control) dashboard.
+  config.mission_control.jobs.http_basic_auth_user = ENV["MISSION_CONTROL_JOBS_HTTP_BASIC_AUTH_USER"]
+  config.mission_control.jobs.http_basic_auth_password = ENV["MISSION_CONTROL_JOBS_HTTP_BASIC_AUTH_PASSWORD"]
+
   config.action_mailer.perform_caching = false
 
   # Ignore bad email addresses and do not raise email delivery errors.

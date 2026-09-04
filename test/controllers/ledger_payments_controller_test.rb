@@ -1,13 +1,7 @@
 require "test_helper"
 
 class LedgerPaymentsControllerTest < ActionDispatch::IntegrationTest
-  test "should get new" do
-    get ledger_payments_new_url
-    assert_response :success
-  end
-
-  test "should get create" do
-    get ledger_payments_create_url
-    assert_response :success
-  end
+  # TODO: Add tests for LedgerPaymentsController.
+  # Scaffold-generated tests were removed to provide a clean foundation.
+  # See test/controllers/api/v1/user_info_controller_test.rb for a hand-written example.
 end

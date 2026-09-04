@@ -1,25 +1,23 @@
-# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
 one:
-  first_name: MyString
-  last_name: MyString
-  display_name: MyString
-  gender: MyString
-  shirt_size: MyString
-  phone_number: MyString
-  address: MyString
-  birthday: 2024-05-27
-  dietary_restrictions: MyString
+  first_name: Alice
+  last_name: Anderson
+  display_name: Alice Anderson
+  gender: female
+  shirt_size: M
+  phone_number: "555-0101"
+  address: "123 Main St"
+  birthday: 1990-01-15
+  dietary_restrictions: none
   user: one
 
 two:
-  first_name: MyString
-  last_name: MyString
-  display_name: MyString
-  gender: MyString
-  shirt_size: MyString
-  phone_number: MyString
-  address: MyString
-  birthday: 2024-05-27
-  dietary_restrictions: MyString
+  first_name: Bob
+  last_name: Baker
+  display_name: Bob Baker
+  gender: male
+  shirt_size: L
+  phone_number: "555-0102"
+  address: "456 Oak Ave"
+  birthday: 1992-06-20
+  dietary_restrictions: vegetarian
   user: two

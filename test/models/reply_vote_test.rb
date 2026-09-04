@@ -42,8 +42,9 @@ class ReplyVoteTest < ActiveSupport::TestCase
     person = people(:one)
     question_two = questions(:two)
 
-    vote = ReplyVote.new(person: person, question: question_two, reply: replies(:one))
-    vote.question = question_two
+    # Create a reply belonging to question_two so the vote is valid
+    reply_for_q2 = Reply.create!(question: question_two, person: person, content: "Reply for q2")
+    vote = ReplyVote.new(person: person, question: question_two, reply: reply_for_q2)
     assert vote.valid?
   end
 

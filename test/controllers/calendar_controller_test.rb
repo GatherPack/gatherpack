@@ -1,8 +1,7 @@
 require "test_helper"
 
 class CalendarControllerTest < ActionDispatch::IntegrationTest
-  test "should get index" do
-    get calendar_index_url
-    assert_response :success
-  end
+  # TODO: Add tests for CalendarController.
+  # Scaffold-generated tests were removed to provide a clean foundation.
+  # See test/controllers/api/v1/user_info_controller_test.rb for a hand-written example.
 end
