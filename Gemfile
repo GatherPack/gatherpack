@@ -130,6 +130,10 @@ gem "hotwire_combobox", "~> 0.4.0", github: "braddoeswebdev/hotwire_combobox"
 
 gem "stripe", "~> 19"
 
+gem "resend"
+
+gem "svix"
+
 gem "dotenv", "~> 3"
 
 gem "pretender", "~> 1.0"

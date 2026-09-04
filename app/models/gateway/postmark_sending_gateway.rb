@@ -31,7 +31,7 @@ class Gateway::PostmarkSendingGateway < Gateway
     )
   end
 
-  def handle_webhook(body, signature)
+  def handle_webhook(body, headers)
     payload = JSON.parse(body)
 
     case payload["RecordType"]

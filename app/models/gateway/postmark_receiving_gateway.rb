@@ -10,7 +10,7 @@ class Gateway::PostmarkReceivingGateway < Gateway
     "envelope-open-text"
   end
 
-  def handle_webhook(body, signature)
+  def handle_webhook(body, headers)
     payload = JSON.parse(body)
     (payload["ToFull"] + payload["CcFull"] + payload["BccFull"]).each do |recipient|
       if mb = Mailbox.where(address: recipient["Email"]).first

@@ -50,8 +50,8 @@ class GatewaysController < InternalController
   end
 
   def webhook
-    ProcessGatewayWebhookJob.perform_later @gateway, request.body.read, request.env["HTTP_STRIPE_SIGNATURE"]
-    # @gateway.handle_webhook(request.body.read, request.env['HTTP_STRIPE_SIGNATURE'])
+    headers = request.env.slice(*@gateway.class.webhook_headers)
+    ProcessGatewayWebhookJob.perform_later @gateway, request.body.read, headers
     head :no_content
   end
 
