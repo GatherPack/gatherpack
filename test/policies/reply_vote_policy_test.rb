@@ -7,8 +7,7 @@ class ReplyVotePolicyTest < ActiveSupport::TestCase
   end
 
   test "scope returns votes for user's teams" do
-    policy = ReplyVotePolicy.new(@user, ReplyVote)
-    scoped = policy.scope.resolve
+    scoped = ReplyVotePolicy::Scope.new(@user, ReplyVote).resolve
     assert_includes scoped, @vote
   end
 

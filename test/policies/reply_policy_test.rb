@@ -7,8 +7,7 @@ class ReplyPolicyTest < ActiveSupport::TestCase
   end
 
   test "scope returns replies for user's teams" do
-    policy = ReplyPolicy.new(@user, Reply)
-    scoped = policy.scope.resolve
+    scoped = ReplyPolicy::Scope.new(@user, Reply).resolve
     assert_includes scoped, @reply
   end
 
@@ -25,6 +24,10 @@ class ReplyPolicyTest < ActiveSupport::TestCase
   test "destroy requires admin or manager" do
     policy = ReplyPolicy.new(@user, @reply)
     # Destroy requires admin or manager of the question's team
-    assert @user.admin? || policy.destroy?
+    if @user.admin?
+      assert policy.destroy?
+    else
+      assert_not policy.destroy?
+    end
   end
 end

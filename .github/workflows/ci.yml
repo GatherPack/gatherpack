@@ -133,13 +133,8 @@ jobs:
   # checks it depends on have passed. Pull requests stop at build_image; pushes
   # to main publish :main/:edge/:sha-… and v*.*.* tags publish :latest.
   #
-  # `test` is deliberately absent from `needs` for now. The suite predates CI
-  # ever running and is largely unmodified scaffold output that fails for
-  # reasons unrelated to the deployment pipeline, so gating releases on it would
-  # mean never publishing an image. It still runs on every push and pull
-  # request. Add it back here once the suite is green.
   publish:
-    needs: [ scan_ruby, scan_js, lint, build_image ]
+    needs: [ scan_ruby, scan_js, lint, build_image, test ]
     if: github.event_name == 'push'
     permissions:
       contents: read

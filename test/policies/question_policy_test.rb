@@ -9,8 +9,7 @@ class QuestionPolicyTest < ActiveSupport::TestCase
   end
 
   test "scope returns questions for user's teams" do
-    policy = QuestionPolicy.new(@user, Question)
-    scoped = policy.scope.resolve
+    scoped = QuestionPolicy::Scope.new(@user, Question).resolve
     assert_includes scoped, @question
   end
 
@@ -29,7 +28,11 @@ class QuestionPolicyTest < ActiveSupport::TestCase
     # User one is person one who is author, but destroy requires admin/manager
     # With default fixtures, person one is not a manager, so this should be false
     # unless user is admin
-    assert @user.admin? || policy.destroy?
+    if @user.admin?
+      assert policy.destroy?
+    else
+      assert_not policy.destroy?
+    end
   end
 
   test "close as author" do
@@ -45,6 +48,10 @@ class QuestionPolicyTest < ActiveSupport::TestCase
   test "move requires manager" do
     policy = QuestionPolicy.new(@user, @question)
     # Move requires manager of the team
-    assert @user.admin? || policy.move?
+    if @user.admin?
+      assert policy.move?
+    else
+      assert_not policy.move?
+    end
   end
 end
