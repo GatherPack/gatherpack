@@ -60,4 +60,6 @@ Rails.application.configure do
   Rails.application.configure do
     config.secret_key_base = ENV["SECRET_KEY_BASE"] || SecureRandom.hex(64)
   end
+
+  config.active_job.queue_adapter = :test
 end
