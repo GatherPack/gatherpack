@@ -2,10 +2,8 @@
 
 one:
   value: MyString
-  people: one
-  people_type: People
+  tokenable: one (Person)
 
 two:
   value: MyString
-  people: two
-  people_type: People
+  tokenable: two (Person)

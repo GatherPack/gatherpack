@@ -2,10 +2,10 @@
 
 one:
   relationship_type: one
-  parent_entity: one
-  child_entity: one
+  parent: one
+  child: one
 
 two:
   relationship_type: two
-  parent_entity: two
-  child_entity: two
+  parent: two
+  child: two

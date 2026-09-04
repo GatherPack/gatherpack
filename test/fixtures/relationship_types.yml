@@ -3,9 +3,9 @@
 one:
   parent_label: MyString
   child_label: MyString
-  permission: MyString
+  permission: added_by_admin
 
 two:
   parent_label: MyString
   child_label: MyString
-  permission: MyString
+  permission: added_by_admin

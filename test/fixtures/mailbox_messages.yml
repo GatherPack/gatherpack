@@ -3,11 +3,11 @@
 one:
   from: MyString
   subject: MyString
-  body_raw: MyString
+  body: MyString
   mailbox: one
 
 two:
   from: MyString
   subject: MyString
-  body_raw: MyString
+  body: MyString
   mailbox: two
