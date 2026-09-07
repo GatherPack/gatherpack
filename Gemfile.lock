@@ -475,7 +475,7 @@ GEM
       io-console (~> 0.5)
     request_store (1.7.0)
       rack (>= 1.4)
-    resend (1.13.0)
+    resend (1.14.0)
       base64
       httparty (>= 0.22.0)
     responders (3.2.1)
