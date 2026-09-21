@@ -1,47 +1,36 @@
 <% breadcrumb :hooks %>
 
-<%= search_form_for @q, data: {"controller": "turbo_search", "turbo_frame": "results"} do |f| %>
-<div class="card">
-  <div class="card-header">
-    <h1>Hooks</h1>
-  </div>
-  <div class="card-body">
-    <div class="row">
-      <div class="col-md">
-        <%= f.input :name_i_cont, label: "Name" %>
-      </div>
-      <div class="col-md">
-        <%= f.input :event_i_cont, label: "Event" %>
-      </div>
-    </div>
-  </div>
-  <div class="card-footer">
-    <%= link_to "New Hook", new_hook_path, class: "btn btn-success" if policy(Hook).new? %>
-    <%= f.submit "Search", class: "btn btn-primary", data: { action: "turbo_search#search" } %>
-    <%= link_to "Clear Search", request.path, class: "btn btn-dark", data: { action: "turbo_search#clear" } %>
-  </div>
-</div>
+<% filters = [
+      { attr: :event_eq, label: "Event", as: :select, collection: Hook.catalog }
+    ] %>
+
+<%= render layout: "shared/filter_bar", locals: {
+      q: @q,
+      title: "Hooks",
+      collection: @hooks,
+      primary: { attr: :name_i_cont, placeholder: "Search by name…" },
+      filters: filters,
+      sorts: { name: "Name", event: "Event", updated_at: "Last Updated" },
+      new_path: (new_hook_path if policy(Hook).new?),
+      new_label: "Hook"
+    } do |f| %>
 <% end %>
 
-<%= turbo_frame_tag "results" do %>
-  <div class="dropdown">
-    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-      Sort By
-    </button>
-    <ul class="dropdown-menu">
-      <li><%= sort_link @q, :name, "Name", class: "dropdown-item" %></li>
-      <li><%= sort_link @q, :event, "Event", class: "dropdown-item" %></li>
-      <li><%= sort_link @q, :updated_at, "Last Updated", class: "dropdown-item" %></li>
-    </ul>
-  </div>
+<%= turbo_frame_tag "results", data: { turbo_action: "advance" } do %>
+  <%= render "shared/results_header", q: @q, filters: filters, collection: @hooks, noun: "hook" %>
 
-  <div id="hooks" class="row">
-    <% @hooks.each do |hook| %>
-      <div class="col-md-3">
-        <%= render hook %>
-      </div>
-    <% end %>
-  </div>
+  <% if @hooks.any? %>
+
+    <div id="hooks" class="row">
+      <% @hooks.each do |hook| %>
+        <div class="col-md-3">
+          <%= render hook %>
+        </div>
+      <% end %>
+    </div>
 
   <%= paginate @hooks %>
+  <% else %>
+    <%= render "shared/no_results", noun: "hook", filtered: any_filters_applied?(@q) %>
+  <% end %>
 <% end %>

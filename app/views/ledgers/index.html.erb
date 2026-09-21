@@ -1,38 +1,36 @@
 <% breadcrumb :ledgers %>
 
-<%= search_form_for @q, data: { "controller": "turbo_search", "turbo-frame": "results" } do |f| %>
-<div class="card">
-  <div class="card-header">
-    <h1>Ledgers</h1>
-  </div>
-  <div class="card-body">
-    <%= f.input :name_cont, label: "Name" %>
-  </div>
-  <div class="card-footer">
-    <%= link_to "New Ledger", new_ledger_path, class: "btn btn-success" if policy(Ledger).new? %>
-    <%= f.submit "Search", class: "btn btn-primary", data: { action: "turbo_search#search" } %>
-    <%= link_to "Clear Search", request.path, class: "btn btn-dark", data: { action: "turbo_search#clear" } %>
-  </div>
-</div>
+<% filters = [
+      { attr: :team_id_eq, label: "Team", as: :select, collection: policy_scope(Team) }
+    ] %>
+
+<%= render layout: "shared/filter_bar", locals: {
+      q: @q,
+      title: "Ledgers",
+      collection: @ledgers,
+      primary: { attr: :name_cont, placeholder: "Search by name…" },
+      filters: filters,
+      sorts: { name: "Name", updated_at: "Last Updated" },
+      new_path: (new_ledger_path if policy(Ledger).new?),
+      new_label: "Ledger"
+    } do |f| %>
 <% end %>
 
-<%= turbo_frame_tag "results" do %>
-  <div class="dropdown">
-    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-        Sort By
-    </button>
-    <ul class="dropdown-menu">
-      <li><%= sort_link @q, :updated_at, "Last Updated", class: "dropdown-item" %></li>
-    </ul>
-  </div>
+<%= turbo_frame_tag "results", data: { turbo_action: "advance" } do %>
+  <%= render "shared/results_header", q: @q, filters: filters, collection: @ledgers, noun: "ledger" %>
 
-  <div id="ledgers" class="row">
-    <% @ledgers.each do |ledger| %>
-      <div class="col-md-3">
-        <%= render ledger %>
-      </div>
-    <% end %>
-  </div>
+  <% if @ledgers.any? %>
+
+    <div id="ledgers" class="row">
+      <% @ledgers.each do |ledger| %>
+        <div class="col-md-3">
+          <%= render ledger %>
+        </div>
+      <% end %>
+    </div>
 
   <%= paginate @ledgers %>
+  <% else %>
+    <%= render "shared/no_results", noun: "ledger", filtered: any_filters_applied?(@q) %>
+  <% end %>
 <% end %>

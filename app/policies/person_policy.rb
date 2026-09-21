@@ -4,7 +4,10 @@ class PersonPolicy < ApplicationPolicy
       if user.admin
         scope.all
       else
-        scope.where(id: (person.all_teams.map(&:all_people).flatten.map(&:id) << person.id)).distinct
+        # A subquery, not a materialised ID array: this scope runs on every
+        # keystroke of live search, so it must compose with Ransack and
+        # Kaminari and never load ids into Ruby.
+        scope.where(Person::VISIBLE_PEOPLE_CONDITION, person_id: person.id)
       end
     end
   end

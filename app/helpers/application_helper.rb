@@ -1,11 +1,12 @@
 module ApplicationHelper
+  # Team#color is nullable and unvalidated, so a single team saved without a
+  # colour used to raise here and 500 the whole Teams index. Fall back to dark
+  # text on anything we cannot parse.
   def contrasting_color(color)
     base = Color::RGB.by_hex(color)
-    if base.brightness > 0.5
-      "#000"
-    else
-      "#fff"
-    end
+    base.brightness > 0.5 ? "#000" : "#fff"
+  rescue ArgumentError, TypeError
+    "#000"
   end
 
   def as_badge(obj, **opts)

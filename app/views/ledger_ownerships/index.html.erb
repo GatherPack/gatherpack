@@ -1,37 +1,36 @@
 <% breadcrumb :ledger_ownerships, @ledger %>
 
-<%= search_form_for @q, data: { "controller": "turbo_search", "turbo-frame": "results" } do |f| %>
-<div class="card">
-  <div class="card-header">
-    <h1>Ledger ownerships</h1>
-  </div>
-  <div class="card-body">
-  </div>
-  <div class="card-footer">
-    <%= link_to "New Ledger Ownership", new_ledger_ownership_path, class: "btn btn-success" %>
-    <%= f.submit "Search", class: "btn btn-primary", data: { action: "turbo_search#search" } %>
-    <%= link_to "Clear Search", request.path, class: "btn btn-dark", data: { action: "turbo_search#clear" } %>
-  </div>
-</div>
+<% filters = [
+        { attr: :ledger_id_eq, label: "Ledger", as: :select, collection: policy_scope(Ledger) }
+      ] %>
+
+<%= render layout: "shared/filter_bar", locals: {
+      q: @q,
+      title: "Ledger Ownerships",
+      collection: @ledger_ownerships,
+      primary: nil,
+      filters: filters,
+      sorts: { updated_at: "Last Updated" },
+      new_path: (new_ledger_ownership_path if policy(LedgerOwnership).new?),
+      new_label: "Ledger Ownership"
+    } do |f| %>
 <% end %>
 
-<%= turbo_frame_tag "results" do %>
-  <div class="dropdown">
-    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-        Sort By
-    </button>
-    <ul class="dropdown-menu">
-      <li><%= sort_link @q, :updated_at, "Last Updated", class: "dropdown-item" %></li>
-    </ul>
-  </div>
+<%= turbo_frame_tag "results", data: { turbo_action: "advance" } do %>
+  <%= render "shared/results_header", q: @q, filters: filters, collection: @ledger_ownerships, noun: "ownership" %>
 
-  <div id="ledger_ownerships" class="row">
-    <% @ledger_ownerships.each do |ledger_ownership| %>
-      <div class="col-md-3">
-        <%= render ledger_ownership %>
-      </div>
-    <% end %>
-  </div>
+  <% if @ledger_ownerships.any? %>
+
+    <div id="ledger_ownerships" class="row">
+      <% @ledger_ownerships.each do |ledger_ownership| %>
+        <div class="col-md-3">
+          <%= render ledger_ownership %>
+        </div>
+      <% end %>
+    </div>
 
   <%= paginate @ledger_ownerships %>
+  <% else %>
+    <%= render "shared/no_results", noun: "ownership", filtered: any_filters_applied?(@q) %>
+  <% end %>
 <% end %>

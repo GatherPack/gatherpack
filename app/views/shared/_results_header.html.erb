@@ -1,0 +1,35 @@
+<%#
+  Active filter chips + result count.
+
+  Renders INSIDE the turbo-frame (unlike the filter bar) so both update when
+  results do. The count is an aria-live region so screen reader users hear
+  "137 people" after each live search.
+
+  Locals: q, filters, noun, collection (nil to omit the count)
+%>
+<% chips = active_filter_chips(q, filters) %>
+
+<div class="results-header">
+  <div class="results-header__chips">
+    <% chips.each do |chip| %>
+      <%# Signals the toolbar instead of navigating: the field to blank lives
+          outside this frame, and a full visit raced in-flight frame requests. %>
+      <button type="button" class="filter-chip"
+              title="Remove filter: <%= chip[:label] %>"
+              data-controller="search-signal"
+              data-search-signal-field-value="<%= chip[:field] %>"
+              data-action="click->search-signal#remove">
+        <span class="filter-chip__label"><%= chip[:label] %>:</span>
+        <span class="filter-chip__value"><%= chip[:value] %></span>
+        <span class="filter-chip__remove" aria-hidden="true">&times;</span>
+        <span class="visually-hidden">Remove this filter</span>
+      </button>
+    <% end %>
+  </div>
+
+  <% if collection %>
+    <p class="results-header__count" aria-live="polite" aria-atomic="true">
+      <%= pluralize number_with_delimiter(collection.total_count), noun %>
+    </p>
+  <% end %>
+</div>

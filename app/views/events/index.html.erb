@@ -1,57 +1,42 @@
 <% breadcrumb :events %>
 
-<%= search_form_for @q, data: {"controller": "turbo_search", "turbo_frame": "results"} do |f| %>
-<div class="card">
-  <div class="card-header">
-    <h1>Events</h1>
-  </div>
-  <div class="card-body">
-    <div class="row">
-      <div class="col-md">
-        <%= f.input :name_i_cont, label: "Name" %>
-      </div>
-      <div class="col-md">
-        <%= f.input :location_i_cont, label: "Location" %>
-      </div>
-      <div class="col-md">
-        <%= f.input :event_type_id_eq, label: "Event Type", as: :select, collection: EventType.all %>
-      </div>
-      <div class="col-md">
-        <%= f.input :team_id_eq, label: "Teams", as: :select, collection: policy_scope(Team) %>
-      </div>
-      <div class="col-md">
-        <%= f.input :time_clock_period_id_eq, label: "Time Clock Period", as: :select, collection: policy_scope(TimeClockPeriod) %>
-      </div>
-    </div>
-  </div>
-  <div class="card-footer">
-    <%= link_to "New Event", new_event_path, class: "btn btn-success" if policy(Event).new? %>
-    <%= f.submit "Search", class: "btn btn-primary", data: { action: "turbo_search#search" } %>
-    <%= link_to "Clear Search", request.path, class: "btn btn-dark", data: { action: "turbo_search#clear" } %>
-  </div>
-</div>
+<%
+  filters = [
+    { attr: :location_i_cont, label: "Location", as: :string },
+    { attr: :event_type_id_eq, label: "Event Type", as: :select, collection: EventType.all },
+    { attr: :team_id_eq, label: "Team", as: :select, collection: policy_scope(Team) },
+    { attr: :time_clock_period_id_eq, label: "Time Clock Period", as: :select,
+      collection: policy_scope(TimeClockPeriod) }
+  ]
+%>
+
+<%= render layout: "shared/filter_bar", locals: {
+      q: @q,
+      title: "Events",
+      collection: @events,
+      primary: { attr: :name_or_location_i_cont, placeholder: "Search name and location…" },
+      filters: filters,
+      sorts: { name: "Name", start_time: "Start Time", end_time: "End Time",
+               updated_at: "Last Updated" },
+      new_path: (new_event_path if policy(Event).new?),
+      new_label: "New Event"
+    } do |f| %>
 <% end %>
 
-<%= turbo_frame_tag "results" do %>
-  <div class="dropdown">
-    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-        Sort By
-    </button>
-    <ul class="dropdown-menu">
-      <li><%= sort_link @q, :name, "Name", class: "dropdown-item" %></li>
-      <li><%= sort_link @q, :start_time, "Start Time", class: "dropdown-item" %></li>
-      <li><%= sort_link @q, :end_time, "End Time", class: "dropdown-item" %></li>
-      <li><%= sort_link @q, :updated_at, "Last Updated", class: "dropdown-item" %></li>
-    </ul>
-  </div>
+<%= turbo_frame_tag "results", data: { turbo_action: "advance" } do %>
+  <%= render "shared/results_header", q: @q, filters: filters, collection: @events, noun: "event" %>
 
-  <div id="calendar_notes" class="row">
-    <% @events.each do |event| %>
-      <div class="col-md-3">
-        <%= render event %>
-      </div>
-    <% end %>
-  </div>
+  <% if @events.any? %>
+    <div id="events" class="row">
+      <% @events.each do |event| %>
+        <div class="col-md-3">
+          <%= render event %>
+        </div>
+      <% end %>
+    </div>
 
-  <%= paginate @events %>
+    <%= paginate @events %>
+  <% else %>
+    <%= render "shared/no_results", noun: "event", filtered: any_filters_applied?(@q) %>
+  <% end %>
 <% end %>

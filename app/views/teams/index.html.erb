@@ -1,53 +1,41 @@
 <% breadcrumb :teams %>
 
-<%= search_form_for @q, data: {"controller": "turbo_search", "turbo_frame": "results"} do |f| %>
-<div class="card">
-  <div class="card-header">
-    <h1>Teams</h1>
-  </div>
-  <div class="card-body">
-    <div class="row">
-      <div class="col-md">
-        <%= f.input :name_cont, label: "Name" %>
-      </div>
-      <div class="col-md">
-        <%= f.input :team_type_id_eq, label: "Team Type", as: :select, collection: TeamType.all %>
-      </div>
-      <div class="col-md">
-        <%= f.input :top_level, label: "Top Level", as: :select, collection: [ [ "Only Top Level Teams", true ] ], include_blank: true %>
-      </div>
-      <div class="col-md">
-        <div class="mb-3">
-          <%= label_tag :filter, "Filter", class: "form-label" %>
-          <%= select_tag :filter, options_for_select([ [ "My Teams", "my" ], [ "All Teams", "all" ] ], params[:filter] || "my"), class: "form-select" %>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="card-footer">
-    <%= link_to "New Team", new_team_path, class: "btn btn-success" if policy(Team).new? %>
-    <%= f.submit "Search", class: "btn btn-primary", data: { action: "turbo_search#search" } %>
-    <%= link_to "Clear Search", request.path, class: "btn btn-dark", data: { action: "turbo_search#clear" } %>
-  </div>
-</div>
+<%
+  filters = [
+    { attr: :team_type_id_eq, label: "Team Type", as: :select, collection: TeamType.all },
+    { attr: :top_level, label: "Top Level", as: :select,
+      collection: [ [ "Only Top Level Teams", true ] ] },
+    # Read straight off params by TeamsController; "My Teams" is the default.
+    { param: :filter, label: "Show", default: "",
+      collection: [ [ "My Teams", "" ], [ "All Teams", "all" ] ] }
+  ]
+%>
+
+<%= render layout: "shared/filter_bar", locals: {
+      q: @q,
+      title: "Teams",
+      collection: @teams,
+      primary: { attr: :name_cont, placeholder: "Search by name…" },
+      filters: filters,
+      sorts: { team_type_name: "Team Type", name: "Name", updated_at: "Last Updated" },
+      new_path: (new_team_path if policy(Team).new?),
+      new_label: "New Team",
+      extra_params: [ :filter ]
+    } do |f| %>
 <% end %>
 
-<%= turbo_frame_tag "results" do %>
-  <div class="dropdown">
-    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-      Sort By
-    </button>
-    <ul class="dropdown-menu">
-      <li><%= sort_link @q, :name, "Name", class: "dropdown-item" %></li>
-      <li><%= sort_link @q, :updated_at, "Last Updated", class: "dropdown-item" %></li>
-    </ul>
-  </div>
+<%= turbo_frame_tag "results", data: { turbo_action: "advance" } do %>
+  <%= render "shared/results_header", q: @q, filters: filters, collection: @teams, noun: "team" %>
 
-  <div id="teams">
-    <% @teams.each do |team| %>
-      <%= render team %>
-    <% end %>
-  </div>
+  <% if @teams.any? %>
+    <div id="teams">
+      <% @teams.each do |team| %>
+        <%= render team %>
+      <% end %>
+    </div>
 
-  <%= paginate @teams %>
+    <%= paginate @teams %>
+  <% else %>
+    <%= render "shared/no_results", noun: "team", filtered: any_filters_applied?(@q, [ :filter ]) %>
+  <% end %>
 <% end %>

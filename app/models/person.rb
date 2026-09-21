@@ -56,16 +56,75 @@ class Person < ApplicationRecord
     user&.admin ? Person.all : Person.joins(:memberships).where(memberships: { team_id: managed_teams.select(:id) }).distinct
   end
 
+  # Shared CTE definitions for "which teams can this person see".
+  #
+  #   descendants - everything at or below the teams they manage
+  #   ancestors   - everything at or above the teams they belong to
+  #
+  # Walking this tree in Ruby (Team#all_descendants / #all_ancestors) costs one
+  # query per node, which is tolerable on a page load but not when live search
+  # re-runs the policy scope on every keystroke.
+  VISIBLE_TEAM_CTES = <<~SQL.freeze
+    descendants(id) AS (
+      SELECT t.id FROM teams t
+        JOIN memberships m ON m.team_id = t.id
+        WHERE m.person_id = :person_id AND m.manager = TRUE
+      UNION
+      SELECT t.id FROM teams t JOIN descendants d ON t.parent_id = d.id
+    ),
+    ancestors(id, parent_id) AS (
+      SELECT t.id, t.parent_id FROM teams t
+        JOIN memberships m ON m.team_id = t.id
+        WHERE m.person_id = :person_id
+      UNION
+      SELECT t.id, t.parent_id FROM teams t JOIN ancestors a ON t.id = a.parent_id
+    ),
+    visible(id) AS (
+      SELECT id FROM descendants
+      UNION
+      SELECT id FROM ancestors
+    )
+  SQL
+
+  VISIBLE_TEAM_IDS_SQL = <<~SQL.freeze
+    WITH RECURSIVE
+    #{VISIBLE_TEAM_CTES}
+    SELECT id FROM visible
+  SQL
+
+  # The people this person is allowed to see: everyone in a visible team or
+  # anywhere below it, plus the person themselves.
+  #
+  # The old Ruby version also added the managers of teams above the visible
+  # ones. That is redundant - `visible` is closed under taking parents, so
+  # those managers are already members of a team in `expanded`.
+  VISIBLE_PERSON_IDS_SQL = <<~SQL.freeze
+    WITH RECURSIVE
+    #{VISIBLE_TEAM_CTES},
+    expanded(id) AS (
+      SELECT id FROM visible
+      UNION
+      SELECT t.id FROM teams t JOIN expanded e ON t.parent_id = e.id
+    )
+    SELECT m.person_id FROM memberships m WHERE m.team_id IN (SELECT id FROM expanded)
+    UNION
+    SELECT :person_id
+  SQL
+
+  # Ready-made WHERE fragments. Built here from the constants above so that
+  # call sites pass a constant plus a real bind parameter, rather than
+  # interpolating SQL inline.
+  VISIBLE_TEAMS_CONDITION  = "teams.id IN (#{VISIBLE_TEAM_IDS_SQL})".freeze
+  VISIBLE_PEOPLE_CONDITION = "people.id IN (#{VISIBLE_PERSON_IDS_SQL})".freeze
+
   def all_teams
-    Team.where(id: all_team_ids)
+    Team.where(VISIBLE_TEAMS_CONDITION, person_id: id)
   end
 
   def all_team_ids
-    direct_team_ids = teams.select(:id)
-    managed_team_ids = memberships.where(manager: true).select(:team_id)
-    descendant_ids = Team.where(id: managed_team_ids).flat_map(&:all_descendants).map(&:id)
-    ancestor_ids = Team.where(id: direct_team_ids).flat_map(&:all_ancestors).map(&:id)
-    direct_team_ids + descendant_ids + ancestor_ids
+    self.class.connection.select_values(
+      self.class.sanitize_sql_array([ VISIBLE_TEAM_IDS_SQL, { person_id: id } ])
+    )
   end
 
   def all_ancestor_teams

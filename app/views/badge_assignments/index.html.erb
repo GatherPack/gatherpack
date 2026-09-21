@@ -1,37 +1,38 @@
 <% breadcrumb :badge_assignments, @badge %>
 
-<%= search_form_for [ @badge, @q ], data: { "controller": "turbo_search", "turbo-frame": "results" } do |f| %>
-<div class="card">
-  <div class="card-header">
-    <h1>Badge assignments</h1>
-  </div>
-  <div class="card-body">
-  </div>
-  <div class="card-footer">
-    <%= link_to "New badge assignment", new_badge_badge_assignment_path(@badge), class: "btn btn-success" %>
-    <%= f.submit "Search", class: "btn btn-primary", data: { action: "turbo_search#search" } %>
-    <%= link_to "Clear Search", request.path, class: "btn btn-dark", data: { action: "turbo_search#clear" } %>
-  </div>
-</div>
+<% filters = [
+      { attr: :person_id_eq, label: "Person", as: :select, collection: policy_scope(Person),
+        opts: { label_method: :identifier_name } }
+    ] %>
+
+<%= render layout: "shared/filter_bar", locals: {
+      q: @q,
+      url: badge_badge_assignments_path(@badge),
+      title: "#{@badge.name} Assignments",
+      collection: @badge_assignments,
+      primary: nil,
+      filters: filters,
+      sorts: { updated_at: "Last Updated" },
+      new_path: (new_badge_badge_assignment_path(@badge) if policy(@badge).update?),
+      new_label: "Assignment"
+    } do |f| %>
 <% end %>
 
-<%= turbo_frame_tag "results" do %>
-  <div class="dropdown">
-    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-        Sort By
-    </button>
-    <ul class="dropdown-menu">
-      <li><%= sort_link @q, :updated_at, "Last Updated", class: "dropdown-item" %></li>
-    </ul>
-  </div>
+<%= turbo_frame_tag "results", data: { turbo_action: "advance" } do %>
+  <%= render "shared/results_header", q: @q, filters: filters, collection: @badge_assignments, noun: "badge assignment" %>
 
-  <div id="badge_assignments" class="row">
-    <% @badge_assignments.each do |badge_assignment| %>
-      <div class="col-md-3">
-        <%= render badge_assignment %>
-      </div>
-    <% end %>
-  </div>
+  <% if @badge_assignments.any? %>
+
+    <div id="badge_assignments" class="row">
+      <% @badge_assignments.each do |badge_assignment| %>
+        <div class="col-md-3">
+          <%= render badge_assignment %>
+        </div>
+      <% end %>
+    </div>
 
   <%= paginate @badge_assignments %>
+  <% else %>
+    <%= render "shared/no_results", noun: "badge assignment", filtered: any_filters_applied?(@q) %>
+  <% end %>
 <% end %>

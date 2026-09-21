@@ -1,6 +1,9 @@
 require "test_helper"
+require "support/authentication_helper"
 
 class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
+  include AuthenticationHelper
+
   if ENV["CAPYBARA_SERVER_PORT"]
     served_by host: "rails-app", port: ENV["CAPYBARA_SERVER_PORT"]
 

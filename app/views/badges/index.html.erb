@@ -1,49 +1,37 @@
 <% breadcrumb :badges %>
 
-<%= search_form_for @q, data: {"controller": "turbo_search", "turbo_frame": "results"} do |f| %>
-<div class="card">
-  <div class="card-header">
-    <h1>Badges</h1>
-  </div>
-  <div class="card-body">
-    <div class="row">
-      <div class="col-md">
-        <%= f.input :name_or_description_or_short_cont, label: "Name" %>
-      </div>
-      <div class="col-md">
-        <%= f.input :badge_type_id_eq, label: "Badge Type", as: :select, collection: BadgeType.all %>
-      </div>
-      <div class="col-md">
-        <%= f.input :team_id_eq, label: "Team", as: :select, collection: Team.all %>
-      </div>
-    </div>
-  </div>
-  <div class="card-footer">
-    <%= link_to "New Badge", new_badge_path, class: "btn btn-success" if policy(Badge).new? %>
-    <%= f.submit "Search", class: "btn btn-primary", data: { action: "turbo_search#search" } %>
-    <%= link_to "Clear Search", request.path, class: "btn btn-dark", data: { action: "turbo_search#clear" } %>
-  </div>
-</div>
+<% filters = [
+        { attr: :badge_type_id_eq, label: "Badge Type", as: :select, collection: BadgeType.all },
+        { attr: :team_id_eq, label: "Team", as: :select, collection: Team.all }
+      ] %>
+
+<%= render layout: "shared/filter_bar", locals: {
+      q: @q,
+      title: "Badges",
+      collection: @badges,
+      primary: { attr: :name_or_description_or_short_cont, placeholder: "Search badges…" },
+      filters: filters,
+      sorts: { name: "Name", updated_at: "Last Updated" },
+      new_path: (new_badge_path if policy(Badge).new?),
+      new_label: "Badge"
+    } do |f| %>
 <% end %>
 
-<%= turbo_frame_tag "results" do %>
-  <div class="dropdown">
-    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-      Sort By
-    </button>
-    <ul class="dropdown-menu">
-      <li><%= sort_link @q, :name, "Name", class: "dropdown-item" %></li>
-      <li><%= sort_link @q, :updated_at, "Last Updated", class: "dropdown-item" %></li>
-    </ul>
-  </div>
+<%= turbo_frame_tag "results", data: { turbo_action: "advance" } do %>
+  <%= render "shared/results_header", q: @q, filters: filters, collection: @badges, noun: "badge" %>
 
-  <div id="badges" class="row">
-    <% @badges.each do |badge| %>
-      <div class="col-md-3">
-        <%= render badge %>
-      </div>
-    <% end %>
-  </div>
+  <% if @badges.any? %>
+
+    <div id="badges" class="row">
+      <% @badges.each do |badge| %>
+        <div class="col-md-3">
+          <%= render badge %>
+        </div>
+      <% end %>
+    </div>
 
   <%= paginate @badges %>
+  <% else %>
+    <%= render "shared/no_results", noun: "badge", filtered: any_filters_applied?(@q) %>
+  <% end %>
 <% end %>

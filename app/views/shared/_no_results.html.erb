@@ -1,0 +1,21 @@
+<%#
+  Empty state for a filtered index. Always offers a way out, so a search that
+  matches nothing is never a dead end.
+
+  Locals: noun (singular, e.g. "person"), filtered (is anything applied?)
+%>
+<div class="no-results">
+  <p class="no-results__icon" aria-hidden="true"><%= i "magnifying-glass", size: "fa-2x" %></p>
+  <% if filtered %>
+    <p class="no-results__message">No <%= noun.pluralize %> match these filters.</p>
+    <%# This renders inside the frame while the search box lives outside it, so
+        it signals the toolbar rather than navigating. A full visit here raced
+        any in-flight frame request, which landed afterwards and put the
+        filtered results straight back. %>
+    <button type="button" class="btn btn-outline-secondary btn-sm"
+            data-controller="search-signal"
+            data-action="click->search-signal#clear">Clear all filters</button>
+  <% else %>
+    <p class="no-results__message">There are no <%= noun.pluralize %> yet.</p>
+  <% end %>
+</div>

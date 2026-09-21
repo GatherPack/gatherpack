@@ -5,7 +5,9 @@ class PeopleController < InternalController
   def index
     @q = policy_scope(Person).ransack(params[:q])
     @q.sorts = "last_name asc" if @q.sorts.empty?
-    @people = @q.result(distinct: true).order(last_name: :asc, first_name: :asc).page(params[:page])
+    # Tiebreaker only - keep it out of @q.sorts or the sort menu draws an arrow
+    # next to First Name as well as the field actually being sorted on.
+    @people = @q.result(distinct: true).order(first_name: :asc).page(params[:page])
   end
 
   # GET /people/1

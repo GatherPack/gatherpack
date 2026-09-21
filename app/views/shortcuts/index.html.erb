@@ -1,37 +1,36 @@
 <% breadcrumb :shortcuts %>
 
-<%= search_form_for @q, data: { "controller": "turbo_search", "turbo-frame": "results" } do |f| %>
-<div class="card">
-  <div class="card-header">
-    <h1>Shortcuts</h1>
-  </div>
-  <div class="card-body">
-  </div>
-  <div class="card-footer">
-    <%= link_to "New Shortcut", new_shortcut_path, class: "btn btn-success" %>
-    <%= f.submit "Search", class: "btn btn-primary", data: { action: "turbo_search#search" } %>
-    <%= link_to "Clear Search", request.path, class: "btn btn-dark", data: { action: "turbo_search#clear" } %>
-  </div>
-</div>
+<% filters = [
+        { attr: :team_id_eq, label: "Team", as: :select, collection: policy_scope(Team) }
+      ] %>
+
+<%= render layout: "shared/filter_bar", locals: {
+      q: @q,
+      title: "Shortcuts",
+      collection: @shortcuts,
+      primary: { attr: :name_cont, placeholder: "Search by name…" },
+      filters: filters,
+      sorts: { name: "Name", updated_at: "Last Updated" },
+      new_path: (new_shortcut_path if policy(Shortcut).new?),
+      new_label: "Shortcut"
+    } do |f| %>
 <% end %>
 
-<%= turbo_frame_tag "results" do %>
-  <div class="dropdown">
-    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-        Sort By
-    </button>
-    <ul class="dropdown-menu">
-      <li><%= sort_link @q, :updated_at, "Last Updated", class: "dropdown-item" %></li>
-    </ul>
-  </div>
+<%= turbo_frame_tag "results", data: { turbo_action: "advance" } do %>
+  <%= render "shared/results_header", q: @q, filters: filters, collection: @shortcuts, noun: "shortcut" %>
 
-  <div id="shortcuts" class="row">
-    <% @shortcuts.each do |shortcut| %>
-      <div class="col-md-3">
-        <%= render shortcut %>
-      </div>
-    <% end %>
-  </div>
+  <% if @shortcuts.any? %>
 
-  <%= paginate @shortcuts %>
+    <div id="shortcuts" class="row">
+      <% @shortcuts.each do |shortcut| %>
+        <div class="col-md-3">
+          <%= render shortcut %>
+        </div>
+      <% end %>
+    </div>
+
+    <%= paginate @shortcuts %>
+  <% else %>
+    <%= render "shared/no_results", noun: "shortcut", filtered: any_filters_applied?(@q) %>
+  <% end %>
 <% end %>

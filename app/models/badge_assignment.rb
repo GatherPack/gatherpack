@@ -17,4 +17,12 @@ class BadgeAssignment < ApplicationRecord
     return true unless badge.present? && badge.team.present?
     errors.add(:person, " must be a member of the badge's team") unless person.all_teams.include?(badge.team)
   end
+
+  def self.ransackable_attributes(auth_object = nil)
+    [ "badge_id", "person_id", "updated_at" ]
+  end
+
+  def self.ransackable_associations(auth_object = nil)
+    [ "badge", "person" ]
+  end
 end
