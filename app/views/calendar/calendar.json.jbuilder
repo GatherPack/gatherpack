@@ -1,13 +1,13 @@
 json.array! @events do |event|
-  background_color = event.team&.color || "#3788d8"
+  colors = event_calendar_colors(event)
   json.id event.id
   json.title event.name
   json.allDay false
   json.start event.start_time
   json.end event.end_time
   json.url event_url(event)
-  json.backgroundColor background_color
-  json.textColor Color::RGB.by_hex(background_color).brightness > 0.5 ? "#6d6753" : "#fffdf6"
+  json.backgroundColor colors[:background]
+  json.textColor colors[:text]
 
   json.extendedProps do
     json.icon "fa-" + (event.team&.team_type&.icon || "star")
