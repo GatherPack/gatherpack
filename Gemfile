@@ -144,4 +144,4 @@ gem "redcarpet", "~> 3"
 
 gem "overmind", "~> 2"
 
-gem "herb", "~> 0.10.1"
+gem "herb", "~> 0.11.0"
