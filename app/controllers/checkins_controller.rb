@@ -47,7 +47,11 @@ class CheckinsController < InternalController
 
   def field_update
     @event = policy_scope(Event).find(params[:id])
-    @checkin_field_response = CheckinFieldResponse.find(params[:field_id])
+    @checkin_field_response = CheckinFieldResponse
+      .joins(:checkin)
+      .where(checkins: { event_id: @event.id })
+      .find(params[:field_id])
+    authorize @checkin_field_response.checkin, :update?
     if @checkin_field_response.update(response: params[:response])
       respond_to do |res|
         res.json do

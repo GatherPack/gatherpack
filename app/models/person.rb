@@ -56,6 +56,11 @@ class Person < ApplicationRecord
     user&.admin ? Person.all : Person.joins(:memberships).where(memberships: { team_id: managed_teams.select(:id) }).distinct
   end
 
+  def can_manage(person)
+    return true if user&.admin?
+    (managed_people.pluck(:id) & [ person.id ]).any?
+  end
+
   def all_teams
     Team.where(id: all_team_ids)
   end

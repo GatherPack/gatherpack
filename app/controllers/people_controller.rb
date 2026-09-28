@@ -98,11 +98,15 @@ class PeopleController < InternalController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_person
-      @person = policy_scope(Person).find(params[:id])
+      @person = authorize policy_scope(Person).find(params[:id])
     end
 
-    # Only allow a list of trusted parameters through.
+    # Only allow a list of trusted parameters through. Linking to a User and
+    # assigning teams or badges are privileged operations, so they are only
+    # accepted from admins & managers.
     def person_params
-      params.require(:person).permit(:first_name, :last_name, :display_name, :gender, :shirt_size, :phone_number, :address, :birthday, :dietary_restrictions, :user_id, :avatar, :bio, :email, team_ids: [], badge_ids: [])
+      fields = [ :first_name, :last_name, :display_name, :gender, :shirt_size, :phone_number, :address, :birthday, :dietary_restrictions, :avatar, :bio, :email ]
+      fields += [ :user_id, team_ids: [], badge_ids: [] ] if current_user.admin? || current_user.person.can_manage(@person)
+      params.require(:person).permit(*fields)
     end
 end

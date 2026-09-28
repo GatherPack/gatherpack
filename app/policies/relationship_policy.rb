@@ -21,6 +21,8 @@ class RelationshipPolicy < ApplicationPolicy
   end
 
   def destroy?
-    user.admin? || record.parent == user || record.child == user
+    user.admin? || record.parent == person || record.child == person
   end
+
+  alias_method :reverse?, :destroy?
 end
