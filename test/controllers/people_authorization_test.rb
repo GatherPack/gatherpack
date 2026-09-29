@@ -49,6 +49,68 @@ class PeopleAuthorizationTest < ActionDispatch::IntegrationTest
       "non-manager granted themselves a team via mass assignment"
   end
 
+  test "a non-admin can create a person without a server error" do
+    assert_difference -> { Person.count }, 1 do
+      post people_path, params: { person: { first_name: "New", last_name: "Scout" } }
+    end
+    assert_response :redirect
+  end
+
+  test "a manager can add a managed member to a team they manage" do
+    manager = create_member("mgr@example.com", "Mary", "Leader", manager: true)
+    sign_in manager.user
+    managed_team = Team.create!(name: "Den A Patrol", team_type: team_types(:one), parent: @team)
+
+    patch person_path(@victim), params: { person: { team_ids: [ @team.id, managed_team.id ] } }
+
+    assert_includes @victim.reload.teams, managed_team
+  end
+
+  test "a manager cannot add a managed member to a team they don't manage" do
+    manager = create_member("mgr@example.com", "Mary", "Leader", manager: true)
+    sign_in manager.user
+    locked_team = Team.create!(name: "Admins Only", team_type: team_types(:one))
+
+    patch person_path(@victim), params: { person: { team_ids: [ @team.id, locked_team.id ] } }
+
+    assert_not_includes @victim.reload.teams, locked_team,
+      "manager added a member to a team they don't manage"
+  end
+
+  test "a manager cannot add themselves to a team they don't manage" do
+    manager = create_member("mgr@example.com", "Mary", "Leader", manager: true)
+    sign_in manager.user
+    locked_team = Team.create!(name: "Admins Only", team_type: team_types(:one))
+
+    patch person_path(manager), params: { person: { team_ids: [ @team.id, locked_team.id ] } }
+
+    assert_not_includes manager.reload.teams, locked_team,
+      "manager granted themselves a team they don't manage"
+  end
+
+  test "a manager cannot remove a managed member from a team they don't manage" do
+    manager = create_member("mgr@example.com", "Mary", "Leader", manager: true)
+    sign_in manager.user
+    other_team = Team.create!(name: "Den B", team_type: team_types(:one))
+    Membership.create!(person: @victim, team: other_team)
+
+    patch person_path(@victim), params: { person: { team_ids: [ @team.id ] } }
+
+    assert_includes @victim.reload.teams, other_team,
+      "manager removed a member from a team they don't manage"
+  end
+
+  test "a manager cannot re-link a managed member's user account" do
+    manager = create_member("mgr@example.com", "Mary", "Leader", manager: true)
+    sign_in manager.user
+    original_user = @victim.user
+
+    patch person_path(@victim), params: { person: { user_id: manager.user.id } }
+
+    assert_equal original_user, @victim.reload.user,
+      "manager re-linked a member's user account"
+  end
+
   private
 
   def create_member(email, first, last, manager:)

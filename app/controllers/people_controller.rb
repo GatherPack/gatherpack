@@ -101,12 +101,35 @@ class PeopleController < InternalController
       @person = authorize policy_scope(Person).find(params[:id])
     end
 
-    # Only allow a list of trusted parameters through. Linking to a User and
-    # assigning teams or badges are privileged operations, so they are only
-    # accepted from admins & managers.
+    # Only allow a list of trusted parameters through. Linking to a User is
+    # admin-only. Managers may also assign teams and badges, but only ones they
+    # control; memberships and badges outside that are left untouched.
     def person_params
       fields = [ :first_name, :last_name, :display_name, :gender, :shirt_size, :phone_number, :address, :birthday, :dietary_restrictions, :avatar, :bio, :email ]
-      fields += [ :user_id, team_ids: [], badge_ids: [] ] if current_user.admin? || current_user.person.can_manage(@person)
-      params.require(:person).permit(*fields)
+      if current_user.admin?
+        fields += [ :user_id, team_ids: [], badge_ids: [] ]
+      elsif @person && current_user.person&.can_manage(@person)
+        fields += [ team_ids: [], badge_ids: [] ]
+      end
+      permitted = params.require(:person).permit(*fields)
+      current_user.admin? ? permitted : limit_to_manageable(permitted)
+    end
+
+    def limit_to_manageable(permitted)
+      if permitted.key?(:team_ids)
+        manageable = current_user.person.all_managed_teams.pluck(:id)
+        permitted[:team_ids] = merge_manageable_ids(@person.team_ids, permitted[:team_ids], manageable)
+      end
+      if permitted.key?(:badge_ids)
+        manageable = policy_scope(Badge).select { |badge| BadgePolicy.new(current_user, badge).update? }.map(&:id)
+        permitted[:badge_ids] = merge_manageable_ids(@person.badge_ids, permitted[:badge_ids], manageable)
+      end
+      permitted
+    end
+
+    # Apply the requested ids only within the manageable set, and keep whatever
+    # the person already has outside it.
+    def merge_manageable_ids(current, requested, manageable)
+      (requested.compact_blank & manageable) | (current - manageable)
     end
 end
