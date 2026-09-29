@@ -1,11 +1,23 @@
 module ApplicationHelper
-  def contrasting_color(color)
-    base = Color::RGB.by_hex(color)
-    if base.brightness > 0.5
-      "#000"
-    else
-      "#fff"
-    end
+  DEFAULT_EVENT_COLOR = "#3788d8"
+
+  def contrasting_color(color, dark: "#000", light: "#fff")
+    Color::RGB.by_hex(color.to_s).brightness > 0.5 ? dark : light
+  rescue ArgumentError
+    dark
+  end
+
+  def event_calendar_colors(event)
+    background = event.team&.color
+    background = DEFAULT_EVENT_COLOR unless hex_color?(background)
+    { background: background, text: contrasting_color(background, dark: "#6d6753", light: "#fffdf6") }
+  end
+
+  def hex_color?(color)
+    Color::RGB.by_hex(color.to_s)
+    true
+  rescue ArgumentError
+    false
   end
 
   def as_badge(obj, **opts)

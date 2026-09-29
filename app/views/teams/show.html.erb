@@ -185,7 +185,7 @@
                data-calendar-timezone-value="<%= Settings[:time_zone].presence || "UTC" %>"
                data-calendar-start-time-value="<%= Date.today.iso8601 %>"
                data-calendar-inline-events-value="<%= @team.events.map { |event|
-                 bg = event.team&.color || "#3788d8"
+                 colors = event_calendar_colors(event)
                  {
                    id: event.id,
                    title: event.name,
@@ -193,8 +193,8 @@
                    start: event.start_time,
                    end: event.end_time,
                    url: event_path(event),
-                   backgroundColor: bg,
-                   textColor: Color::RGB.by_hex(bg).brightness > 0.5 ? "#6d6753" : "#fffdf6",
+                   backgroundColor: colors[:background],
+                   textColor: colors[:text],
                    extendedProps: { icon: "fa-" + (event.team&.team_type&.icon || "star") }
                  }
                }.to_json %>">
