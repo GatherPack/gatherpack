@@ -59,7 +59,7 @@ class Person < ApplicationRecord
   def can_manage(person)
     return true if user&.admin?
     return false if person.nil?
-    managed_people.where(id: person.id).exists?
+    all_managed_people.where(id: person.id).exists?
   end
 
   def all_teams
