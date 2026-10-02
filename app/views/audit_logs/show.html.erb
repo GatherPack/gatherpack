@@ -25,37 +25,43 @@
     <h2>Changes</h2>
   </div>
   <div class="card-body">
-    <table class="table">
-      <thead>
-        <tr>
-          <th scope="col">Attribute</th>
-          <th scope="col">Before</th>
-          <th scope="col">After</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @log_hash.each do |key, value| %>
+    <% if @log_hash.blank? %>
+      <p class="text-muted mb-0">
+        No attribute changes were recorded for this entry. This usually means the record was touched without being edited, such as when a file attachment was added or replaced.
+      </p>
+    <% else %>
+      <table class="table">
+        <thead>
           <tr>
-            <th scope="row">
-              <%= key %>
-            </th>
-            <td>
-              <% if value[0].nil? %>
-                <i>nil</i>
-              <% else %>
-                <%= value[0] %>
-              <% end %>
-            </td>
-            <td>
-              <% if value[1].nil? %>
-                <i>nil</i>
-              <% else %>
-                <%= value[1] %>
-              <% end %>
-            </td>
+            <th scope="col">Attribute</th>
+            <th scope="col">Before</th>
+            <th scope="col">After</th>
           </tr>
-        <% end %>
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          <% @log_hash.each do |key, value| %>
+            <tr>
+              <th scope="row">
+                <%= key %>
+              </th>
+              <td>
+                <% if value[0].nil? %>
+                  <i>nil</i>
+                <% else %>
+                  <%= value[0] %>
+                <% end %>
+              </td>
+              <td>
+                <% if value[1].nil? %>
+                  <i>nil</i>
+                <% else %>
+                  <%= value[1] %>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% end %>
   </div>
 </div>

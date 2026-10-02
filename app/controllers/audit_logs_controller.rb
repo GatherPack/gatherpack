@@ -9,7 +9,7 @@ class AuditLogsController < ApplicationController
   end
 
   def show
-    @log_hash = PaperTrail.serializer.load(@log.object_changes)
+    @log_hash = @log.object_changes ? PaperTrail.serializer.load(@log.object_changes) : {}
   end
 
   def destroy
