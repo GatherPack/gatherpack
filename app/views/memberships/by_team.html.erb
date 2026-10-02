@@ -2,7 +2,7 @@
 
 <div data-controller="member-manage">
   <h2>All People</h2>
-  <%= search_form_for @people_q, url: team_memberships_path(@team), data: {"controller": "turbo_search", "turbo_frame": "people_results"} do |f| %>
+  <%= search_form_for @people_q, as: :people_q, url: team_memberships_path(@team), data: {"controller": "turbo_search", "turbo_frame": "people_results"} do |f| %>
   <div class="card">
     <div class="card-body">
       <div class="row">

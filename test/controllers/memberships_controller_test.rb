@@ -33,4 +33,15 @@ class MembershipsControllerTest < ActionDispatch::IntegrationTest
     assert_select in_grid.(@candidate)
     assert_select in_grid.(@member), count: 0
   end
+
+  test "name search narrows the people grid" do
+    Membership.create!(person: @candidate, team: @team)
+
+    get team_memberships_path(@team)
+    assert_select "input[name='people_q[display_name_cont]']"
+
+    get team_memberships_path(@team, people_q: { display_name_cont: "Carol" })
+    assert_select "#people_grid", text: /Carol Carter/
+    assert_select "#people_grid", text: /Alice Anderson/, count: 0
+  end
 end
