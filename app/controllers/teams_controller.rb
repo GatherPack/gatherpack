@@ -64,7 +64,7 @@ class TeamsController < InternalController
 
   # PATCH/PUT /teams/1
   def update
-    if authorize(@team).update(permitted_attributes(@team))
+    if @team.update(permitted_attributes(@team))
       redirect_to @team, notice: "Team was successfully updated.", status: :see_other
     else
       render :edit, status: :unprocessable_entity
@@ -81,7 +81,7 @@ class TeamsController < InternalController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_team
-    @team = policy_scope(Team).find(params[:id])
+    @team = authorize policy_scope(Team).find(params[:id])
   rescue ActiveRecord::RecordNotFound
     raise Pundit::NotAuthorizedError
   end

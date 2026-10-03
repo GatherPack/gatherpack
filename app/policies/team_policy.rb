@@ -23,6 +23,23 @@ class TeamPolicy < ApplicationPolicy
     has_perms
   end
 
+  def badges?
+    show?
+  end
+
+  def pages?
+    show?
+  end
+
+  def events?
+    show?
+  end
+
+  # Pending applications name the applicants, so only managers see them.
+  def applications?
+    has_perms
+  end
+
   def manage_members?
     has_perms
   end

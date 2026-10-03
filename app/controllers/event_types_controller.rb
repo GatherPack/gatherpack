@@ -4,7 +4,7 @@ class EventTypesController < InternalController
 
   # GET /event_types
   def index
-    @q = EventType.ransack(params[:q])
+    @q = policy_scope(EventType).ransack(params[:q])
     @q.sorts = "name asc" if @q.sorts.empty?
     @event_types = @q.result(distinct: true).order(name: :asc).page(params[:page]).includes(:events)
   end
@@ -15,7 +15,7 @@ class EventTypesController < InternalController
 
   # GET /event_types/new
   def new
-    @event_type = EventType.new
+    @event_type = authorize EventType.new
   end
 
   # GET /event_types/1/edit
@@ -24,7 +24,7 @@ class EventTypesController < InternalController
 
   # POST /event_types
   def create
-    @event_type = EventType.new(event_type_params)
+    @event_type = authorize EventType.new(event_type_params)
 
     if @event_type.save
       redirect_to @event_type, notice: "Event type was successfully created."
@@ -51,7 +51,7 @@ class EventTypesController < InternalController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_event_type
-      @event_type = EventType.find(params[:id])
+      @event_type = authorize EventType.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.

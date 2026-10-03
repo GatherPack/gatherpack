@@ -56,7 +56,7 @@ class TokensController < InternalController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_token
-      @token = policy_scope(Token).find(params[:id])
+      @token = authorize policy_scope(Token).find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.

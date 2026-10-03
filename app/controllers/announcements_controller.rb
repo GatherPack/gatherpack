@@ -52,7 +52,7 @@ class AnnouncementsController < InternalController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_announcement
-      @announcement = policy_scope(Announcement).find(params[:id])
+      @announcement = authorize policy_scope(Announcement).find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
