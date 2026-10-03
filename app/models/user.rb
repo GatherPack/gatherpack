@@ -18,6 +18,20 @@ class User < ApplicationRecord
     [ "email" ]
   end
 
+  # User search matches the person's name as well as the email.
+  def self.ransackable_associations(auth_object = nil)
+    [ "person" ]
+  end
+
+  # Users have no name of their own; show their person's, or their email.
+  def identifier_name
+    person&.display_name.presence || email
+  end
+
+  def identifier_icon
+    "user"
+  end
+
   def self.create_from_provider_data(provider_data)
     if Settings[:oauth_signup]
       where(provider: provider_data.provider, uid: provider_data.uid).first_or_create  do |user|
