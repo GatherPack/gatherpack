@@ -69,6 +69,41 @@ class AuthorizationEnforcementTest < ActionDispatch::IntegrationTest
     end
   end
 
+  test "a member can't change or delete someone else's checkin" do
+    event = Event.create!(name: "Workday", event_type: event_types(:one), team: @team, start_time: 1.day.from_now, end_time: 2.days.from_now)
+    checkin = Checkin.create!(event: event, person: @manager, notes: "Arrived early")
+    sign_in @member.user
+
+    patch event_checkin_path(event, checkin), params: { checkin: { notes: "Hacked" } }
+    assert_equal "Arrived early", checkin.reload.notes
+
+    assert_no_difference -> { Checkin.count } do
+      delete event_checkin_path(event, checkin)
+    end
+  end
+
+  test "a member can't change or delete a badge type" do
+    badge_type = BadgeType.create!(name: "Safety")
+    sign_in @member.user
+
+    patch badge_type_path(badge_type), params: { badge_type: { name: "Hacked" } }
+    assert_equal "Safety", badge_type.reload.name
+
+    assert_no_difference -> { BadgeType.count } do
+      delete badge_type_path(badge_type)
+    end
+  end
+
+  test "a member can't delete a ledger ownership" do
+    ledger = Ledger.create!(name: "Den A Fund", team: @team)
+    ownership = LedgerOwnership.create!(ledger: ledger, owner: @manager)
+    sign_in @member.user
+
+    assert_no_difference -> { LedgerOwnership.count } do
+      delete ledger_ownership_path(ledger, ownership)
+    end
+  end
+
   test "only admins can change the time clock's max hours" do
     sign_in @manager.user
 
