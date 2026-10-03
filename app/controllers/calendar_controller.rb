@@ -25,7 +25,7 @@ class CalendarController < ApplicationController
           ransacked_people = policy_scope(Person).ransack(
             display_name_i_cont: params[:q][:name_i_cont]
           ).result(distinct: true)
-          ransacked_people = ransacked_people.joins(:memberships).where(memberships: { person_id: (Team.find(params[:q][:team_id_eq]).all_people) }).uniq if params[:q][:team_id_eq].present?
+          ransacked_people = ransacked_people.where(id: Team.find(params[:q][:team_id_eq]).all_people.select(:id)) if params[:q][:team_id_eq].present?
           ransacked_people = ransacked_people.where(id: params[:person_id]) if params[:person_id]
           @birthdays = ransacked_people.where("DATE_PART('doy', birthday) >= ? AND DATE_PART('doy', birthday) <= ? AND DATE_PART('year', birthday) <= ?", @start_time_doy >= @end_time_doy ? 0 : @start_time_doy, @end_time_doy, @start_time_year)
             .or(ransacked_people.where("DATE_PART('doy', birthday) >= ? AND DATE_PART('doy', birthday) <= ? AND DATE_PART('year', birthday) <= ?", @start_time_doy >= @end_time_doy ? @start_time_doy : 367, 366, @start_time_year))
