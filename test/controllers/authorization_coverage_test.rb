@@ -6,9 +6,12 @@ require "test_helper"
 class AuthorizationCoverageTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
 
+  # Errors from the verification itself, or from wiring it to an action the
+  # controller doesn't have.
   UNCHECKED = [
     Pundit::AuthorizationNotPerformedError,
-    Pundit::PolicyScopingNotPerformedError
+    Pundit::PolicyScopingNotPerformedError,
+    AbstractController::ActionNotFound
   ].freeze
 
   setup do
@@ -27,6 +30,9 @@ class AuthorizationCoverageTest < ActionDispatch::IntegrationTest
       visited += 1
       begin
         get path
+        if response.body.include?("<h1>Unknown action</h1>")
+          unchecked << "#{route.defaults[:controller]}##{route.defaults[:action]} (unknown action)"
+        end
       rescue *UNCHECKED => e
         unchecked << "#{route.defaults[:controller]}##{route.defaults[:action]} (#{e.class.name.demodulize})"
       rescue StandardError
