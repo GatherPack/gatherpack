@@ -1,12 +1,23 @@
 module ApplicationHelper
-  # Team#color is nullable and unvalidated, so a single team saved without a
-  # colour used to raise here and 500 the whole Teams index. Fall back to dark
-  # text on anything we cannot parse.
-  def contrasting_color(color)
-    base = Color::RGB.by_hex(color)
-    base.brightness > 0.5 ? "#000" : "#fff"
+  DEFAULT_EVENT_COLOR = "#3788d8"
+
+  def contrasting_color(color, dark: "#000", light: "#fff")
+    Color::RGB.by_hex(color.to_s).brightness > 0.5 ? dark : light
   rescue ArgumentError, TypeError
-    "#000"
+    dark
+  end
+
+  def event_calendar_colors(event)
+    background = event.team&.color
+    background = DEFAULT_EVENT_COLOR unless hex_color?(background)
+    { background: background, text: contrasting_color(background, dark: "#6d6753", light: "#fffdf6") }
+  end
+
+  def hex_color?(color)
+    Color::RGB.by_hex(color.to_s)
+    true
+  rescue ArgumentError, TypeError
+    false
   end
 
   def as_badge(obj, **opts)

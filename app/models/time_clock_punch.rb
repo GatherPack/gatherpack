@@ -89,11 +89,11 @@ class TimeClockPunch < ApplicationRecord
   end
 
   def valid_times
-    errors.add(:start_time, "cannot start before period start time") if time_clock_period.present? && start_time.before?(time_clock_period.start_time)
+    errors.add(:start_time, "cannot start before period start time") if time_clock_period.present? && start_time.before?(time_clock_period.start_time.beginning_of_day)
     if end_time.present?
       if end_time.before? start_time
         errors.add(:end_time, "cannot end before start time")
-      elsif time_clock_period.present? && end_time.after?(time_clock_period.end_time)
+      elsif time_clock_period.present? && end_time.after?(time_clock_period.end_time.end_of_day)
         errors.add(:end_time, "cannot end after period end time")
       end
     end

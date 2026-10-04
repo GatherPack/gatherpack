@@ -41,7 +41,7 @@ class TimeKioskController < ApplicationController
       if @time_kiosk.time_clock_punch
         punch = @time_kiosk.time_clock_punch
         current_time = Time.current
-        max_time = punch.time_clock_period&.end_time || current_time
+        max_time = punch.time_clock_period&.end_time&.end_of_day || current_time
         end_time = current_time > max_time ? max_time: current_time
 
         punch.update(end_time: end_time, created_by: "kiosk")
@@ -53,7 +53,7 @@ class TimeKioskController < ApplicationController
       if @time_kiosk.time_clock_period && @time_kiosk.person && Pundit.policy(@time_kiosk.person.user, @time_kiosk.time_clock_period).edit?
         period = @time_kiosk.time_clock_period
         current_time = Time.current
-        max_time = period&.end_time || current_time
+        max_time = period&.end_time&.end_of_day || current_time
         end_time = current_time > max_time ? max_time: current_time
 
         period.open_punches.each do |punch|
@@ -66,7 +66,7 @@ class TimeKioskController < ApplicationController
     if @time_kiosk.tool == "punch_out_all"
       current_time = Time.current
       @time_kiosk.managed_periods.each do |period|
-        max_time = period&.end_time || current_time
+        max_time = period&.end_time&.end_of_day || current_time
         end_time = current_time > max_time ? max_time: current_time
         period.open_punches.each do |punch|
           punch.update(end_time: end_time, created_by: "kiosk")

@@ -111,11 +111,14 @@ class Person < ApplicationRecord
     SELECT :person_id
   SQL
 
-  # Ready-made WHERE fragments. Built here from the constants above so that
-  # call sites pass a constant plus a real bind parameter, rather than
-  # interpolating SQL inline.
   VISIBLE_TEAMS_CONDITION  = "teams.id IN (#{VISIBLE_TEAM_IDS_SQL})".freeze
   VISIBLE_PEOPLE_CONDITION = "people.id IN (#{VISIBLE_PERSON_IDS_SQL})".freeze
+
+  def can_manage(person)
+    return true if user&.admin?
+    return false if person.nil?
+    all_managed_people.where(id: person.id).exists?
+  end
 
   def all_teams
     Team.where(VISIBLE_TEAMS_CONDITION, person_id: id)
