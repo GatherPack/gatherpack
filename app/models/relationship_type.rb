@@ -11,4 +11,8 @@ class RelationshipType < ApplicationRecord
   def identifier_name
     "#{parent_label} - #{child_label}"
   end
+
+  def self.ransackable_associations(auth_object = nil)
+    []
+  end
 end

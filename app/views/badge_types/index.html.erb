@@ -1,39 +1,34 @@
 <% breadcrumb :badge_types %>
 
-<%= search_form_for @q, data: {"controller": "turbo_search", "turbo_frame": "results"} do |f| %>
-<div class="card">
-  <div class="card-header">
-    <h1>Badge Types</h1>
-  </div>
-  <div class="card-body">
-    <%= f.input :name_cont, label: "Name" %>
-  </div>
-  <div class="card-footer">
-    <%= link_to "New Badge Type", new_badge_type_path, class: "btn btn-success" if policy(BadgeType).new? %>
-    <%= f.submit "Search", class: "btn btn-primary", data: { action: "turbo_search#search" } %>
-    <%= link_to "Clear Search", request.path, data: { action: "turbo_search#clear" }, class: "btn btn-dark" %>
-  </div>
-</div>
+<% filters = [] %>
+
+<%= render layout: "shared/filter_bar", locals: {
+      q: @q,
+      title: "Badge Types",
+      collection: @badge_types,
+      primary: { attr: :name_cont, placeholder: "Search by name…" },
+      filters: filters,
+      sorts: { name: "Name", updated_at: "Last Updated" },
+      new_path: (new_badge_type_path if policy(BadgeType).new?),
+      new_label: "Badge Type"
+    } do |f| %>
 <% end %>
 
-<%= turbo_frame_tag "results" do %>
-  <div class="dropdown">
-    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-      Sort By
-    </button>
-    <ul class="dropdown-menu">
-      <li><%= sort_link @q, :name, "Name", class: "dropdown-item" %></li>
-      <li><%= sort_link @q, :updated_at, "Last Updated", class: "dropdown-item" %></li>
-    </ul>
-  </div>
+<%= turbo_frame_tag "results", data: { turbo_action: "advance" } do %>
+  <%= render "shared/results_header", q: @q, filters: filters, collection: @badge_types, noun: "badge type" %>
 
-  <div id="badge_types" class="row">
-    <% @badge_types.each do |badge_type| %>
-      <div class="col-md-3">
-        <%= render badge_type %>
-      </div>
-    <% end %>
-  </div>
+  <% if @badge_types.any? %>
+
+    <div id="badge_types" class="row">
+      <% @badge_types.each do |badge_type| %>
+        <div class="col-md-3">
+          <%= render badge_type %>
+        </div>
+      <% end %>
+    </div>
 
   <%= paginate @badge_types %>
+  <% else %>
+    <%= render "shared/no_results", noun: "badge type", filtered: any_filters_applied?(@q) %>
+  <% end %>
 <% end %>

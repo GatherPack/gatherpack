@@ -1,55 +1,38 @@
 <% breadcrumb :time_clock_periods %>
 
-<%= search_form_for @q, data: {"controller": "turbo_search", "turbo-frame": "results"} do |f| %>
-<div class="card">
-  <div class="card-header">
-    <h1>Time Clock Periods</h1>
-  </div>
-  <div class="card-body">
-    <div class="row">
-      <div class="col-md">
-        <%= f.input :name_cont, label: "Name" %>
-      </div>
-      <div class="col-md">
-        <%= f.input :start_time_gteq, label: "Starting After", input_html: { type: :date } %>
-      </div>
-      <div class="col-md">
-        <%= f.input :end_time_lteq, label: "Ending Before", input_html: { type: :date } %>
-      </div>
-      <div class="col-md">
-        <%= f.input :team_id_eq, label: "Team", as: :select, collection: policy_scope(Team) %>
-      </div>
-    </div>
-  </div>
-  <div class="card-footer">
-    <%= link_to "New Time Clock Period", new_time_clock_period_path, class: "btn btn-success" if policy(TimeClockPeriod).new? %>
-    <%= link_to "Time Clock Punches", time_clock_punches_path, class: "btn btn-info" %>
-    <%= f.submit "Search", class: "btn btn-primary", data: { action: "turbo_search#search" } %>
-    <%= link_to "Clear Search", request.path, class: "btn btn-dark", data: { action: "turbo_search#clear" } %>
-  </div>
-</div>
+<% filters = [
+        { attr: :start_time_gteq, label: "Starting After", opts: { input_html: { type: :date } } },
+        { attr: :end_time_lteq, label: "Ending Before", opts: { input_html: { type: :date } } },
+        { attr: :team_id_eq, label: "Team", as: :select, collection: policy_scope(Team) }
+      ] %>
+
+<%= render layout: "shared/filter_bar", locals: {
+      q: @q,
+      title: "Time Clock Periods",
+      collection: @time_clock_periods,
+      primary: { attr: :name_cont, placeholder: "Search by name…" },
+      filters: filters,
+      sorts: { name: "Name", start_time: "Start Time", end_time: "End Time", updated_at: "Last Updated" },
+      new_path: (new_time_clock_period_path if policy(TimeClockPeriod).new?),
+      new_label: "Time Clock Period"
+    } do |f| %>
 <% end %>
 
-<%= turbo_frame_tag "results" do %>
-  <div class="dropdown">
-    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-      Sort By
-    </button>
-    <ul class="dropdown-menu">
-      <li><%= sort_link @q, :name, "Name", class: "dropdown-item" %></li>
-      <li><%= sort_link @q, :start_time, "Start Time", class: "dropdown-item" %></li>
-      <li><%= sort_link @q, :end_time, "End Time", class: "dropdown-item" %></li>
-      <li><%= sort_link @q, :updated_at, "Last Updated", class: "dropdown-item" %></li>
-    </ul>
-  </div>
+<%= turbo_frame_tag "results", data: { turbo_action: "advance" } do %>
+  <%= render "shared/results_header", q: @q, filters: filters, collection: @time_clock_periods, noun: "period" %>
 
-  <div id="time_clock_periods" class="row">
-    <% @time_clock_periods.each do |time_clock_period| %>
-      <div class="col-md-3">
-        <%= render time_clock_period %>
-      </div>
-    <% end %>
-  </div>
+  <% if @time_clock_periods.any? %>
 
-  <%= paginate @time_clock_periods %>
+    <div id="time_clock_periods" class="row">
+      <% @time_clock_periods.each do |time_clock_period| %>
+        <div class="col-md-3">
+          <%= render time_clock_period %>
+        </div>
+      <% end %>
+    </div>
+
+    <%= paginate @time_clock_periods %>
+  <% else %>
+    <%= render "shared/no_results", noun: "period", filtered: any_filters_applied?(@q) %>
+  <% end %>
 <% end %>

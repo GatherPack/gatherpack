@@ -1,50 +1,37 @@
 <% breadcrumb :audit_logs %>
 
-<%= search_form_for @q, data: {"controller": "turbo_search", "turbo_frame": "results"} do |f| %>
-<div class="card">
-  <div class="card-header">
-    <h1>Audit Log</h1>
-  </div>
-  <div class="card-body">
-    <div class="row">
-      <div class="col-md">
-        <%= f.input :event_eq, label: "Event", as: :select, collection: [ "create", "update", "destroy" ] %>
-      </div>
-      <div class="col-md">
-        <%= f.input :whodunnit_eq, label: "Whodunnit", as: :searching_combobox, scope: "users" %>
-      </div>
-      <div class="col-md">
-        <%= f.input :item_type_eq, label: "Model" %>
-      </div>
-    </div>
-  </div>
-  <div class="card-footer">
-    <%= f.submit "Search", class: "btn btn-primary", data: { action: "turbo_search#search" } %>
-    <%= link_to "Clear Search", request.path, class: "btn btn-dark", data: { action: "turbo_search#clear" } %>
-  </div>
-</div>
+<% filters = [
+      { attr: :event_eq, label: "Event", as: :select, collection: [ "create", "update", "destroy" ] },
+      { attr: :item_type_eq, label: "Model", as: :select, collection: AuditLog.distinct.order(:item_type).pluck(:item_type).compact },
+      { attr: :whodunnit_eq, label: "Whodunnit", as: :searching_combobox, opts: { scope: "users" } }
+    ] %>
+
+<%= render layout: "shared/filter_bar", locals: {
+      q: @q,
+      title: "Audit Log",
+      collection: @logs,
+      primary: nil,
+      filters: filters,
+      sorts: { whodunnit: "Whodunnit", item_type: "Model", event: "Event", created_at: "Last Updated" },
+      new_path: nil
+    } do |f| %>
 <% end %>
 
-<%= turbo_frame_tag "results" do %>
-  <div class="dropdown">
-    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-      Sort By
-    </button>
-    <ul class="dropdown-menu">
-      <li><%= sort_link @q, :whodunnit, "Whodunnit", class: "dropdown-item" %></li>
-      <li><%= sort_link @q, :item_type, "Model", class: "dropdown-item" %></li>
-      <li><%= sort_link @q, :event, "Event", class: "dropdown-item" %></li>
-      <li><%= sort_link @q, :created_at, "Last Updated", class: "dropdown-item" %></li>
-    </ul>
-  </div>
+<%= turbo_frame_tag "results", data: { turbo_action: "advance" } do %>
+  <%= render "shared/results_header", q: @q, filters: filters, collection: @logs, noun: "entry" %>
 
-  <div id="logs" class="row">
-    <% @logs.each do |log| %>
-      <div class="col-md-3">
-        <%= render log %>
-      </div>
-    <% end %>
-  </div>
+  <% if @logs.any? %>
+
+    <div id="logs" class="row">
+      <% @logs.each do |log| %>
+        <div class="col-md-3">
+          <%= render log %>
+        </div>
+      <% end %>
+    </div>
 
   <%= paginate @logs %>
+  <% else %>
+    <%= render "shared/no_results", noun: "entry", filtered: any_filters_applied?(@q) %>
+  <% end %>
 <% end %>

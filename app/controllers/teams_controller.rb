@@ -4,9 +4,11 @@ class TeamsController < InternalController
   # GET /teams
   def index
     @q = policy_scope(Team).ransack(params[:q])
-    @q.sorts = "team_types.name asc" if @q.sorts.empty?
+    @q.sorts = "team_type_name asc" if @q.sorts.empty?
 
-    teams = @q.result(distinct: true).includes(:team_type).order("team_type.name": :asc, name: :asc)
+    # Not distinct: Postgres rejects SELECT DISTINCT ordered by team_types.name,
+    # and Team's ransackable associations are all belongs_to, so nothing fans out.
+    teams = @q.result.includes(:team_type).order(name: :asc)
 
     unless params[:filter] == "all"
       teams = teams.where(id: current_user.person.teams.select(:id))

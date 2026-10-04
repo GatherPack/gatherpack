@@ -1,40 +1,36 @@
 <% breadcrumb :relationship_types %>
 
-<%= search_form_for @q, data: {"controller": "turbo_search", "turbo-frame": "results"} do |f| %>
-<div class="card">
-  <div class="card-header">
-    <h1>Relationship Types</h1>
-  </div>
-  <div class="card-body">
-  </div>
-  <div class="card-footer">
-    <%= link_to "New Relationship Type", new_relationship_type_path, class: "btn btn-success" %>
-    <%= f.submit "Search", class: "btn btn-primary", data: { action: "turbo_search#search" } %>
-    <%= link_to "Clear Search", request.path, class: "btn btn-dark", data: { action: "turbo_search#clear" } %>
-  </div>
-</div>
+<% filters = [
+      { attr: :permission_eq, label: "Added By", as: :select, collection: RelationshipType.permissions.keys.map { |p| [ p.humanize, p ] } }
+    ] %>
+
+<%= render layout: "shared/filter_bar", locals: {
+      q: @q,
+      title: "Relationship Types",
+      collection: @relationship_types,
+      primary: { attr: :child_label_or_parent_label_cont, placeholder: "Search by label…" },
+      filters: filters,
+      sorts: { parent_label: "Parent Label", child_label: "Child Label", permission: "Permission", updated_at: "Last Updated" },
+      new_path: (new_relationship_type_path if policy(RelationshipType).new?),
+      new_label: "Relationship Type"
+    } do |f| %>
 <% end %>
 
-<%= turbo_frame_tag "results" do %>
-  <div class="dropdown">
-    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-      Sort By
-    </button>
-    <ul class="dropdown-menu">
-      <li><%= sort_link @q, :parent_label, "Parent Label", class: "dropdown-item" %></li>
-      <li><%= sort_link @q, :child_label, "Child Label", class: "dropdown-item" %></li>
-      <li><%= sort_link @q, :permission, "Permission", class: "dropdown-item" %></li>
-      <li><%= sort_link @q, :updated_at, "Last Updated", class: "dropdown-item" %></li>
-    </ul>
-  </div>
+<%= turbo_frame_tag "results", data: { turbo_action: "advance" } do %>
+  <%= render "shared/results_header", q: @q, filters: filters, collection: @relationship_types, noun: "relationship type" %>
 
-  <div id="relationship_types" class="row">
-    <% @relationship_types.each do |relationship_type| %>
-      <div class="col-md-3">
-        <%= render relationship_type %>
-      </div>
-    <% end %>
-  </div>
+  <% if @relationship_types.any? %>
 
-  <%= paginate @relationship_types %>
+    <div id="relationship_types" class="row">
+      <% @relationship_types.each do |relationship_type| %>
+        <div class="col-md-3">
+          <%= render relationship_type %>
+        </div>
+      <% end %>
+    </div>
+
+    <%= paginate @relationship_types %>
+  <% else %>
+    <%= render "shared/no_results", noun: "relationship type", filtered: any_filters_applied?(@q) %>
+  <% end %>
 <% end %>

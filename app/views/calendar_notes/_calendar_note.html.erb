@@ -5,7 +5,7 @@
   <div class="card-body">
     <p><%= calendar_note.start_time.to_fs(:long) %><% if calendar_note.end_time.present? %> to <%= calendar_note.end_time.to_fs(:long) %><% end %></p>
     <% if calendar_note.noteable %>
-      <p>Associated with <%= as_badge calendar_note.noteable, true %></p>
+      <p>Associated with <%= as_badge calendar_note.noteable %></p>
     <% end %>
   </div>
 </div>

@@ -1,0 +1,160 @@
+<%#
+  Shared search + filter toolbar for index pages.
+
+  Render with `render layout:` so a page can pass extra fields as a block
+  (see Teams, which has a non-Ransack `filter` param).
+
+  Locals:
+    q            - the Ransack search object (@q)
+    title        - page heading, e.g. "People"
+    primary      - { attr:, placeholder: } for the always-visible search box,
+                   or nil for a model with nothing sensible to free-text search
+    filters      - secondary filter definitions, each
+                   { attr:, label:, as:, collection:, include_blank: }.
+                   Also drives the removable chips in shared/_results_header.
+    sorts        - { attribute => label } for the sort menu
+    new_path     - path for the primary action, or nil to hide it
+    new_label    - label for that button
+    frame        - turbo frame to target (default "results")
+    extra_params - non-Ransack param keys that still count as "a filter is on"
+    url          - form action, when it is not the current path
+    actions      - extra buttons for the header, as a captured string
+
+  This form deliberately sits OUTSIDE the turbo-frame it targets. Turbo
+  replaces only the frame's contents, so the search input is never
+  re-rendered and keeps focus and cursor position while results swap.
+%>
+<%
+  filters      ||= []
+  sorts        ||= {}
+  frame        ||= "results"
+  extra_params ||= []
+  primary   = local_assigns[:primary]
+  new_path  = local_assigns[:new_path]
+  new_label = local_assigns[:new_label] || "New"
+  actions   = local_assigns[:actions]
+
+  chips    = active_filter_chips(q, filters)
+  applied  = chips.any? || any_filters_applied?(q, extra_params)
+  panel_id = "filter-panel-#{title.parameterize}"
+%>
+
+<%= search_form_for q, url: local_assigns[:url], data: {
+      "controller": "live-search",
+      "turbo-action": "replace",
+      "turbo-frame": frame,
+      "action": "input->live-search#input change->live-search#change " \
+                "search:clear@window->live-search#clear " \
+                "search:remove@window->live-search#removeFilter"
+    } do |f| %>
+<div class="card filter-card">
+  <div class="card-header filter-card__header">
+    <h1><%= title %></h1>
+    <div class="filter-card__actions">
+      <% if new_path.present? %>
+        <%= link_to new_path, class: "btn btn-success" do %>
+          <%= i "plus" %> <%= new_label %>
+        <% end %>
+      <% end %>
+      <%= actions %>
+    </div>
+  </div>
+  <div class="card-body filter-card__body">
+  <%
+    # Capture rather than test block_given?: `render layout:` always passes a
+    # block, including the empty one pages with no extra fields pass, so
+    # block_given? alone would render an empty panel on People and Events.
+    extra_fields = capture { yield f } if block_given?
+    has_panel = filters.any? || extra_fields.present?
+    # Open on load when a hidden filter is applied, so there is never active
+    # state the user cannot see.
+    panel_open = chips.any?
+  %>
+
+  <div class="filter-bar">
+    <% if primary.present? %>
+      <div class="filter-bar__search">
+        <%= f.label primary[:attr], "Search #{title}", class: "visually-hidden" %>
+        <span class="filter-bar__search-icon" aria-hidden="true"><%= i "magnifying-glass" %></span>
+        <%= f.search_field primary[:attr],
+              placeholder: primary[:placeholder] || "Search #{title.downcase}…",
+              autocomplete: "off",
+              class: "form-control filter-bar__search-input" %>
+      </div>
+    <% end %>
+
+    <% if has_panel %>
+      <button class="btn btn-outline-secondary filter-bar__toggle" type="button"
+              data-bs-toggle="collapse" data-bs-target="#<%= panel_id %>"
+              aria-expanded="<%= panel_open %>" aria-controls="<%= panel_id %>">
+        <%= i "sliders" %>
+        <span class="filter-bar__toggle-text">Filters</span>
+        <%# Kept in sync client-side: this button is outside the frame, so the
+            server never re-renders it during a live search. %>
+        <span class="filter-bar__count"
+              data-live-search-target="count" <%= "hidden" if chips.empty? %>><%= chips.size %></span>
+      </button>
+    <% end %>
+
+    <% if sorts.any? %>
+      <div class="dropdown filter-bar__sort">
+        <button class="btn btn-outline-secondary dropdown-toggle" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false">
+          <%= i "arrow-down-short-wide" %>
+          <span class="filter-bar__sort-text"><%= current_sort_label(q, sorts) %></span>
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end">
+          <%# Plain links, not frame navigations: this control renders OUTSIDE
+              the frame, so a frame-only update would leave the button showing
+              the previous sort. A full visit re-renders both. %>
+          <% sorts.each do |attribute, label| %>
+            <li><%= sort_link q, attribute, label, class: "dropdown-item" %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <%= link_to "Clear", request.path, class: "btn btn-link filter-bar__clear",
+          hidden: !applied,
+          data: { action: "live-search#clear", live_search_target: "clear" } %>
+  </div>
+
+  <% if has_panel %>
+    <div class="collapse <%= "show" if panel_open %>" id="<%= panel_id %>">
+      <div class="filter-bar__panel row g-3" data-live-search-target="panel">
+        <% filters.each do |filter| %>
+          <div class="col-sm-6 col-lg-3">
+            <% if filter[:param] %>
+              <%# Not a Ransack condition - the controller reads this param
+                  directly - but it still serializes with the form. %>
+              <div class="mb-3">
+                <%= label_tag filter[:param], filter[:label], class: "form-label" %>
+                <%= select_tag filter[:param],
+                      options_for_select(filter[:collection], params[filter[:param]]),
+                      class: "form-select",
+                      data: { live_search_default: filter_default_value(filter) }.compact %>
+              </div>
+            <% else %>
+              <%
+                # A filter is never required; without this simple_form guesses
+                # and renders an asterisk on every one.
+                opts = { label: filter[:label], required: false }
+                opts[:as] = filter[:as] if filter[:as]
+                if filter[:collection]
+                  opts[:collection] = filter[:collection]
+                  opts[:include_blank] = filter.fetch(:include_blank, true)
+                end
+                opts[:input_html] = { data: { live_search_default: filter_default_value(filter) }.compact }
+                opts.merge!(filter[:opts]) if filter[:opts]
+              %>
+              <%= f.input filter[:attr], **opts %>
+            <% end %>
+          </div>
+        <% end %>
+        <%= extra_fields %>
+      </div>
+    </div>
+  <% end %>
+  </div>
+</div>
+<% end %>

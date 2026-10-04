@@ -1,43 +1,34 @@
 <% breadcrumb :event_types %>
 
-<%= search_form_for @q, data: {"controller": "turbo_search", "turbo_frame": "results"} do |f| %>
-<div class="card">
-  <div class="card-header">
-    <h1>Event Types</h1>
-  </div>
-  <div class="card-body">
-    <div class="row">
-      <div class="col">
-        <%= f.input :name_i_cont, label: "Name" %>
-      </div>
-    </div>
-  </div>
-  <div class="card-footer">
-    <%= link_to "New Event Type", new_event_type_path, class: "btn btn-success" if policy(EventType).new? %>
-    <%= f.submit "Search", class: "btn btn-primary", data: { action: "turbo_search#search" } %>
-    <%= link_to "Clear Search", request.path, data: { action: "turbo_search#clear" }, class: "btn btn-dark" %>
-  </div>
-</div>
+<% filters = [] %>
+
+<%= render layout: "shared/filter_bar", locals: {
+      q: @q,
+      title: "Event Types",
+      collection: @event_types,
+      primary: { attr: :name_i_cont, placeholder: "Search by name…" },
+      filters: filters,
+      sorts: { name: "Name", updated_at: "Last Updated" },
+      new_path: (new_event_type_path if policy(EventType).new?),
+      new_label: "Event Type"
+    } do |f| %>
 <% end %>
 
-<%= turbo_frame_tag "results" do %>
-  <div class="dropdown">
-    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-      Sort By
-    </button>
-    <ul class="dropdown-menu">
-      <li><%= sort_link @q, :name, "Name", class: "dropdown-item" %></li>
-      <li><%= sort_link @q, :updated_at, "Last Updated", class: "dropdown-item" %></li>
-    </ul>
-  </div>
+<%= turbo_frame_tag "results", data: { turbo_action: "advance" } do %>
+  <%= render "shared/results_header", q: @q, filters: filters, collection: @event_types, noun: "event type" %>
 
-  <div id="event_types" class="row">
-    <% @event_types.each do |event_type| %>
-      <div class="col-md-3">
-        <%= render event_type %>
-      </div>
-    <% end %>
-  </div>
+  <% if @event_types.any? %>
+
+    <div id="event_types" class="row">
+      <% @event_types.each do |event_type| %>
+        <div class="col-md-3">
+          <%= render event_type %>
+        </div>
+      <% end %>
+    </div>
 
   <%= paginate @event_types %>
+  <% else %>
+    <%= render "shared/no_results", noun: "event type", filtered: any_filters_applied?(@q) %>
+  <% end %>
 <% end %>

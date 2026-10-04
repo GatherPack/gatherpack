@@ -1,5 +1,8 @@
 class CalendarController < ApplicationController
   def index
+    # The calendar fetches its own data over JSON; @q exists purely so the
+    # shared filter bar has something to build the form from.
+    @q = policy_scope(Event).ransack(params[:q])
   end
 
   def calendar

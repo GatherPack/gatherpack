@@ -3,7 +3,7 @@ module ApplicationHelper
 
   def contrasting_color(color, dark: "#000", light: "#fff")
     Color::RGB.by_hex(color.to_s).brightness > 0.5 ? dark : light
-  rescue ArgumentError
+  rescue ArgumentError, TypeError
     dark
   end
 
@@ -16,7 +16,7 @@ module ApplicationHelper
   def hex_color?(color)
     Color::RGB.by_hex(color.to_s)
     true
-  rescue ArgumentError
+  rescue ArgumentError, TypeError
     false
   end
 

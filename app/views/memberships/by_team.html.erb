@@ -1,39 +1,38 @@
 <%= render "teams/show_shared" %>
 
 <div data-controller="member-manage">
-  <h2>All People</h2>
-  <%= search_form_for @people_q, url: team_memberships_path(@team), data: {"controller": "turbo_search", "turbo_frame": "people_results"} do |f| %>
-  <div class="card">
-    <div class="card-body">
-      <div class="row">
-        <div class="col-md">
-          <%= f.input :display_name_cont, label: "Name" %>
-        </div>
-        <div class="col-md">
-          <label class="form-label" for="member_type">Membership Type</label>
-          <select name="member_type" id="member_type" class="form-select">
-            <option value="">All</option>
-            <option value="direct" <%= "selected" if params[:member_type] == "direct" %>>Direct Members</option>
-            <option value="parent_manager" <%= "selected" if params[:member_type] == "parent_manager" %>>Parent Managers</option>
-            <option value="child_member" <%= "selected" if params[:member_type] == "child_member" %>>Child Team Members</option>
-          </select>
-        </div>
-      </div>
-    </div>
-    <div class="card-footer">
-      <%= link_to "Add Member", new_team_membership_path(@team), class: "btn btn-success" %>
-      <% if policy(@team).manage_members? %>
-        <button type="button" class="btn btn-primary" data-action="member-manage#toggle">
-          <span data-member-manage-target="label">Manage Members</span>
-        </button>
-      <% end %>
-      <%= f.submit "Search", class: "btn btn-primary", data: { action: "turbo_search#search" } %>
-      <%= link_to "Clear Search", team_memberships_path(@team), class: "btn btn-dark", data: { action: "turbo_search#clear" } %>
-    </div>
-  </div>
-  <% end %>
+  <% membership_filters = [
+     { param: :member_type, label: "Membership Type", default: "",
+       collection: [ [ "All", "" ], [ "Direct Members", "direct" ],
+                     [ "Parent Managers", "parent_manager" ],
+                     [ "Child Team Members", "child_member" ] ] }
+   ] %>
 
-  <%= turbo_frame_tag "people_results" do %>
+<%= render layout: "shared/filter_bar", locals: {
+      q: @people_q,
+      url: team_memberships_path(@team),
+      title: "All People",
+      collection: @people,
+      primary: { attr: :display_name_cont, placeholder: "Search by name…" },
+      filters: membership_filters,
+      sorts: {},
+      frame: "people_results",
+      extra_params: [ :member_type ],
+      new_path: (new_team_membership_path(@team) if policy(@team).manage_members?),
+      new_label: "Add Member",
+      actions: capture do %>
+        <% if policy(@team).manage_members? %>
+          <button type="button" class="btn btn-primary" data-action="member-manage#toggle">
+            <span data-member-manage-target="label">Manage Members</span>
+          </button>
+        <% end %>
+      <% end
+    } do |f| %>
+<% end %>
+
+  <%= turbo_frame_tag "people_results", data: { turbo_action: "advance" } do %>
+    <%= render "shared/results_header", q: @people_q, filters: membership_filters, collection: @people, noun: "person" %>
+
     <div id="people_grid" class="row">
       <% @people.each do |person| %>
         <% membership = person.memberships.find_by(team: @team) %>
@@ -49,5 +48,9 @@
       <% end %>
     </div>
     <%= paginate @people, param_name: :people_page %>
+
+    <% if @people.none? %>
+      <%= render "shared/no_results", noun: "person", filtered: any_filters_applied?(@people_q, [ :member_type ]) %>
+    <% end %>
   <% end %>
 </div>

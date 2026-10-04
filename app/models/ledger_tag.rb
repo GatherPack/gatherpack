@@ -10,4 +10,8 @@ class LedgerTag < ApplicationRecord
   def identifier_icon
     "stamp"
   end
+
+  def self.ransackable_attributes(auth_object = nil)
+    [ "name", "updated_at" ]
+  end
 end

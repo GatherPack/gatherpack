@@ -1,61 +1,41 @@
 <% breadcrumb :time_clock_punches %>
 
-<%= search_form_for @q, data: {"controller": "turbo_search", "turbo-frame": "results"} do |f| %>
-<div class="card">
-  <div class="card-header">
-    <h1>Time Clock</h1>
-  </div>
-  <div class="card-body">
-    <div class="row">
-      <div class="col-md">
-        <% if params['q']&.has_key?('person_id_eq') %>
-          <%= f.input :person_id_eq, label: "Person", as: :select, collection: policy_scope(Person), label_method: :identifier_name %>
-        <% else %>
-          <%= f.input :person_display_name_cont, label: "Person" %>
-        <% end %>
-      </div>
-      <div class="col-md">
-        <%= f.input :start_time_gteq, label: "Starting After", input_html: { type: "datetime-local" } %>
-      </div>
-      <div class="col-md">
-        <%= f.input :end_time_lteq, label: "Ending Before", input_html: { type: "datetime-local" } %>
-      </div>
-      <div class="col-md">
-        <%= f.input :time_clock_period_id_eq, label: "Periods", as: :select, collection: policy_scope(TimeClockPeriod) %>
-      </div>
-    </div>
-  </div>
-  <div class="card-footer">
-    <%= link_to "New Time Clock Punch", new_time_clock_punch_path, class: "btn btn-success" %>
-    <%= link_to "Time Clock Periods", time_clock_periods_path, class: "btn btn-info" %>
-    <% if policy(TimeClockPunch).flagged? %>
-      <%= link_to "Flag Review", flagged_time_clock_punches_path, class: "btn btn-warning" %>
-    <% end %>
-    <%= f.submit "Search", class: "btn btn-primary", data: { action: "turbo_search#search" } %>
-    <%= link_to "Clear Search", request.path, class: "btn btn-dark", data: { action: "turbo_search#clear" } %>
-    <% if manager? %>
-      <%= link_to "Time Clock Kiosk", time_kiosk_path, class: "btn btn-warning", data: { turbo: false } %>
-    <% end %>
-  </div>
-</div>
+<% filters = [
+        { attr: :start_time_gteq, label: "Starting After", opts: { input_html: { type: "datetime-local" } } },
+        { attr: :end_time_lteq, label: "Ending Before", opts: { input_html: { type: "datetime-local" } } },
+        { attr: :time_clock_period_id_eq, label: "Period", as: :select, collection: policy_scope(TimeClockPeriod) }
+      ] %>
+
+<%= render layout: "shared/filter_bar", locals: {
+      q: @q,
+      title: "Time Clock",
+      collection: @time_clock_punches,
+      primary: { attr: :person_display_name_cont, placeholder: "Search by person…" },
+      filters: filters,
+      sorts: { start_time: "Start Time", end_time: "End Time", updated_at: "Last Updated" },
+      new_path: (new_time_clock_punch_path if policy(TimeClockPunch).new?),
+      new_label: "Punch",
+      actions: capture do %>
+        <%= link_to "Periods", time_clock_periods_path, class: "btn btn-info" %>
+        <%= link_to "Flag Review", flagged_time_clock_punches_path, class: "btn btn-warning" if policy(TimeClockPunch).flagged? %>
+        <%= link_to "Kiosk", time_kiosk_path, class: "btn btn-warning", data: { turbo: false } if manager? %>
+      <% end
+    } do |f| %>
 <% end %>
 
-<%= turbo_frame_tag "results" do %>
-  <div class="dropdown">
-    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-      Sort By
-    </button>
-    <ul class="dropdown-menu">
-      <li><%= sort_link @q, :start_time, "Start Time", class: "dropdown-item" %></li>
-      <li><%= sort_link @q, :end_time, "End Time", class: "dropdown-item" %></li>
-      <li><%= sort_link @q, :updated_at, "Last Updated", class: "dropdown-item" %></li>
-    </ul>
-  </div>
+<%= turbo_frame_tag "results", data: { turbo_action: "advance" } do %>
+  <%= render "shared/results_header", q: @q, filters: filters, collection: @time_clock_punches, noun: "punch" %>
 
-  <div class="row">
-    <div class="col">
-      <%= render "time_clock_punches" %>
+  <% if @time_clock_punches.any? %>
+
+    <div class="row">
+      <div class="col">
+        <%= render "time_clock_punches" %>
+      </div>
     </div>
-  </div>
-  <%= paginate @time_clock_punches %>
+
+    <%= paginate @time_clock_punches %>
+  <% else %>
+    <%= render "shared/no_results", noun: "punch", filtered: any_filters_applied?(@q) %>
+  <% end %>
 <% end %>

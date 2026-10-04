@@ -4,16 +4,16 @@
   <div class="card-header">
     <h1><%= @time_clock_period.identifier_name %></h1>
   </div>
-  <div class="card-body">
-    <% if @time_clock_period.total_hours > 0 %>
+  <% if @time_clock_period.total_hours > 0 %>
+    <div class="card-body">
       <p>
         <%= pluralize(@time_clock_period.total_hours, "hour") %> potential assigned hours from <%= pluralize(@time_clock_period.events.count, "event") %>.
         <% if @time_clock_period.available_hours > 0 %>
           <%= pluralize(@time_clock_period.available_hours, "hour") %> have accumulated so far.
-        <% end %>
+          <% end %>
       </p>
-    <% end %>
-  </div>
+    </div>
+  <% end %>
   <div class="card-footer">
     <%= link_to "Back to Time Clock", time_clock_punches_path, class: "btn btn-success" %>
     <%= link_to "Period Summary", summary_time_clock_period_path(@time_clock_period), class: "btn btn-info" %>
@@ -22,52 +22,36 @@
   </div>
 </div>
 
-<%= search_form_for @q, url: @time_clock_period, data: {"controller": "turbo_search", "turbo-frame": "results"} do |f| %>
-  <div class="card">
-    <div class="card-header">
-      <h1><%= @time_clock_period.identifier_name %> Punches</h1>
-    </div>
-    <div class="card-body">
-      <div class="row">
-        <div class="col-md">
-          <% if params['q']&.has_key?('person_id_eq') %>
-            <%= f.input :person_id_eq, label: "Person", as: :select, collection: policy_scope(Person), label_method: :identifier_name %>
-          <% else %>
-            <%= f.input :person_display_name_cont, label: "Person" %>
-          <% end %>
-        </div>
-        <div class="col-md">
-          <%= f.input :start_time_gteq, label: "Starting After", input_html: { type: "datetime-local" } %>
-        </div>
-        <div class="col-md">
-          <%= f.input :end_time_lteq, label: "Ending Before", input_html: { type: "datetime-local" } %>
-        </div>
-      </div>
-    </div>
-    <div class="card-footer">
-      <%= f.submit "Search", class: "btn btn-primary", data: { action: "turbo_search#search" } %>
-      <%= link_to "Clear Search", request.path, class: "btn btn-dark", data: { action: "turbo_search#clear" } %>
-    </div>
-  </div>
+<% filters = [
+        { attr: :start_time_gteq, label: "Starting After", opts: { input_html: { type: "datetime-local" } } },
+        { attr: :end_time_lteq, label: "Ending Before", opts: { input_html: { type: "datetime-local" } } }
+      ] %>
+
+<%= render layout: "shared/filter_bar", locals: {
+      q: @q,
+      url: @time_clock_period,
+      title: "Punches",
+      collection: @time_clock_punches,
+      primary: { attr: :person_display_name_cont, placeholder: "Search by person…" },
+      filters: filters,
+      sorts: { start_time: "Start Time", end_time: "End Time", updated_at: "Last Updated" },
+      new_path: nil
+    } do |f| %>
 <% end %>
 
-<%= turbo_frame_tag "results" do %>
-  <div class="dropdown">
-    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-      Sort By
-    </button>
-    <ul class="dropdown-menu">
-      <li><%= sort_link @q, :start_time, "Start Time", class: "dropdown-item" %></li>
-      <li><%= sort_link @q, :end_time, "End Time", class: "dropdown-item" %></li>
-      <li><%= sort_link @q, :updated_at, "Last Updated", class: "dropdown-item" %></li>
-    </ul>
-  </div>
+<%= turbo_frame_tag "results", data: { turbo_action: "advance" } do %>
+  <%= render "shared/results_header", q: @q, filters: filters, collection: @time_clock_punches, noun: "punch" %>
 
-  <div class="row">
-    <div class="col">
-      <%= render "time_clock_punches/time_clock_punches" %>
+  <% if @time_clock_punches.any? %>
+
+    <div class="row">
+      <div class="col">
+        <%= render "time_clock_punches/time_clock_punches" %>
+      </div>
     </div>
-  </div>
 
-  <%= paginate @time_clock_punches %>
+    <%= paginate @time_clock_punches %>
+  <% else %>
+    <%= render "shared/no_results", noun: "punch", filtered: any_filters_applied?(@q) %>
+  <% end %>
 <% end %>

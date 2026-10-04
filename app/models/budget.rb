@@ -40,4 +40,12 @@ class Budget < ApplicationRecord
     return 0 if amount_cents.zero?
     ((-actual_amount_cents.to_f / amount_cents.to_f) * 100).round(2)
   end
+
+  def self.ransackable_attributes(auth_object = nil)
+    [ "amount_cents", "budget_period_id", "updated_at" ]
+  end
+
+  def self.ransackable_associations(auth_object = nil)
+    [ "budget_period" ]
+  end
 end

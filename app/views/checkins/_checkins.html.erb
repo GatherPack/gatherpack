@@ -1,35 +1,35 @@
-<%= search_form_for q, url: event_url, data: {"controller": "turbo_search", "turbo-frame": "results"} do |f| %>
-<div class="card">
-  <div class="card-header">
-    <h3>Search People</h3>
-  </div>
-  <div class="card-body">
-      <div class="col">
-        <%= f.input :person_display_name_cont, label: "Name" %>
-      </div>
-  </div>
-  <div class="card-footer">
-    <% if policy(@checkin).create? %>
-      <%= link_to "Check Someone In", new_event_checkin_path(event), class: "btn btn-success" %>
-    <% else %>
-      <div class="btn btn-success disabled">Check In Locked</div>
-    <% end %>
-
-    <%= f.submit "Search", class: "btn btn-primary", data: { action: "turbo_search#search" } %>
-    <%= link_to "Clear Search", request.path, class: "btn btn-dark", data: { action: "turbo_search#clear" } %>
-  </div>
-</div>
+<%= render layout: "shared/filter_bar", locals: {
+      q: q,
+      url: event_url,
+      title: "Checkins",
+      collection: checkins,
+      primary: { attr: :person_display_name_cont, placeholder: "Search by name…" },
+      filters: [],
+      sorts: {},
+      new_path: (new_event_checkin_path(event) if policy(@checkin).create?),
+      new_label: "Check Someone In",
+      actions: capture do %>
+        <% unless policy(@checkin).create? %>
+          <span class="btn btn-success disabled">Check In Locked</span>
+        <% end %>
+      <% end
+    } do |f| %>
 <% end %>
 
-<h2 class="mt-3">Checkins (<%= @event.checkins.count %><% if @event.checkin_limit.present? && @event.checkin_limit > 0 %>/<%= @event.checkin_limit %><% end %>)</h2>
-<%= turbo_frame_tag "results" do %>
-  <div id="checkins" class="row">
-    <% checkins.each do |checkin| %>
-      <div class="col-6 col-md-2">
-        <%= render checkin %>
-      </div>
-    <% end %>
-  </div>
+<%= turbo_frame_tag "results", data: { turbo_action: "advance" } do %>
+  <%= render "shared/results_header", q: q, filters: [], collection: checkins, noun: "checkin" %>
 
-  <%= paginate checkins %>
+  <% if checkins.any? %>
+    <div id="checkins" class="row">
+      <% checkins.each do |checkin| %>
+        <div class="col-6 col-md-2">
+          <%= render checkin %>
+        </div>
+      <% end %>
+    </div>
+
+    <%= paginate checkins %>
+  <% else %>
+    <%= render "shared/no_results", noun: "checkin", filtered: any_filters_applied?(q) %>
+  <% end %>
 <% end %>

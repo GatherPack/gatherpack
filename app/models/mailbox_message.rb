@@ -12,4 +12,8 @@ class MailboxMessage < ApplicationRecord
   def identifier_name
     subject
   end
+
+  def self.ransackable_associations(auth_object = nil)
+    []
+  end
 end
