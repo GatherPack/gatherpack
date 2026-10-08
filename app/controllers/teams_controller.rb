@@ -1,5 +1,6 @@
 class TeamsController < InternalController
   before_action :set_team, only: %i[show edit update destroy badges pages events applications]
+  before_action :set_recent_questions, only: :show
 
   # GET /teams
   def index
@@ -19,9 +20,6 @@ class TeamsController < InternalController
   def show
     @is_member = current_user.admin? || current_user.architect? || @team.people.include?(current_user.person)
     render "show_public" unless @is_member
-    if GatherPack::Features.enabled?(:qa)
-      @recent_questions = @team.questions.where(closed: false).order(created_at: :desc).limit(5)
-    end
   end
 
   # GET /teams/1/badges
@@ -86,6 +84,13 @@ class TeamsController < InternalController
     @team = policy_scope(Team).find(params[:id])
   rescue ActiveRecord::RecordNotFound
     raise Pundit::NotAuthorizedError
+  end
+
+  # Loaded before #show runs because both show templates read it, and #show
+  # renders show_public immediately for non-members.
+  def set_recent_questions
+    return unless GatherPack::Features.enabled?(:qa)
+    @recent_questions = @team.questions.where(closed: false).order(created_at: :desc).limit(5)
   end
 
   # Only allow a list of trusted parameters through.
