@@ -27,6 +27,12 @@ class TeamPolicy < ApplicationPolicy
     has_perms
   end
 
+  # The full team page, rather than show_public. Managers of a parent team
+  # manage this team too, so they get it without being direct members.
+  def show_full?
+    user.admin || user.architect || record.people.include?(person) || has_perms
+  end
+
   def permitted_attributes_for_update
     [ :name, :color, :team_type_id, :description ] + if user.admin?
       [ :join_permission, :parent_id, person_ids: [] ]

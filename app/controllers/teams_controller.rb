@@ -18,7 +18,7 @@ class TeamsController < InternalController
 
   # GET /teams/1
   def show
-    @is_member = current_user.admin? || current_user.architect? || @team.people.include?(current_user.person)
+    @is_member = policy(@team).show_full?
     render "show_public" unless @is_member
   end
 
