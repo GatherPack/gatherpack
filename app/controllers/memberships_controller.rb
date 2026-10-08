@@ -9,7 +9,7 @@ class MembershipsController < InternalController
       @q = policy_scope(Membership).where(team: @team).ransack(params[:q])
       @memberships = @q.result(distinct: true).includes(:person, :team).order("person.last_name" => "desc", "team.name" => "asc").page(params[:page])
 
-      @people_q = @team.descendant_people.includes(:memberships).ransack(params[:people_q])
+      @people_q = @team.all_people.includes(:memberships).ransack(params[:people_q])
       @people = @people_q.result(distinct: true)
       @people = case params[:member_type]
       when "direct"
@@ -17,8 +17,7 @@ class MembershipsController < InternalController
       when "parent_manager"
         @people.where(id: @team.ancestor_manager_ids)
       when "child_member"
-        child_ids = @team.descendant_member_ids - @team.memberships.pluck(:person_id)
-        @people.where(id: child_ids)
+        @people.where(id: @team.descendant_member_ids).where.not(id: @team.memberships.select(:person_id))
       else
         @people
       end
