@@ -50,7 +50,7 @@ gem "kamal", require: false
 gem "thruster", require: false
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
-gem "image_processing", "~> 2.0.1"
+gem "image_processing", "~> 2.2.0"
 gem "ruby-vips"
 
 group :development, :test do
@@ -128,7 +128,7 @@ gem "jbuilder", "~> 2"
 
 gem "hotwire_combobox", "~> 0.4.0", github: "braddoeswebdev/hotwire_combobox"
 
-gem "stripe", "~> 19"
+gem "stripe", "~> 20"
 
 gem "resend"
 
@@ -144,4 +144,4 @@ gem "redcarpet", "~> 3"
 
 gem "overmind", "~> 2"
 
-gem "herb", "~> 0.10.1"
+gem "herb", "~> 0.11.0"
