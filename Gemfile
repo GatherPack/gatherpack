@@ -128,7 +128,7 @@ gem "jbuilder", "~> 2"
 
 gem "hotwire_combobox", "~> 0.4.0", github: "braddoeswebdev/hotwire_combobox"
 
-gem "stripe", "~> 19"
+gem "stripe", "~> 20"
 
 gem "resend"
 
