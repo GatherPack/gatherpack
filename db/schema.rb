@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_12_133754) do
+ActiveRecord::Schema[8.1].define(version: 2026_09_27_140000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -96,6 +96,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_12_133754) do
     t.datetime "created_at", null: false
     t.uuid "person_id", null: false
     t.datetime "updated_at", null: false
+    t.index ["badge_id", "person_id"], name: "index_badge_assignments_on_badge_id_and_person_id", unique: true
     t.index ["badge_id"], name: "index_badge_assignments_on_badge_id"
     t.index ["person_id"], name: "index_badge_assignments_on_person_id"
   end
@@ -184,6 +185,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_12_133754) do
     t.string "notes"
     t.uuid "person_id", null: false
     t.datetime "updated_at", null: false
+    t.index ["event_id", "person_id"], name: "index_checkins_on_event_id_and_person_id", unique: true
     t.index ["event_id"], name: "index_checkins_on_event_id"
     t.index ["person_id"], name: "index_checkins_on_person_id"
   end
@@ -368,6 +370,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_12_133754) do
     t.datetime "updated_at", null: false
     t.index ["inherited_id"], name: "index_memberships_on_inherited_id"
     t.index ["person_id"], name: "index_memberships_on_person_id"
+    t.index ["team_id", "person_id"], name: "index_memberships_on_team_id_and_person_id", unique: true
     t.index ["team_id"], name: "index_memberships_on_team_id"
   end
 

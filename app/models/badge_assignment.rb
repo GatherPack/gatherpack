@@ -5,6 +5,7 @@ class BadgeAssignment < ApplicationRecord
   belongs_to :badge
   belongs_to :person
 
+  validates :person, uniqueness: { scope: :badge, message: "already has this badge" }
   validate :team_membership
 
   def identifier_name
