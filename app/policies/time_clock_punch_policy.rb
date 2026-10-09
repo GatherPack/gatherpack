@@ -15,6 +15,10 @@ class TimeClockPunchPolicy < ApplicationPolicy
     user.admin || person.manager?
   end
 
+  def update_max_hours?
+    user.admin
+  end
+
   def bulk_destroy?
     user.admin || person.manager?
   end

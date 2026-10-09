@@ -64,7 +64,7 @@ class CheckinsController < InternalController
   end
 
   def rename_response
-    @event = policy_scope(Event).find(params[:id])
+    @event = authorize policy_scope(Event).find(params[:id]), :update?
     field = @event.event_type.checkin_fields.find(params[:field_id])
     old_response = params[:old_response].presence
     new_response = params[:new_response].presence
@@ -82,7 +82,7 @@ class CheckinsController < InternalController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_checkin
-      @checkin = policy_scope(@event.checkins).find(params[:id])
+      @checkin = authorize policy_scope(@event.checkins).find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.

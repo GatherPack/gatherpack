@@ -55,7 +55,7 @@ class LedgerOwnershipsController < InternalController
 
     # Use callbacks to share common setup or constraints between actions.
     def set_ledger_ownership
-      @ledger_ownership = policy_scope(LedgerOwnership).find(params[:id])
+      @ledger_ownership = authorize policy_scope(LedgerOwnership).find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
