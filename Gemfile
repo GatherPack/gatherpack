@@ -92,7 +92,7 @@ gem "omniauth", "~> 2"
 
 gem "omniauth-rails_csrf_protection", "~> 2"
 
-gem "ransack", "~> 4"
+gem "ransack", "~> 5"
 
 gem "kaminari", "~> 1"
 
