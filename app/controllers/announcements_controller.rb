@@ -35,7 +35,15 @@ class AnnouncementsController < InternalController
 
   # PATCH/PUT /announcements/1
   def update
-    if @announcement.update(announcement_params)
+    # Authorize again once the new attributes are in place: #update? reads the
+    # announcement's team, so this is what stops a manager from moving one of
+    # their team's announcements out to everyone (or into a team they don't
+    # manage) by submitting a team_id the authorized-in `set_announcement`
+    # never saw.
+    @announcement.assign_attributes(announcement_params)
+    authorize @announcement
+
+    if @announcement.save
       AnnouncementNotificationRouter.new(@announcement).run
       redirect_to @announcement, notice: "Announcement was successfully updated.", status: :see_other
     else
@@ -52,7 +60,7 @@ class AnnouncementsController < InternalController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_announcement
-      @announcement = policy_scope(Announcement).find(params[:id])
+      @announcement = authorize policy_scope(Announcement).find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.

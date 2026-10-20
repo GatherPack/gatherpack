@@ -6,7 +6,17 @@
     <h1>People</h1>
   </div>
   <div class="card-body">
-    <%= f.input :display_name_cont, label: "Name" %>
+    <div class="row">
+      <div class="col-md">
+        <%= f.input :display_name_cont, label: "Name" %>
+      </div>
+      <div class="col-md">
+        <%= f.input :phone_cont, label: "Phone" %>
+      </div>
+      <div class="col-md">
+        <%= f.input :address_cont, label: "Address" %>
+      </div>
+    </div>
   </div>
   <div class="card-footer">
     <%= link_to "New Person", new_person_path, class: "btn btn-success" if policy(Person).new? %>

@@ -9,11 +9,24 @@ class AnnouncementPolicy < ApplicationPolicy
     end
   end
 
+  def new?
+    user.admin? || manageable_teams.present?
+  end
+
   def create?
-    user.admin || person.manager?
+    user.admin? || manageable_teams.include?(record.team)
   end
 
   def update?
-    user.admin || (record.team && person.all_managed_teams.include?(record.team))
+    create?
+  end
+
+  private
+
+  # An announcement with no team goes to every person in the system
+  # (see AnnouncementNotificationRouter), so for everyone but an admin it has
+  # to name a team they actually manage.
+  def manageable_teams
+    person&.all_managed_teams || Team.none
   end
 end
