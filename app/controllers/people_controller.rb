@@ -72,7 +72,9 @@ class PeopleController < InternalController
     redirect_back_or_to root_path
   end
 
+  # Always allowed: it only returns an impersonating admin to themselves.
   def stop_impersonating
+    skip_authorization
     stop_impersonating_user
     redirect_back_or_to root_path
   end

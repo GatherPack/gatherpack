@@ -50,7 +50,7 @@ class BadgeTypesController < InternalController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_badge_type
-      @badge_type = policy_scope(BadgeType).find(params[:id])
+      @badge_type = authorize policy_scope(BadgeType).find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.

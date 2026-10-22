@@ -1,11 +1,11 @@
 class LedgerPaymentsController < InternalController
   def new
-    @ledger_payment = LedgerPayment.new(ledger_payment_params)
+    @ledger_payment = authorize LedgerPayment.new(ledger_payment_params)
     @ledger_payment.gateway_id ||= Gateway.registered(:payment).first&.id
   end
 
   def create
-    @ledger_payment = LedgerPayment.new(ledger_payment_params)
+    @ledger_payment = authorize LedgerPayment.new(ledger_payment_params)
     if @ledger_payment.valid?
       @ledger_entry = @ledger_payment.gateway.start_payment(@ledger_payment, current_user)
       if @ledger_entry.gateway.entry_handler_url_for(@ledger_entry).present?

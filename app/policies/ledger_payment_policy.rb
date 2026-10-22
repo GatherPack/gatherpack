@@ -6,6 +6,6 @@ class LedgerPaymentPolicy < ApplicationPolicy
   end
 
   def create?
-    person.manager? || record.ledger.owners.include?(person)
+    record.ledger.present? && (person.manager? || record.ledger.owners.include?(person))
   end
 end

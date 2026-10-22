@@ -44,7 +44,7 @@ class TimeClockPunchesController < InternalController
 
   # PATCH /time_clock_punches/update_max_hours
   def update_max_hours
-    head :forbidden and return unless current_user.admin?
+    authorize TimeClockPunch
     hours = params[:max_hours].to_i
     Settings[:time_clock_max_hours] = hours.to_s if hours > 0
     redirect_to flagged_time_clock_punches_path
