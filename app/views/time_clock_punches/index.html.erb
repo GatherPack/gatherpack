@@ -11,7 +11,7 @@
         <% if params['q']&.has_key?('person_id_eq') %>
           <%= f.input :person_id_eq, label: "Person", as: :select, collection: policy_scope(Person), label_method: :identifier_name %>
         <% else %>
-          <%= f.input :person_display_name_cont, label: "Person" %>
+          <%= f.input :person_display_name_i_cont, label: "Person" %>
         <% end %>
       </div>
       <div class="col-md">

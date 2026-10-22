@@ -62,4 +62,8 @@ Rails.application.configure do
   end
 
   config.active_job.queue_adapter = :test
+
+  # Allow tests to use localhost as host
+  config.hosts << "localhost"
+  config.hosts << "localapp"
 end

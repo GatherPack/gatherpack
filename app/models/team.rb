@@ -28,10 +28,6 @@ class Team < ApplicationRecord
     [ :top_level ]
   end
 
-  def self.ransackable_conditions(auth_object = nil)
-    [ "team_type_id", "parent_id" ]
-  end
-
   def self.ransackable_attributes(auth_object = nil)
     [ "name", "team_type_id", "updated_at", "people.count", "parent_id", "join_permission" ]
   end

@@ -11,7 +11,7 @@
         <%= f.input :tokenable_id_eq, label: "Tokenable Person", as: :select, collection: policy_scope(Person).map { |p| [ p.display_name, p.id ] } %>
       </div>
       <div class="col-md">
-        <%= f.input :value_cont, label: "Value" %>
+        <%= f.input :value_i_cont, label: "Value" %>
       </div>
     </div>
   </div>

@@ -38,9 +38,9 @@ class MembershipsControllerTest < ActionDispatch::IntegrationTest
     Membership.create!(person: @candidate, team: @team)
 
     get team_memberships_path(@team)
-    assert_select "input[name='people_q[display_name_cont]']"
+    assert_select "input[name='people_q[display_name_i_cont]']"
 
-    get team_memberships_path(@team, people_q: { display_name_cont: "Carol" })
+    get team_memberships_path(@team, people_q: { display_name_i_cont: "Carol" })
     assert_select "#people_grid", text: /Carol Carter/
     assert_select "#people_grid", text: /Alice Anderson/, count: 0
   end
