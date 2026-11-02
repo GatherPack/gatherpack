@@ -551,7 +551,7 @@ GEM
       rubocop-performance (~> 1.26.0)
     stimulus-rails (1.3.4)
       railties (>= 6.0.0)
-    stripe (20.0.0)
+    stripe (20.1.0)
       bigdecimal
       logger
     svix (2.9.0)
