@@ -13,7 +13,6 @@ class Settings
       @setting_key = setting_key
       @setting_type = setting_type || :text
       @name = name
-      @value = store.transaction { store.fetch(setting_key, default_value) }
       @default_value = default_value
       @group = group || "Site Settings"
       @description = description || ""
@@ -28,15 +27,16 @@ class Settings
       store.transaction do
         store[@setting_key] = val
       end
-      @value = val
     end
 
     def value
+      stored = Settings.instance.stored_values.fetch(setting_key, default_value)
+
       case setting_type
       when :boolean
-        @value == "true"
+        stored == "true"
       else
-        @value
+        stored
       end
     end
 
@@ -75,6 +75,23 @@ class Settings
     end
   end
 
+  # The saved values, reloaded whenever the file changes, so a value saved by
+  # another process (another Puma worker or the job runner) applies without a
+  # restart. A file changed less than a second before it was loaded is read
+  # again, since a second save in the same clock tick may not move its mtime.
+  def stored_values
+    path = store.path
+    mtime = File.exist?(path) ? File.mtime(path) : nil
+    loaded_path, loaded_mtime, loaded_at, values = @loaded
+
+    return values if mtime && path == loaded_path && mtime == loaded_mtime && loaded_at - mtime > 1
+
+    loaded_at = Time.now
+    values = store.transaction(true) { store.roots.to_h { |key| [ key, store[key] ] } }
+    @loaded = [ path, mtime, loaded_at, values ]
+    values
+  end
+
   private
 
   def add_feature_setting(feature)
@@ -93,7 +110,9 @@ class Settings
   end
 
   def initialize
-    @store = PStore.new("storage/settings.pstore")
+    # Thread safe, so Puma threads reading at the same time wait for each other
+    # instead of raising PStore::Error ("nested transaction").
+    @store = PStore.new("storage/settings.pstore", true)
 
     @settings = {}
     add_setting(:title, :string, "Site Name", "GatherPack", nil, "The name of the site")
