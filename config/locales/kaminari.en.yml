@@ -1,0 +1,11 @@
+# Kaminari's own English labels are HTML entities ("&laquo; First"), which
+# the pagination partials escape. Plain characters render the same without
+# marking anything html_safe.
+en:
+  views:
+    pagination:
+      first: "« First"
+      last: "Last »"
+      previous: "‹ Prev"
+      next: "Next ›"
+      truncate: "…"
