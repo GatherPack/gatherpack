@@ -69,4 +69,58 @@ class StudentPiiTest < ActionDispatch::IntegrationTest
 
     assert_nil @student.reload.address
   end
+
+  # --- Domain defaulting ------------------------------------------------------
+
+  test "people created with a student-domain email default to student with PII scrubbed" do
+    Settings[:student_email_domains] = "student.example.org"
+    sign_in @admin
+
+    post people_path, params: { person: { first_name: "Dana", last_name: "Domain",
+      email: "dana@STUDENT.example.org", address: "1 PII St", birthday: "2012-03-15" } }
+
+    person = Person.find_by(first_name: "Dana")
+    assert person.student?
+    assert_nil person.address
+    assert_equal Person::STUDENT_BIRTHDAY_YEAR, person.birthday.year
+  ensure
+    Settings[:student_email_domains] = ""
+  end
+
+  test "oauth signups from a student domain default to student" do
+    Settings[:student_email_domains] = "student.example.org"
+    info = Struct.new(:email, :first_name, :last_name).new("kay@student.example.org", "Kay", "Kid")
+    data = Struct.new(:provider, :uid, :info).new("google_oauth2", "999", info)
+
+    user = User.create_from_provider_data(data)
+
+    assert user.person.student?
+  ensure
+    Settings[:student_email_domains] = ""
+  end
+
+  test "other email domains are not flagged" do
+    Settings[:student_email_domains] = "student.example.org"
+    user = User.create!(email: "staff@example.org", password: "Password1!")
+
+    person = Person.create!(user: user, first_name: "Stan", last_name: "Staff")
+
+    assert_not person.student?
+  ensure
+    Settings[:student_email_domains] = ""
+  end
+
+  test "an admin un-check sticks despite a matching domain" do
+    Settings[:student_email_domains] = "student.example.org"
+    user = User.create!(email: "dee@student.example.org", password: "Password1!")
+    person = Person.create!(user: user, first_name: "Dee", last_name: "Dom")
+    assert person.student?
+
+    person.update!(student: false)
+    person.update!(first_name: "Deeanne")
+
+    assert_not person.reload.student?
+  ensure
+    Settings[:student_email_domains] = ""
+  end
 end
