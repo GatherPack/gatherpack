@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 class Users::RegistrationsController < Devise::RegistrationsController
+  # Throttles self-service account creation.
+  rate_limit to: 10, within: 1.hour, only: :create
+
   # before_action :configure_sign_up_params, only: %i[create]
   # before_action :configure_account_update_params, only: [:update]
 

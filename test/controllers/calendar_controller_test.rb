@@ -9,7 +9,7 @@ class CalendarControllerTest < ActionDispatch::IntegrationTest
     @den_b = Team.create!(name: "Den B", team_type: team_types(:one))
     @ann = create_member("ann@example.com", "Ann", @den_a, birthday: Date.new(2015, 6, 15))
     @bea = create_member("bea@example.com", "Bea", @den_b, birthday: Date.new(2014, 6, 16))
-    admin = User.create!(email: "admin@example.com", password: "Password1!", admin: true)
+    admin = User.create!(email: "admin@example.com", password: "Password1!", admin: true, confirmed_at: Time.current)
     Person.create!(user: admin, first_name: "Ada", last_name: "Admin")
     sign_in admin
   end
@@ -37,7 +37,7 @@ class CalendarControllerTest < ActionDispatch::IntegrationTest
   end
 
   def create_member(email, first, team, **attributes)
-    user = User.create!(email: email, password: "Password1!")
+    user = User.create!(email: email, password: "Password1!", confirmed_at: Time.current)
     person = Person.create!(user: user, first_name: first, last_name: "Test", **attributes)
     Membership.create!(person: person, team: team)
     person

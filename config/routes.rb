@@ -177,9 +177,9 @@ Rails.application.routes.draw do
   # end
 
   if Settings[:local_signup]
-    devise_for :users, controllers: { omniauth_callbacks: "omniauth", registrations: "users/registrations" }
+    devise_for :users, controllers: { omniauth_callbacks: "omniauth", registrations: "users/registrations", sessions: "users/sessions", passwords: "users/passwords", confirmations: "users/confirmations" }
   else
-    devise_for :users, controllers: { omniauth_callbacks: "omniauth" }, skip: :registrations
+    devise_for :users, controllers: { omniauth_callbacks: "omniauth", sessions: "users/sessions", passwords: "users/passwords", confirmations: "users/confirmations" }, skip: :registrations
   end
 
   get "/setup" => "welcome#setup", :as => :setup

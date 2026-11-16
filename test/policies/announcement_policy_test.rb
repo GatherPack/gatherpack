@@ -7,14 +7,14 @@ class AnnouncementPolicyTest < ActiveSupport::TestCase
     @team = teams(:one)
     @other_team = Team.create!(name: "Bravo", team_type: team_types(:one))
 
-    @admin_user = User.create!(email: "admin@example.com", password: "Password1!", admin: true)
+    @admin_user = User.create!(email: "admin@example.com", password: "Password1!", admin: true, confirmed_at: Time.current)
     @admin = Person.create!(user: @admin_user, first_name: "Ada", last_name: "Admin")
 
-    @manager_user = User.create!(email: "manager@example.com", password: "Password1!")
+    @manager_user = User.create!(email: "manager@example.com", password: "Password1!", confirmed_at: Time.current)
     @manager = Person.create!(user: @manager_user, first_name: "Mary", last_name: "Manager")
     Membership.create!(person: @manager, team: @team, manager: true)
 
-    @member_user = User.create!(email: "member@example.com", password: "Password1!")
+    @member_user = User.create!(email: "member@example.com", password: "Password1!", confirmed_at: Time.current)
     @member = Person.create!(user: @member_user, first_name: "Jo", last_name: "Member")
     Membership.create!(person: @member, team: @team, manager: false)
   end
