@@ -13,6 +13,10 @@ class BadgePolicy < ApplicationPolicy
      user.admin || person.all_managed_teams.present?
   end
 
+  def duplicate?
+    new?
+  end
+
   def create?
     user.admin || (record.team && person.all_managed_teams.include?(record.team))
   end
