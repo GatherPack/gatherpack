@@ -8,6 +8,10 @@ class RelationshipType < ApplicationRecord
     [ "parent_label", "child_label", "updated_at", "permission" ]
   end
 
+  def self.ransackable_associations(auth_object = nil)
+    []
+  end
+
   def identifier_name
     "#{parent_label} - #{child_label}"
   end

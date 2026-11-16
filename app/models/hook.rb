@@ -18,6 +18,10 @@ class Hook < ApplicationRecord
     %w[ name event updated_at ]
   end
 
+  def self.ransackable_associations(auth_object = nil)
+    []
+  end
+
   def identifier_icon
     "timeline"
   end
