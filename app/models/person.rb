@@ -20,6 +20,12 @@ class Person < ApplicationRecord
   has_one_attached :avatar
   attr_accessor :email
 
+  # Leap-year sentinel stored in place of a student's real birth year, so the
+  # birthday calendar keeps working (month/day) without capturing the year.
+  STUDENT_BIRTHDAY_YEAR = 4
+
+  before_validation :scrub_student_pii
+
   def self.ransackable_attributes(auth_object = nil)
     [ "address", "birthday", "created_at", "dietary_restrictions", "display_name", "first_name", "gender", "id", "last_name", "phone_number", "shirt_size", "updated_at", "user_id" ]
   end
@@ -166,5 +172,12 @@ class Person < ApplicationRecord
 
   def check_display_name
     self.display_name = first_name + " " + last_name if display_name.blank? && !first_name.blank? && !last_name.blank?
+  end
+
+  # Students never store an address or a real birth year, whoever submits them.
+  def scrub_student_pii
+    return unless student?
+    self.address = nil
+    self.birthday = birthday.change(year: STUDENT_BIRTHDAY_YEAR) if birthday.present?
   end
 end
