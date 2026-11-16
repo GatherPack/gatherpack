@@ -28,4 +28,12 @@ class EventPolicy < ApplicationPolicy
   def print?
     update?
   end
+
+  def duplicate?
+    create?
+  end
+
+  def duplicate_create?
+    create?
+  end
 end

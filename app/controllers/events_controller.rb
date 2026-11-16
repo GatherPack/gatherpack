@@ -1,5 +1,5 @@
 class EventsController < InternalController
-  before_action :set_event, only: %i[ show edit update destroy arrange print ]
+  before_action :set_event, only: %i[ show edit update destroy arrange print duplicate duplicate_create ]
 
   # GET /events
   def index
@@ -42,6 +42,35 @@ class EventsController < InternalController
   # GET /events/new
   def new
     @event = authorize Event.new
+  end
+
+  # GET /events/1/duplicate
+  def duplicate
+  end
+
+  # POST /events/1/duplicate
+  def duplicate_create
+    dates = Array(params[:dates]).filter_map { |d| Date.iso8601(d) rescue nil }.uniq.sort
+
+    if dates.empty?
+      redirect_to duplicate_event_path(@event), alert: "Select at least one date."
+      return
+    end
+
+    duration = @event.end_time.present? ? @event.end_time - @event.start_time : nil
+    copies = ActiveRecord::Base.transaction do
+      dates.map do |date|
+        copy = @event.dup
+        copy.start_time = @event.start_time.change(year: date.year, month: date.month, day: date.day)
+        copy.end_time = duration ? copy.start_time + duration : nil
+        copy.save!
+        copy
+      end
+    end
+
+    redirect_to events_path(q: { name_i_cont: @event.name }), notice: "Created #{helpers.pluralize(copies.size, "copy")} of #{@event.name}."
+  rescue ActiveRecord::RecordInvalid => e
+    redirect_to duplicate_event_path(@event), alert: "Duplication failed: #{e.message}"
   end
 
   # GET /events/1/edit

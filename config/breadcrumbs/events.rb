@@ -17,6 +17,11 @@ crumb :arrange_event do |event|
   parent :event, event
 end
 
+crumb :duplicate_event do |event|
+  link "Duplicate", duplicate_event_path(event)
+  parent :event, event
+end
+
 crumb :print_event do |event|
   link "Print", print_event_path(event)
   parent :event, event
