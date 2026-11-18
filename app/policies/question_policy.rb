@@ -10,7 +10,9 @@ class QuestionPolicy < ApplicationPolicy
   end
 
   def create?
-    user.admin || person.all_teams.exists?(record.team_id)
+    return true if user.admin
+    # The index view asks with the class (policy(Question).create?).
+    record.is_a?(Class) ? person.all_teams.any? : person.all_teams.exists?(record.team_id)
   end
 
   def update?
