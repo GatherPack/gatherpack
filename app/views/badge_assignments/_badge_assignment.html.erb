@@ -4,5 +4,6 @@
   </div>
   <div class="card-body">
     <%= image_tag get_avatar_url_512(badge_assignment.person.avatar), class: "person-img" %>
+    <p class="mb-0 mt-2"><strong>Earned:</strong> <%= badge_assignment.earned_at&.strftime("%b %-d, %Y") %></p>
   </div>
 </div>

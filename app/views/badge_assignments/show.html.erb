@@ -13,6 +13,7 @@
         <%= as_badge @badge_assignment.badge %>
       </div>
       <div class="col">
+        <p><strong>Earned on:</strong> <%= @badge_assignment.earned_at&.strftime("%B %d, %Y") %></p>
         <p><strong>Assigned on:</strong> <%= @badge_assignment.created_at.strftime("%B %d, %Y") %></p>
       </div>
     </div>
