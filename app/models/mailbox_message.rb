@@ -9,6 +9,10 @@ class MailboxMessage < ApplicationRecord
     [ "subject", "body", "from", "updated_at" ]
   end
 
+  def self.ransackable_associations(auth_object = nil)
+    []
+  end
+
   def identifier_name
     subject
   end

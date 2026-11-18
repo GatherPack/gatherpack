@@ -10,16 +10,23 @@ class SearchableIndexesTest < ActionDispatch::IntegrationTest
     host! "localhost"
     user = User.create!(email: "admin@example.com", password: "Password1!")
     Person.create!(user: user, first_name: "Ada", last_name: "Admin")
-    user.update!(admin: true)
+    user.update!(admin: true, architect: true)
     sign_in user
   end
 
   %w[
+    /budget_periods
+    /budgets
     /checkin_fields
     /event_types
+    /gateways
     /hooks
+    /ledger_tags
+    /mailboxes
+    /oauth_applications
     /relationship_types
     /reports
+    /shortcuts
     /team_types
     /variables
   ].each do |path|
