@@ -38,7 +38,7 @@ class TeamPageAccessTest < ActionDispatch::IntegrationTest
   private
 
   def create_person(email)
-    user = User.create!(email: email, password: "Password1!")
+    user = User.create!(email: email, password: "Password1!", confirmed_at: Time.current)
     Person.create!(user: user, first_name: "Test", last_name: "Person")
   end
 end

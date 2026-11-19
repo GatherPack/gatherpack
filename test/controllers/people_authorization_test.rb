@@ -114,7 +114,7 @@ class PeopleAuthorizationTest < ActionDispatch::IntegrationTest
   private
 
   def create_member(email, first, last, manager:)
-    user = User.create!(email: email, password: "Password1!")
+    user = User.create!(email: email, password: "Password1!", confirmed_at: Time.current)
     person = Person.create!(user: user, first_name: first, last_name: last)
     Membership.create!(person: person, team: @team, manager: manager)
     person

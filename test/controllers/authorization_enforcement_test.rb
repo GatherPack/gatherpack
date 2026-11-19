@@ -113,7 +113,7 @@ class AuthorizationEnforcementTest < ActionDispatch::IntegrationTest
   end
 
   test "an impersonating admin can always stop impersonating" do
-    admin = User.create!(email: "admin@example.com", password: "Password1!", admin: true)
+    admin = User.create!(email: "admin@example.com", password: "Password1!", admin: true, confirmed_at: Time.current)
     Person.create!(user: admin, first_name: "Ada", last_name: "Admin")
     sign_in admin
     post impersonate_person_path(@member)
@@ -126,7 +126,7 @@ class AuthorizationEnforcementTest < ActionDispatch::IntegrationTest
   private
 
   def create_member(email, manager:)
-    user = User.create!(email: email, password: "Password1!")
+    user = User.create!(email: email, password: "Password1!", confirmed_at: Time.current)
     person = Person.create!(user: user, first_name: email.split("@").first.capitalize, last_name: "Test")
     Membership.create!(person: person, team: @team, manager: manager)
     person

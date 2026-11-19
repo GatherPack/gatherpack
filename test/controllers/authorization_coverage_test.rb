@@ -16,7 +16,7 @@ class AuthorizationCoverageTest < ActionDispatch::IntegrationTest
 
   setup do
     host! "localhost"
-    user = User.create!(email: "coverage-admin@example.com", password: "Password1!", admin: true, architect: true)
+    user = User.create!(email: "coverage-admin@example.com", password: "Password1!", admin: true, architect: true, confirmed_at: Time.current)
     Person.create!(user: user, first_name: "Ada", last_name: "Admin")
     sign_in user
   end

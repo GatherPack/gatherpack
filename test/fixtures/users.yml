@@ -3,7 +3,9 @@
 one:
   email: user-one@example.com
   encrypted_password: x
+  confirmed_at: <%= Time.zone.now %>
 
 two:
   email: user-two@example.com
   encrypted_password: x
+  confirmed_at: <%= Time.zone.now %>

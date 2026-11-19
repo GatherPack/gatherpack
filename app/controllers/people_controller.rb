@@ -42,7 +42,10 @@ class PeopleController < InternalController
     if @person.save
       if @person.email
         pw = Spicy::Proton.pair
-        User.create(email: @person.email, person: @person, password: pw)
+        user = User.new(email: @person.email, person: @person, password: pw)
+        # Admin vouches for the address; don't gate the handed-out password on email.
+        user.skip_confirmation!
+        user.save
         flash[:info] = "User was successfully created, password set to #{pw}"
       end
       redirect_to @person, notice: "Person was successfully created."

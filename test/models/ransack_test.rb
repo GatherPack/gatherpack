@@ -34,7 +34,7 @@ class RansackTest < ActiveSupport::TestCase
   end
 
   test "ransack search with user association works" do
-    user = User.create!(email: "test@example.com", password: "password123")
+    user = User.create!(email: "test@example.com", password: "password123", confirmed_at: Time.current)
     person_with_user = Person.create!(first_name: "With", last_name: "User", display_name: "With User", user: user)
     person_without_user = Person.create!(first_name: "Without", last_name: "User", display_name: "Without User")
 
@@ -89,7 +89,7 @@ class RansackTest < ActiveSupport::TestCase
 
   test "ransack distinct true removes duplicates when joining" do
     # Create a user and associate with person to test distinct through a join
-    user = User.create!(email: "duplicate-test@example.com", password: "password123")
+    user = User.create!(email: "duplicate-test@example.com", password: "password123", confirmed_at: Time.current)
     @person.update!(user: user)
 
     # Search through user association - should return person only once despite join
