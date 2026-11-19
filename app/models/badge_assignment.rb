@@ -8,6 +8,16 @@ class BadgeAssignment < ApplicationRecord
   validates :person, uniqueness: { scope: :badge, message: "already has this badge" }
   validate :team_membership
 
+  before_validation -> { self.earned_at ||= Time.current }
+
+  def self.ransackable_attributes(auth_object = nil)
+    %w[ earned_at updated_at ]
+  end
+
+  def self.ransackable_associations(auth_object = nil)
+    []
+  end
+
   def identifier_name
     "#{person.display_name} => #{badge.name}"
   end

@@ -63,7 +63,12 @@ Rails.application.routes.draw do
 
   if GatherPack::Features.enabled?(:badges)
     resources :badges do
-      resources :badge_assignments
+      resources :badge_assignments do
+        collection do
+          get "bulk"
+          patch "bulk", to: "badge_assignments#bulk_update"
+        end
+      end
     end
     resources :badge_types
   end
