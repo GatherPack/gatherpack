@@ -9,6 +9,14 @@ class Budget < ApplicationRecord
   monetize :actual_amount_cents
   monetize :remaining_amount_cents
 
+  def self.ransackable_attributes(auth_object = nil)
+    %w[ amount_cents updated_at ]
+  end
+
+  def self.ransackable_associations(auth_object = nil)
+    []
+  end
+
   def identifier_icon
     "wallet"
   end
