@@ -138,5 +138,6 @@ class Settings
 
     add_setting(:shirt_sizes, :string, "Shirt Sizes", "Youth S, Youth M, Youth L, S, M, L, XL, XXL, 3XL, 4XL", "People", "Comma-separated list of valid shirt sizes")
     add_setting(:gender_options, :string, "Gender Options", "M, F, X", "People", "Comma-separated list of valid gender options")
+    add_setting(:student_email_domains, :string, "Student Email Domains", "", "People", "Comma-separated email domains whose new profiles get the student PII flag by default (e.g. student.example.org)")
   end
 end
