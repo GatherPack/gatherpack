@@ -1,0 +1,35 @@
+<% breadcrumb :duplicate_event, @event %>
+
+<%= form_with url: duplicate_event_path(@event), method: :post do |f| %>
+  <div class="card" data-controller="duplicate-dates">
+    <div class="card-header">
+      <h1>Duplicating <%= @event.identifier_name %></h1>
+    </div>
+    <div class="card-body">
+      <p>
+        A copy of this event will be created on each selected date, keeping the same
+        start time<%= " and duration" if @event.end_time.present? %>
+        (<%= format_event_time_date(@event, :long_ordinal, false) %>).
+        Checkins are not copied.
+      </p>
+      <div class="row align-items-end">
+        <div class="col-auto">
+          <label class="form-label" for="duplicate-date">Date</label>
+          <input id="duplicate-date" type="date" class="form-control"
+                 data-duplicate-dates-target="input"
+                 data-action="keydown.enter->duplicate-dates#add">
+        </div>
+        <div class="col-auto">
+          <button type="button" class="btn btn-secondary" data-action="duplicate-dates#add">Add Date</button>
+        </div>
+      </div>
+      <hr>
+      <p class="text-muted" data-duplicate-dates-target="empty">No dates selected yet.</p>
+      <div data-duplicate-dates-target="list"></div>
+    </div>
+    <div class="card-footer">
+      <%= link_to "Cancel", @event, class: "btn btn-warning" %>
+      <%= f.submit "Create Copies", class: "btn btn-primary", disabled: true, data: { duplicate_dates_target: "submit" } %>
+    </div>
+  </div>
+<% end %>

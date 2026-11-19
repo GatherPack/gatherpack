@@ -30,6 +30,7 @@
     <div class="card-footer">
       <%= link_to "Print", print_event_path(@event), class: "btn btn-dark" if policy(@event).print? %>
       <%= link_to "Arrange", arrange_event_path(@event), class: "btn btn-info" if policy(@event).arrange? %>
+      <%= link_to "Duplicate", duplicate_event_path(@event), class: "btn btn-success" if policy(@event).duplicate? %>
       <%= link_to "Edit", edit_event_path(@event), class: "btn btn-warning" if policy(@event).update? %>
       <%= link_to "Delete", @event, class: "btn btn-danger", data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } if policy(@event).destroy? %>
     </div>
