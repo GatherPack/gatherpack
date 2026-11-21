@@ -147,7 +147,7 @@ class Person < ApplicationRecord
   end
 
   def identifier_name
-    display_name.presence || id
+    display_name.presence || name_from_parts.presence || id
   end
 
   def identifier_icon
@@ -165,6 +165,12 @@ class Person < ApplicationRecord
   private
 
   def check_display_name
-    self.display_name = first_name + " " + last_name if display_name.blank? && !first_name.blank? && !last_name.blank?
+    self.display_name = name_from_parts if display_name.blank? && name_from_parts.present?
+  end
+
+  # The first and last names that are filled in, so a person with only one
+  # of them still gets a display name.
+  def name_from_parts
+    [ first_name, last_name ].map { |part| part.to_s.strip }.compact_blank.join(" ")
   end
 end
