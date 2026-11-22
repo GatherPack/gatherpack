@@ -31,13 +31,13 @@
       <tbody>
         <% @oauth_applications.each do |app| %>
           <tr>
-            <td><%= link_to app.name, app %></td>
+            <td><%= link_to app.name, app, "data-turbo": "false" %></td>
             <td><code><%= truncate app.uid, length: 20 %></code></td>
             <td><%= app.scopes.presence || "—" %></td>
             <td><code><%= truncate app.redirect_uri, length: 30 %></code></td>
             <td><%= time_ago_in_words app.updated_at %> ago</td>
             <td>
-              <%= link_to "Edit", edit_oauth_application_path(app), class: "btn btn-sm btn-warning" %>
+              <%= link_to "Edit", edit_oauth_application_path(app), class: "btn btn-sm btn-warning", "data-turbo": "false" %>
               <%= link_to "Delete", app, class: "btn btn-sm btn-danger", data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } %>
             </td>
           </tr>

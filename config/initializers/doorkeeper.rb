@@ -21,7 +21,10 @@ Doorkeeper.configure do
   # See: https://guides.rubyonrails.org/active_record_multiple_databases.html#activating-automatic-role-switching
 
   resource_owner_authenticator do
-    current_user || redirect_to(new_user_session_url)
+    current_user || begin
+      session["user_return_to"] = request.fullpath
+      redirect_to(new_user_session_url)
+    end
   end
 
   admin_authenticator do

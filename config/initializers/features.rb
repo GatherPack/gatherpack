@@ -221,7 +221,15 @@ Rails.application.config.to_prepare do
       label: "OAuth Provider",
       description: "Allow third-party apps to authenticate users via OAuth2",
       default_enabled: true,
-      toggleable: true
+      toggleable: true,
+      setup_section: "Communication",
+      setup_items: [
+        GatherPack::Feature::SetupItem.new(
+          label: "OAuth Applications",
+          path: :oauth_applications_path,
+          policy_check: ->(view) { view.admin? }
+        )
+      ]
     )
   )
 end
