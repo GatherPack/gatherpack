@@ -21,6 +21,11 @@
   border-color: var(--pair-a-fg);
 }
 
+// Bootstrap's default gray is unreadable on the themed card backgrounds.
+.form-text {
+  color: color-mix(in srgb, var(--pair-a-fg), transparent 15%);
+}
+
 .code-editor textarea.form-control {
   font-family: $font-family-monospace;
   background-color: var(--pair-b-bg);
