@@ -5,8 +5,8 @@ class User < ApplicationRecord
   has_one :person
   accepts_nested_attributes_for :person
   # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable, :omniauthable, omniauth_providers: [ :developer, :google_oauth2, :discord, :github ]
+  # :lockable, :timeoutable, :trackable
+  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable, :confirmable, :omniauthable, omniauth_providers: [ :developer, :google_oauth2, :discord, :github ]
 
   validate :password_change, on: :update
 
@@ -37,6 +37,8 @@ class User < ApplicationRecord
       where(provider: provider_data.provider, uid: provider_data.uid).first_or_create  do |user|
         user.email = provider_data.info.email
         user.password = Devise.friendly_token[0, 20]
+        # The provider already verified this address.
+        user.skip_confirmation!
         user.person = Person.new
         user.person.first_name = provider_data.info.first_name
         user.person.last_name = provider_data.info.last_name

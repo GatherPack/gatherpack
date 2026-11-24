@@ -5,7 +5,7 @@ class UserSearchTest < ActionDispatch::IntegrationTest
 
   setup do
     host! "localhost"
-    @admin = User.create!(email: "admin@example.com", password: "Password1!", admin: true)
+    @admin = User.create!(email: "admin@example.com", password: "Password1!", admin: true, confirmed_at: Time.current)
     Person.create!(user: @admin, first_name: "Ada", last_name: "Admin")
     sign_in @admin
   end
@@ -18,7 +18,7 @@ class UserSearchTest < ActionDispatch::IntegrationTest
   end
 
   test "a user without a person shows their email" do
-    User.create!(email: "no-person@example.com", password: "Password1!")
+    User.create!(email: "no-person@example.com", password: "Password1!", confirmed_at: Time.current)
 
     get combo_search_path(q: "no-person", scope: "users", format: :turbo_stream)
 

@@ -14,6 +14,8 @@ class UsersController < InternalController
     else
       @user = authorize User.new(user_params)
     end
+    # Managers/admins vouch for addresses they enter by hand.
+    @user.skip_confirmation! unless @user.persisted?
 
     if @user.save
       @person.update(user: @user)
