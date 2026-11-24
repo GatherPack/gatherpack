@@ -11,6 +11,10 @@ class Variable < ApplicationRecord
     [ "klass", "name", "raw_value", "updated_at"  ]
   end
 
+  def self.ransackable_associations(auth_object = nil)
+    []
+  end
+
   def value
     nil if raw_value.blank?
     case klass

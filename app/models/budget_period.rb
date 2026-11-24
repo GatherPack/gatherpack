@@ -5,6 +5,14 @@ class BudgetPeriod < ApplicationRecord
   belongs_to :team
   has_many :budgets, dependent: :destroy
 
+  def self.ransackable_attributes(auth_object = nil)
+    %w[ name starts_at ends_at team_id updated_at ]
+  end
+
+  def self.ransackable_associations(auth_object = nil)
+    []
+  end
+
   def identifier_icon
     "file-invoice-dollar"
   end

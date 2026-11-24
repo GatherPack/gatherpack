@@ -9,6 +9,10 @@ class Mailbox < ApplicationRecord
     [ "address", "updated_at" ]
   end
 
+  def self.ransackable_associations(auth_object = nil)
+    []
+  end
+
   def identifier_name
     address
   end

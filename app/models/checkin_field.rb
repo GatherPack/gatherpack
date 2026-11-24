@@ -13,6 +13,10 @@ class CheckinField < ApplicationRecord
     [ "name", "permission", "updated_at" ]
   end
 
+  def self.ransackable_associations(auth_object = nil)
+    []
+  end
+
   def identifier_name
     "#{event_type.name} / #{name}"
   end
