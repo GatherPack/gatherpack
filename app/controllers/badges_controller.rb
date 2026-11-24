@@ -1,5 +1,5 @@
 class BadgesController < InternalController
-  before_action :set_badge, only: %i[ show edit update destroy ]
+  before_action :set_badge, only: %i[ show edit update destroy duplicate ]
 
   # GET /badges
   def index
@@ -15,6 +15,12 @@ class BadgesController < InternalController
   # GET /badges/new
   def new
     @badge = authorize Badge.new
+  end
+
+  # GET /badges/1/duplicate
+  def duplicate
+    @badge = @badge.dup
+    render :new
   end
 
   # GET /badges/1/edit

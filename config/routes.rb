@@ -64,6 +64,7 @@ Rails.application.routes.draw do
   if GatherPack::Features.enabled?(:badges)
     resources :badges do
       resources :badge_assignments
+      get "duplicate", on: :member
     end
     resources :badge_types
   end
