@@ -1,0 +1,60 @@
+<% breadcrumb :badge_assignments, @badge %>
+
+<div data-controller="bulk-assign" data-bulk-assign-url-value="<%= bulk_badge_badge_assignments_path(@badge) %>">
+  <%= search_form_for @q, url: bulk_badge_badge_assignments_path(@badge), data: { "controller": "turbo_search", "turbo-frame": "results" } do |f| %>
+    <div class="card">
+      <div class="card-header">
+        <h1>Assign <%= @badge.name %></h1>
+      </div>
+      <div class="card-body">
+        <div class="row align-items-end">
+          <div class="col-12 col-md-6">
+            <%= f.input :last_name_or_first_name_or_display_name_i_cont, label: "Name" %>
+          </div>
+          <div class="col-12 col-md-6">
+            <label class="form-label" for="bulk-earned-on">Earned on</label>
+            <input id="bulk-earned-on" type="date" class="form-control" value="<%= Date.current.iso8601 %>"
+                   data-bulk-assign-target="date">
+            <p class="form-text">Applied to badges as you check them.</p>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <%= f.submit "Search", class: "btn btn-primary", data: { action: "turbo_search#search" } %>
+        <%= link_to "Clear Search", request.path, class: "btn btn-dark", data: { action: "turbo_search#clear" } %>
+        <%= link_to "Back to Assignments", badge_badge_assignments_path(@badge), class: "btn btn-warning float-end" %>
+      </div>
+    </div>
+  <% end %>
+
+  <%= turbo_frame_tag "results" do %>
+    <div class="card mt-3">
+      <div class="card-body">
+        <% @people.each do |person| %>
+          <div class="row align-items-center border-bottom py-2" data-bulk-row>
+            <div class="col-auto">
+              <div class="form-check form-switch">
+                <input type="checkbox" class="form-check-input" id="bulk_person_<%= person.id %>"
+                       <%= "checked" if @assigned_ids.include?(person.id) %>
+                       data-person-id="<%= person.id %>"
+                       data-action="bulk-assign#toggle">
+              </div>
+            </div>
+            <div class="col-auto">
+              <%= image_tag get_avatar_url_64(person.avatar), class: "person-img", style: "height: 2em; width: auto;" %>
+            </div>
+            <div class="col">
+              <label for="bulk_person_<%= person.id %>"><%= person.identifier_name %></label>
+              <span class="text-danger ms-2" data-bulk-error></span>
+            </div>
+          </div>
+        <% end %>
+        <% if @people.empty? %>
+          <p class="text-center mb-0">No people found.</p>
+        <% end %>
+      </div>
+    </div>
+
+    <%= paginate @people %>
+  <% end %>
+</div>

@@ -13,6 +13,10 @@ class BadgeAssignmentPolicy < ApplicationPolicy
     end
   end
 
+  def bulk?
+    index?
+  end
+
   def show?
     BadgePolicy.new(user, record.badge).edit?
   end

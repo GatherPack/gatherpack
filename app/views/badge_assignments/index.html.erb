@@ -9,6 +9,7 @@
   </div>
   <div class="card-footer">
     <%= link_to "New badge assignment", new_badge_badge_assignment_path(@badge), class: "btn btn-success" %>
+    <%= link_to "Bulk Assign", bulk_badge_badge_assignments_path(@badge), class: "btn btn-info" %>
     <%= f.submit "Search", class: "btn btn-primary", data: { action: "turbo_search#search" } %>
     <%= link_to "Clear Search", request.path, class: "btn btn-dark", data: { action: "turbo_search#clear" } %>
   </div>
