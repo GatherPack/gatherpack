@@ -43,14 +43,31 @@
         <%= f.input :shirt_size, as: :select, collection: Settings[:shirt_sizes].split(",").map(&:strip) %>
       </div>
       <div class="col-6">
-
-        <%= f.input :birthday, as: :string, input_html: { type: :date } %>
+        <% if @person.student? %>
+          <%= f.input :birthday, as: :string, input_html: { type: :date },
+                hint: "Student profile: the year is discarded; only month and day are stored." %>
+        <% else %>
+          <%= f.input :birthday, as: :string, input_html: { type: :date } %>
+        <% end %>
       </div>
     </div>
 
+    <% if current_user.admin? %>
+      <div class="row">
+        <div class="col-12">
+          <%= f.input :student, label: "Student (limit PII)",
+                hint: "Students never store an address or birth year. Saving wipes any existing values." %>
+        </div>
+      </div>
+    <% end %>
+
     <div class="row">
       <div class="col-12 col-md-6">
-        <%= f.input :address %>
+        <% if @person.student? %>
+          <%= f.input :address, input_html: { disabled: true, value: "" }, hint: "Not collected for students." %>
+        <% else %>
+          <%= f.input :address %>
+        <% end %>
       </div>
       <div class="col-12 col-md-6">
         <%= f.input :phone_number %>

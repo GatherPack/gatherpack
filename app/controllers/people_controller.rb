@@ -109,7 +109,7 @@ class PeopleController < InternalController
     def person_params
       fields = [ :first_name, :last_name, :display_name, :gender, :shirt_size, :phone_number, :address, :birthday, :dietary_restrictions, :avatar, :bio, :email ]
       if current_user.admin?
-        fields += [ :user_id, team_ids: [], badge_ids: [] ]
+        fields += [ :user_id, :student, team_ids: [], badge_ids: [] ]
       elsif @person && current_user.person&.can_manage(@person)
         fields += [ team_ids: [], badge_ids: [] ]
       end
