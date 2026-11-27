@@ -562,7 +562,7 @@ GEM
     stripe (20.1.0)
       bigdecimal
       logger
-    svix (2.11.0)
+    svix (2.11.1)
       base64 (~> 0.3.0)
       logger (~> 1.0)
     thor (1.5.0)
