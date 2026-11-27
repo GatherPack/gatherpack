@@ -143,7 +143,7 @@ GEM
       responders
       warden (~> 1.2.3)
     domain_name (0.7.20261117)
-    doorkeeper (5.9.9)
+    doorkeeper (5.9.10)
       railties (>= 5)
     dotenv (3.2.0)
     drb (2.2.3)
@@ -215,7 +215,7 @@ GEM
     jbuilder (2.15.1)
       actionview (>= 7.0.0)
       activesupport (>= 7.0.0)
-    json (3.1.0)
+    json (3.2.0)
     jwt (3.3.0)
       base64
     kamal (2.12.0)
